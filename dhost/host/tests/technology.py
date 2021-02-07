@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from .models import Technology, File, Website
+from ..models import Technology
 
 
 class TechnologyTest(TestCase):

@@ -6,25 +6,25 @@ from django.views.generic import (
     DeleteView,
 )
 
-from .models import Website, File
+from .models import Site, File
 
 
-class WebsiteListView(ListView):
-    model = Website
+class SiteListView(ListView):
+    model = Site
 
 
-class WebsiteDetailView(DetailView):
-    model = Website
+class SiteDetailView(DetailView):
+    model = Site
 
 
-class WebsiteCreateView(CreateView):
-    model = Website
+class SiteCreateView(CreateView):
+    model = Site
 
 
-class WebsiteUpdateView(UpdateView):
-    model = Website
+class SiteUpdateView(UpdateView):
+    model = Site
 
 
-class WebsiteDeleteView(DeleteView):
-    model = Website
+class SiteDeleteView(DeleteView):
+    model = Site
 

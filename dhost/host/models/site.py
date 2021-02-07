@@ -1,18 +1,9 @@
 from django.db import models
 
-
-class Technology(models.Model):
-    name = models.CharField(max_length=42)
+from .file import File
 
 
-class File(models.Model):
-    name = models.CharField(max_length=128)
-    technology = models.ForeignKey(Technology, on_delete=models.SET_NULL, null=True)
-    url = models.URLField()
-    content = models.TextField()
-
-
-class Website(models.Model):
+class Site(models.Model):
 
     STARTING = 'SR'
     WORKING = 'UP'
