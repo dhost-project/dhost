@@ -7,7 +7,7 @@
 
 {% block content %}
 
-{% if website_list %}
+{% if site_list %}
 <table class="table">
   <thead>
     <tr>
@@ -19,25 +19,25 @@
     </tr>
   </thead>
   <tbody>
-  {% for website in website_list %}
+  {% for site in site_list %}
     <tr class="
-        {% if website.status == 'UP' %}
+        {% if site.status == 'UP' %}
           table-success
-        {% elif website.status == 'ST' %}
+        {% elif site.status == 'ST' %}
           table-light
-        {% elif website.status == 'SR' %}
+        {% elif site.status == 'SR' %}
           table-warning
         {% endif %}">
       <th scope="row">{{ count }}</th>
-      <td>{{ website.name }}</td>
-      <td>{{ website.get_status_display }}</td>
-      <td>{{ website.url }}</td>
+      <td>{{ site.name }}</td>
+      <td>{{ site.get_status_display }}</td>
+      <td>{{ site.url }}</td>
       <td></td>
     </tr>
   {% endfor %}
     </ul>
 {% else %}
-    <p>No websites are available.</p>
+    <p>No sites are available.</p>
 {% endif %}
 
 {% endblock %}
