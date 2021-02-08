@@ -52,3 +52,13 @@ In case of problem with pip installation:
 sudo apt install libpq-dev python-dev
 ```
 
+### Docker
+```
+# docker-compose up -d
+```
+
+Verify
+```
+# docker-compose ps
+```
+
