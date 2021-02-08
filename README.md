@@ -46,3 +46,9 @@ create API token:
 ```
 python manage.py drf_create_token <username>
 ```
+
+In case of problem with pip installation:
+```
+sudo apt install libpq-dev python-dev
+```
+
