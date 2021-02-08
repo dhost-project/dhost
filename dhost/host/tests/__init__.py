@@ -1,4 +1,4 @@
-from .file import FileTest
-from .site import SiteTest
-from .technology import TechnologyTest
-#from .views import SiteListViewTest
+from .file import FileTest  # noqa
+from .site import SiteTest  # noqa
+from .technology import TechnologyTest  # noqa
+# from .views import SiteListViewTest

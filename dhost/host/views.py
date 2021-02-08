@@ -6,7 +6,7 @@ from django.views.generic import (
     DeleteView,
 )
 
-from .models import Site, File
+from .models import Site
 
 
 class SiteListView(ListView):
@@ -27,4 +27,3 @@ class SiteUpdateView(UpdateView):
 
 class SiteDeleteView(DeleteView):
     model = Site
-

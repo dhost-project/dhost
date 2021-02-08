@@ -9,4 +9,3 @@ class TechnologyTest(TestCase):
 
     def test_tech_is_created(self):
         t1 = Technology.objects.get(name='tech1')
-
