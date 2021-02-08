@@ -9,6 +9,10 @@ import django_heroku
 from sentry_sdk.integrations.django import DjangoIntegration
 
 
+def get_list(text):
+    return [item.strip() for item in text.split(',')]
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = ast.literal_eval(os.environ.get('DEBUG', 'True'))
@@ -18,10 +22,7 @@ if not SECRET_KEY and DEBUG:
     warnings.warn('SECRET_KEY not configured, using a random temporary key.')
     SECRET_KEY = get_random_secret_key()
 
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'dhost.herokuapp.com',
-]
+ALLOWED_HOSTS = get_list(os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1'))
 
 INSTALLED_APPS = [
     'django.contrib.admin',
