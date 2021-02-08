@@ -14,7 +14,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = ast.literal_eval(os.environ.get('DEBUG', 'True'))
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
-
 if not SECRET_KEY and DEBUG:
     warnings.warn('SECRET_KEY not configured, using a random temporary key.')
     SECRET_KEY = get_random_secret_key()
@@ -89,14 +88,14 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
 # Sentry
-sentry_sdk.init(
-    dsn=os.environ.get('SENTRY_DSN'),
-    integrations=[DjangoIntegration()],
-    traces_sample_rate=1.0,
-
-    # associate users to errors sending PII data.
-    send_default_pii=True
-)
+SENTRY_DSN = os.environ.get('SENTRY_DSN')
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[DjangoIntegration()],
+        traces_sample_rate=1.0,
+        send_default_pii=True
+    )
 
 # Django-Heroku.
 django_heroku.settings(locals())
