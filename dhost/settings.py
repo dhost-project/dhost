@@ -5,7 +5,6 @@ from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
 import sentry_sdk
-import django_heroku
 from sentry_sdk.integrations.django import DjangoIntegration
 
 
@@ -36,6 +35,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -98,6 +98,4 @@ if SENTRY_DSN:
         send_default_pii=True
     )
 
-# Travis CI fail when Heroku is used, it fails when the test db is deleted
-# Django-Heroku.
-django_heroku.settings(locals())
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
