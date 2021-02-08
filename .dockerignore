@@ -3,4 +3,5 @@
 *.sqlite
 media
 static
-
+venv
+staticfiles
