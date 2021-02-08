@@ -11,6 +11,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
+    'dhost.herokuapp.com',
 ]
 
 INSTALLED_APPS = [
