@@ -99,6 +99,5 @@ if SENTRY_DSN:
     )
 
 # Travis CI fail when Heroku is used, it fails when the test db is deleted
-if 'CI' not in os.environ:
-    # Django-Heroku.
-    django_heroku.settings(locals())
+# Django-Heroku.
+django_heroku.settings(locals())
