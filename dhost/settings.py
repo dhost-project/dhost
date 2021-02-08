@@ -1,15 +1,23 @@
+import os
+import ast
+import warnings
 from pathlib import Path
 
+from django.core.management.utils import get_random_secret_key
+import sentry_sdk
 import django_heroku
+from sentry_sdk.integrations.django import DjangoIntegration
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'sx)b9ipi0j+n7e$$=uht)85c8=c&*mzn7o7!8-oul26(dy)aq5'
+DEBUG = ast.literal_eval(os.environ.get('DEBUG', 'True'))
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
+if not SECRET_KEY and DEBUG:
+    warnings.warn('SECRET_KEY not configured, using a random temporary key.')
+    SECRET_KEY = get_random_secret_key()
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
@@ -80,5 +88,15 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
-# Activate Django-Heroku.
+# Sentry
+sentry_sdk.init(
+    dsn=os.environ.get('SENTRY_DSN'),
+    integrations=[DjangoIntegration()],
+    traces_sample_rate=1.0,
+
+    # associate users to errors sending PII data.
+    send_default_pii=True
+)
+
+# Django-Heroku.
 django_heroku.settings(locals())
