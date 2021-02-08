@@ -1,13 +1,6 @@
 from django.urls import path
 
-from .views import (
-    SiteListView,
-    SiteDetailView,
-    SiteCreateView,
-    SiteUpdateView,
-    SiteDeleteView,
-)
-
+from .views import SiteCreateView, SiteDeleteView, SiteDetailView, SiteListView, SiteUpdateView
 
 urlpatterns = [
     path("", SiteListView.as_view(), name="website_list"),
