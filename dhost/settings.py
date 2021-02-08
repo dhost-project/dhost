@@ -5,7 +5,7 @@ from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
 import sentry_sdk
-#import django_heroku
+import django_heroku
 from sentry_sdk.integrations.django import DjangoIntegration
 
 
@@ -98,5 +98,7 @@ if SENTRY_DSN:
         send_default_pii=True
     )
 
-# Django-Heroku.
-#django_heroku.settings(locals())
+# Travis CI fail when Heroku is used, it fails when the test db is deleted
+if 'CI' not in os.environ:
+    # Django-Heroku.
+    django_heroku.settings(locals())
