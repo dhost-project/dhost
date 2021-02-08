@@ -12,4 +12,5 @@ class SiteTest(TestCase):
 
     def test_tech_is_created(self):
         s1 = Site.objects.get(name="site1")
+        print(s1)
 

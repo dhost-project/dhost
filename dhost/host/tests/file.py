@@ -17,4 +17,5 @@ class FileTest(TestCase):
 
     def test_tech_is_created(self):
         f1 = File.objects.get(name="file1")
+        print(f1)
 

@@ -71,3 +71,10 @@ SECRET_KEY=[auto_generated for dev only]
 SENTRY_DSN=[sentry_dsn_url]
 ```
 
+## Styling guide
+
+To check the style install flake8 (in requirements_dev) and run:
+```
+flake8 dhost --max-line-length 119 --per-file-ignores="__init__.py:F401" --ignore W391
+```
+
