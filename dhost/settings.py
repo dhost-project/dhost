@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import django_heroku
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -77,3 +79,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
