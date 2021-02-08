@@ -1,7 +1,16 @@
 # dhost_django
 
+### Docker
+```
+# docker-compose up -d
+```
 
-## Setup
+Verify
+```
+# docker-compose ps
+```
+
+## Manual Setup
 
 Python virtual environment
 ```
@@ -52,13 +61,13 @@ In case of problem with pip installation:
 sudo apt install libpq-dev python-dev
 ```
 
-### Docker
-```
-# docker-compose up -d
-```
+## Environment variables
 
-Verify
+Some configuration use the env var, the following are used:
 ```
-# docker-compose ps
+DEBUG=[True/False]
+ALLOWED_HOSTS=[127.0.0.1,localhost]
+SECRET_KEY=[auto_generated for dev only]
+SENTRY_DSN=[sentry_dsn_url]
 ```
 
