@@ -5,7 +5,7 @@ from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
 import sentry_sdk
-import django_heroku
+#import django_heroku
 from sentry_sdk.integrations.django import DjangoIntegration
 
 
@@ -99,4 +99,4 @@ if SENTRY_DSN:
     )
 
 # Django-Heroku.
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
