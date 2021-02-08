@@ -35,7 +35,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',   # To serve statis in production, to be changed later
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -98,4 +98,5 @@ if SENTRY_DSN:
         send_default_pii=True
     )
 
+# To serve statis in production, to be changed later
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
