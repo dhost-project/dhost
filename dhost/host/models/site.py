@@ -5,15 +5,15 @@ from .file import File
 
 class Site(models.Model):
 
-    STARTING = 'SR'
-    WORKING = 'UP'
-    STOPED = 'ST'
-    UPDATING = 'UD'
+    STARTING = "SR"
+    WORKING = "UP"
+    STOPED = "ST"
+    UPDATING = "UD"
     STATUS_CHOICES = [
-        (STARTING, 'Starting'),
-        (WORKING, 'Working'),
-        (STOPED, 'Stoped'),
-        (UPDATING, 'Updating'),
+        (STARTING, "Starting"),
+        (WORKING, "Working"),
+        (STOPED, "Stoped"),
+        (UPDATING, "Updating"),
     ]
 
     name = models.CharField(max_length=42)

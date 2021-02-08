@@ -6,14 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('host', '0002_auto_20210207_1634'),
+        ("host", "0002_auto_20210207_1634"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='website',
-            name='status',
-            field=models.CharField(choices=[('ST', 'Starting'), ('UP', 'Working'), ('ST', 'Stoped'), ('UD', 'Updating')], default='UP', max_length=2),
+            model_name="website",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("ST", "Starting"),
+                    ("UP", "Working"),
+                    ("ST", "Stoped"),
+                    ("UD", "Updating"),
+                ],
+                default="UP",
+                max_length=2,
+            ),
             preserve_default=False,
         ),
     ]

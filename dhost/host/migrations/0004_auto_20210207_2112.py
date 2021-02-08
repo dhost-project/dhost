@@ -6,21 +6,40 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('host', '0003_website_status'),
+        ("host", "0003_website_status"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Site',
+            name="Site",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=42)),
-                ('url', models.URLField()),
-                ('status', models.CharField(choices=[('SR', 'Starting'), ('UP', 'Working'), ('ST', 'Stoped'), ('UD', 'Updating')], max_length=2)),
-                ('files', models.ManyToManyField(blank=True, to='host.File')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=42)),
+                ("url", models.URLField()),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("SR", "Starting"),
+                            ("UP", "Working"),
+                            ("ST", "Stoped"),
+                            ("UD", "Updating"),
+                        ],
+                        max_length=2,
+                    ),
+                ),
+                ("files", models.ManyToManyField(blank=True, to="host.File")),
             ],
         ),
         migrations.DeleteModel(
-            name='Website',
+            name="Website",
         ),
     ]
