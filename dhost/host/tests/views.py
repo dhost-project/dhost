@@ -17,3 +17,4 @@ class SiteListViewTest(TestCase):
 
         context = view.get_context_data()
         self.assertIn("site_list", context)
+

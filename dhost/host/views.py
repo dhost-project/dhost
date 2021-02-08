@@ -27,3 +27,4 @@ class SiteUpdateView(UpdateView):
 
 class SiteDeleteView(DeleteView):
     model = Site
+

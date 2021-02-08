@@ -20,3 +20,4 @@ class Site(models.Model):
     url = models.URLField()
     files = models.ManyToManyField(File, blank=True)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES)
+

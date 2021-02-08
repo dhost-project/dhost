@@ -6,3 +6,4 @@ def page_not_found_view(*args, **kwargs):
     capture_message("Page not found!", level="error")
 
     return HttpResponseNotFound("Not found")
+

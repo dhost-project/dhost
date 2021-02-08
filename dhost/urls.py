@@ -8,3 +8,4 @@ urlpatterns = [
 ]
 
 handler404 = "dhost.core.views.page_not_found_view"
+

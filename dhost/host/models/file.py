@@ -8,3 +8,4 @@ class File(models.Model):
     technology = models.ForeignKey(Technology, on_delete=models.SET_NULL, null=True)
     url = models.URLField()
     content = models.TextField()
+

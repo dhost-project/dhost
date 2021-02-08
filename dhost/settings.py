@@ -100,3 +100,4 @@ if SENTRY_DSN:
 
 # To serve statis in production, to be changed later
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
