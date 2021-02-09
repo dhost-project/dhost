@@ -9,7 +9,5 @@ jobs:
   docker:
     steps:
       - name: Build Image
-        runs:
-          using: 'docker'
-          image: 'Dockerfile'
+        run: docker build
 
