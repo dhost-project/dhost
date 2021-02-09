@@ -1,5 +1,13 @@
 # dhost_django
 
+Techs:
+    - Django
+    - Docker
+    - Sentry
+    - Travis CI
+    - Heroku
+    - Gunicorn
+
 ### Docker
 ```
 # docker-compose up -d
