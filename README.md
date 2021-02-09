@@ -1,12 +1,12 @@
 # dhost_django
 
 Techs:
-    - Django
-    - Docker
-    - Sentry
-    - Travis CI
-    - Heroku
-    - Gunicorn
+- Django
+- Docker
+- Sentry
+- Travis CI
+- Heroku
+- Gunicorn
 
 ### Docker
 ```
