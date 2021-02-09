@@ -9,6 +9,9 @@ jobs:
   test:
     executor: docker-executor
     steps:
-      - name: Build Image
-        run: docker run
+      - checkout
+      - run:
+        name: Test Docker
+        command: |
+          docker run
 
