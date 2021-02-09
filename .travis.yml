@@ -3,6 +3,11 @@ language: python
 python:
   - "3.9"
 
+addons:
+  apt:
+    packages:
+      - docker-ce
+
 services:
   - docker
 
