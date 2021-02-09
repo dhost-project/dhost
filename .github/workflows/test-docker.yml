@@ -7,8 +7,22 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-20.04
+    executor: docker-executor
     steps:
-      - name: Build Image
-        run: docker run
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - setup_remote_docker
+      - run:
+        name: Load cached Docker image
+        command: |
+          docker load -i /tmp/workspace/$IMAGE_TAG.tar
+      - run:
+        name: Smoke test Docker container
+          command: |
+            docker run -d --name smoke-testing-helloworld $IMAGE_NAME:$IMAGE_TAG
+            docker create -v /etc/newman --name smoke-tests alpine:3.4 /bin/true
+            docker cp smoke-tests/. smoke-tests:/etc/newman
+            docker run --network container:smoke-testing-helloworld jwilder/dockerize \
+              -wait http://localhost:8000/ -timeout 120s -wait-retry-interval 5s
 
