@@ -1,4 +1,4 @@
-name: Docker
+name: Docker Build
 
 on:
   push:
@@ -6,9 +6,10 @@ on:
       - master
 
 jobs:
-  docker:
+  test:
     runs-on: ubuntu-20.04
     steps:
+      - uses: actions/checkout@/v2
       - name: Build Image
         run: docker build .
 
