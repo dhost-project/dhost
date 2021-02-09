@@ -6,9 +6,12 @@ python:
 services:
   - docker
 
-install:
-  - pip install -r requirements.txt
-
-script:
-  - python manage.py test --parallel
+jobs:
+  include:
+    - name: "Django test"
+      before_script:
+        - docker-compose build
+        - docker-compose up -d
+      script:
+        - docker-compose run django python manage.py test --parallel
 
