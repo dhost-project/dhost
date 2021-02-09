@@ -10,5 +10,5 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Build Image
-        run: docker build
+        run: docker build .
 
