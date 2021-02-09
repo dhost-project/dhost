@@ -1,0 +1,11 @@
+name: Docker
+
+on:
+  push:
+    branches:
+      - master
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+
