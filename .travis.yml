@@ -3,15 +3,6 @@ language: python
 python:
   - "3.9"
 
-services:
-  - docker
-
-jobs:
-  include:
-    - name: "Django test"
-      before_script:
-        - docker-compose build
-        - docker-compose up -d
-      script:
-        - docker-compose run django python manage.py test --parallel
+script:
+  - python manage.py test --parallel
 
