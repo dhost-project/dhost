@@ -8,6 +8,8 @@ Techs:
 - Heroku
 - Gunicorn
 - PostgreSQL
+- Adminer
+- Mailhog
 
 ### Docker
 

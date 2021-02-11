@@ -67,8 +67,12 @@ WSGI_APPLICATION = "dhost.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "dhost",
+        "USER": "dhost",
+        "PASSWORD": "dhost",
+        "HOST": "db",
+        "PORT": 5432,
     }
 }
 
@@ -87,6 +91,9 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
+
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "localhost")
+EMAIL_PORT = os.environ.get("EMAIL_PORT", 1025)
 
 # Sentry
 SENTRY_DSN = os.environ.get("SENTRY_DSN")
