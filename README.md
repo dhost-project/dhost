@@ -4,9 +4,10 @@ Techs:
 - Django
 - Docker
 - Sentry
-- Travis CI
+- Github CI
 - Heroku
 - Gunicorn
+- PostgreSQL
 
 ### Docker
 
@@ -66,3 +67,4 @@ ALLOWED_HOSTS=[127.0.0.1,localhost]
 SECRET_KEY=[auto_generated for dev only]
 SENTRY_DSN=[sentry_dsn_url]
 ```
+
