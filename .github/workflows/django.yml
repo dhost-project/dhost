@@ -6,18 +6,15 @@ on:
   pull_request:
     branches: [ master ]
 
-services:
-  - postgresql
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    services:
+      - postgresql
     strategy:
       max-parallel: 4
       matrix:
         python-version: [3.8, 3.9]
-
     variables:
       - POSTGRES_DB: dhost
       - POSTGRES_USER: dhost
