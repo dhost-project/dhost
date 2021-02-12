@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ master ]
 
+services:
+  - postgresql
+
 jobs:
   build:
 
@@ -14,6 +17,11 @@ jobs:
       max-parallel: 4
       matrix:
         python-version: [3.8, 3.9]
+
+    variables:
+      - POSTGRES_DB: dhost
+      - POSTGRES_USER: dhost
+      - POSTGRES_PASSWORD: dhost
 
     steps:
     - uses: actions/checkout@v2
@@ -28,3 +36,4 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py test --parallel
+
