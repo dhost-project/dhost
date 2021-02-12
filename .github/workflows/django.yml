@@ -17,9 +17,9 @@ jobs:
       postgres:
         image: postgres:10.8
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: github_actions
+          POSTGRES_USER: dhost
+          POSTGRES_PASSWORD: dhost
+          POSTGRES_DB: dhost
         ports:
           - 5432:5432
     steps:
