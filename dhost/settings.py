@@ -86,6 +86,7 @@ if os.environ.get('GITHUB_WORKFLOW'):
            'HOST': '127.0.0.1',
            'PORT': '5432',
         }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator", },
