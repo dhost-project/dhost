@@ -68,25 +68,13 @@ WSGI_APPLICATION = "dhost.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "dhost",
-        "USER": "dhost",
-        "PASSWORD": "dhost",
-        "HOST": "db",
-        "PORT": 5432,
+        "NAME": os.environ.get("DATABASES_NAME", "dhost"),
+        "USER": os.environ.get("DATABASES_USER", "dhost"),
+        "PASSWORD": os.environ.get("DATABASES_PASSWORD", "dhost"),
+        "HOST": os.environ.get("DATABASES_HOST", "127.0.0.1"),
+        "PORT": os.environ.get("DATABASES_PORT", 5432),
     }
 }
-
-if os.environ.get('GITHUB_WORKFLOW'):
-    DATABASES = {
-        'default': {
-           'ENGINE': 'django.db.backends.postgresql',
-           'NAME': 'github_actions',
-           'USER': 'postgres',
-           'PASSWORD': 'postgres',
-           'HOST': '127.0.0.1',
-           'PORT': '5432',
-        }
-    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator", },
