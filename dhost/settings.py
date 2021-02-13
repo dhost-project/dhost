@@ -118,8 +118,7 @@ if SENTRY_DSN:
     )
 
 # Debug-toolbar
-DEBUG_TOOLBAR = ast.literal_eval(os.environ.get("DEBUG_TOOLBAR", "False"))
-if DEBUG_TOOLBAR and DEBUG:
+if DEBUG:
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
     INTERNAL_IPS = ["127.0.0.1"]
