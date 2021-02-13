@@ -3,6 +3,7 @@ import os
 import warnings
 from pathlib import Path
 
+import dj_database_url
 import sentry_sdk
 from django.core.management.utils import get_random_secret_key
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -30,13 +31,16 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
+    # Local apps
     "dhost.host",
+    # External apps
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # To serve statis in production, to be changed later
     "django.middleware.security.SecurityMiddleware",
+    # to serve staticfiles in production
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -50,7 +54,7 @@ ROOT_URLCONF = "dhost.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": ["dhost/templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -65,16 +69,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "dhost.wsgi.application"
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("DATABASES_NAME", "dhost"),
-        "USER": os.environ.get("DATABASES_USER", "dhost"),
-        "PASSWORD": os.environ.get("DATABASES_PASSWORD", "dhost"),
-        "HOST": os.environ.get("DATABASES_HOST", "127.0.0.1"),
-        "PORT": os.environ.get("DATABASES_PORT", 5432),
-    }
-}
+DATABASES = {"default": dj_database_url.config(conn_max_age=600)}
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator", },
@@ -91,9 +86,26 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
+STATICFILES_DIRS = [BASE_DIR / "dhost/static"]
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 EMAIL_HOST = os.environ.get("EMAIL_HOST", "localhost")
 EMAIL_PORT = os.environ.get("EMAIL_PORT", 1025)
+
+# Redis
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.environ.get("REDIS_URL", "redis://127.0.0.1:6379/1"),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "IGNORE_EXCEPTIONS": True,
+        }
+    }
+}
 
 # Sentry
 SENTRY_DSN = os.environ.get("SENTRY_DSN")
@@ -105,6 +117,18 @@ if SENTRY_DSN:
         send_default_pii=True,
     )
 
-# To serve statis in production, to be changed later
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# Debug-toolbar
+DEBUG_TOOLBAR = ast.literal_eval(os.environ.get("DEBUG_TOOLBAR", "False"))
+if DEBUG_TOOLBAR and DEBUG:
+    INSTALLED_APPS.append("debug_toolbar")
+    MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
+    INTERNAL_IPS = ["127.0.0.1"]
+
+    # To work with Docker
+    def show_toolbar(request):
+        return True
+
+    DEBUG_TOOLBAR_CONFIG = {
+        'SHOW_TOOLBAR_CALLBACK': show_toolbar,
+    }
 

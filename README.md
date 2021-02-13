@@ -2,6 +2,7 @@
 
 Techs:
 - Django
+- REST
 - Docker
 - Sentry
 - Github CI
