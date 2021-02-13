@@ -4,10 +4,8 @@ from ..models import Technology
 
 
 class TechnologyTest(TestCase):
-    def setUp(self):
-        Technology.objects.create(name="tech1")
+    fixtures = ["technologies.json"]
 
     def test_tech_is_created(self):
-        t1 = Technology.objects.get(name="tech1")
-        print(t1)
+        Technology.objects.get(pk=1)
 

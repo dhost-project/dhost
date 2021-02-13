@@ -13,10 +13,7 @@ urlpatterns = [
 handler404 = "dhost.core.views.page_not_found_view"
 
 if settings.DEBUG:
-    from django.conf.urls.static import static
-    urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    import debug_toolbar
 
-    if settings.DEBUG_TOOLBAR:
-        import debug_toolbar
-        urlpatterns += [path("__debug__/", include(debug_toolbar.urls))]
+    urlpatterns += [path("__debug__/", include(debug_toolbar.urls))]
 

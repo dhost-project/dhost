@@ -1,0 +1,16 @@
+[
+    {
+        "model": "host.technology",
+        "pk": 1,
+        "fields": {
+            "name": "Test1"
+        }
+    },
+    {
+        "model": "host.technology",
+        "pk": 2,
+        "fields": {
+            "name": "Test2"
+        }
+    }
+]
