@@ -6,4 +6,3 @@ from ..models import Technology
 @admin.register(Technology)
 class TechnologyAdmin(admin.ModelAdmin):
     pass
-

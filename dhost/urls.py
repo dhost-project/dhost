@@ -16,4 +16,3 @@ if settings.DEBUG_TOOLBAR:
     import debug_toolbar
 
     urlpatterns += [path("__debug__/", include(debug_toolbar.urls))]
-

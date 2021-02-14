@@ -15,4 +15,3 @@ class SiteTest(TestCase):
 
     def test_tech_is_created(self):
         Site.objects.get(name=self.SITE1_NAME)
-

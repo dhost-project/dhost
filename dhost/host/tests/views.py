@@ -1,9 +1,12 @@
 from django.test import RequestFactory, TestCase
 
-from ..views import SiteCreateView, SiteDeleteView, SiteDetailView, SiteListView, SiteUpdateView
+from ..views import (
+    SiteCreateView, SiteDeleteView, SiteDetailView, SiteListView, SiteUpdateView
+)
 
 
 class SiteListViewTest(TestCase):
+
     def test_environment_set_in_context(self):
         request = RequestFactory().get("/host/")
         view = SiteListView()
@@ -14,6 +17,7 @@ class SiteListViewTest(TestCase):
 
 
 class SiteDetailViewTest(TestCase):
+
     def test_environment_set_in_context(self):
         request = RequestFactory().get("/host/")
         view = SiteDetailView()
@@ -24,6 +28,7 @@ class SiteDetailViewTest(TestCase):
 
 
 class SiteCreateViewTest(TestCase):
+
     def test_environment_set_in_context(self):
         request = RequestFactory().get("/host/")
         view = SiteCreateView()
@@ -34,6 +39,7 @@ class SiteCreateViewTest(TestCase):
 
 
 class SiteUpdateViewTest(TestCase):
+
     def test_environment_set_in_context(self):
         request = RequestFactory().get("/host/")
         view = SiteUpdateView()
@@ -44,6 +50,7 @@ class SiteUpdateViewTest(TestCase):
 
 
 class SiteDeleteViewTest(TestCase):
+
     def test_environment_set_in_context(self):
         request = RequestFactory().get("/host/")
         view = SiteDeleteView()
@@ -51,4 +58,3 @@ class SiteDeleteViewTest(TestCase):
 
         context = view.get_context_data()
         self.assertIn("site_list", context)
-

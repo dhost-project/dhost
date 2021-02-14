@@ -66,8 +66,15 @@ python manage.py makemigrations
 Some configuration use the env var, the following are used:
 ```
 DEBUG=[True/False]
+DEBUG_TOOLBAR=[True/False]
 ALLOWED_HOSTS=[127.0.0.1,localhost]
 SECRET_KEY=[auto_generated for dev only]
 SENTRY_DSN=[sentry_dsn_url]
 ```
+
+## Style
+
+Yapf is used has code formatter with a custom config that can be found in the `.style.yapf` file.
+
+There is also an editorconfig file (`.editorconfig`) that can be used with your IDE or text editor, more infos [here](https://editorconfig.org/).
 

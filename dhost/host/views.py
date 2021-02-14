@@ -1,4 +1,6 @@
-from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
+from django.views.generic import (
+    CreateView, DeleteView, DetailView, ListView, UpdateView
+)
 
 from .models import Site
 
@@ -21,4 +23,3 @@ class SiteUpdateView(UpdateView):
 
 class SiteDeleteView(DeleteView):
     model = Site
-
