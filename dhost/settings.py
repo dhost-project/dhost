@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Local apps
+    #"dhost.account",
     "dhost.host",
     # External apps
     "rest_framework",

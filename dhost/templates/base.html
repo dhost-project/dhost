@@ -2,15 +2,17 @@
 {% load static i18n %}
 
 {% block root %}
+
 <div class="navbar">
   {% block navbar %}{% endblock navbar %}
 </div><!-- /.navbar -->
-<div class="container">
-  <div class="content" role="main" aria-label="{% trans "content" %}">
-    {% block content %}{% endblock content %}
-  </div><!-- /.content -->
-</div><!-- /.container -->
+
+<div class="content" role="main" aria-label="{% trans "content" %}">
+  {% block content %}{% endblock content %}
+</div><!-- /.content -->
+
 <footer>
   {% block footer %}{% endblock footer %}
 </footer>
+
 {% endblock root %}
