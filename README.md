@@ -9,8 +9,7 @@ Techs:
 - Heroku
 - Gunicorn
 - PostgreSQL
-- Adminer
-- Mailhog
+- Yapf
 
 ### Docker
 
@@ -74,7 +73,7 @@ SENTRY_DSN=[sentry_dsn_url]
 
 ## Style
 
-Yapf is used has code formatter with a custom config that can be found in the `.style.yapf` file.
+Yapf is used has code formatter with a custom config that can be found in the `.style.yapf` file. You can use isort before yapf to order imports.
 
 There is also an editorconfig file (`.editorconfig`) that can be used with your IDE or text editor, more infos [here](https://editorconfig.org/).
 
