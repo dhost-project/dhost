@@ -21,6 +21,7 @@ jobs:
         ports:
           - 5432:5432
     env:
+      DEBUG: "True"
       DATABASE_URL: postgres://dhost:dhost@127.0.0.1:5432/dhost
     steps:
     - uses: actions/checkout@v2
