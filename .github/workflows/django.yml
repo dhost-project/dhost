@@ -54,9 +54,9 @@ jobs:
         ports:
           - 5432:5432
     env:
-      DEBUG: "False"
+      DEBUG: False
       DATABASE_URL: postgres://dhost:dhost@127.0.0.1:5432/dhost
-      SECRET_KEY: test
+      SECRET_KEY: verysecretkey
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
