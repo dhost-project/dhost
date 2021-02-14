@@ -73,7 +73,7 @@ jobs:
     - name: Collect static
       run: |
         python manage.py collectstatic
-    - name: Start Gunicorn
+    - name: Run Tests
       run: |
-        gunicorn --bind :8000 dhost.wsgi
+        python manage.py test --parallel
 
