@@ -9,20 +9,30 @@ from django.core.management.utils import get_random_secret_key
 from sentry_sdk.integrations.django import DjangoIntegration
 
 
-def get_list(text):
-    return [item.strip() for item in text.split(",")]
+def env(var, default=None):
+    return os.environ.get(var, default)
+
+
+def env_bool(var, default=None):
+    return ast.literal_eval(env(var, default))
+
+
+def env_list(var, default=None, separator=","):
+    """Return a python list of value from env vars"""
+    text_list = env(var, default)
+    return [item.strip() for item in text_list.split(separator)]
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DEBUG = ast.literal_eval(os.environ.get("DEBUG", "True"))
+DEBUG = env_bool("DEBUG", "False")
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = env("SECRET_KEY")
 if not SECRET_KEY and DEBUG:
     warnings.warn("SECRET_KEY not configured, using a random temporary key.")
     SECRET_KEY = get_random_secret_key()
 
-ALLOWED_HOSTS = get_list(os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1"))
+ALLOWED_HOSTS = env_list("ALLOWED_HOSTS", "localhost,127.0.0.1")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -38,7 +48,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     # to serve staticfiles in production
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -95,19 +105,19 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
 STATICFILES_DIRS = [BASE_DIR / "dhost/static"]
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-EMAIL_HOST = os.environ.get("EMAIL_HOST", "localhost")
-EMAIL_PORT = os.environ.get("EMAIL_PORT", 1025)
+EMAIL_HOST = env("EMAIL_HOST", "localhost")
+EMAIL_PORT = env("EMAIL_PORT", 1025)
 
 # Redis
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": os.environ.get("REDIS_URL", "redis://127.0.0.1:6379/1"),
+        "LOCATION": env("REDIS_URL", "redis://127.0.0.1:6379/1"),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "IGNORE_EXCEPTIONS": True,
@@ -116,7 +126,7 @@ CACHES = {
 }
 
 # Sentry
-SENTRY_DSN = os.environ.get("SENTRY_DSN")
+SENTRY_DSN = env("SENTRY_DSN")
 if SENTRY_DSN:
     sentry_sdk.init(
         dsn=SENTRY_DSN,
@@ -126,10 +136,11 @@ if SENTRY_DSN:
     )
 
 # Debug-toolbar
-if DEBUG:
+DEBUG_TOOLBAR = env_bool("DEBUG_TOOLBAR", "False")
+if DEBUG_TOOLBAR:
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
-    INTERNAL_IPS = ["127.0.0.1"]
+    INTERNAL_IPS = env_list("INTERNAL_IPS", "127.0.0.1")
 
     # To work with Docker
     def show_toolbar(request):
