@@ -75,5 +75,5 @@ jobs:
         python manage.py collectstatic
     - name: Start Gunicorn
       run: |
-        gunicorn --bind :8000 dhost.wsg
+        gunicorn --bind :8000 dhost.wsgi
 
