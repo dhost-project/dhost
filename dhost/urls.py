@@ -10,8 +10,6 @@ urlpatterns = [
     path("host/", include("dhost.host.urls")),
 ]
 
-handler404 = "dhost.core.views.page_not_found_view"
-
 if settings.DEBUG_TOOLBAR:
     import debug_toolbar
 
