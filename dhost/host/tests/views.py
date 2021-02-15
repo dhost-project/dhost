@@ -1,8 +1,6 @@
 from django.test import RequestFactory, TestCase
 
-from ..views import (
-    SiteCreateView, SiteDeleteView, SiteDetailView, SiteListView, SiteUpdateView
-)
+from ..views import SiteCreateView, SiteDeleteView, SiteDetailView, SiteListView, SiteUpdateView
 
 
 class SiteListViewTest(TestCase):

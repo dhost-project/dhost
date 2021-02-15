@@ -1,6 +1,4 @@
-from django.views.generic import (
-    CreateView, DeleteView, DetailView, ListView, UpdateView
-)
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 from .models import Site
 
