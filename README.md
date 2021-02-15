@@ -73,7 +73,6 @@ SENTRY_DSN=[sentry_dsn_url]
 
 ## Style
 
-Yapf is used has code formatter with a custom config that can be found in the `.style.yapf` file. You can use isort before yapf to order imports.
+Black is used has a code formater, you can run it with `black . -l 119`.
 
 There is also an editorconfig file (`.editorconfig`) that can be used with your IDE or text editor, more infos [here](https://editorconfig.org/).
-

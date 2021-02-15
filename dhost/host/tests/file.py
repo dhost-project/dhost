@@ -4,7 +4,6 @@ from ..models import File, Technology
 
 
 class FileTest(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         tf1 = Technology.objects.create(name="tech_for_file1")
