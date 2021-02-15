@@ -8,6 +8,7 @@ urlpatterns = [
     path("", home_view, name="home"),
     path("admin/", admin.site.urls),
     path("host/", include("dhost.host.urls")),
+    path("accounts/", include("allauth.urls")),
 ]
 
 if settings.DEBUG_TOOLBAR:
