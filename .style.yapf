@@ -1,4 +1,5 @@
 [style]
 based_on_style = google
+column_limit = 119
 dedent_closing_brackets = true
 coalesce_brackets = true

@@ -11,14 +11,10 @@ charset = utf-8
 
 # Docstrings and comments use max_line_length = 79
 [*.py]
-max_line_length = 80
+max_line_length = 119
 
 [*.html]
 indent_size = 2
-
-[**/admin/js/vendor/**]
-indent_style = ignore
-indent_size = ignore
 
 [**.min.js]
 indent_style = ignore
@@ -34,5 +30,8 @@ indent_style = tab
 max_line_length = 79
 
 [*.yml]
+indent_size = 2
+
+[*.json]
 indent_size = 2
 
