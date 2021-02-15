@@ -1,5 +1,8 @@
 # dhost_django
 
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/psf/black
+
 Techs:
 - Django
 - REST
@@ -76,4 +79,3 @@ SENTRY_DSN=[sentry_dsn_url]
 Yapf is used has code formatter with a custom config that can be found in the `.style.yapf` file. You can use isort before yapf to order imports.
 
 There is also an editorconfig file (`.editorconfig`) that can be used with your IDE or text editor, more infos [here](https://editorconfig.org/).
-
