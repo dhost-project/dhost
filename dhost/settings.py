@@ -25,6 +25,8 @@ def env_list(var, default=None, separator=","):
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SITE_ID = env("SITE_ID", 1)
+
 DEBUG = env_bool("DEBUG", "False")
 
 SECRET_KEY = env("SECRET_KEY")
@@ -41,11 +43,17 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
     # Local apps
-    #"dhost.account",
     "dhost.host",
     # External apps
     "rest_framework",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.github",
+    "allauth.socialaccount.providers.gitlab",
+    "allauth.socialaccount.providers.google",
 ]
 
 MIDDLEWARE = [
@@ -82,6 +90,11 @@ WSGI_APPLICATION = "dhost.wsgi.application"
 
 DATABASES = {"default": dj_database_url.config(conn_max_age=600)}
 
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME":
@@ -117,6 +130,16 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 EMAIL_HOST = env("EMAIL_HOST", "localhost")
 EMAIL_PORT = env("EMAIL_PORT", 1025)
+
+LOGIN_REDIRECT_URL = "/dashboard"
+
+# Allauth
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_MAX_EMAIL_ADDRESSES = 10
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_USERNAME_BLACKLIST = ["admin", "moderator", "dhost"]
 
 # Redis
 CACHES = {
