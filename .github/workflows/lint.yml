@@ -17,5 +17,5 @@ jobs:
         pip install black
     - name: Analysing the code with yapf
       run: |
-        black . --line-length 119 --check
+        black . --check
 

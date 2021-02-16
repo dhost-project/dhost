@@ -45,9 +45,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     # Local apps
+    "dhost.users",
     "dhost.host",
     # External apps
     "rest_framework",
+    "rest_framework.authtoken",
 ]
 
 MIDDLEWARE = [
@@ -83,6 +85,8 @@ TEMPLATES = [
 WSGI_APPLICATION = "dhost.wsgi.application"
 
 DATABASES = {"default": dj_database_url.config(conn_max_age=600)}
+
+AUTH_USER_MODEL = "users.User"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
