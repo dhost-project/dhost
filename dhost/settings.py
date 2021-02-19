@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     # External apps
     "rest_framework",
     "rest_framework.authtoken",
+    "fontawesome-free",
 ]
 
 MIDDLEWARE = [

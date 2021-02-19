@@ -9,6 +9,8 @@
     <meta name="description" content="DHost"/>
     <link rel="apple-touch-icon" href="{% static "image/logo192.png" %}" />
     <title>{% block title %}{% if title %}{{ title }}{% else %}DHost{% endif %}{% endblock %}</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link href="{% static 'fontawesome_free/css/all.min.css' %}" rel="stylesheet" type="text/css">
     {% block extrastyle %}{% endblock %}
     {% block extrahead %}{% endblock %}
   </head>
