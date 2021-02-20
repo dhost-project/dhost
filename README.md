@@ -73,11 +73,11 @@ SENTRY_DSN=[sentry_dsn_url]
 
 ## Style
 
-Black is used has a code formater, you can run it with `black .`, the file `pyproject.toml` configure Black.
+Yapf is used has a code formater, you can run it with `yapf -r -i dhost`.
 
 There is also an editorconfig file (`.editorconfig`) that can be used with your IDE or text editor, more infos [here](https://editorconfig.org/).
 
-To use flake8 try:
+Flake8 is used has linter for code quality, to use it run:
 ```
 flake8 dhost --max-line-length 119 --per-file-ignores="__init__.py:F401" --extend-exclude "**/migrations/*"
 ```

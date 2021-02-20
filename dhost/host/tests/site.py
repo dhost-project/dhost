@@ -4,7 +4,7 @@ from ..models import Site
 
 
 class SiteTest(TestCase):
-    SITE1_NAME = "site1"
+    SITE1_NAME = 'site1'
 
     @classmethod
     def setUpTestData(cls):
