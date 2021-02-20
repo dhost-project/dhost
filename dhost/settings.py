@@ -110,6 +110,9 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+CSRF_COOKIE_SECURE = env_bool("CSRF_COOKIE_SECURE", "False")
+SESSION_COOKIE_SECURE = env_bool("SESSION_COOKIE_SECURE", "False")
+
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
 STATICFILES_DIRS = [BASE_DIR / "dhost/static"]
@@ -120,6 +123,8 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 EMAIL_HOST = env("EMAIL_HOST", "localhost")
 EMAIL_PORT = env("EMAIL_PORT", 1025)
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", "webmaster@localhost")
+SERVER_EMAIL = env("SERVER_EMAIL", "root@localhost")
 
 LOGIN_REDIRECT_URL = "/dashboard"
 
