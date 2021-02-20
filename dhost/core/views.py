@@ -2,4 +2,4 @@ from django.template.response import TemplateResponse
 
 
 def home_view(request):
-    return TemplateResponse(request, "home/home.html", {})
+    return TemplateResponse(request, 'home/home.html', {})
