@@ -3,11 +3,14 @@ from django.test import TestCase
 
 
 class EmailTest(TestCase):
+
     def test_send_email(self):
         mail.outbox = []
         mail.send_mail(
-            'Subject test', 'Here is the message.',
-            'from@example.com', ['to@example.com'],
+            'Subject test',
+            'Here is the message.',
+            'from@example.com',
+            ['to@example.com'],
             fail_silently=False,
         )
 
