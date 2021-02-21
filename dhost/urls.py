@@ -23,7 +23,7 @@ if settings.DEBUG:
 
     urlpatterns += [path('404', page_not_found_debug)]
 
-if settings.DEBUG_TOOLBAR:
+if settings.ENABLE_DEBUG_TOOLBAR:
     import debug_toolbar
 
     urlpatterns += [path('__debug__/', include(debug_toolbar.urls))]

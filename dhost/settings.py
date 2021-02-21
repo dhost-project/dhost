@@ -124,8 +124,8 @@ STATIC_ROOT = env('STATIC_ROOT', BASE_DIR / 'static')
 STATICFILES_DIRS = [BASE_DIR / 'dhost/static']
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = env('MEDIA_URL', '/media/')
+MEDIA_ROOT = env('MEDIA_ROOT', BASE_DIR / 'media')
 
 EMAIL_HOST = env('EMAIL_HOST', 'localhost')
 EMAIL_PORT = env('EMAIL_PORT', 1025)
@@ -180,8 +180,8 @@ if SENTRY_DSN:
     )
 
 # Debug-toolbar
-DEBUG_TOOLBAR = env_bool('DEBUG_TOOLBAR', False)
-if DEBUG_TOOLBAR:
+ENABLE_DEBUG_TOOLBAR = env_bool('DEBUG_TOOLBAR', False)
+if ENABLE_DEBUG_TOOLBAR:
     INSTALLED_APPS.append('debug_toolbar')
     MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
     INTERNAL_IPS = env_list('INTERNAL_IPS', '127.0.0.1')
@@ -192,4 +192,21 @@ if DEBUG_TOOLBAR:
 
     DEBUG_TOOLBAR_CONFIG = {
         'SHOW_TOOLBAR_CALLBACK': show_toolbar,
+    }
+
+# reCAPTCHA
+ENABLE_RECAPTCHA = env_bool('ENABLE_RECAPTCHA', False)
+if ENABLE_RECAPTCHA:
+    INSTALLED_APPS.append('captcha')
+    RECAPTCHA_PUBLIC_KEY = env('RECAPTCHA_PUBLIC_KEY' ,'6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI')
+    RECAPTCHA_PRIVATE_KEY = env('RECAPTCHA_PRIVATE_KEY' ,'6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe')
+    RECAPTCHA_USE_SSL = True
+
+    if DEBUG:
+        # silence the warning about the missing keys
+        SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
+
+    # changing the allauth signup form to use the captcha
+    ACCOUNT_FORMS = {
+        'signup': 'dhost.users.forms.CaptchaSignupForm',
     }
