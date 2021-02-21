@@ -14,7 +14,7 @@ def env(var, default=None):
 
 
 def env_bool(var, default=None):
-    return ast.literal_eval(env(var, default))
+    return ast.literal_eval(env(var, str(default)))
 
 
 def env_list(var, default=None, separator=','):
@@ -27,11 +27,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SITE_ID = env('SITE_ID', 1)
 
-DEBUG = env_bool('DEBUG', 'True')
+DEBUG = env_bool('DEBUG', True)
 
 SECRET_KEY = env('SECRET_KEY')
 if not SECRET_KEY and DEBUG:
-    warnings.warn('SECRET_KEY not configured, using a random temporary key.')
+    warnings.warn("SECRET_KEY not configured, using a random temporary key.")
     SECRET_KEY = get_random_secret_key()
 
 ALLOWED_HOSTS = env_list('ALLOWED_HOSTS', 'localhost,127.0.0.1')
@@ -40,22 +40,28 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.sessions',
     'django.contrib.sites',
+    'django.contrib.staticfiles',
     # Local apps
-    'dhost.users',
     'dhost.host',
+    'dhost.users',
     # External apps
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.bitbucket',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.gitlab',
+    'allauth.socialaccount.providers.google',
+    'fontawesome-free',
     'rest_framework',
     'rest_framework.authtoken',
-    'fontawesome-free',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # to serve staticfiles in production
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -110,8 +116,8 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-CSRF_COOKIE_SECURE = env_bool('CSRF_COOKIE_SECURE', 'False')
-SESSION_COOKIE_SECURE = env_bool('SESSION_COOKIE_SECURE', 'False')
+CSRF_COOKIE_SECURE = env_bool('CSRF_COOKIE_SECURE', False)
+SESSION_COOKIE_SECURE = env_bool('SESSION_COOKIE_SECURE', False)
 
 STATIC_URL = env('STATIC_URL', '/static/')
 STATIC_ROOT = env('STATIC_ROOT', BASE_DIR / 'static')
@@ -151,15 +157,6 @@ if REDIS_URL:
     SESSION_CACHE_ALIAS = 'default'
 
 # Allauth
-INSTALLED_APPS += [
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.github',
-    'allauth.socialaccount.providers.gitlab',
-    'allauth.socialaccount.providers.google',
-]
-
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
@@ -183,7 +180,7 @@ if SENTRY_DSN:
     )
 
 # Debug-toolbar
-DEBUG_TOOLBAR = env_bool('DEBUG_TOOLBAR', 'False')
+DEBUG_TOOLBAR = env_bool('DEBUG_TOOLBAR', False)
 if DEBUG_TOOLBAR:
     INSTALLED_APPS.append('debug_toolbar')
     MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
