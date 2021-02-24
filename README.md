@@ -1,4 +1,6 @@
-# dhost_django
+# DHost
+
+This is the back-end REST API for the DHost project.
 
 Techs:
 - Django
