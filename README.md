@@ -5,11 +5,14 @@ Techs:
 - REST
 - Docker
 - Sentry
-- Github CI
 - Heroku
 - Gunicorn
 - PostgreSQL
+
+Dev:
+- Github CI
 - Yapf
+- Editorconfig
 
 ### Docker
 
