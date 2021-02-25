@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'django_otp',
     'django_otp.plugins.otp_static',
     'django_otp.plugins.otp_totp',
-    'oauth2_provider',
     'rest_framework',
     'rest_framework.authtoken',
 ]
@@ -132,11 +131,8 @@ SERVER_EMAIL = env('SERVER_EMAIL', 'root@localhost')
 # REST
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated',],
-    'DEFAULT_AUTHENTICATION_CLASSES': ['oauth2_provider.contrib.rest_framework.OAuth2Authentication',],
+    'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.TokenAuthentication',],
 }
-
-# OAuth2
-OAUTH2_PROVIDER = {'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}}
 
 # Redis
 REDIS_URL = env('REDIS_URL')

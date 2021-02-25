@@ -2,8 +2,7 @@ from django.apps import apps
 from django.contrib import auth
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import PermissionsMixin
-from django.contrib.auth.models import UserManager
+from django.contrib.auth.models import PermissionsMixin, UserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.core.mail import send_mail
 from django.db import models
