@@ -1,7 +1,6 @@
-from django.urls import path, include
+from django.urls import include, path
 
-from .api.viewsets import UserList, UserDetails, GroupList
-
+from .views import GroupList, UserDetails, UserList
 
 urlpatterns = [
     path('users/', UserList.as_view()),

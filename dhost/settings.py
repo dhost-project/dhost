@@ -131,18 +131,12 @@ SERVER_EMAIL = env('SERVER_EMAIL', 'root@localhost')
 
 # REST
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-    ],
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated',],
+    'DEFAULT_AUTHENTICATION_CLASSES': ['oauth2_provider.contrib.rest_framework.OAuth2Authentication',],
 }
 
 # OAuth2
-OAUTH2_PROVIDER = {
-    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
-}
+OAUTH2_PROVIDER = {'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}}
 
 # Redis
 REDIS_URL = env('REDIS_URL')

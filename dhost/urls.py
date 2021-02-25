@@ -2,12 +2,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 
-from .core.views import home_view
-
 urlpatterns = [
-    path('', home_view, name='home'),
-    path('host/', include('dhost.host.urls')),
-    # api
     path('api/', include('dhost.users.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),

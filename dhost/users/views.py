@@ -1,9 +1,9 @@
-from rest_framework import permissions, generics
 from django.contrib.auth.models import Group
 from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, TokenHasScope
+from rest_framework import generics, permissions
 
-from dhost.users.api.serializers import UserSerializer, GroupSerializer
-from dhost.users.models import User
+from .models import User
+from .serializers import GroupSerializer, UserSerializer
 
 
 class UserList(generics.ListCreateAPIView):

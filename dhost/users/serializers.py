@@ -1,7 +1,7 @@
-from rest_framework import serializers
 from django.contrib.auth.models import Group
+from rest_framework import serializers
 
-from dhost.users.models import User
+from .models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -12,6 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class GroupSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Group
         fields = ['name']
