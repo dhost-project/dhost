@@ -38,9 +38,14 @@ Python virtual environment
 python3.8 -m venv venv
 ```
 
-Activate virtual environment
+Activate virtual environment (Linux)
 ```
 source venv/bin/activate
+```
+
+Activate virtual environment (Windows)
+```
+venv\Scripts\activate
 ```
 
 Install python libs
