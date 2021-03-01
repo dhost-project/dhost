@@ -2,6 +2,7 @@ from oauth2_provider.scopes import BaseScopes
 
 
 class SettingsScopes(BaseScopes):
+
     def get_all_scopes(self):
         return {
             'read': 'Full read scope',

@@ -1,10 +1,10 @@
 from django.contrib.auth.models import Group
-from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, TokenHasScope, OAuth2Authentication
+from oauth2_provider.contrib.rest_framework import OAuth2Authentication, TokenHasReadWriteScope, TokenHasScope
 from rest_framework import generics, permissions
 
 from .models import User
-from .serializers import GroupSerializer, UserSerializer
 from .permissions import IsAuthenticatedOrCreate
+from .serializers import GroupSerializer, UserSerializer
 
 
 class SignUp(generics.CreateAPIView):
