@@ -47,18 +47,22 @@ INSTALLED_APPS = [
     # Local apps
     'dhost.host',
     'dhost.users',
+    'dhost.users.oauth2',
     # External apps
     'django_otp',
     'django_otp.plugins.otp_static',
     'django_otp.plugins.otp_totp',
+    'oauth2_provider',
     'rest_framework',
-    'rest_framework.authtoken',
+    'rest_framework_social_oauth2',
+    'social_django',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -80,6 +84,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -128,11 +134,40 @@ EMAIL_PORT = env('EMAIL_PORT', 1025)
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', 'noreply@localhost')
 SERVER_EMAIL = env('SERVER_EMAIL', 'root@localhost')
 
+LOGIN_URL = '/admin/login/'
+
 # REST
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated',],
-    'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.TokenAuthentication',],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        'rest_framework_social_oauth2.authentication.SocialAuthentication',
+    ],
 }
+
+if DEBUG:
+    REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] += [
+        'rest_framework.authentication.SessionAuthentication',  # To keep the Browsable API
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+
+# OAuth2 provider
+SCOPES_BACKEND_CLASS = 'oauth2.scopes.SettingsScopes'
+OAUTH2_PROVIDER_APPLICATION_MODEL = 'oauth2.Application'
+# REFRESH_TOKEN_EXPIRE_SECONDS = env('REFRESH_TOKEN_EXPIRE_SECONDS')
+
+# Dhost social
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.github.GithubOAuth2',
+    'rest_framework_social_oauth2.backends.DjangoOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+DRFSO2_PROPRIETARY_BACKEND_NAME = env('DRFSO2_PROPRIETARY_BACKEND_NAME', 'Dhost')
+
+# Social auth
+SOCIAL_AUTH_GITHUB_KEY = env('SOCIAL_AUTH_GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = env('SOCIAL_AUTH_GITHUB_SECRET')
+# SOCIAL_AUTH_GITHUB_SCOPE = []
 
 # Redis
 REDIS_URL = env('REDIS_URL')

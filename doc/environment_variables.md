@@ -37,6 +37,9 @@ Note:
 | `STATIC_ROOT` | ❓ | `BASE_DIR / 'static'` | The absolute path to the directory where collectstatic will collect static files. More infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#static-root). |
 | `MEDIA_URL` | 🍪 | `/media/` | URL that handles the media served. More infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#media-url). |
 | `MEDIA_ROOT` | ❌ | `BASE_DIR / 'media'` | Absolute filesystem path to the directory that will hold user-uploaded files. More infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#media-root). |
+| `SOCIAL_AUTH_GITHUB_KEY` | ✅ | | Github OAuth2 client ID |
+| `SOCIAL_AUTH_GITHUB_SECRET` | ✅ | | Github OAuth2 client secret |
+| `DRFSO2_PROPRIETARY_BACKEND_NAME` | 🤷 | `Dhost` | |
 | `ENABLE_RECAPTCHA` | 🤷 | `False` | Enable the reCAPTCHA on forms. |
 | `RECAPTCHA_PUBLIC_KEY` | 🤷 | *dev key* | You need to create a Google reCAPTCHA V3 account [here](https://www.google.com/recaptcha/intro/index.html) to get the key. See [here](https://github.com/praekelt/django-recaptcha#installation) for more details. |
 | `RECAPTCHA_PRIVATE_KEY` | 🤷 | *dev key* | Same has for `RECAPTCHA_PUBLIC_KEY`. |
