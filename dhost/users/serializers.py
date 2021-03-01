@@ -8,7 +8,12 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name', 'groups']
+        fields = ['username', 'email', 'password']
+        write_only_fields = ['password']
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user
 
 
 class GroupSerializer(serializers.ModelSerializer):

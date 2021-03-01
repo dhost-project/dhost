@@ -1,9 +1,10 @@
 from django.urls import include, path
 
-from .views import GroupList, UserDetails, UserList
+from . import views
 
 urlpatterns = [
-    path('users/', UserList.as_view()),
-    path('users/<pk>/', UserDetails.as_view()),
-    path('groups/', GroupList.as_view()),
+    path('signup/', views.SignUp.as_view(), name='signup'),
+    path('users/', views.UserList.as_view()),
+    path('users/<pk>/', views.UserDetails.as_view()),
+    path('groups/', views.GroupList.as_view()),
 ]
