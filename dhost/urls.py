@@ -5,8 +5,9 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('u/', include('dhost.users.urls')),
+    path('github/', include('dhost.github.urls')),
     path('oauth2/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-    path('auth/', include('rest_framework_social_oauth2.urls')),
+    path('social/', include('social_django.urls', namespace='social')),
     # apps
     path('admin/', admin.site.urls),
 ]
