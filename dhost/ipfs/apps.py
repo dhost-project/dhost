@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class IpfsConfig(AppConfig):
-    name = 'ipfs'
+class IPFSConfig(AppConfig):
+    name = 'dhost.ipfs'
