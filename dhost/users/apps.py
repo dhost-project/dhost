@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 
 
-class AccountConfig(AppConfig):
+class UsersConfig(AppConfig):
     name = 'dhost.users'
+    app_label = 'users'

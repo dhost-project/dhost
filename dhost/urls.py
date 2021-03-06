@@ -4,18 +4,11 @@ from django.urls import include, path
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
+    path('o/', include('dhost.oauth2.urls', namespace='oauth2_provider')),
+    path('social/', include('social_django.urls', namespace='social')),
     path('u/', include('dhost.users.urls')),
-    path('oauth2/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-    path('auth/', include('rest_framework_social_oauth2.urls')),
-    # apps
     path('admin/', admin.site.urls),
 ]
-
-if settings.DEBUG:
-    urlpatterns += [
-        path('api-auth/', include('rest_framework.urls')),
-        path('token-auth/', obtain_auth_token, name='api_token_auth'),
-    ]
 
 if settings.ENABLE_DEBUG_TOOLBAR:
     import debug_toolbar
