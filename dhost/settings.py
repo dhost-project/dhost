@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Local apps
     'dhost.builds',
+    'dhost.dapps',
     'dhost.github',
     'dhost.ipfs',
     'dhost.users',

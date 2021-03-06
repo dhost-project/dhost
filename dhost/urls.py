@@ -4,7 +4,7 @@ from django.urls import include, path
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
-    path('o/', include('dhost.oauth2.urls', namespace='oauth2_provider')),
+    path('oauth2/', include('dhost.oauth2.urls', namespace='oauth2_provider')),
     path('social/', include('social_django.urls', namespace='social')),
     path('u/', include('dhost.users.urls')),
     path('admin/', admin.site.urls),
