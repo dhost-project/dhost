@@ -78,7 +78,6 @@ DEBUG=[True/False]
 DEBUG_TOOLBAR=[True/False]
 ALLOWED_HOSTS=[127.0.0.1,localhost]
 SECRET_KEY=[auto_generated for dev only]
-SENTRY_DSN=[sentry_dsn_url]
 ```
 
 ## Style
