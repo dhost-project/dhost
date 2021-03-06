@@ -45,17 +45,19 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
     # Local apps
-    'dhost.host',
+    'dhost.build',
+    'dhost.github',
+    'dhost.ipfs',
     'dhost.users',
-    'dhost.users.oauth2',
+    'dhost.oauth2',
     # External apps
     'django_otp',
     'django_otp.plugins.otp_static',
     'django_otp.plugins.otp_totp',
     'oauth2_provider',
     'rest_framework',
-    'rest_framework_social_oauth2',
     'social_django',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -122,7 +124,7 @@ CSRF_COOKIE_SECURE = env_bool('CSRF_COOKIE_SECURE', False)
 SESSION_COOKIE_SECURE = env_bool('SESSION_COOKIE_SECURE', False)
 
 STATIC_URL = env('STATIC_URL', '/static/')
-STATIC_ROOT = env('STATIC_ROOT', BASE_DIR / 'static')
+STATIC_ROOT = BASE_DIR / 'static'
 STATICFILES_DIRS = [BASE_DIR / 'dhost/static']
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -135,39 +137,45 @@ DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', 'noreply@localhost')
 SERVER_EMAIL = env('SERVER_EMAIL', 'root@localhost')
 
 LOGIN_URL = '/admin/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 # REST
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated',],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-        'rest_framework_social_oauth2.authentication.SocialAuthentication',
-    ],
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'],
+    'DEFAULT_AUTHENTICATION_CLASSES': ['oauth2_provider.contrib.rest_framework.OAuth2Authentication'],
 }
-
-if DEBUG:
-    REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] += [
-        'rest_framework.authentication.SessionAuthentication',  # To keep the Browsable API
-        'rest_framework.authentication.TokenAuthentication',
-    ]
 
 # OAuth2 provider
 SCOPES_BACKEND_CLASS = 'oauth2.scopes.SettingsScopes'
 OAUTH2_PROVIDER_APPLICATION_MODEL = 'oauth2.Application'
 # REFRESH_TOKEN_EXPIRE_SECONDS = env('REFRESH_TOKEN_EXPIRE_SECONDS')
 
-# Dhost social
+# Social auth
 AUTHENTICATION_BACKENDS = [
     'social_core.backends.github.GithubOAuth2',
-    'rest_framework_social_oauth2.backends.DjangoOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 ]
-DRFSO2_PROPRIETARY_BACKEND_NAME = env('DRFSO2_PROPRIETARY_BACKEND_NAME', 'Dhost')
 
-# Social auth
 SOCIAL_AUTH_GITHUB_KEY = env('SOCIAL_AUTH_GITHUB_KEY')
 SOCIAL_AUTH_GITHUB_SECRET = env('SOCIAL_AUTH_GITHUB_SECRET')
-# SOCIAL_AUTH_GITHUB_SCOPE = []
+
+# AWS S3
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_DEFAULT_ACL = env('AWS_DEFAULT_ACL', None)
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = env('AWS_S3_REGION_NAME', None)
+AWS_S3_CUSTOM_DOMAIN = env('AWS_S3_CUSTOM_DOMAIN', None)
+AWS_LOCATION = env('AWS_LOCATION', '')
+AWS_MEDIA_BUCKET_NAME = env('AWS_MEDIA_BUCKET_NAME')
+AWS_MEDIA_CUSTOM_DOMAIN = env('AWS_MEDIA_CUSTOM_DOMAIN')
+
+if AWS_STORAGE_BUCKET_NAME:
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+if AWS_MEDIA_BUCKET_NAME:
+    DEFAULT_FILE_STORAGE = 'dhost.core.storages.S3MediaStorage'
 
 # Redis
 REDIS_URL = env('REDIS_URL')
