@@ -1,16 +1,17 @@
 import os
 
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 
 def source_path():
-    return os.path.join(settings.MEDIAO_DIR, 'source')
+    return os.path.join(settings.MEDIA_ROOT, 'source')
 
 
 def bundle_path():
-    return os.path.join(settings.MEDIAO_DIR, 'bundle')
+    return os.path.join(settings.MEDIA_ROOT, 'bundle')
 
 
 class BuildOptions(models.Model):
@@ -21,14 +22,15 @@ class BuildOptions(models.Model):
         allow_files=False,
         allow_folders=True,
         max_length=1024,
-        help_text=_('Source folder'),
+        verbose_name=_('Source folder'),
     )
     command = models.CharField(
         _('build command'),
         max_length=2048,
+        blank=True,
         help_text=_('Command used during the build process.'),
     )
-    docker_container = models.CharField(
+    docker = models.CharField(
         max_length=128,
         blank=True,
         help_text=_('Container used for the build process'),
@@ -61,9 +63,11 @@ class Build(models.Model):
     )
     is_success = models.BooleanField(
         null=True,
+        blank=True,
         help_text=_('Based on the build return code'),
     )
     logs = models.TextField(
+        blank=True,
         help_text=_('Raw logs output of the build process'),
     )
     source = models.FilePathField(

@@ -4,7 +4,7 @@ from .models import Build, BuildOptions, EnvironmentVariable
 
 
 @admin.register(BuildOptions)
-class BuildOptions(admin.ModelAdmin):
+class BuildOptionsAdmin(admin.ModelAdmin):
     pass
 
 

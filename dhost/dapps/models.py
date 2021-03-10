@@ -22,6 +22,7 @@ class AbstractDapp(models.Model):
         related_query_name="%(class)ss",
         on_delete=models.CASCADE,
     )
+    slug = models.SlugField(unique=True, blank=True, null=True)
     url = models.CharField(_('URL'), max_length=2048, blank=True)
 
     class Statuses(models.TextChoices):
@@ -31,8 +32,8 @@ class AbstractDapp(models.Model):
           - BUILDING: In the process of building the bundle
           - BUILT: When the source is bundled
           - DEPLOYING: In the process of deploying
-          - STARTING: When the site is deployed but not yet reachable from
-            the web (404)
+          - STARTING: When the site is deployed but not yet reachable from the
+            web (404)
           - UP: When the site is deployed and reachable from the web (200)
           - UNAVAILABLE: When the site should be reachable but is not for a
             technical reason
@@ -54,7 +55,7 @@ class AbstractDapp(models.Model):
         default=Statuses.STOPED,
     )
 
-    created = models.DateTimeField(_('created'), auto_now_add=True)
+    created_at = models.DateTimeField(_('created'), default=timezone.now)
 
     class Meta:
         verbose_name = _('dapp')
@@ -63,6 +64,10 @@ class AbstractDapp(models.Model):
 
     def __str__(self):
         return self.name
+
+    def build(self):
+        """One of the function to overwrite when inheriting"""
+        raise Exception("The build process is not implemented.")
 
     def deploy(self):
         """One of the function to overwrite when inheriting"""
@@ -104,7 +109,7 @@ class Bundle(models.Model):
         allow_files=True,
         allow_folders=True,
     )
-    added = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
         verbose_name = _('bundle')

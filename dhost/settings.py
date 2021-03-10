@@ -134,12 +134,12 @@ CSRF_COOKIE_SECURE = env_bool('CSRF_COOKIE_SECURE', False)
 SESSION_COOKIE_SECURE = env_bool('SESSION_COOKIE_SECURE', False)
 
 STATIC_URL = env('STATIC_URL', '/static/')
-STATIC_ROOT = BASE_DIR / 'static'
-STATICFILES_DIRS = [BASE_DIR / 'dhost/static']
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'dhost/static')]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = env('MEDIA_URL', '/media/')
-MEDIA_ROOT = env('MEDIA_ROOT', BASE_DIR / 'media')
+MEDIA_ROOT = env('MEDIA_ROOT', os.path.join(BASE_DIR, 'media'))
 
 EMAIL_HOST = env('EMAIL_HOST', 'localhost')
 EMAIL_PORT = env('EMAIL_PORT', 1025)
@@ -248,7 +248,7 @@ if ENABLE_RECAPTCHA:
         # silence the warning about the missing keys
         SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 
-    # changing the allauth signup form to use the captcha
+    # changing the signup form to use the captcha
     ACCOUNT_FORMS = {
         'signup': 'dhost.users.forms.CaptchaSignupForm',
     }

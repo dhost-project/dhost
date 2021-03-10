@@ -2,7 +2,6 @@ from django.db import models
 
 
 class AbstractGit(models.Model):
-    dapp = models.ForeignKey('dapps.Dapp', on_delete=models.CASCADE)
     repo_name = models.CharField(max_length=1024)
     branch = models.CharField(max_length=1024, default='master')
     auto_deploy = models.BooleanField(default=False)

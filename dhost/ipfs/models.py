@@ -7,7 +7,7 @@ from dhost.dapps.models import AbstractDeployment, Dapp
 class IPFSDapp(Dapp):
     """Dapp raidy to be deployed to the IPFS network"""
 
-    hash = models.CharField(max_length=128)
+    hash = models.CharField(_('IPFS hash'), max_length=128, blank=True)
 
     def deploy(self):
         """Create an IPFSDeployment object and deploy it"""
@@ -24,8 +24,9 @@ class IPFSDeployment(AbstractDeployment):
         related_name='deployments',
         related_query_name='deployments',
         on_delete=models.CASCADE,
+        verbose_name=_('dapp'),
     )
-    hash = models.CharField(_("IPFS hash"), max_length=128)
+    hash = models.CharField(_('IPFS hash'), max_length=128, blank=True)
 
     def __str__(self):
         return self.hash
