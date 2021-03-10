@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Dapp
+
+
+@admin.register(Dapp)
+class DappAdmin(admin.ModelAdmin):
+    pass
