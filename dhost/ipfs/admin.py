@@ -1,8 +1,13 @@
 from django.contrib import admin
 
-from .models import File
+from .models import IPFSDapp, IPFSDeployment
 
 
-@admin.register(File)
-class FileAdmin(admin.ModelAdmin):
+@admin.register(IPFSDapp)
+class IPFSDappAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(IPFSDeployment)
+class IPFSDeploymentAdmin(admin.ModelAdmin):
     pass

@@ -1,6 +1,8 @@
 from django.contrib.auth.models import Group
 from django.views.generic import TemplateView
-from oauth2_provider.contrib.rest_framework import OAuth2Authentication, TokenHasReadWriteScope, TokenHasScope
+from oauth2_provider.contrib.rest_framework import (
+    OAuth2Authentication, TokenHasReadWriteScope, TokenHasScope
+)
 from rest_framework import generics, permissions
 
 from .models import User
