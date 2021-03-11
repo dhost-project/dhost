@@ -1,9 +1,12 @@
 import os
+import uuid
 
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+
+from .docker import DockerBuild
 
 
 def source_path():
@@ -17,9 +20,10 @@ def bundle_path():
 class BuildOptions(models.Model):
     source = models.FilePathField(
         null=True,
+        blank=True,
         path=source_path,
         recursive=True,
-        allow_files=False,
+        allow_files=True,
         allow_folders=True,
         max_length=1024,
         verbose_name=_('Source folder'),
@@ -40,26 +44,61 @@ class BuildOptions(models.Model):
         verbose_name = _('build options')
         verbose_name_plural = _('builds options')
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # TODO REMOVE, ONLY for testing purposes
+        # will build the bundle whenever the build options are saved
+        self.build()
+
+    def __str__(self):
+        return '{} ({})'.format(self.docker, self.command)
+
     def build(self):
         """Create a `Build` object and start the building process from the
         source in the Docker container specified in `docker_container` and with
         the command
         """
+        build = Build(options=self, source_path=self.source)
+        build.save()
+        is_success, bundle = build.build()
+        return is_success, bundle
+
+
+class Bundle(models.Model):
+    """Bundled web app raidy for deployment"""
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    folder = models.FilePathField(
+        _('folder'),
+        null=True,
+        blank=True,
+        path=bundle_path,
+        allow_files=True,
+        allow_folders=True,
+    )
+    created_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        verbose_name = _('bundle')
+        verbose_name_plural = _('bundles')
+
+    def __str__(self):
+        return 'bundl:{}'.format(self.id.hex[:7])
+
+    def delete(self):
+        # TODO delete bundle folder when deleting the object
         pass
 
 
 class Build(models.Model):
     """A single build instance"""
 
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     options = models.ForeignKey(
         BuildOptions,
         on_delete=models.CASCADE,
         related_name='builds',
         related_query_name='builds',
-    )
-    number = models.PositiveIntegerField(
-        default=1,
-        help_text=_('Build number'),
     )
     is_success = models.BooleanField(
         null=True,
@@ -70,8 +109,9 @@ class Build(models.Model):
         blank=True,
         help_text=_('Raw logs output of the build process'),
     )
-    source = models.FilePathField(
+    source_path = models.FilePathField(
         null=True,
+        blank=True,
         path=source_path,
         recursive=True,
         allow_files=False,
@@ -79,47 +119,79 @@ class Build(models.Model):
         max_length=1024,
         help_text=_('Source folder'),
     )
-    bundle = models.FilePathField(
+    bundle = models.OneToOneField(
+        Bundle,
+        on_delete=models.SET_NULL,
         null=True,
-        path=bundle_path,
-        recursive=True,
-        allow_files=False,
-        allow_folders=True,
-        max_length=1024,
-        help_text=_('Bundle folder')
+        blank=True,
+        verbose_name=_('bundle'),
     )
 
     start = models.DateTimeField(default=timezone.now)
-    end = models.DateTimeField(null=True)
+    end = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         verbose_name = _('build')
         verbose_name_plural = _('builds')
-        unique_together = [['options', 'number']]
-
-    def save(self, *args, **kwargs):
-        if not self.id and not self.number:
-            self.number = 2
-        super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
-        # TODO remove both source and bundle when deleting a build if and only
-        # if unused in BuildOptions, this woul mean that it's not the current
-        # build source, and also check if unused in Dapp
+        # TODO remove source when deleting a build if and only if unused in
+        # `BuildOptions`, this would mean that it's not the current build
+        # source
         super().delete(*args, **kwargs)
 
     def __str__(self):
-        return self.number
-
-    @property
-    def is_deployed(self):
-        pass
+        return 'build:{}'.format(self.id.hex[:7])
 
     def build(self):
-        pass
+        """
+        return:
+          - BOOL: success status, True if succeed
+          - BUNDLE (object): if succeed then the Bundle object is created
 
-    def stop_building(self):
-        pass
+        Start the build process, when it's done and if the build succeed
+        create a `Bundle` object containing the static files generated during
+        the build process
+        """
+        bundle_path_var = self.start_build()
+        if self.is_success:
+            bundle = Bundle.objects.create(folder=bundle_path_var)
+            bundle.save()
+            self.bundle = bundle
+            self.save()
+        return self.is_success, self.bundle
+
+    def start_build(self):
+        """
+        return:
+          - STR: bundle_path, path to the bundle folder
+
+        Build the bundle using the class DockerBuild and return the status
+        (is success or not), the bundle path and the logs
+        """
+        container = self.options.docker
+        source_path = self.source_path
+        command = self.options.command
+        self.start = timezone.now()
+
+        # Generate dict of the environment variables
+        envars = {}
+        for var_object in self.options.envars.all():
+            envars[var_object.variable] = var_object.value
+
+        docker_build = DockerBuild(
+            container=container,
+            source_path=source_path,
+            command=command,
+            envars=envars,
+        )
+        is_success, logs, bundle_path = docker_build.build()
+
+        self.is_success = is_success
+        self.logs = logs
+        self.end = timezone.now()
+        self.save()
+        return bundle_path
 
 
 class EnvironmentVariable(models.Model):
@@ -136,4 +208,4 @@ class EnvironmentVariable(models.Model):
         verbose_name_plural = _('environment variables')
 
     def __str__(self):
-        return self.variable
+        return '{}={}'.format(self.variable, self.value)

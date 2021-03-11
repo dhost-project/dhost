@@ -1,9 +1,11 @@
+import uuid
+
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from dhost.builds.models import BuildOptions
+from dhost.builds.models import BuildOptions, Bundle
 
 
 class AbstractDapp(models.Model):
@@ -65,10 +67,6 @@ class AbstractDapp(models.Model):
     def __str__(self):
         return self.name
 
-    def build(self):
-        """One of the function to overwrite when inheriting"""
-        raise Exception("The build process is not implemented.")
-
     def deploy(self):
         """One of the function to overwrite when inheriting"""
         raise Exception("The deployment process is not implemented.")
@@ -83,43 +81,10 @@ class Dapp(AbstractDapp, BuildOptions):
         pass
 
 
-class Bundle(models.Model):
-    """Bundled web app raidy for deployment"""
-
-    dapp = models.ForeignKey(
-        Dapp,
-        on_delete=models.CASCADE,
-        related_name='bundles',
-        related_query_name='bundles',
-        verbose_name=_('dapp'),
-    )
-    build = models.ForeignKey(
-        'builds.Build',
-        on_delete=models.SET_NULL,
-        null=True,
-        related_name='bundles',
-        related_query_name='bundles',
-        blank=True,
-        verbose_name=_('build'),
-    )
-    folder = models.FilePathField(
-        _('folder'),
-        null=True,
-        blank=True,
-        allow_files=True,
-        allow_folders=True,
-    )
-    created_at = models.DateTimeField(default=timezone.now)
-
-    class Meta:
-        verbose_name = _('bundle')
-        verbose_name_plural = _('bundles')
-
-
 class AbstractDeployment(models.Model):
     """Model representing a single deployment process"""
 
-    dapp = None
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     bundle = models.ForeignKey(
         Bundle,
         related_name='deployments',
@@ -141,8 +106,8 @@ class AbstractDeployment(models.Model):
         default=Statuses.STOPED,
     )
 
-    start = models.DateTimeField(auto_now_add=True)
-    end = models.DateTimeField(null=True)
+    start = models.DateTimeField(default=timezone.now)
+    end = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         verbose_name = _('deployment')
@@ -150,7 +115,4 @@ class AbstractDeployment(models.Model):
         abstract = True
 
     def __str__(self):
-        if self.bundle:
-            return str(self.bundle)
-        else:
-            return str(self.dapp)
+        return 'dplmt:{}'.format(self.id.hex[:7])

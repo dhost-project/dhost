@@ -9,7 +9,11 @@ class IPFSDapp(Dapp):
 
     hash = models.CharField(_('IPFS hash'), max_length=128, blank=True)
 
-    def deploy(self):
+    class Meta(Dapp.Meta):
+        verbose_name = _('IPFS Dapp')
+        verbose_name_plural = _('IPFS Dapps')
+
+    def deploy(self, bundle):
         """Create an IPFSDeployment object and deploy it"""
         pass
 
@@ -19,18 +23,12 @@ class IPFSDapp(Dapp):
 
 
 class IPFSDeployment(AbstractDeployment):
-    dapp = models.ForeignKey(
-        IPFSDapp,
-        related_name='deployments',
-        related_query_name='deployments',
-        on_delete=models.CASCADE,
-        verbose_name=_('dapp'),
-    )
     hash = models.CharField(_('IPFS hash'), max_length=128, blank=True)
 
-    def __str__(self):
-        return self.hash
+    class Meta(AbstractDeployment.Meta):
+        verbose_name = _('IPFS Deployment')
+        verbose_name_plural = _('IPFS Deployments')
 
-    def delete(self):
+    def delete(self, *args, **kwargs):
         # TODO remove from IPFS
-        pass
+        super().delete(*args, **kwargs)
