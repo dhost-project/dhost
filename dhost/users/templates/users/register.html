@@ -1,0 +1,14 @@
+{% extends "users/base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<p>Already have an account? Then please <a href="{% url 'login' %}">sign in</a>.</p>
+
+<form method="POST" id="form_register">
+  {% csrf_token %}
+  {{ form }}
+  <button class="btn btn-raised btn-primary" type="submit">{% trans "Sign Up" %}</button>
+</form>
+
+{% endblock %}

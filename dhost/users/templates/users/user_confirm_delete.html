@@ -1,0 +1,13 @@
+{% extends "users/base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<p>Are you sure you want to permanently delete your account ? <a href="{% url 'settings' %}">settings</a>.</p>
+
+<form method="POST" id="form_register">
+  {% csrf_token %}
+  <button class="btn btn-raised btn-primary" type="submit">{% trans "Delete account" %}</button>
+</form>
+
+{% endblock %}
