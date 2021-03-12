@@ -61,6 +61,8 @@ INSTALLED_APPS = [
     'storages',
 ]
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -146,9 +148,10 @@ EMAIL_PORT = env('EMAIL_PORT', 1025)
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', 'noreply@localhost')
 SERVER_EMAIL = env('SERVER_EMAIL', 'root@localhost')
 
-LOGIN_URL = '/admin/login/'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'settings'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'login'
 
 # REST
 REST_FRAMEWORK = {
