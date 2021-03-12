@@ -4,7 +4,6 @@ from django.contrib.auth import REDIRECT_FIELD_NAME, get_user_model
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render, resolve_url
@@ -14,8 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
-from django.views.generic.edit import DeleteView, FormView
-from django.views.generic.base import TemplateView
+from django.views.generic.edit import FormView
 
 from .forms import SettingsForm, SignupForm
 
@@ -66,13 +64,16 @@ class SignupView(auth_views.SuccessURLAllowedHostsMixin, FormView):
     redirect_field_name = REDIRECT_FIELD_NAME
     template_name = 'users/register.html'
     redirect_authenticated_user = False
-    extra_context = {'title': _('Register')}
+    extra_context = None
 
     @method_decorator(sensitive_post_parameters())
     @method_decorator(csrf_protect)
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
-        if self.redirect_authenticated_user and self.request.user.is_authenticated:
+        if (
+            self.redirect_authenticated_user
+            and self.request.user.is_authenticated
+        ):
             redirect_to = self.get_success_url()
             if redirect_to == self.request.path:
                 raise ValueError(
@@ -150,7 +151,7 @@ def settings_view(request):
     return render(
         request=request,
         template_name='users/settings.html',
-        context={'title': _('Settings'), 'form': form,},
+        context={'title': _('Settings'), 'form': form},
     )
 
 

@@ -1,8 +1,8 @@
 from django.contrib.auth.models import Group
 from oauth2_provider.contrib.rest_framework import (
-    OAuth2Authentication, TokenHasReadWriteScope, TokenHasScope
+    OAuth2Authentication, TokenHasScope
 )
-from rest_framework import generics, permissions
+from rest_framework import generics
 
 from ..models import User
 from .serializers import GroupSerializer, UserSerializer

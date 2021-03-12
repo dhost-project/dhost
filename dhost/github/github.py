@@ -17,7 +17,8 @@ class GithubAPI:
 
     def _get_social(self):
         try:
-            self.social = user.social_auth.get(provider='github')
+            self.social = self.user.social_auth.get(provider='github')
+        # TODO Do not use bare 'except'
         except:
             raise Exception("User doesn't have github account linked.")
         else:
