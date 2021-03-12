@@ -5,7 +5,9 @@ Create a superuser with:
 ./manage.py createsuperuser
 ```
 
-## OAuth2 for back-end of the app server
+## OAuth2 Authorization code flow
+
+The OAuth2 flow used for the dashboard web client.
 
 To create an app go to the admin interface : `http://localhost:8000/admin/oauth2/application/add/`.
 
@@ -71,3 +73,18 @@ To learn more about OAuth2 visit:
 
 * `https://www.oauth.com/`
 * `https://aaronparecki.com/oauth-2-simplified/`
+
+## OAuth2 ROPC
+
+The OAuth2 flow used for the CLI app.
+
+* Client id: `test` (just for this example)
+* Client Type: public
+* Authorization Grant Type: Resource owner password-based
+* Redirect uris: `Empty`
+
+With the user credentials the CLI will be able to call:
+```
+curl -X POST -H "Cache-Control: no-cache" -H "Content-Type: application/x-www-form-urlencoded" "http://localhost:8000/oauth2/token/" -d "client_id=test" -d "username=admin" -d "password=admin" -d "grant_type=password"
+```
+

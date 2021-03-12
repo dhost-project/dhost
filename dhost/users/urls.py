@@ -15,22 +15,22 @@ urlpatterns = [
     path('signup/', views.SignupView.as_view(), name='signup'),
     path('logout/', views.LogoutView.as_view(), name='logout'),
     path(
-        'password_change/',
+        'password/change/',
         views.PasswordChangeView.as_view(),
         name='password_change',
     ),
     path(
-        'password_change/done/',
+        'password/change/done/',
         views.PasswordChangeDoneView.as_view(),
         name='password_change_done',
     ),
     path(
-        'password_reset/',
+        'password/reset/',
         views.PasswordResetView.as_view(),
         name='password_reset',
     ),
     path(
-        'password_reset/done/',
+        'password/reset/done/',
         views.PasswordResetDoneView.as_view(),
         name='password_reset_done',
     ),

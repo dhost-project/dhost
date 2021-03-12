@@ -15,6 +15,7 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic.edit import DeleteView, FormView
+from django.views.generic.base import TemplateView
 
 from .forms import SettingsForm, SignupForm
 
