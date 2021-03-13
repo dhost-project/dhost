@@ -9,8 +9,8 @@ from django.utils.translation import gettext_lazy as _
 
 class User(AbstractBaseUser, PermissionsMixin):
     """
-    User class implementing a fully featured User model with
-    admin-compliant permissions.
+    User class implementing a fully featured User model with admin-compliant
+    permissions.
 
     Username and password are required. Other fields are optional.
     """

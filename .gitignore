@@ -129,6 +129,7 @@ dmypy.json
 .pyre/
 
 /static/
+/staticfiles/
 db.sqlite3
 /media/
 
