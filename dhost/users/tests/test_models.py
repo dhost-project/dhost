@@ -3,8 +3,7 @@ from unittest import mock
 from django.conf.global_settings import PASSWORD_HASHERS
 from django.contrib.auth import authenticate, get_user, get_user_model
 from django.contrib.auth.hashers import get_hasher
-from django.contrib.auth.models import AnonymousUser, Group, Permission
-from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import AnonymousUser
 from django.core import mail
 from django.db import IntegrityError
 from django.http import HttpRequest

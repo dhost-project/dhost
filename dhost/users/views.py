@@ -6,18 +6,29 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, render, resolve_url
+from django.shortcuts import resolve_url
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
+from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 
-from .forms import SettingsForm, SignupForm
+from .forms import AccountSettingsForm, SignupForm
 
 User = get_user_model()
+
+
+class TitleMixin:
+    extra_context = None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'title': self.title, **(self.extra_context or {})})
+        return context
 
 
 class LoginView(auth_views.LoginView):
@@ -25,6 +36,7 @@ class LoginView(auth_views.LoginView):
 
 
 class LogoutView(auth_views.LogoutView):
+    # TODO logout with POST
     template_name = 'users/logged_out.html'
 
 
@@ -54,7 +66,7 @@ class PasswordChangeDoneView(auth_views.PasswordChangeDoneView):
     template_name = 'users/password_change_done.html'
 
 
-class SignupView(auth_views.SuccessURLAllowedHostsMixin, FormView):
+class SignupView(TitleMixin, auth_views.SuccessURLAllowedHostsMixin, FormView):
     """
     Display the registration form and handle the register action.
     """
@@ -65,6 +77,7 @@ class SignupView(auth_views.SuccessURLAllowedHostsMixin, FormView):
     template_name = 'users/register.html'
     redirect_authenticated_user = False
     extra_context = None
+    title = _('Sign up')
 
     @method_decorator(sensitive_post_parameters())
     @method_decorator(csrf_protect)
@@ -128,44 +141,66 @@ class SignupView(auth_views.SuccessURLAllowedHostsMixin, FormView):
         return context
 
 
-@login_required
-def settings_view(request):
-    if request.method == 'POST':
-        form = SettingsForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            messages.add_message(
-                request,
-                messages.SUCCESS,
-                'Account successfully updated',
-            )
-        else:
-            messages.add_message(
-                request,
-                messages.ERROR,
-                'An error occured, please try again later',
-            )
-    else:
-        form = SettingsForm(instance=request.user)
-    return render(
-        request=request,
-        template_name='users/settings.html',
-        context={'title': _('Settings'), 'form': form},
-    )
+class AccountSettingsView(TitleMixin, FormView):
+    template_name = 'users/account_settings.html'
+    form_class = AccountSettingsForm
+    # TODO disable redirect to self
+    success_url = reverse_lazy('account_settings')
+    title = _('Account settings')
+
+    @method_decorator(sensitive_post_parameters())
+    @method_decorator(csrf_protect)
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['instance'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        form.save()
+        messages.add_message(
+            self.request,
+            messages.SUCCESS,
+            'Account successfully updated',
+        )
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.add_message(
+            self.request,
+            messages.SUCCESS,
+            'An error occured, please try again later',
+        )
+        return super().form_invalid(form)
 
 
-@login_required
-def delete_account(request):
-    if request.method == 'POST':
-        user = User.objects.get(id=request.user.id)
+class AccountDeleteView(TitleMixin, TemplateView):
+    template_name = 'users/account_delete.html'
+    success_url = reverse_lazy('account_delete_done')
+    title = _('Delete account')
+
+    @method_decorator(csrf_protect)
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        """
+        Delete the user's account on a POST
+        """
+        user = request.user
         user.delete()
         messages.add_message(
             request,
             messages.SUCCESS,
             'Account successfully deleted',
         )
-        return redirect('home')
-    return render(
-        request=request,
-        template_name='users/user_confirm_delete.html',
-    )
+        return HttpResponseRedirect(str(self.success_url))
+
+
+class AccountDeleteDoneView(TitleMixin, TemplateView):
+    template_name = 'users/account_delete_done.html'
+    title = _('Delete account successful')

@@ -149,7 +149,7 @@ DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', 'noreply@localhost')
 SERVER_EMAIL = env('SERVER_EMAIL', 'root@localhost')
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'settings'
+LOGIN_REDIRECT_URL = 'account_settings'
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = 'login'
 
@@ -222,7 +222,7 @@ if SENTRY_DSN:
     )
 
 # Debug-toolbar
-ENABLE_DEBUG_TOOLBAR = env_bool('DEBUG_TOOLBAR', False)
+ENABLE_DEBUG_TOOLBAR = env_bool('ENABLE_DEBUG_TOOLBAR', False)
 if ENABLE_DEBUG_TOOLBAR:
     INSTALLED_APPS.append('debug_toolbar')
     MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')

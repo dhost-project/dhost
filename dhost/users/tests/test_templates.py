@@ -1,22 +1,20 @@
-from datetime import date
-
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.test import RequestFactory, TestCase, override_settings
+from django.test import RequestFactory, TestCase, override_settings, tag
 from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode
 
 from ..models import User
 from ..views import (
-    PasswordChangeDoneView, PasswordChangeView, PasswordResetCompleteView,
-    PasswordResetDoneView, PasswordResetView
+    AccountDeleteDoneView, AccountDeleteView, LoginView, PasswordChangeDoneView,
+    PasswordChangeView, PasswordResetCompleteView, PasswordResetDoneView,
+    PasswordResetView, SignupView
 )
 from .client import PasswordResetConfirmClient
 
 
 @override_settings(ROOT_URLCONF='dhost.users.urls')
-class AuthTemplateTests(TestCase):
+class UsersTemplateTests(TestCase):
     request_factory = RequestFactory()
 
     @classmethod
@@ -27,6 +25,7 @@ class AuthTemplateTests(TestCase):
         request.user = user
         cls.user, cls.request = user, request
 
+    @tag('core')
     def test_password_reset_view(self):
         response = PasswordResetView.as_view(success_url='dummy/')(self.request)
         self.assertContains(response, 'Password reset')
@@ -48,6 +47,7 @@ class AuthTemplateTests(TestCase):
         response = client.get(url)
         self.assertContains(response, 'Password reset unsuccessful')
 
+    @tag('core')
     def test_password_reset_confirm_view_valid_token(self):
         # PasswordResetConfirmView valid token
         client = PasswordResetConfirmClient()
@@ -81,3 +81,20 @@ class AuthTemplateTests(TestCase):
     def test_password_change_done_view(self):
         response = PasswordChangeDoneView.as_view()(self.request)
         self.assertContains(response, 'Password change successful')
+
+    def test_signup_view(self):
+        response = SignupView.as_view()(self.request)
+        self.assertContains(response, 'Sign up')
+
+    def test_login_view(self):
+        pass
+        #response = LoginView.as_view()(self.request)
+        #self.assertContains(response, 'Log in')
+
+    def test_account_delete_view(self):
+        response = AccountDeleteView.as_view()(self.request)
+        self.assertContains(response, 'Delete account')
+
+    def test_account_delete_done_view(self):
+        response = AccountDeleteDoneView.as_view()(self.request)
+        self.assertContains(response, 'Delete account successful')

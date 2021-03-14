@@ -1,6 +1,8 @@
 {% extends "users/base.html" %}
 {% load i18n static %}
 
+{% block content %}
+
 {% if form.non_field_errors %}
 {% for error in form.non_field_errors %}
 <p class="errornote">
@@ -20,6 +22,8 @@
   </p>
   {% endif %}
 
+  <p>Don't have an account? You can <a href="{% url 'signup' %}">register now</a>.</p>
+
   <button class="btn btn-primary mb-2">
     <a href="{% url 'social:begin' 'github' %}">Login with Github</a>
   </button>
@@ -34,7 +38,7 @@
       {{ form.password.label_tag }} {{ form.password }}
       <input type="hidden" name="next" value="{{ next }}">
     </div>
-    {% url 'admin_password_reset' as password_reset_url %}
+    {% url 'password_reset' as password_reset_url %}
     {% if password_reset_url %}
     <div class="password-reset-link">
       <a href="{{ password_reset_url }}">{% translate 'Forgotten your password or username?' %}</a>
@@ -46,4 +50,5 @@
   </form>
 
 </div>
+
 {% endblock %}
