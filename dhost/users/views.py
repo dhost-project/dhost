@@ -74,7 +74,7 @@ class SignupView(TitleMixin, auth_views.SuccessURLAllowedHostsMixin, FormView):
     authentication_form = None
     next_page = None
     redirect_field_name = REDIRECT_FIELD_NAME
-    template_name = 'users/register.html'
+    template_name = 'users/signup.html'
     redirect_authenticated_user = False
     extra_context = None
     title = _('Sign up')
@@ -144,7 +144,6 @@ class SignupView(TitleMixin, auth_views.SuccessURLAllowedHostsMixin, FormView):
 class AccountSettingsView(TitleMixin, FormView):
     template_name = 'users/account_settings.html'
     form_class = AccountSettingsForm
-    # TODO disable redirect to self
     success_url = reverse_lazy('account_settings')
     title = _('Account settings')
 

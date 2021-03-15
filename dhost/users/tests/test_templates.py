@@ -88,8 +88,8 @@ class UsersTemplateTests(TestCase):
 
     def test_login_view(self):
         pass
-        #response = LoginView.as_view()(self.request)
-        #self.assertContains(response, 'Log in')
+        # response = LoginView.as_view()(self.request)
+        # self.assertContains(response, 'Log in')
 
     def test_account_delete_view(self):
         response = AccountDeleteView.as_view()(self.request)
