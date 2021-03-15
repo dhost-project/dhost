@@ -195,3 +195,9 @@ class AccountSettingsFormTest(TestDataMixin, TestCase):
         form = AccountSettingsForm(data, instance=self.u1)
         self.assertTrue(form.is_valid())
         self.assertEqual(form.cleaned_data['username'], data['username'])
+
+    def test_username_field_autocapitalize_none(self):
+        form = AccountSettingsForm()
+        self.assertEqual(
+            form.fields['username'].widget.attrs.get('autocapitalize'), 'none'
+        )
