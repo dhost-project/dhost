@@ -84,7 +84,9 @@ Flake8 is used has linter for code quality, to use it run:
 flake8 dhost
 ```
 
-There is also a pre-commit hooks, to run it:
+There is also a pre-commit hooks, simply commit or use:
 ```
 pre-commit run --all-files
 ```
+
+Learn more about it [here](https://pre-commit.com/)
