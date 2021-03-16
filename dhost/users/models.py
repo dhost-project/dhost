@@ -6,6 +6,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from .utils.avatar import avatar_generator
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     """
@@ -56,6 +58,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
+
+    def save(self, *args, **kwargs):
+        if not self.avatar:
+            # if the avatar doesn't exist it will be generated from a hash of
+            # the user's `USERNAME_FIELD`
+            # to 're-generate' the avatar simply remove it and save the user
+            self.avatar = avatar_generator(self.__dict__[self.USERNAME_FIELD])
+        return super().save(*args, **kwargs)
 
     def clean(self):
         super().clean()
