@@ -4,9 +4,7 @@ from . import views
 from .api import views as api_views
 
 apipatterns = [
-    path('users/', api_views.UserList.as_view()),
     path('users/<pk>/', api_views.UserDetails.as_view()),
-    path('groups/', api_views.GroupList.as_view()),
 ]
 
 urlpatterns = [

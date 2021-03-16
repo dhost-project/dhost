@@ -85,6 +85,13 @@ flake8 dhost
 ```
 
 There is also a pre-commit hooks, simply commit or use:
+
+Install it with:
+```
+pre-commit install
+```
+
+And run it with:
 ```
 pre-commit run --all-files
 ```
