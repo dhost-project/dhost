@@ -19,7 +19,7 @@ class GithubAPI:
         try:
             self.social = self.user.social_auth.get(provider='github')
         # TODO Do not use bare 'except'
-        except:
+        except:  # noqa
             raise Exception("User doesn't have github account linked.")
         else:
             self.github_name = self.social['login']

@@ -6,7 +6,7 @@ from django.utils.http import urlsafe_base64_encode
 
 from ..models import User
 from ..views import (
-    AccountDeleteDoneView, AccountDeleteView, LoginView, PasswordChangeDoneView,
+    AccountDeleteDoneView, AccountDeleteView, PasswordChangeDoneView,
     PasswordChangeView, PasswordResetCompleteView, PasswordResetDoneView,
     PasswordResetView, SignupView
 )
@@ -75,7 +75,7 @@ class UsersTemplateTests(TestCase):
 
     def test_password_reset_change_view(self):
         response = PasswordChangeView.as_view(success_url='dummy/'
-                                             )(self.request)
+                                             )(self.request)  # noqa
         self.assertContains(response, 'Password change')
 
     def test_password_change_done_view(self):

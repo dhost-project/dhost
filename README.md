@@ -81,5 +81,10 @@ There is also an editorconfig file (`.editorconfig`) that can be used with your 
 
 Flake8 is used has linter for code quality, to use it run:
 ```
-flake8 dhost --max-line-length 119 --per-file-ignores="__init__.py:F401" --extend-exclude "**/migrations/*"
+flake8 dhost
+```
+
+There is also a pre-commit hooks, to run it:
+```
+pre-commit run --all-files
 ```

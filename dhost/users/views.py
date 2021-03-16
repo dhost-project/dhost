@@ -91,7 +91,8 @@ class SignupView(TitleMixin, auth_views.SuccessURLAllowedHostsMixin, FormView):
             if redirect_to == self.request.path:
                 raise ValueError(
                     "Redirection loop for authenticated user detected. Check "
-                    "that your LOGIN_REDIRECT_URL doesn't point to a login page."
+                    "that your LOGIN_REDIRECT_URL doesn't point to a login "
+                    "page."
                 )
             return HttpResponseRedirect(redirect_to)
         return super().dispatch(request, *args, **kwargs)

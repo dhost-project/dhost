@@ -150,7 +150,7 @@ class SignupFormTest(TestDataMixin, TestCase):
             form['password2'].errors
         )
         self.assertIn(
-            'This password is too short. It must contain at least 8 characters.',
+            'This password is too short. It must contain at least 8 characters',
             form['password2'].errors
         )
 

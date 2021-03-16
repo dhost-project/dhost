@@ -11,4 +11,3 @@ RUN pip install -r requirements.txt
 COPY . /app/
 
 CMD ["gunicorn", "--bind", ":8000", "dhost.asgi:application", "--workers", "4", "--worker-class", "uvicorn.workers.UvicornWorker"]
-
