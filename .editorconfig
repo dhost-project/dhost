@@ -35,3 +35,5 @@ indent_size = 2
 [*.json]
 indent_size = 2
 
+[*.po]
+max_line_length = 79
