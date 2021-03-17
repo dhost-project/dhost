@@ -79,4 +79,4 @@ class User(AbstractBaseUser, PermissionsMixin):
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
     def generate_avatar(self):
-        self.avatar = avatar_generator(self.__dict__[self.USERNAME_FIELD])
+        self.avatar = avatar_generator(self.username)

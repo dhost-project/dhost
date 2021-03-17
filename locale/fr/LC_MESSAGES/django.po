@@ -359,8 +359,7 @@ msgid "Forgotten your password or username?"
 msgstr "Mot de passe ou nom d'utilisateur oublié ?"
 
 #: dhost/users/templates/users/login.html:48
-#: dhost/users/templates/users/password_reset_complete.html:8
-msgid "Log in"
+msgid "Login"
 msgstr "Connexion"
 
 #: dhost/users/templates/users/password_change_done.html:5
@@ -393,6 +392,10 @@ msgstr "Changer mon mot de passe"
 msgid "Your password has been set.  You may go ahead and log in now."
 msgstr ""
 "Votre mot de passe a été mis a jour. Vous pouvez désormais vous connecter."
+
+#: dhost/users/templates/users/password_reset_complete.html:8
+msgid "Log in"
+msgstr "Connexion"
 
 #: dhost/users/templates/users/password_reset_confirm.html:8
 msgid ""
@@ -451,7 +454,7 @@ msgstr "Adresse mail:"
 msgid "Reset my password"
 msgstr "Réinitialiser mon mot de passe"
 
-#: dhost/users/templates/users/signup.html:11
+#: dhost/users/templates/users/signup.html:15
 msgid "Sign Up"
 msgstr "Inscription"
 

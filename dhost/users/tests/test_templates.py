@@ -7,7 +7,7 @@ from django.utils.http import urlsafe_base64_encode
 
 from ..models import User
 from ..views import (
-    AccountDeleteDoneView, AccountDeleteView, PasswordChangeDoneView,
+    AccountDeleteDoneView, AccountDeleteView, LoginView, PasswordChangeDoneView,
     PasswordChangeView, PasswordResetCompleteView, PasswordResetDoneView,
     PasswordResetView, SignupView
 )
@@ -15,7 +15,6 @@ from .client import PasswordResetConfirmClient
 
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
-@override_settings(ROOT_URLCONF='dhost.users.urls')
 class UsersTemplateTests(TestCase):
     request_factory = RequestFactory()
 
@@ -89,9 +88,8 @@ class UsersTemplateTests(TestCase):
         self.assertContains(response, 'Sign up')
 
     def test_login_view(self):
-        pass
-        # response = LoginView.as_view()(self.request)
-        # self.assertContains(response, 'Log in')
+        response = LoginView.as_view()(self.request)
+        self.assertContains(response, 'Login')
 
     def test_account_delete_view(self):
         response = AccountDeleteView.as_view()(self.request)
