@@ -1,33 +1,20 @@
 # dhost_django
 
-Techs:
-- Django
-- REST
-- Docker
-- Sentry
-- Heroku
-- Gunicorn
-- PostgreSQL
-
-Dev:
-- Github CI
-- Yapf
-- Editorconfig
+## Setup
 
 ### Docker
 
+You can use Docker for dev or production:
+
 ```
-# docker-compose build
+# docker build . -t 'api'
 ```
 
 ```
-# docker-compose up -d
+# docker run api
 ```
 
-Verify
-```
-# docker-compose ps
-```
+You should be able to visit it at: [http://localhost:8000/](http://localhost:8000/).
 
 ## Manual Setup
 
@@ -51,6 +38,11 @@ Create database:
 python manage.py migrate
 ```
 
+Create superuser:
+```
+python manage.py createsuperuser
+```
+
 Launch server:
 ```
 python manage.py runserver
@@ -65,13 +57,7 @@ python manage.py makemigrations
 
 ## Environment variables
 
-Some configuration use the env var, the following are used:
-```
-DEBUG=[True/False]
-DEBUG_TOOLBAR=[True/False]
-ALLOWED_HOSTS=[127.0.0.1,localhost]
-SECRET_KEY=[auto_generated for dev only]
-```
+Some configurations use environment variables, the list can be found [here](docs/environment_variables.md).
 
 ## Style
 
@@ -97,3 +83,20 @@ pre-commit run --all-files
 ```
 
 Learn more about it [here](https://pre-commit.com/)
+
+## Techs
+
+- Django
+- REST
+- Docker
+- Sentry
+- Heroku
+- Gunicorn
+- PostgreSQL
+
+Dev:
+- Github CI
+- Yapf
+- Editorconfig
+- isort
+- pre-commit config
