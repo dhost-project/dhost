@@ -8,3 +8,4 @@ To call a command use: `./manage.py <command>`.
 | --- | --- | --- |
 | `cleartokens` | | remove expired refresh tokens more infos [here](https://django-oauth-toolkit.readthedocs.io/en/latest/management_commands.html#cleartokens) |
 | `generateavatar` | `<username>` | Generate an avatar for the user, this will remove the user's current avatar ! |
+| `deltestdir` | `--noinput` | Delete the `TEST_DIR` folder and it's content |

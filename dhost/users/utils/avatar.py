@@ -12,7 +12,7 @@ def avatar_generator(username: str):
     # over 15 the patern will start repeating itself
     rows = 12
     cols = 12
-    background_color = '#f1f1f1'
+    background_color = '#f2f2f2'
 
     canvas = Image.new('RGB', (total_width, total_height), background_color)
     draw = ImageDraw.Draw(canvas)
@@ -25,18 +25,18 @@ def avatar_generator(username: str):
     matrix = [[False for col in range(cols)] for row in range(rows)]
 
     half_cols = int(cols / 2)
-    for row in range(rows):
-        for col in range(half_cols):
+    for row in range(1, rows + 1):
+        for col in range(1, half_cols + 1):
             # fill matrix with `True` if the bit is `1`
             if bin_hash[(row * col) % len(bin_hash)] == '1':
-                matrix[row][col] = True
+                matrix[row - 1][col - 1] = True
                 # to create the vertical symetry
-                matrix[row][cols - col - 1] = True
+                matrix[row - 1][cols - col] = True
 
     # generate pale color
-    r = (int(h[:2], 16) % 128) + 127
-    g = (int(h[2:4], 16) % 128) + 127
-    b = (int(h[4:6], 16) % 128) + 127
+    r = (int(h[:2], 16) % 70) + 114
+    g = (int(h[2:4], 16) % 43) + 114
+    b = (int(h[4:6], 16) % 100) + 114
     fg_color = (r, g, b)
 
     # color the image
