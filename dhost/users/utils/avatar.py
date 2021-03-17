@@ -1,18 +1,29 @@
 import hashlib
 from io import BytesIO
 
+from django.conf import settings
 from django.core.files import File
 from PIL import Image, ImageDraw
 
+AVATAR_EXTENSION = getattr(settings, 'AVATAR_EXTENSION', 'PNG')
+AVATAR_DIMENSION = getattr(settings, 'AVATAR_DIMENSION', 256)
+# number of squares per rows and columns
+AVATAR_SQUARE_NUMBER = getattr(settings, 'AVATAR_SQUARE_NUMBER', 12)
+AVATAR_BACKGROUND_COLOR = getattr(
+    settings,
+    'AVATAR_BACKGROUND_COLOR',
+    '#f2f2f2',
+)
+
 
 def avatar_generator(username: str):
-    extension = 'PNG'
-    total_width = 256
-    total_height = 256
+    extension = AVATAR_EXTENSION
+    total_width = AVATAR_DIMENSION
+    total_height = AVATAR_DIMENSION
     # over 15 the patern will start repeating itself
-    rows = 12
-    cols = 12
-    background_color = '#f2f2f2'
+    rows = AVATAR_SQUARE_NUMBER
+    cols = AVATAR_SQUARE_NUMBER
+    background_color = AVATAR_BACKGROUND_COLOR
 
     canvas = Image.new('RGB', (total_width, total_height), background_color)
     draw = ImageDraw.Draw(canvas)
