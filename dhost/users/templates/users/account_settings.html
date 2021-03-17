@@ -1,0 +1,15 @@
+{% extends "users/base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<form method="POST">
+  {% csrf_token %}
+  {{ form }}
+  <button class="btn btn-raised btn-primary" type="submit">{% trans "Update account" %}</button>
+</form>
+
+<a class="btn btn-raised btn-primary" href="{% url 'password_change' %}">{% trans "Change password" %}</a>
+<a class="btn btn-raised btn-primary" href="{% url 'account_delete' %}">{% trans "Delete account" %}</a>
+
+{% endblock %}

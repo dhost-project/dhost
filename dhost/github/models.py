@@ -1,7 +1,11 @@
+from django.conf import settings
 from django.db import models
 
 
 class AbstractGit(models.Model):
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )
     repo_name = models.CharField(max_length=1024)
     branch = models.CharField(max_length=1024, default='master')
     auto_deploy = models.BooleanField(default=False)
@@ -26,7 +30,6 @@ class CommitMixin(models.Model):
 
 class Github(AbstractGit):
     repo_url = models.URLField()
-    auto_deploy = models.BooleanField(default=False)
 
     class Meta(AbstractGit.Meta):
         pass

@@ -1,6 +1,6 @@
 import oauth2_provider.views as oauth2_views
 from django.conf import settings
-from django.urls import include, path
+from django.urls import path
 
 app_name = 'oauth2_provider'
 

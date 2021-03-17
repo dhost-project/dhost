@@ -37,7 +37,7 @@ class BuildOptions(models.Model):
     docker = models.CharField(
         max_length=128,
         blank=True,
-        help_text=_('Container used for the build process'),
+        help_text=_('Container used for the build process.'),
     )
 
     class Meta:

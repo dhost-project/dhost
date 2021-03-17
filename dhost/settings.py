@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Local apps
     'dhost.builds',
+    'dhost.core',
     'dhost.dapps',
     'dhost.github',
     'dhost.ipfs',
@@ -68,6 +69,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'oauth2_provider.middleware.OAuth2TokenMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -110,7 +112,8 @@ AUTH_USER_MODEL = 'users.User'
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME':
-            'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+            'django.contrib.auth.password_validation.'
+            'UserAttributeSimilarityValidator',
     },
     {
         'NAME':
@@ -126,11 +129,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
+
+LANGUAGES = [
+    ('en', 'English'),
+    ('fr', 'Français'),
+]
 
 CSRF_COOKIE_SECURE = env_bool('CSRF_COOKIE_SECURE', False)
 SESSION_COOKIE_SECURE = env_bool('SESSION_COOKIE_SECURE', False)
@@ -148,10 +157,17 @@ EMAIL_PORT = env('EMAIL_PORT', 1025)
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', 'noreply@localhost')
 SERVER_EMAIL = env('SERVER_EMAIL', 'root@localhost')
 
+# auth
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'settings'
+LOGIN_REDIRECT_URL = 'account_settings'
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = 'login'
+
+# test
+# putting the `TEST_DIR` inside the `.cache` folder protect from loosing data
+# that musn't be deleted
+TEST_DIR = os.path.join(env('TEST_DIR', '.cache'), '.test_dir')
+TEST_MEDIA_ROOT = env('TEST_MEDIA_ROOT', os.path.join(TEST_DIR, 'media'))
 
 # REST
 REST_FRAMEWORK = {
@@ -222,7 +238,7 @@ if SENTRY_DSN:
     )
 
 # Debug-toolbar
-ENABLE_DEBUG_TOOLBAR = env_bool('DEBUG_TOOLBAR', False)
+ENABLE_DEBUG_TOOLBAR = env_bool('ENABLE_DEBUG_TOOLBAR', False)
 if ENABLE_DEBUG_TOOLBAR:
     INSTALLED_APPS.append('debug_toolbar')
     MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')

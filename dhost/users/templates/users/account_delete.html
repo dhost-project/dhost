@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<p>Are you sure you want to permanently delete your account ? <a href="{% url 'settings' %}">settings</a>.</p>
+<p>Are you sure you want to permanently delete your account ? <a href="{% url 'account_settings' %}">settings</a>.</p>
 
 <form method="POST" id="form_register">
   {% csrf_token %}

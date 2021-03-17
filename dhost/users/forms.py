@@ -1,6 +1,4 @@
 from captcha.fields import ReCaptchaField
-from django import forms
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 from django.forms import ModelForm
@@ -10,10 +8,9 @@ User = get_user_model()
 
 class SignupForm(UserCreationForm):
 
-    class Meta:
+    class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('username',)
-        field_classes = {'username': UsernameField}
+        fields = ('username', 'email')
 
     def __init__(self, *args, **kwargs):
         self.user = None
@@ -22,7 +19,7 @@ class SignupForm(UserCreationForm):
     def save(self, commit=True):
         user = super().save(commit=commit)
         self.user = user
-        return user
+        return self.user
 
     def get_user(self):
         return self.user
@@ -36,8 +33,9 @@ class CaptchaSignupForm(SignupForm):
         return user
 
 
-class SettingsForm(ModelForm):
+class AccountSettingsForm(ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email')
+        fields = ('username', 'email', 'first_name', 'last_name')
+        field_classes = {'username': UsernameField}

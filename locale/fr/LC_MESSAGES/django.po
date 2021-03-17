@@ -1,0 +1,468 @@
+# DHost API.
+# This file is distributed under the same license as the dhost package.
+#
+# Translators:
+# 2O4, 2021
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-16 20:20+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: dhost/builds/models.py:29 dhost/builds/models.py:120
+msgid "Source folder"
+msgstr "Dossier source"
+
+#: dhost/builds/models.py:32
+msgid "build command"
+msgstr "commande de build"
+
+#: dhost/builds/models.py:35
+#, fuzzy
+#| msgid "Command used during the build process."
+msgid "Command used during the build process."
+msgstr "Commande utilisée pour le processus de build."
+
+#: dhost/builds/models.py:40
+#, fuzzy
+#| msgid "Command used during the build process."
+msgid "Container used for the build process."
+msgstr "Commande utilisée pour le processus de build."
+
+#: dhost/builds/models.py:44
+msgid "build options"
+msgstr "options de build"
+
+#: dhost/builds/models.py:45
+msgid "builds options"
+msgstr "options des builds"
+
+#: dhost/builds/models.py:72
+msgid "folder"
+msgstr "dossier"
+
+#: dhost/builds/models.py:82 dhost/builds/models.py:127
+msgid "bundle"
+msgstr "bundle"
+
+#: dhost/builds/models.py:83
+msgid "bundles"
+msgstr "bundles"
+
+#: dhost/builds/models.py:106
+msgid "Based on the build return code"
+msgstr "Basée sur le code de retour du build"
+
+#: dhost/builds/models.py:110
+msgid "Raw logs output of the build process"
+msgstr "Logs brut du processus de build"
+
+#: dhost/builds/models.py:134
+msgid "build"
+msgstr "build"
+
+#: dhost/builds/models.py:135
+msgid "builds"
+msgstr "builds"
+
+#: dhost/builds/models.py:207
+msgid "environment variable"
+msgstr "variable d'environnement"
+
+#: dhost/builds/models.py:208
+msgid "environment variables"
+msgstr "variables d'environnement"
+
+#: dhost/dapps/models.py:13
+msgid "dapp name"
+msgstr "nom de la dapp"
+
+#: dhost/dapps/models.py:17
+msgid "A dapp with that name already exists."
+msgstr "Une dapp avec ce nom existe déjà."
+
+#: dhost/dapps/models.py:22
+msgid "owner"
+msgstr "propriétaire"
+
+#: dhost/dapps/models.py:28
+msgid "URL"
+msgstr "URL"
+
+#: dhost/dapps/models.py:44 dhost/dapps/models.py:97
+msgid "Stoped"
+msgstr "Arrêté"
+
+#: dhost/dapps/models.py:45
+msgid "Building"
+msgstr "En construction"
+
+#: dhost/dapps/models.py:46
+msgid "Builed"
+msgstr "Construit"
+
+#: dhost/dapps/models.py:47 dhost/dapps/models.py:98
+msgid "Deploying"
+msgstr "En cours de déploiement"
+
+#: dhost/dapps/models.py:48 dhost/dapps/models.py:99
+msgid "Starting"
+msgstr "En cour de démarrage"
+
+#: dhost/dapps/models.py:49 dhost/dapps/models.py:100
+msgid "Running"
+msgstr "En route"
+
+#: dhost/dapps/models.py:50 dhost/dapps/models.py:101
+msgid "Unavailable"
+msgstr "Indisponnible"
+
+#: dhost/dapps/models.py:51
+msgid "Error"
+msgstr "Erreur"
+
+#: dhost/dapps/models.py:54
+msgid "status"
+msgstr "status"
+
+#: dhost/dapps/models.py:60
+msgid "created"
+msgstr "création"
+
+#: dhost/dapps/models.py:63
+msgid "dapp"
+msgstr "dapp"
+
+#: dhost/dapps/models.py:64
+msgid "dapps"
+msgstr "dapps"
+
+#: dhost/dapps/models.py:113
+msgid "deployment"
+msgstr "déploiement"
+
+#: dhost/dapps/models.py:114
+msgid "deployments"
+msgstr "déploiements"
+
+#: dhost/ipfs/models.py:10 dhost/ipfs/models.py:26
+msgid "IPFS hash"
+msgstr "Hash IPFS"
+
+#: dhost/ipfs/models.py:13
+msgid "IPFS Dapp"
+msgstr "Dapp IPFS"
+
+#: dhost/ipfs/models.py:14
+msgid "IPFS Dapps"
+msgstr "Dapps IPFS"
+
+#: dhost/ipfs/models.py:29
+msgid "IPFS Deployment"
+msgstr "Déploiement IPFS"
+
+#: dhost/ipfs/models.py:30
+msgid "IPFS Deployments"
+msgstr "Déploiements IPFS"
+
+#: dhost/templates/400.html:4
+msgid "Bad request"
+msgstr "Mauvaise requête"
+
+#: dhost/templates/400.html:8
+msgid "Bad request (400)"
+msgstr "Mauvaise requête (400)"
+
+#: dhost/templates/403.html:4
+msgid "permission denied"
+msgstr "permissions refusée"
+
+#: dhost/templates/403.html:8
+msgid "Permission denied"
+msgstr "Permissions refusée"
+
+#: dhost/templates/403.html:10
+msgid "Sorry you don't have the permission to access this page."
+msgstr "Vous n'avez pas les permissions pour accéder a cette page."
+
+#: dhost/templates/404.html:4
+msgid "Page not found"
+msgstr "Page introuvable"
+
+#: dhost/templates/404.html:9
+msgid "Page not found (404)"
+msgstr "Page introuvable (404)"
+
+#: dhost/templates/404.html:10
+msgid "We’re sorry, but the requested page could not be found."
+msgstr "Désolé, la page que vous avez demandé n'a pas pu être trouvé."
+
+#: dhost/templates/500.html:4
+msgid "Server error (500)"
+msgstr "Erreur serveur (500)"
+
+#: dhost/templates/500.html:8
+msgid "Server Error <em>(500)</em>"
+msgstr "Erreur serveur <em>(500)</em>"
+
+#: dhost/templates/500.html:11
+msgid ""
+"There’s been an error. It’s been reported to the site administrators via "
+"email and should be fixed shortly. Thanks for your patience."
+msgstr ""
+"Il y a eu une erreur. Les administrateurs du site ont été notifiés par email "
+"et devraient résoudre le problème rapidement. Merci de votre patience."
+
+#: dhost/users/admin.py:12
+msgid "Personal info"
+msgstr "Info personnel"
+
+#: dhost/users/admin.py:15
+#, fuzzy
+#| msgid "Permission denied"
+msgid "Permissions"
+msgstr "Permissions"
+
+#: dhost/users/admin.py:24
+msgid "Important dates"
+msgstr "Dates importantes"
+
+#: dhost/users/models.py:23
+msgid "username"
+msgstr "nom d'utilisateur"
+
+#: dhost/users/models.py:28
+msgid "A user with that username already exists."
+msgstr "Un utilisateur avec ce nom existe déjà."
+
+#: dhost/users/models.py:31
+msgid "first name"
+msgstr "prénom"
+
+#: dhost/users/models.py:32
+msgid "last name"
+msgstr "nom"
+
+#: dhost/users/models.py:33
+msgid "email address"
+msgstr "adresse e-mail"
+
+#: dhost/users/models.py:35
+msgid "avatar"
+msgstr "avatar"
+
+#: dhost/users/models.py:41
+msgid "staff status"
+msgstr "status staff"
+
+#: dhost/users/models.py:44
+msgid "Designates whether the user can log into this admin site."
+msgstr "Designe si l'utilisateur peut se connecter au site admin."
+
+#: dhost/users/models.py:48
+msgid "active"
+msgstr "actif"
+
+#: dhost/users/models.py:50
+msgid "Unselect this instead of deleting accounts."
+msgstr "Deselectionnez ceci au lieu de supprimer le compte."
+
+#: dhost/users/models.py:52
+msgid "date joined"
+msgstr "date d'inscription"
+
+#: dhost/users/models.py:61
+msgid "user"
+msgstr "utilisateur"
+
+#: dhost/users/models.py:62
+msgid "users"
+msgstr "utilisateurs"
+
+#: dhost/users/templates/users/account_delete.html:10
+#: dhost/users/templates/users/account_settings.html:13
+#: dhost/users/views.py:183
+msgid "Delete account"
+msgstr "Supprimer le compte"
+
+#: dhost/users/templates/users/account_delete_done.html:6
+msgid "Your account have been successfully deleted."
+msgstr "Votre compte a ete supprime avec success"
+
+#: dhost/users/templates/users/account_settings.html:9
+msgid "Update account"
+msgstr "Mettre a jour le compte"
+
+#: dhost/users/templates/users/account_settings.html:12
+msgid "Change password"
+msgstr "Changer de mot de passe"
+
+#: dhost/users/templates/users/emails/password_reset_email.html:2
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+"Vous recevez ce mail car vous avez fait une demande de réinitialisation de "
+"votre mot de passe pour votre compte sur %(site_name)s"
+
+#: dhost/users/templates/users/emails/password_reset_email.html:4
+msgid "Please go to the following page and choose a new password:"
+msgstr "Merci de suivre le lien suivant afin de modifier votre mot de passe:"
+
+#: dhost/users/templates/users/emails/password_reset_email.html:8
+msgid "Your username, in case you’ve forgotten:"
+msgstr "Si vous avez oublie, votre nom d'utilisateur est:"
+
+#: dhost/users/templates/users/emails/password_reset_email.html:10
+msgid "Thanks for using our site!"
+msgstr "Merci d'utiliser notre site!"
+
+#: dhost/users/templates/users/emails/password_reset_email.html:12
+#, python-format
+msgid "The %(site_name)s team"
+msgstr "L'equipe de %(site_name)s"
+
+#: dhost/users/templates/users/emails/password_reset_subject.txt:2
+#, python-format
+msgid "Password reset on %(site_name)s"
+msgstr "Reinitialisation de mot de passe sur %(site_name)s"
+
+#: dhost/users/templates/users/logged_out.html:6
+msgid "Thanks for spending some quality time with the Web site today."
+msgstr "Merci d'avoir passée du temps de qualité sur notre site aujourd'hui."
+
+#: dhost/users/templates/users/logged_out.html:8
+msgid "Log in again"
+msgstr "Connectez vous a nouveau"
+
+#: dhost/users/templates/users/login.html:18
+#, python-format
+msgid ""
+"You are authenticated as %(username)s, but are not authorized to access this "
+"page. Would you like to login to a different account?"
+msgstr ""
+"Vous etes connecté en tant que %(username)s, mais vous n'avez pas acces a "
+"cette page. Voulez vous vous connecter avec un compte différent ?"
+
+#: dhost/users/templates/users/login.html:44
+msgid "Forgotten your password or username?"
+msgstr "Mot de passe ou nom d'utilisateur oublié ?"
+
+#: dhost/users/templates/users/login.html:48
+#: dhost/users/templates/users/password_reset_complete.html:8
+msgid "Log in"
+msgstr "Connexion"
+
+#: dhost/users/templates/users/password_change_done.html:5
+msgid "Your password was changed."
+msgstr "Votre mot de passe à changé."
+
+#: dhost/users/templates/users/password_change_form.html:10
+msgid "Please correct the error below."
+msgstr "Merci de corriger l'erreur ci-dessous."
+
+#: dhost/users/templates/users/password_change_form.html:10
+msgid "Please correct the errors below."
+msgstr "Merci de corriger l'erreur ci-dessous."
+
+#: dhost/users/templates/users/password_change_form.html:15
+msgid ""
+"Please enter your old password, for security’s sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
+msgstr ""
+"Merci d'entrer votre ancien mot de passe, pour des raisons de sécurité, et "
+"ensuite entrez votre nouveau mot de passe deux fois pour confirmer qu'il a "
+"été tapé correctement."
+
+#: dhost/users/templates/users/password_change_form.html:40
+#: dhost/users/templates/users/password_reset_confirm.html:23
+msgid "Change my password"
+msgstr "Changer mon mot de passe"
+
+#: dhost/users/templates/users/password_reset_complete.html:6
+msgid "Your password has been set.  You may go ahead and log in now."
+msgstr ""
+"Votre mot de passe a été mis a jour. Vous pouvez désormais vous connecter."
+
+#: dhost/users/templates/users/password_reset_confirm.html:8
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly."
+msgstr ""
+"Merci saisir votre mot de passe deux fois afin que nous puissions confirmer "
+"que vous l'avez tapé correctement."
+
+#: dhost/users/templates/users/password_reset_confirm.html:15
+msgid "New password:"
+msgstr "Nouveau mot de passe:"
+
+#: dhost/users/templates/users/password_reset_confirm.html:20
+msgid "Confirm password:"
+msgstr "Confirmez le mot de passe:"
+
+#: dhost/users/templates/users/password_reset_confirm.html:30
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a new password reset."
+msgstr ""
+"Le lien de réinitialisation n'est pas valide, il a probablement déja été "
+"utilisé. Merci de refaire une demande de réinitialisation."
+
+#: dhost/users/templates/users/password_reset_done.html:7
+msgid ""
+"We’ve emailed you instructions for setting your password, if an account "
+"exists with the email you entered. You should receive them shortly."
+msgstr ""
+"Nous vous avons envoyé un mail avec les instructions pour réinitialiser "
+"votre mot de passe. Si un compte est lié a l'adresse renseigné, vous devriez "
+"les recevoir rapidement."
+
+#: dhost/users/templates/users/password_reset_done.html:11
+msgid ""
+"If you don’t receive an email, please make sure you’ve entered the address "
+"you registered with, and check your spam folder."
+msgstr ""
+"Si vous ne recevez pas de mail assurez vous que vous avez entré l'adresse "
+"avec laquelle vous vous etes inscrit, et vérifiez votre dossier de spam."
+
+#: dhost/users/templates/users/password_reset_form.html:7
+msgid ""
+"Forgotten your password? Enter your email address below, and we’ll email "
+"instructions for setting a new one."
+msgstr ""
+"Mot de passe oublié ? Entrez votre adresse mail ci-dessous et nous allons "
+"vous envoyer les instructions pour le changer."
+
+#: dhost/users/templates/users/password_reset_form.html:14
+msgid "Email address:"
+msgstr "Adresse mail:"
+
+#: dhost/users/templates/users/password_reset_form.html:17
+msgid "Reset my password"
+msgstr "Réinitialiser mon mot de passe"
+
+#: dhost/users/templates/users/signup.html:11
+msgid "Sign Up"
+msgstr "Inscription"
+
+#: dhost/users/views.py:80
+msgid "Sign up"
+msgstr "Inscription"
+
+#: dhost/users/views.py:149
+msgid "Account settings"
+msgstr "Paramètres de compte"
+
+#: dhost/users/views.py:206
+msgid "Delete account successful"
+msgstr "Votre compte à bien été suprimé"
