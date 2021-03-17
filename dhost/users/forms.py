@@ -19,7 +19,7 @@ class SignupForm(UserCreationForm):
     def save(self, commit=True):
         user = super().save(commit=commit)
         self.user = user
-        return user
+        return self.user
 
     def get_user(self):
         return self.user

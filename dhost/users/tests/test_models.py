@@ -1,5 +1,6 @@
 from unittest import mock
 
+from django.conf import settings
 from django.conf.global_settings import PASSWORD_HASHERS
 from django.contrib.auth import authenticate, get_user, get_user_model
 from django.contrib.auth.hashers import get_hasher
@@ -13,6 +14,7 @@ from django.utils import translation
 from dhost.users.models import User
 
 
+@override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
 class UserTestCase(TestCase):
 
     @tag('core', 'slow')

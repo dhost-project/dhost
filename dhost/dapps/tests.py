@@ -17,7 +17,9 @@ class DappModelTest(TestCase):
         """
         Test Dapp's `__str__` function
         """
-        user = User.objects.create(username='john', password='john')
+        user = User.objects.create(
+            username='johnny', password='john', avatar='-'
+        )
         d = self.create_dapp(owner=user)
         dapp_str = str(d)
         self.assertTrue(isinstance(d, Dapp))

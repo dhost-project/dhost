@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Local apps
     'dhost.builds',
+    'dhost.core',
     'dhost.dapps',
     'dhost.github',
     'dhost.ipfs',
@@ -111,7 +112,8 @@ AUTH_USER_MODEL = 'users.User'
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME':
-            'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+            'django.contrib.auth.password_validation.'
+            'UserAttributeSimilarityValidator',
     },
     {
         'NAME':
@@ -155,10 +157,17 @@ EMAIL_PORT = env('EMAIL_PORT', 1025)
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', 'noreply@localhost')
 SERVER_EMAIL = env('SERVER_EMAIL', 'root@localhost')
 
+# auth
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'account_settings'
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = 'login'
+
+# test
+# putting the `TEST_DIR` inside the `.cache` folder protect from loosing data
+# that musn't be deleted
+TEST_DIR = os.path.join(env('TEST_DIR', '.cache'), '.test_dir')
+TEST_MEDIA_ROOT = env('TEST_MEDIA_ROOT', os.path.join(TEST_DIR, 'media'))
 
 # REST
 REST_FRAMEWORK = {

@@ -34,7 +34,7 @@ class Command(BaseCommand):
         except UserModel.DoesNotExist:
             raise CommandError("user '%s' does not exist" % username)
 
-        u.avatar = None
+        u.generate_avatar()
         u.save()
 
         return "Avatar successfully generated for user '%s'" % u

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-16 10:58+0000\n"
+"POT-Creation-Date: 2021-03-16 20:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -222,61 +222,75 @@ msgstr ""
 "Il y a eu une erreur. Les administrateurs du site ont été notifiés par email "
 "et devraient résoudre le problème rapidement. Merci de votre patience."
 
-#: dhost/users/models.py:21
+#: dhost/users/admin.py:12
+msgid "Personal info"
+msgstr "Info personnel"
+
+#: dhost/users/admin.py:15
+#, fuzzy
+#| msgid "Permission denied"
+msgid "Permissions"
+msgstr "Permissions"
+
+#: dhost/users/admin.py:24
+msgid "Important dates"
+msgstr "Dates importantes"
+
+#: dhost/users/models.py:23
 msgid "username"
 msgstr "nom d'utilisateur"
 
-#: dhost/users/models.py:26
+#: dhost/users/models.py:28
 msgid "A user with that username already exists."
 msgstr "Un utilisateur avec ce nom existe déjà."
 
-#: dhost/users/models.py:29
+#: dhost/users/models.py:31
 msgid "first name"
 msgstr "prénom"
 
-#: dhost/users/models.py:30
+#: dhost/users/models.py:32
 msgid "last name"
 msgstr "nom"
 
-#: dhost/users/models.py:31
+#: dhost/users/models.py:33
 msgid "email address"
 msgstr "adresse e-mail"
 
-#: dhost/users/models.py:33
+#: dhost/users/models.py:35
 msgid "avatar"
 msgstr "avatar"
 
-#: dhost/users/models.py:39
+#: dhost/users/models.py:41
 msgid "staff status"
 msgstr "status staff"
 
-#: dhost/users/models.py:41
+#: dhost/users/models.py:44
 msgid "Designates whether the user can log into this admin site."
 msgstr "Designe si l'utilisateur peut se connecter au site admin."
 
-#: dhost/users/models.py:44
+#: dhost/users/models.py:48
 msgid "active"
 msgstr "actif"
 
-#: dhost/users/models.py:46
+#: dhost/users/models.py:50
 msgid "Unselect this instead of deleting accounts."
 msgstr "Deselectionnez ceci au lieu de supprimer le compte."
 
-#: dhost/users/models.py:48
+#: dhost/users/models.py:52
 msgid "date joined"
 msgstr "date d'inscription"
 
-#: dhost/users/models.py:57
+#: dhost/users/models.py:61
 msgid "user"
 msgstr "utilisateur"
 
-#: dhost/users/models.py:58
+#: dhost/users/models.py:62
 msgid "users"
 msgstr "utilisateurs"
 
 #: dhost/users/templates/users/account_delete.html:10
 #: dhost/users/templates/users/account_settings.html:13
-#: dhost/users/views.py:182
+#: dhost/users/views.py:183
 msgid "Delete account"
 msgstr "Supprimer le compte"
 
@@ -445,10 +459,10 @@ msgstr "Inscription"
 msgid "Sign up"
 msgstr "Inscription"
 
-#: dhost/users/views.py:148
+#: dhost/users/views.py:149
 msgid "Account settings"
 msgstr "Paramètres de compte"
 
-#: dhost/users/views.py:205
+#: dhost/users/views.py:206
 msgid "Delete account successful"
 msgstr "Votre compte à bien été suprimé"

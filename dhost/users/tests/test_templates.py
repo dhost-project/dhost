@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.test import RequestFactory, TestCase, override_settings, tag
@@ -13,6 +14,7 @@ from ..views import (
 from .client import PasswordResetConfirmClient
 
 
+@override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
 @override_settings(ROOT_URLCONF='dhost.users.urls')
 class UsersTemplateTests(TestCase):
     request_factory = RequestFactory()

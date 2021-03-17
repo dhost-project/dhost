@@ -1,11 +1,13 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from .models import Github
 
 User = get_user_model()
 
 
+@override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
 class GithubModelTest(TestCase):
 
     def create_github(

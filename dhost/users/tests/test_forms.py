@@ -1,5 +1,6 @@
+from django.conf import settings
 from django.forms.fields import Field
-from django.test import TestCase, tag
+from django.test import TestCase, override_settings, tag
 
 from ..forms import AccountSettingsForm, SignupForm
 from ..models import User
@@ -27,6 +28,7 @@ class TestDataMixin:
         )
 
 
+@override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
 class SignupFormTest(TestDataMixin, TestCase):
 
     def test_user_already_exists(self):
@@ -151,8 +153,7 @@ class SignupFormTest(TestDataMixin, TestCase):
         )
         self.assertIn(
             'This password is too short. It must contain at least 8 '
-            'characters.',
-            form['password2'].errors
+            'characters.', form['password2'].errors
         )
 
     def test_password_whitespace_not_stripped(self):
@@ -187,6 +188,7 @@ class SignupFormTest(TestDataMixin, TestCase):
                 )
 
 
+@override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
 class AccountSettingsFormTest(TestDataMixin, TestCase):
 
     def test_valide_data(self):

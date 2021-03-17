@@ -65,8 +65,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         if not self.avatar:
             # if the avatar doesn't exist it will be generated from a hash of
             # the user's `USERNAME_FIELD`
-            # to 're-generate' the avatar simply remove it and save the user
-            self.avatar = avatar_generator(self.__dict__[self.USERNAME_FIELD])
+            # to 're-generate' the avatar simply remove it and save the user or
+            # call the function `generate_avatar` and don't forget to `save`
+            self.generate_avatar()
         return super().save(*args, **kwargs)
 
     def clean(self):
@@ -76,3 +77,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def email_user(self, subject, message, from_email=None, **kwargs):
         """Send an email to this user."""
         send_mail(subject, message, from_email, [self.email], **kwargs)
+
+    def generate_avatar(self):
+        self.avatar = avatar_generator(self.__dict__[self.USERNAME_FIELD])
