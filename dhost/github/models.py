@@ -4,7 +4,8 @@ from django.db import models
 
 class AbstractGit(models.Model):
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
     )
     repo_name = models.CharField(max_length=1024)
     branch = models.CharField(max_length=1024, default='master')

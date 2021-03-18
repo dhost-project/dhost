@@ -83,17 +83,14 @@ class SignupView(TitleMixin, auth_views.SuccessURLAllowedHostsMixin, FormView):
     @method_decorator(csrf_protect)
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
-        if (
-            self.redirect_authenticated_user and
-            self.request.user.is_authenticated
-        ):
+        if (self.redirect_authenticated_user and
+                self.request.user.is_authenticated):
             redirect_to = self.get_success_url()
             if redirect_to == self.request.path:
                 raise ValueError(
                     "Redirection loop for authenticated user detected. Check "
                     "that your LOGIN_REDIRECT_URL doesn't point to a login "
-                    "page."
-                )
+                    "page.")
             return HttpResponseRedirect(redirect_to)
         return super().dispatch(request, *args, **kwargs)
 
@@ -104,8 +101,7 @@ class SignupView(TitleMixin, auth_views.SuccessURLAllowedHostsMixin, FormView):
         """Return the user-originating redirect URL if it's safe."""
         redirect_to = self.request.POST.get(
             self.redirect_field_name,
-            self.request.GET.get(self.redirect_field_name, '')
-        )
+            self.request.GET.get(self.redirect_field_name, ''))
         url_is_safe = url_has_allowed_host_and_scheme(
             url=redirect_to,
             allowed_hosts=self.get_success_url_allowed_hosts(),

@@ -20,13 +20,11 @@ class Command(BaseCommand):
         interactive = options['interactive']
 
         if interactive:
-            confirm = input(
-                """You have requested to remove the test folder.
+            confirm = input("""You have requested to remove the test folder.
 This will IRREVERSIBLY DESTROY all data currently in the "%s" folder.
 Are you sure you want to do this?
 
-    Type 'yes' to continue, or 'no' to cancel: """ % settings.TEST_DIR
-            )
+    Type 'yes' to continue, or 'no' to cancel: """ % settings.TEST_DIR)
         else:
             confirm = 'yes'
 

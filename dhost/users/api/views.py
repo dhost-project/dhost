@@ -1,6 +1,5 @@
-from oauth2_provider.contrib.rest_framework import (
-    OAuth2Authentication, TokenHasScope
-)
+from oauth2_provider.contrib.rest_framework import (OAuth2Authentication,
+                                                    TokenHasScope)
 from rest_framework import generics
 
 from ..models import User
