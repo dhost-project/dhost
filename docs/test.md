@@ -1,5 +1,29 @@
 # Tests
 
+## Coverage
+
+With the tool coverage we can produce very usefull data wich can help us make to make tests.
+
+To use coverage with django use:
+```
+coverage run manage.py test
+```
+
+To see the report use:
+```
+coverage report -m
+```
+
+To see the report in HTML format use:
+```
+coverage html
+```
+
+More infos [here](https://coverage.readthedocs.io/en/coverage-5.5/#quick-start).
+
+
+## Test command
+
 The `test` command is modified for this project, the new command can be found in `dhost/core/management/commands/test.py` it's a minor modification witch delete the `TEST_DIR` located in the `.cache` folder (by default at the root of the project).
 
 ```

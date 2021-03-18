@@ -6,16 +6,14 @@ from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode
 
 from ..models import User
-from ..views import (
-    AccountDeleteDoneView, AccountDeleteView, PasswordChangeDoneView,
-    PasswordChangeView, PasswordResetCompleteView, PasswordResetDoneView,
-    PasswordResetView, SignupView
-)
+from ..views import (AccountDeleteDoneView, AccountDeleteView, LoginView,
+                     PasswordChangeDoneView, PasswordChangeView,
+                     PasswordResetCompleteView, PasswordResetDoneView,
+                     PasswordResetView, SignupView)
 from .client import PasswordResetConfirmClient
 
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
-@override_settings(ROOT_URLCONF='dhost.users.urls')
 class UsersTemplateTests(TestCase):
     request_factory = RequestFactory()
 
@@ -39,13 +37,11 @@ class UsersTemplateTests(TestCase):
     def test_password_reset_confirm_view_invalid_token(self):
         # PasswordResetConfirmView invalid token
         client = PasswordResetConfirmClient()
-        url = reverse(
-            'password_reset_confirm',
-            kwargs={
-                'uidb64': 'Bad',
-                'token': 'Bad-Token'
-            }
-        )
+        url = reverse('password_reset_confirm',
+                      kwargs={
+                          'uidb64': 'Bad',
+                          'token': 'Bad-Token'
+                      })
         response = client.get(url)
         self.assertContains(response, 'Password reset unsuccessful')
 
@@ -56,12 +52,11 @@ class UsersTemplateTests(TestCase):
         default_token_generator = PasswordResetTokenGenerator()
         token = default_token_generator.make_token(self.user)
         uidb64 = urlsafe_base64_encode(str(self.user.pk).encode())
-        url = reverse(
-            'password_reset_confirm', kwargs={
-                'uidb64': uidb64,
-                'token': token
-            }
-        )
+        url = reverse('password_reset_confirm',
+                      kwargs={
+                          'uidb64': uidb64,
+                          'token': token
+                      })
         response = client.get(url)
         self.assertContains(response, 'Enter new password')
         # The username is added to the password reset confirmation form to help
@@ -76,8 +71,8 @@ class UsersTemplateTests(TestCase):
         self.assertContains(response, 'Password reset complete')
 
     def test_password_reset_change_view(self):
-        response = PasswordChangeView.as_view(success_url='dummy/'
-                                             )(self.request)  # noqa
+        response = PasswordChangeView.as_view(success_url='dummy/')(
+            self.request)
         self.assertContains(response, 'Password change')
 
     def test_password_change_done_view(self):
@@ -89,9 +84,8 @@ class UsersTemplateTests(TestCase):
         self.assertContains(response, 'Sign up')
 
     def test_login_view(self):
-        pass
-        # response = LoginView.as_view()(self.request)
-        # self.assertContains(response, 'Log in')
+        response = LoginView.as_view()(self.request)
+        self.assertContains(response, 'Login')
 
     def test_account_delete_view(self):
         response = AccountDeleteView.as_view()(self.request)

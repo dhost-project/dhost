@@ -1,14 +1,12 @@
 class DockerBuild:
 
-    def __init__(
-        self,
-        container,
-        source_path,
-        command=None,
-        envars=None,
-        *args,
-        **kwargs
-    ):
+    def __init__(self,
+                 container,
+                 source_path,
+                 command=None,
+                 envars=None,
+                 *args,
+                 **kwargs):
         self.container = container
         self.source_path = source_path
         self.command = command
@@ -22,11 +20,8 @@ class DockerBuild:
 
     def build(self):
         """Main build function to start the process"""
-        print(
-            'Building source: {}, in container: {}, with command:`{}`'.format(
-                str(self.source_path), str(self.container), str(self.command)
-            )
-        )
+        print('Building source: {}, in container: {}, with command:`{}`'.format(
+            str(self.source_path), str(self.container), str(self.command)))
         if self.envars:
             print('Environment variables used:')
             for key, value in self.envars.items():

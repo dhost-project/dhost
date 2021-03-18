@@ -79,9 +79,8 @@ class UserTestCase(TestCase):
 
     def test_superuser(self):
         "Check the creation and properties of a superuser"
-        super = User.objects.create_superuser(
-            'super', 'super@example.com', 'super'
-        )
+        super = User.objects.create_superuser('super', 'super@example.com',
+                                              'super')
         self.assertTrue(super.is_superuser)
         self.assertTrue(super.is_active)
         self.assertTrue(super.is_staff)
@@ -102,8 +101,7 @@ class UserTestCase(TestCase):
         for i, kwargs in enumerate(cases):
             with self.subTest(**kwargs):
                 superuser = User.objects.create_superuser(
-                    'super{}'.format(i), **kwargs
-                )
+                    'super{}'.format(i), **kwargs)
                 self.assertEqual(superuser.email, '')
                 self.assertFalse(superuser.has_usable_password())
 
@@ -142,12 +140,10 @@ class UserTestCase(TestCase):
             "html_message": None,
         }
         user = User(email='foo@bar.com')
-        user.email_user(
-            subject="Subject here",
-            message="This is a message",
-            from_email="from@domain.com",
-            **kwargs
-        )
+        user.email_user(subject="Subject here",
+                        message="This is a message",
+                        from_email="from@domain.com",
+                        **kwargs)
         self.assertEqual(len(mail.outbox), 1)
         message = mail.outbox[0]
         self.assertEqual(message.subject, "Subject here")
@@ -177,7 +173,7 @@ class UserTestCase(TestCase):
         user = User.objects.create_user(username='user', password='foo')
         user.set_password('bar')
         with mock.patch(
-            'django.contrib.auth.password_validation.password_changed'
+                'django.contrib.auth.password_validation.password_changed'
         ) as pw_changed:
             user.save()
             self.assertEqual(pw_changed.call_count, 1)
@@ -202,7 +198,7 @@ class UserTestCase(TestCase):
             # Upgrade the password iterations
             hasher.iterations = old_iterations + 1
             with mock.patch(
-                'django.contrib.auth.password_validation.password_changed'
+                    'django.contrib.auth.password_validation.password_changed'
             ) as pw_changed:
                 user.check_password('foo')
                 self.assertEqual(pw_changed.call_count, 0)
@@ -217,9 +213,8 @@ class UserTestCase(TestCase):
         self.assertIsInstance(user, AnonymousUser)
 
     def test_get_user(self):
-        created_user = User.objects.create_user(
-            'testuser', 'test@example.com', 'testpw'
-        )
+        created_user = User.objects.create_user('testuser', 'test@example.com',
+                                                'testpw')
         self.client.login(username='testuser', password='testpw')
         request = HttpRequest()
         request.session = self.client.session

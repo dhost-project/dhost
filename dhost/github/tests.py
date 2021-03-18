@@ -16,14 +16,14 @@ class GithubModelTest(TestCase):
         branch='master',
         repo_url='http://github.com/dhost-project/dhost',
         auto_deploy=False,
-        owner=None
+        owner=None,
     ):
         return Github.objects.create(
             repo_url=repo_url,
             branch=branch,
             repo_name=repo_name,
             auto_deploy=auto_deploy,
-            owner=owner
+            owner=owner,
         )
 
     def test_str(self):

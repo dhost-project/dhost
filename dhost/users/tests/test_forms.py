@@ -10,22 +10,18 @@ class TestDataMixin:
 
     @classmethod
     def setUpTestData(cls):
-        cls.u1 = User.objects.create_user(
-            username='testclient',
-            password='password',
-            email='testclient@example.com'
-        )
-        cls.u2 = User.objects.create_user(
-            username='inactive', password='password', is_active=False
-        )
+        cls.u1 = User.objects.create_user(username='testclient',
+                                          password='password',
+                                          email='testclient@example.com')
+        cls.u2 = User.objects.create_user(username='inactive',
+                                          password='password',
+                                          is_active=False)
         cls.u3 = User.objects.create_user(username='staff', password='password')
         cls.u4 = User.objects.create(username='empty_password', password='')
-        cls.u5 = User.objects.create(
-            username='unmanageable_password', password='$'
-        )
-        cls.u6 = User.objects.create(
-            username='unknown_password', password='foo$bar'
-        )
+        cls.u5 = User.objects.create(username='unmanageable_password',
+                                     password='$')
+        cls.u6 = User.objects.create(username='unknown_password',
+                                     password='foo$bar')
 
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
@@ -41,8 +37,7 @@ class SignupFormTest(TestDataMixin, TestCase):
         self.assertFalse(form.is_valid())
         self.assertEqual(
             form["username"].errors,
-            [str(User._meta.get_field('username').error_messages['unique'])]
-        )
+            [str(User._meta.get_field('username').error_messages['unique'])])
 
     def test_invalid_data(self):
         data = {
@@ -52,10 +47,8 @@ class SignupFormTest(TestDataMixin, TestCase):
         }
         form = SignupForm(data)
         self.assertFalse(form.is_valid())
-        validator = next(
-            v for v in User._meta.get_field('username').validators
-            if v.code == 'invalid'
-        )
+        validator = next(v for v in User._meta.get_field('username').validators
+                         if v.code == 'invalid')
         self.assertEqual(form["username"].errors, [str(validator.message)])
 
     def test_password_verification(self):
@@ -67,10 +60,8 @@ class SignupFormTest(TestDataMixin, TestCase):
         }
         form = SignupForm(data)
         self.assertFalse(form.is_valid())
-        self.assertEqual(
-            form["password2"].errors,
-            [str(form.error_messages['password_mismatch'])]
-        )
+        self.assertEqual(form["password2"].errors,
+                         [str(form.error_messages['password_mismatch'])])
 
     @tag('core')
     def test_both_passwords(self):
@@ -112,9 +103,8 @@ class SignupFormTest(TestDataMixin, TestCase):
         self.assertTrue(form.is_valid())
         user = form.save()
         self.assertNotEqual(user.username, ohm_username)
-        self.assertEqual(
-            user.username, 'testΩ'
-        )  # U+03A9 GREEK CAPITAL LETTER OMEGA
+        self.assertEqual(user.username,
+                         'testΩ')  # U+03A9 GREEK CAPITAL LETTER OMEGA
 
     def test_duplicate_normalized_unicode(self):
         """
@@ -133,10 +123,8 @@ class SignupFormTest(TestDataMixin, TestCase):
         }
         form = SignupForm(data)
         self.assertFalse(form.is_valid())
-        self.assertEqual(
-            form.errors['username'],
-            ["A user with that username already exists."]
-        )
+        self.assertEqual(form.errors['username'],
+                         ["A user with that username already exists."])
 
     def test_validates_password(self):
         data = {
@@ -147,14 +135,11 @@ class SignupFormTest(TestDataMixin, TestCase):
         form = SignupForm(data)
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form['password2'].errors), 2)
-        self.assertIn(
-            'The password is too similar to the username.',
-            form['password2'].errors
-        )
+        self.assertIn('The password is too similar to the username.',
+                      form['password2'].errors)
         self.assertIn(
             'This password is too short. It must contain at least 8 '
-            'characters.', form['password2'].errors
-        )
+            'characters.', form['password2'].errors)
 
     def test_password_whitespace_not_stripped(self):
         data = {
@@ -170,8 +155,7 @@ class SignupFormTest(TestDataMixin, TestCase):
     def test_username_field_autocapitalize_none(self):
         form = SignupForm()
         self.assertEqual(
-            form.fields['username'].widget.attrs.get('autocapitalize'), 'none'
-        )
+            form.fields['username'].widget.attrs.get('autocapitalize'), 'none')
 
     def test_html_autocomplete_attributes(self):
         form = SignupForm()
@@ -184,8 +168,7 @@ class SignupFormTest(TestDataMixin, TestCase):
             with self.subTest(field_name=field_name, autocomplete=autocomplete):
                 self.assertEqual(
                     form.fields[field_name].widget.attrs['autocomplete'],
-                    autocomplete
-                )
+                    autocomplete)
 
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
@@ -202,5 +185,4 @@ class AccountSettingsFormTest(TestDataMixin, TestCase):
     def test_username_field_autocapitalize_none(self):
         form = AccountSettingsForm()
         self.assertEqual(
-            form.fields['username'].widget.attrs.get('autocapitalize'), 'none'
-        )
+            form.fields['username'].widget.attrs.get('autocapitalize'), 'none')

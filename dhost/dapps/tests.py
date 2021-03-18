@@ -9,7 +9,10 @@ User = get_user_model()
 class DappModelTest(TestCase):
 
     def create_dapp(
-        self, name='test dapp', url='http://example.com/', owner=None
+        self,
+        name='test dapp',
+        url='http://example.com/',
+        owner=None,
     ):
         return Dapp.objects.create(name=name, url=url, owner=owner)
 
@@ -18,7 +21,9 @@ class DappModelTest(TestCase):
         Test Dapp's `__str__` function
         """
         user = User.objects.create(
-            username='johnny', password='john', avatar='-'
+            username='johnny',
+            password='john',
+            avatar='-',
         )
         d = self.create_dapp(owner=user)
         dapp_str = str(d)

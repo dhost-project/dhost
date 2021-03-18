@@ -60,7 +60,7 @@ msgstr "bundles"
 
 #: dhost/builds/models.py:106
 msgid "Based on the build return code"
-msgstr "Basée sur le code de retour du build"
+msgstr "Basé sur le code de retour du build"
 
 #: dhost/builds/models.py:110
 msgid "Raw logs output of the build process"
@@ -124,7 +124,7 @@ msgstr "En route"
 
 #: dhost/dapps/models.py:50 dhost/dapps/models.py:101
 msgid "Unavailable"
-msgstr "Indisponnible"
+msgstr "Indisponible"
 
 #: dhost/dapps/models.py:51
 msgid "Error"
@@ -184,15 +184,15 @@ msgstr "Mauvaise requête (400)"
 
 #: dhost/templates/403.html:4
 msgid "permission denied"
-msgstr "permissions refusée"
+msgstr "permission refusée"
 
 #: dhost/templates/403.html:8
 msgid "Permission denied"
-msgstr "Permissions refusée"
+msgstr "Permission refusée"
 
 #: dhost/templates/403.html:10
 msgid "Sorry you don't have the permission to access this page."
-msgstr "Vous n'avez pas les permissions pour accéder a cette page."
+msgstr "Désolé, vous n'avez pas la permission pour accéder à cette page."
 
 #: dhost/templates/404.html:4
 msgid "Page not found"
@@ -224,7 +224,7 @@ msgstr ""
 
 #: dhost/users/admin.py:12
 msgid "Personal info"
-msgstr "Info personnel"
+msgstr "Info personnelles"
 
 #: dhost/users/admin.py:15
 #, fuzzy
@@ -266,7 +266,7 @@ msgstr "status staff"
 
 #: dhost/users/models.py:44
 msgid "Designates whether the user can log into this admin site."
-msgstr "Designe si l'utilisateur peut se connecter au site admin."
+msgstr "Désigne si l'utilisateur peut se connecter au site admin."
 
 #: dhost/users/models.py:48
 msgid "active"
@@ -274,7 +274,7 @@ msgstr "actif"
 
 #: dhost/users/models.py:50
 msgid "Unselect this instead of deleting accounts."
-msgstr "Deselectionnez ceci au lieu de supprimer le compte."
+msgstr "Désélectionnez ceci au lieu de supprimer le compte."
 
 #: dhost/users/models.py:52
 msgid "date joined"
@@ -296,11 +296,11 @@ msgstr "Supprimer le compte"
 
 #: dhost/users/templates/users/account_delete_done.html:6
 msgid "Your account have been successfully deleted."
-msgstr "Votre compte a ete supprime avec success"
+msgstr "Votre compte à été supprimé avec succès"
 
 #: dhost/users/templates/users/account_settings.html:9
 msgid "Update account"
-msgstr "Mettre a jour le compte"
+msgstr "Mettre à jour le compte"
 
 #: dhost/users/templates/users/account_settings.html:12
 msgid "Change password"
@@ -321,7 +321,7 @@ msgstr "Merci de suivre le lien suivant afin de modifier votre mot de passe:"
 
 #: dhost/users/templates/users/emails/password_reset_email.html:8
 msgid "Your username, in case you’ve forgotten:"
-msgstr "Si vous avez oublie, votre nom d'utilisateur est:"
+msgstr "Si vous avez oublié, votre nom d'utilisateur est:"
 
 #: dhost/users/templates/users/emails/password_reset_email.html:10
 msgid "Thanks for using our site!"
@@ -330,20 +330,20 @@ msgstr "Merci d'utiliser notre site!"
 #: dhost/users/templates/users/emails/password_reset_email.html:12
 #, python-format
 msgid "The %(site_name)s team"
-msgstr "L'equipe de %(site_name)s"
+msgstr "L'équipe de %(site_name)s"
 
 #: dhost/users/templates/users/emails/password_reset_subject.txt:2
 #, python-format
 msgid "Password reset on %(site_name)s"
-msgstr "Reinitialisation de mot de passe sur %(site_name)s"
+msgstr "Réinitialisation de mot de passe sur %(site_name)s"
 
 #: dhost/users/templates/users/logged_out.html:6
 msgid "Thanks for spending some quality time with the Web site today."
-msgstr "Merci d'avoir passée du temps de qualité sur notre site aujourd'hui."
+msgstr "Merci d'avoir passé du temps de qualité sur notre site aujourd'hui."
 
 #: dhost/users/templates/users/logged_out.html:8
 msgid "Log in again"
-msgstr "Connectez vous a nouveau"
+msgstr "Connectez vous à nouveau"
 
 #: dhost/users/templates/users/login.html:18
 #, python-format
@@ -351,7 +351,7 @@ msgid ""
 "You are authenticated as %(username)s, but are not authorized to access this "
 "page. Would you like to login to a different account?"
 msgstr ""
-"Vous etes connecté en tant que %(username)s, mais vous n'avez pas acces a "
+"Vous êtes connectés en tant que %(username)s, mais vous n'avez pas accès à "
 "cette page. Voulez vous vous connecter avec un compte différent ?"
 
 #: dhost/users/templates/users/login.html:44
@@ -359,13 +359,12 @@ msgid "Forgotten your password or username?"
 msgstr "Mot de passe ou nom d'utilisateur oublié ?"
 
 #: dhost/users/templates/users/login.html:48
-#: dhost/users/templates/users/password_reset_complete.html:8
-msgid "Log in"
+msgid "Login"
 msgstr "Connexion"
 
 #: dhost/users/templates/users/password_change_done.html:5
 msgid "Your password was changed."
-msgstr "Votre mot de passe à changé."
+msgstr "Votre mot de passe a changé."
 
 #: dhost/users/templates/users/password_change_form.html:10
 msgid "Please correct the error below."
@@ -394,12 +393,16 @@ msgid "Your password has been set.  You may go ahead and log in now."
 msgstr ""
 "Votre mot de passe a été mis a jour. Vous pouvez désormais vous connecter."
 
+#: dhost/users/templates/users/password_reset_complete.html:8
+msgid "Log in"
+msgstr "Connexion"
+
 #: dhost/users/templates/users/password_reset_confirm.html:8
 msgid ""
 "Please enter your new password twice so we can verify you typed it in "
 "correctly."
 msgstr ""
-"Merci saisir votre mot de passe deux fois afin que nous puissions confirmer "
+"Merci de saisir votre mot de passe deux fois afin que nous puissions confirmer "
 "que vous l'avez tapé correctement."
 
 #: dhost/users/templates/users/password_reset_confirm.html:15
@@ -424,7 +427,7 @@ msgid ""
 "exists with the email you entered. You should receive them shortly."
 msgstr ""
 "Nous vous avons envoyé un mail avec les instructions pour réinitialiser "
-"votre mot de passe. Si un compte est lié a l'adresse renseigné, vous devriez "
+"votre mot de passe. Si un compte est lié à l'adresse renseigné, vous devriez "
 "les recevoir rapidement."
 
 #: dhost/users/templates/users/password_reset_done.html:11
@@ -433,7 +436,7 @@ msgid ""
 "you registered with, and check your spam folder."
 msgstr ""
 "Si vous ne recevez pas de mail assurez vous que vous avez entré l'adresse "
-"avec laquelle vous vous etes inscrit, et vérifiez votre dossier de spam."
+"avec laquelle vous vous êtes inscrit, et vérifiez votre dossier de spam."
 
 #: dhost/users/templates/users/password_reset_form.html:7
 msgid ""
@@ -451,7 +454,7 @@ msgstr "Adresse mail:"
 msgid "Reset my password"
 msgstr "Réinitialiser mon mot de passe"
 
-#: dhost/users/templates/users/signup.html:11
+#: dhost/users/templates/users/signup.html:15
 msgid "Sign Up"
 msgstr "Inscription"
 

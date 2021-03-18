@@ -49,7 +49,7 @@ urlpatterns = [
     path(
         'settings/delete/',
         views.AccountDeleteView.as_view(),
-        name='account_delete'
+        name='account_delete',
     ),
     path(
         'settings/delete/done/',

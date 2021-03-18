@@ -22,7 +22,7 @@
   </p>
   {% endif %}
 
-  <p>Don't have an account? You can <a href="{% url 'signup' %}">register now</a>.</p>
+  <p>Don't have an account? You can <a href="{% url "signup" %}">sign up now</a>.</p>
 
   <button class="btn btn-primary mb-2">
     <a href="{% url 'social:begin' 'github' %}">Login with Github</a>
@@ -41,11 +41,11 @@
     {% url 'password_reset' as password_reset_url %}
     {% if password_reset_url %}
     <div class="password-reset-link">
-      <a href="{{ password_reset_url }}">{% translate 'Forgotten your password or username?' %}</a>
+      <a href="{{ password_reset_url }}">{% translate "Forgotten your password or username?" %}</a>
     </div>
     {% endif %}
     <div class="submit-row">
-      <input type="submit" value="{% translate 'Log in' %}">
+      <input type="submit" value="{% translate "Login" %}">
     </div>
   </form>
 

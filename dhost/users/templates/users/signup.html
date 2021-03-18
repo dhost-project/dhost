@@ -3,7 +3,11 @@
 
 {% block content %}
 
-<p>Already have an account? Then please <a href="{% url 'login' %}">sign in</a>.</p>
+<p>Already have an account? Then please <a href="{% url 'login' %}">login</a>.</p>
+
+<button class="btn btn-primary mb-2">
+  <a href="{% url 'social:begin' 'github' %}">Sign up with Github</a>
+</button>
 
 <form method="POST" id="form_register">
   {% csrf_token %}

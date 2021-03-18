@@ -51,9 +51,7 @@ class GithubAPI:
         else:
             raise Exception(
                 'Error trying to access `{}`, error code: {}'.format(
-                    url, r.status_code
-                )
-            )
+                    url, r.status_code))
 
     def request_private_repo_access(self):
         """Request access to public and private repositories hooks.
