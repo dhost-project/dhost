@@ -13,6 +13,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='application',
             name='logo',
-            field=models.ImageField(blank=True, null=True, upload_to='oauth2_provider_app_logos/'),
+            field=models.ImageField(blank=True,
+                                    null=True,
+                                    upload_to='oauth2_provider_app_logos/'),
         ),
     ]

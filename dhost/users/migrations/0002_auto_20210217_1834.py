@@ -13,6 +13,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user',
             name='is_active',
-            field=models.BooleanField(default=True, help_text='Unselect this instead of deleting accounts.', verbose_name='active'),
+            field=models.BooleanField(
+                default=True,
+                help_text='Unselect this instead of deleting accounts.',
+                verbose_name='active'),
         ),
     ]

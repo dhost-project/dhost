@@ -19,9 +19,19 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Bundle',
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('folder', models.FilePathField(allow_folders=True, blank=True, null=True, path=dhost.builds.models.bundle_path, verbose_name='folder')),
-                ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
+                ('id',
+                 models.UUIDField(default=uuid.uuid4,
+                                  editable=False,
+                                  primary_key=True,
+                                  serialize=False)),
+                ('folder',
+                 models.FilePathField(allow_folders=True,
+                                      blank=True,
+                                      null=True,
+                                      path=dhost.builds.models.bundle_path,
+                                      verbose_name='folder')),
+                ('created_at',
+                 models.DateTimeField(default=django.utils.timezone.now)),
             ],
             options={
                 'verbose_name': 'bundle',
@@ -36,11 +46,22 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='buildoptions',
             name='source',
-            field=models.FilePathField(allow_folders=True, blank=True, max_length=1024, null=True, path=dhost.builds.models.source_path, recursive=True, verbose_name='Source folder'),
+            field=models.FilePathField(allow_folders=True,
+                                       blank=True,
+                                       max_length=1024,
+                                       null=True,
+                                       path=dhost.builds.models.source_path,
+                                       recursive=True,
+                                       verbose_name='Source folder'),
         ),
         migrations.AlterField(
             model_name='build',
             name='bundle',
-            field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='builds.bundle', verbose_name='bundle'),
+            field=models.OneToOneField(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to='builds.bundle',
+                verbose_name='bundle'),
         ),
     ]

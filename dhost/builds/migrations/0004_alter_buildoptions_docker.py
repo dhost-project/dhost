@@ -13,6 +13,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='buildoptions',
             name='docker',
-            field=models.CharField(blank=True, help_text='Container used for the build process.', max_length=128),
+            field=models.CharField(
+                blank=True,
+                help_text='Container used for the build process.',
+                max_length=128),
         ),
     ]
