@@ -15,6 +15,10 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='bundle',
             name='folder',
-            field=models.FilePathField(allow_folders=True, blank=True, null=True, path=dhost.builds.models.bundle_path, verbose_name='folder'),
+            field=models.FilePathField(allow_folders=True,
+                                       blank=True,
+                                       null=True,
+                                       path=dhost.builds.models.bundle_path,
+                                       verbose_name='folder'),
         ),
     ]

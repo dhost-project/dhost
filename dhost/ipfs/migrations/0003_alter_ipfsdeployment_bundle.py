@@ -15,6 +15,10 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='ipfsdeployment',
             name='bundle',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='deployments', related_query_name='deployments', to='builds.bundle'),
+            field=models.ForeignKey(null=True,
+                                    on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='deployments',
+                                    related_query_name='deployments',
+                                    to='builds.bundle'),
         ),
     ]

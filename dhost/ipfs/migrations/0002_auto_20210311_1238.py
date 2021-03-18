@@ -13,11 +13,17 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name='ipfsdapp',
-            options={'verbose_name': 'IPFS Dapp', 'verbose_name_plural': 'IPFS Dapps'},
+            options={
+                'verbose_name': 'IPFS Dapp',
+                'verbose_name_plural': 'IPFS Dapps'
+            },
         ),
         migrations.AlterModelOptions(
             name='ipfsdeployment',
-            options={'verbose_name': 'IPFS Deployment', 'verbose_name_plural': 'IPFS Deployments'},
+            options={
+                'verbose_name': 'IPFS Deployment',
+                'verbose_name_plural': 'IPFS Deployments'
+            },
         ),
         migrations.RemoveField(
             model_name='ipfsdeployment',

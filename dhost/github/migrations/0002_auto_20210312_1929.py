@@ -16,17 +16,25 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='github',
             name='owner',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='users.user'),
+            field=models.ForeignKey(default=1,
+                                    on_delete=django.db.models.deletion.CASCADE,
+                                    to='users.user'),
             preserve_default=False,
         ),
         migrations.AlterField(
             model_name='github',
             name='id',
-            field=models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID'),
+            field=models.BigAutoField(auto_created=True,
+                                      primary_key=True,
+                                      serialize=False,
+                                      verbose_name='ID'),
         ),
         migrations.AlterField(
             model_name='githubcommit',
             name='id',
-            field=models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID'),
+            field=models.BigAutoField(auto_created=True,
+                                      primary_key=True,
+                                      serialize=False,
+                                      verbose_name='ID'),
         ),
     ]
