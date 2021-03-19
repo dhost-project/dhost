@@ -54,5 +54,5 @@ from django.test import TestCase, override_settings
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
 class ExampleTestCase(TestCase):
-    [...]
+   [...]
 ```

@@ -87,4 +87,3 @@ With the user credentials the CLI will be able to call:
 ```
 curl -X POST -H "Cache-Control: no-cache" -H "Content-Type: application/x-www-form-urlencoded" "http://localhost:8000/oauth2/token/" -d "client_id=test" -d "username=admin" -d "password=admin" -d "grant_type=password"
 ```
-
