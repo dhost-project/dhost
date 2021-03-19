@@ -2,9 +2,9 @@ name: Django CI
 
 on:
   push:
-    branches: [ master, dev ]
+    branches: [ master ]
   pull_request:
-    branches: [ master, dev ]
+    branches: [ master ]
 
 jobs:
   dev:
@@ -76,4 +76,3 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py test --parallel
-

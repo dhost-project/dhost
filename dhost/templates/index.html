@@ -1,16 +1,15 @@
 {% load i18n static %}
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE|default:"en-us" }}">
+<html lang="{{ LANGUAGE_CODE|default:'en-us' }}">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="{% static "favicon.ico" %}" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta name="description" content="DHost"/>
-    <link rel="apple-touch-icon" href="{% static "image/logo192.png" %}" />
+    <meta name="description" content="DHost" />
+    <link rel="apple-touch-icon" href="{% static "images/logo192.png" %}" />
     <title>{% block title %}{% if title %}{{ title }}{% else %}DHost{% endif %}{% endblock %}</title>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-    <link href="{% static 'fontawesome_free/css/all.min.css' %}" rel="stylesheet" type="text/css">
     {% block extrastyle %}{% endblock %}
     {% block extrahead %}{% endblock %}
   </head>

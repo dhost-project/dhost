@@ -11,7 +11,7 @@ charset = utf-8
 
 # Docstrings and comments use max_line_length = 79
 [*.py]
-max_line_length = 119
+max_line_length = 80
 
 [*.html]
 indent_size = 2
@@ -35,3 +35,5 @@ indent_size = 2
 [*.json]
 indent_size = 2
 
+[*.po]
+max_line_length = 79

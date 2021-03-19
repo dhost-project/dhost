@@ -14,6 +14,15 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user',
             name='username',
-            field=models.CharField(error_messages={'unique': 'A user with that username already exists.'}, max_length=150, unique=True, validators=[django.contrib.auth.validators.UnicodeUsernameValidator()], verbose_name='username'),
+            field=models.CharField(
+                error_messages={
+                    'unique': 'A user with that username already exists.'
+                },
+                max_length=150,
+                unique=True,
+                validators=[
+                    django.contrib.auth.validators.UnicodeUsernameValidator()
+                ],
+                verbose_name='username'),
         ),
     ]

@@ -17,8 +17,9 @@ class GithubAPI:
 
     def _get_social(self):
         try:
-            self.social = user.social_auth.get(provider='github')
-        except:
+            self.social = self.user.social_auth.get(provider='github')
+        # TODO Do not use bare 'except'
+        except:  # noqa
             raise Exception("User doesn't have github account linked.")
         else:
             self.github_name = self.social['login']
@@ -48,7 +49,9 @@ class GithubAPI:
         if r.status_code == 200:
             return r.response.json()
         else:
-            raise Exception('Error trying to access `{}`, error code: {}'.format(url, r.status_code))
+            raise Exception(
+                'Error trying to access `{}`, error code: {}'.format(
+                    url, r.status_code))
 
     def request_private_repo_access(self):
         """Request access to public and private repositories hooks.

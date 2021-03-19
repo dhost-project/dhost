@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Local apps
     'dhost.builds',
+    'dhost.core',
+    'dhost.dapps',
     'dhost.github',
     'dhost.ipfs',
     'dhost.users',
@@ -60,11 +62,14 @@ INSTALLED_APPS = [
     'storages',
 ]
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'oauth2_provider.middleware.OAuth2TokenMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -95,55 +100,80 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dhost.wsgi.application'
 
-DATABASES = {'default': dj_database_url.config(default='sqlite:///db.sqlite3', conn_max_age=600)}
+DATABASES = {
+    'default':
+        dj_database_url.config(default='sqlite:///db.sqlite3', conn_max_age=600)
+}
 
 AUTH_USER_MODEL = 'users.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+                'UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
+
+LANGUAGES = [
+    ('en', 'English'),
+    ('fr', 'Français'),
+]
 
 CSRF_COOKIE_SECURE = env_bool('CSRF_COOKIE_SECURE', False)
 SESSION_COOKIE_SECURE = env_bool('SESSION_COOKIE_SECURE', False)
 
 STATIC_URL = env('STATIC_URL', '/static/')
-STATIC_ROOT = BASE_DIR / 'static'
-STATICFILES_DIRS = [BASE_DIR / 'dhost/static']
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'dhost/static')]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = env('MEDIA_URL', '/media/')
-MEDIA_ROOT = env('MEDIA_ROOT', BASE_DIR / 'media')
+MEDIA_ROOT = env('MEDIA_ROOT', os.path.join(BASE_DIR, 'media'))
 
 EMAIL_HOST = env('EMAIL_HOST', 'localhost')
 EMAIL_PORT = env('EMAIL_PORT', 1025)
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', 'noreply@localhost')
 SERVER_EMAIL = env('SERVER_EMAIL', 'root@localhost')
 
-LOGIN_URL = '/admin/login/'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+# auth
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'account_settings'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'login'
+
+# test
+# putting the `TEST_DIR` inside the `.cache` folder protect from loosing data
+# that musn't be deleted
+TEST_DIR = os.path.join(env('TEST_DIR', '.cache'), '.test_dir')
+TEST_MEDIA_ROOT = env('TEST_MEDIA_ROOT', os.path.join(TEST_DIR, 'media'))
 
 # REST
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'],
-    'DEFAULT_AUTHENTICATION_CLASSES': ['oauth2_provider.contrib.rest_framework.OAuth2Authentication'],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication'
+    ],
 }
 
 # OAuth2 provider
@@ -205,7 +235,7 @@ if SENTRY_DSN:
     )
 
 # Debug-toolbar
-ENABLE_DEBUG_TOOLBAR = env_bool('DEBUG_TOOLBAR', False)
+ENABLE_DEBUG_TOOLBAR = env_bool('ENABLE_DEBUG_TOOLBAR', False)
 if ENABLE_DEBUG_TOOLBAR:
     INSTALLED_APPS.append('debug_toolbar')
     MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
@@ -223,14 +253,16 @@ if ENABLE_DEBUG_TOOLBAR:
 ENABLE_RECAPTCHA = env_bool('ENABLE_RECAPTCHA', False)
 if ENABLE_RECAPTCHA:
     INSTALLED_APPS.append('captcha')
-    RECAPTCHA_PUBLIC_KEY = env('RECAPTCHA_PUBLIC_KEY', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI')
-    RECAPTCHA_PRIVATE_KEY = env('RECAPTCHA_PRIVATE_KEY', '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe')
+    RECAPTCHA_PUBLIC_KEY = env('RECAPTCHA_PUBLIC_KEY',
+                               '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI')
+    RECAPTCHA_PRIVATE_KEY = env('RECAPTCHA_PRIVATE_KEY',
+                                '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe')
 
     if DEBUG:
         # silence the warning about the missing keys
         SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 
-    # changing the allauth signup form to use the captcha
+    # changing the signup form to use the captcha
     ACCOUNT_FORMS = {
         'signup': 'dhost.users.forms.CaptchaSignupForm',
     }
