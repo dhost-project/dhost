@@ -1,0 +1,11 @@
+{% extends "users/base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<form method="POST">
+  {% csrf_token %}
+  <button class="btn btn-raised btn-primary" type="submit">{% trans "Export account's data." %}</button>
+</form>
+
+{% endblock %}

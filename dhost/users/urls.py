@@ -47,6 +47,11 @@ urlpatterns = [
         name='password_change_done',
     ),
     path(
+        'settings/export_data/',
+        views.ExportDataView.as_view(),
+        name='export_data',
+    ),
+    path(
         'settings/delete/',
         views.AccountDeleteView.as_view(),
         name='account_delete',

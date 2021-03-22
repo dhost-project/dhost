@@ -8,23 +8,21 @@ class SettingsScopes(BaseScopes):
             'read': 'Full read scope',
             'write': 'Full write scope',
             'delete': 'Full delete scope',
-            'groups': 'Groups scope',
+            'user': 'User read write scope',
+            'user:read': 'User read scope',
+            'user:email': 'User email read scope',
         }
 
-    def get_available_scopes(
-        self,
-        application=None,
-        request=None,
-        *args,
-        **kwargs,
-    ):
-        return ['read', 'write', 'delete']
+    def get_available_scopes(self,
+                             application=None,
+                             request=None,
+                             *args,
+                             **kwargs):
+        return ['read', 'write', 'delete', 'user', 'user:read', 'user:email']
 
-    def get_default_scopes(
-        self,
-        application=None,
-        request=None,
-        *args,
-        **kwargs,
-    ):
-        return ['read']
+    def get_default_scopes(self,
+                           application=None,
+                           request=None,
+                           *args,
+                           **kwargs):
+        return ['user:read']

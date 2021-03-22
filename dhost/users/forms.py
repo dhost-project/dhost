@@ -29,7 +29,7 @@ class CaptchaSignupForm(SignupForm):
     captcha = ReCaptchaField()
 
     def save(self, request):
-        user = super(CaptchaSignupForm, self).save(request)
+        user = super().save(request)
         return user
 
 
@@ -37,5 +37,5 @@ class AccountSettingsForm(ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name')
+        fields = ('username', 'email', 'first_name', 'last_name', 'avatar')
         field_classes = {'username': UsernameField}

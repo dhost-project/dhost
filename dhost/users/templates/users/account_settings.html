@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form }}
   <button class="btn btn-raised btn-primary" type="submit">{% trans "Update account" %}</button>

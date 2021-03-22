@@ -9,7 +9,7 @@
   <a href="{% url 'social:begin' 'github' %}">Sign up with Github</a>
 </button>
 
-<form method="POST" id="form_register">
+<form method="POST">
   {% csrf_token %}
   {{ form }}
   <button class="btn btn-raised btn-primary" type="submit">{% trans "Sign Up" %}</button>
