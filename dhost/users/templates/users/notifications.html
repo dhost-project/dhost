@@ -1,0 +1,12 @@
+{% extends "users/base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<form method="POST" id="form_register">
+  {% csrf_token %}
+  {{ form }}
+  <button class="btn btn-raised btn-primary" type="submit">{% trans "Update notifications" %}</button>
+</form>
+
+{% endblock %}

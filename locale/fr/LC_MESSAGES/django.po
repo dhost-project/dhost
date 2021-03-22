@@ -27,14 +27,10 @@ msgid "build command"
 msgstr "commande de build"
 
 #: dhost/builds/models.py:35
-#, fuzzy
-#| msgid "Command used during the build process."
 msgid "Command used during the build process."
 msgstr "Commande utilisée pour le processus de build."
 
 #: dhost/builds/models.py:40
-#, fuzzy
-#| msgid "Command used during the build process."
 msgid "Container used for the build process."
 msgstr "Commande utilisée pour le processus de build."
 
@@ -227,8 +223,6 @@ msgid "Personal info"
 msgstr "Info personnelles"
 
 #: dhost/users/admin.py:15
-#, fuzzy
-#| msgid "Permission denied"
 msgid "Permissions"
 msgstr "Permissions"
 
@@ -290,7 +284,7 @@ msgstr "utilisateurs"
 
 #: dhost/users/templates/users/account_delete.html:10
 #: dhost/users/templates/users/account_settings.html:13
-#: dhost/users/views.py:183
+#: dhost/users/views.py:203
 msgid "Delete account"
 msgstr "Supprimer le compte"
 
@@ -337,6 +331,10 @@ msgstr "L'équipe de %(site_name)s"
 msgid "Password reset on %(site_name)s"
 msgstr "Réinitialisation de mot de passe sur %(site_name)s"
 
+#: dhost/users/templates/users/export_data.html:8
+msgid "Export account's data."
+msgstr "Exporter les données de compte"
+
 #: dhost/users/templates/users/logged_out.html:6
 msgid "Thanks for spending some quality time with the Web site today."
 msgstr "Merci d'avoir passé du temps de qualité sur notre site aujourd'hui."
@@ -361,6 +359,10 @@ msgstr "Mot de passe ou nom d'utilisateur oublié ?"
 #: dhost/users/templates/users/login.html:48
 msgid "Login"
 msgstr "Connexion"
+
+#: dhost/users/templates/users/notifications.html:9
+msgid "Update notifications"
+msgstr "Mettre à jour les notifications"
 
 #: dhost/users/templates/users/password_change_done.html:5
 msgid "Your password was changed."
@@ -402,8 +404,8 @@ msgid ""
 "Please enter your new password twice so we can verify you typed it in "
 "correctly."
 msgstr ""
-"Merci de saisir votre mot de passe deux fois afin que nous puissions confirmer "
-"que vous l'avez tapé correctement."
+"Merci de saisir votre mot de passe deux fois afin que nous puissions "
+"confirmer que vous l'avez tapé correctement."
 
 #: dhost/users/templates/users/password_reset_confirm.html:15
 msgid "New password:"
@@ -458,14 +460,18 @@ msgstr "Réinitialiser mon mot de passe"
 msgid "Sign Up"
 msgstr "Inscription"
 
-#: dhost/users/views.py:80
+#: dhost/users/views.py:82
 msgid "Sign up"
 msgstr "Inscription"
 
-#: dhost/users/views.py:149
+#: dhost/users/views.py:147
 msgid "Account settings"
 msgstr "Paramètres de compte"
 
-#: dhost/users/views.py:206
+#: dhost/users/views.py:181
+msgid "Export data"
+msgstr "Exporter les données"
+
+#: dhost/users/views.py:226
 msgid "Delete account successful"
 msgstr "Votre compte à bien été suprimé"

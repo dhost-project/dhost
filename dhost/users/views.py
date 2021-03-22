@@ -5,7 +5,8 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
-from django.http import HttpResponseRedirect
+from django.core import serializers
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import resolve_url
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -172,6 +173,28 @@ class AccountSettingsView(TitleMixin, FormView):
             'An error occured, please try again later',
         )
         return super().form_invalid(form)
+
+
+class ExportDataView(TitleMixin, TemplateView):
+    template_name = 'users/export_data.html'
+    success_url = reverse_lazy('export_data')
+    title = _('Export data')
+
+    @method_decorator(csrf_protect)
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        """
+        Download the user's data has a JSON file
+        """
+        user = request.user
+        data = serializers.serialize('json', [user])
+        response = HttpResponse(data, content_type='application/json')
+        response[
+            'Content-Disposition'] = 'attachment; filename="exported_data.json"'
+        return response
 
 
 class AccountDeleteView(TitleMixin, TemplateView):

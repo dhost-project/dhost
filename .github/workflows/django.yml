@@ -7,40 +7,6 @@ on:
     branches: [ master ]
 
 jobs:
-  dev:
-    runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 4
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: dhost
-          POSTGRES_PASSWORD: dhost
-          POSTGRES_DB: dhost
-        ports:
-          - 5432:5432
-    env:
-      DEBUG: "True"
-      DATABASE_URL: postgres://dhost:dhost@127.0.0.1:5432/dhost
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.9
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install -r requirements_dev.txt
-    - name: Run Check
-      run: |
-        python manage.py check
-    - name: Run Tests
-      run: |
-        python manage.py test --parallel
-
   prod:
     runs-on: ubuntu-latest
     strategy:
