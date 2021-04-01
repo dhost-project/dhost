@@ -10,10 +10,11 @@ class Notification(models.Model):
         related_name='notifications',
         related_query_name='notifications',
     )
-    subject = models.CharField(max_length=200)
-    content = models.TextField(max_length=10000)
-    url = models.URLField(null=True, blank=True)
-    time = models.DateTimeField(auto_now_add=True)
+    subject = models.CharField(_('subject'), max_length=200)
+    content = models.TextField(_('content'), max_length=10000)
+    read = models.BooleanField(_('read'), default=False)
+    url = models.URLField(_('URL'), null=True, blank=True)
+    time = models.DateTimeField(_('time'), auto_now_add=True)
 
     class Meta:
         verbose_name = _('notification')
