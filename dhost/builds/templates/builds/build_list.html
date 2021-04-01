@@ -3,7 +3,10 @@
 
 {% block content %}
 
-<a href="{{ build_options_url }}">Back to build options</a>
+{% if build_options_url %}
+  <a href="{{ build_options_url }}">Back to build options</a>
+{% endif %}
+
 <br>
 
 {% if build_list %}

@@ -5,8 +5,8 @@ from . import views
 urlpatterns = [
     path(
         '<int:pk>/settings/',
-        views.BuildOptionsUpdateView.as_view(),
-        name='build_options_update',
+        views.DappUpdateView.as_view(),
+        name='dapp_update',
     ),
     path(
         '<int:build_op_pk>/env_vars/',
