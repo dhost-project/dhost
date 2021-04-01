@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'dhost.dapps',
     'dhost.github',
     'dhost.ipfs',
+    'dhost.notifications',
     'dhost.users',
     'dhost.oauth2',
     # External apps
