@@ -10,6 +10,15 @@ from .forms import EnvironmentVariableForm
 from .models import Build, BuildOptions, Bundle, EnvironmentVariable
 
 
+class BuildOptionsDetailView(DetailView):
+    """Build options overview, show logs, links to builds, bundles settings"""
+    model = BuildOptions
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+
 class BuildOptionsUpdateView(UpdateView):
     # TODO integrate the `EnvironmentVariableListView` has a formset view mixin
     # to be able to edit the environment variables inside the settings
@@ -89,17 +98,23 @@ class BuildOptionsMixin:
         """Overwrite this function to get the build URL from an id"""
         return None
 
+    def _get_object_build_options(self):
+        """Return the object's options"""
+        if hasattr(self.object, 'options'):
+            return self.object.options
+        return None
+
     def _get_build_options(self):
         """Return a build options object"""
         build_op_id = self._get_build_options_id()
         if build_op_id:
             return self.build_op_model.objects.get(id=build_op_id)
-        return self.object.options
+        return self._get_object_build_options()
 
     def get_build_options_url(self):
         """Return the build options object's URL"""
         build_op = self._get_build_options()
-        if build_op:
+        if build_op and hasattr(build_op, 'get_absolute_url'):
             return build_op.get_absolute_url()
         return None
 

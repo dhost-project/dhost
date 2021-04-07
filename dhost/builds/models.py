@@ -54,9 +54,6 @@ class BuildOptions(models.Model):
     def __str__(self):
         return '{} ({})'.format(self.docker, self.command)
 
-    def get_absolute_url(self):
-        return reverse_lazy('build_options_update', kwargs={'pk': self.id})
-
     def build(self):
         """Create a `Build` object and start the building process from the
         source in the Docker container specified in `docker_container` and with

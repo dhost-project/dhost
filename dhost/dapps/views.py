@@ -1,13 +1,26 @@
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.generic import DetailView, ListView
+
 from dhost.builds import views as builds_views
 
 from .models import Dapp
+
+
+class DappDetailView(builds_views.BuildOptionsDetailView):
+    model = Dapp
+
+    def get_queryset(self):
+        """Filter to only show user's Dapps"""
+        queryset = super().get_queryset()
+        queryset = queryset.filter(owner=self.request.user)
+        return queryset
 
 
 class DappUpdateView(builds_views.BuildOptionsUpdateView):
 
     model = Dapp
     fields = ['name', 'command', 'docker']
-    template_name = 'builds/buildoptions_form.html'
 
     def get_queryset(self):
         """Filter to only show user's Dapps"""
@@ -45,3 +58,25 @@ class BuildListView(DappMixin, builds_views.BuildListView):
 
 class BuildDetailView(DappMixin, builds_views.BuildDetailView):
     pass
+
+
+class AbstractDeploymentListView(DappMixin, builds_views.BuildOptionsMixin,
+                                 ListView):
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def _get_build_options_id(self):
+        return self.kwargs.get(self.build_options_url_kwarg)
+
+
+class AbstractDeploymentDetailView(DappMixin, builds_views.BuildOptionsMixin,
+                                   DetailView):
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def _get_object_build_options(self):
+        return self.object.bundle.options

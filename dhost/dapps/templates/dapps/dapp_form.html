@@ -1,0 +1,22 @@
+{% extends "builds/base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<form method="post">
+  {% csrf_token %}
+  {{ form }}
+  <button type="submit">{% trans "Update" %}</button>
+</form>
+
+{% if bundle_list_url %}
+  <a href="{{ bundle_list_url }}">Bundles</a>
+{% endif %}
+{% if build_list_url %}
+  <a href="{{ build_list_url }}">Builds</a>
+{% endif %}
+{% if deployement_list_url %}
+  <a href="{{ deployement_list_url }}">Deployements</a>
+{% endif %}
+
+{% endblock %}

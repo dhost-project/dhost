@@ -1,0 +1,12 @@
+{% extends "builds/base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+Logs:
+{{ object.logs }}
+
+<a href="{% url 'bundle_list' object.id %}">Bundles</a>
+<a href="{% url 'build_list' object.id %}">Builds</a>
+
+{% endblock %}
