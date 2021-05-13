@@ -10,6 +10,6 @@ COPY requirements_dev.txt /app/
 RUN pip install -r requirements.txt
 RUN pip install -r requirements_dev.txt
 
-COPY . /app/
+ADD . /app/
 
 CMD ["gunicorn", "--bind", ":8000", "dhost.asgi:application", "--workers", "4", "--worker-class", "uvicorn.workers.UvicornWorker"]

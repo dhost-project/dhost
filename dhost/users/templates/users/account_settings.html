@@ -1,15 +1,16 @@
-{% extends "users/base.html" %}
-{% load i18n %}
+{% extends "users/base_card.html" %}
+{% load i18n crispy_forms_tags %}
 
 {% block content %}
-
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
-  {{ form }}
-  <button class="btn btn-raised btn-primary" type="submit">{% trans "Update account" %}</button>
+  {{ form | crispy }}
+  <button class="btn btn-primary" type="submit">{% trans "Update account" %}</button>
 </form>
-
-<a class="btn btn-raised btn-primary" href="{% url 'password_change' %}">{% trans "Change password" %}</a>
-<a class="btn btn-raised btn-primary" href="{% url 'account_delete' %}">{% trans "Delete account" %}</a>
-
+<p class="pt-3">
+<a class="btn btn-secondary" href="{% url 'password_change' %}">{% trans "Change password" %}</a>
+</p>
+<p>
+<a class="btn btn-danger" href="{% url 'account_delete' %}">{% trans "Delete account" %}</a>
+</p>
 {% endblock %}

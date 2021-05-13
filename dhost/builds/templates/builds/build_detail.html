@@ -1,0 +1,13 @@
+{% extends "builds/base.html" %}
+{% load i18n %}
+
+{% block content %}
+{% if build_options_url %}
+  <a class="btn btn-secondary" href="{{ build_options_url }}">Back to build options</a>
+{% endif %}
+{% if build_list_url %}
+  <a class="btn btn-secondary" href="{{ build_list_url }}">Back to builds list</a>
+{% endif %}
+<br>
+{{ build }}
+{% endblock %}

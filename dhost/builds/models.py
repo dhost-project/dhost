@@ -3,6 +3,7 @@ import uuid
 
 from django.conf import settings
 from django.db import models
+from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -68,6 +69,14 @@ class Bundle(models.Model):
     """Bundled web app raidy for deployment"""
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    options = models.ForeignKey(
+        BuildOptions,
+        on_delete=models.CASCADE,
+        related_name='bundles',
+        related_query_name='bundles',
+        null=True,
+        blank=True,
+    )
     folder = models.FilePathField(
         _('folder'),
         null=True,
@@ -88,6 +97,9 @@ class Bundle(models.Model):
     def delete(self):
         # TODO delete bundle folder when deleting the object
         pass
+
+    def get_absolute_url(self):
+        return reverse_lazy('bundle_detail', kwargs={'pk': self.id})
 
 
 class Build(models.Model):
@@ -124,6 +136,8 @@ class Build(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
+        related_name='build',
+        related_query_name='build',
         verbose_name=_('bundle'),
     )
 
@@ -142,6 +156,9 @@ class Build(models.Model):
 
     def __str__(self):
         return 'build:{}'.format(self.id.hex[:7])
+
+    def get_absolute_url(self):
+        return reverse_lazy('build_detail', kwargs={'pk': self.id})
 
     def build(self):
         """
@@ -209,3 +226,7 @@ class EnvironmentVariable(models.Model):
 
     def __str__(self):
         return '{}={}'.format(self.variable, self.value)
+
+    def get_absolute_url(self):
+        return reverse_lazy('env_vars_list',
+                            kwargs={'build_op_pk': self.options.id})

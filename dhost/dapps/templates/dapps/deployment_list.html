@@ -1,0 +1,21 @@
+{% extends "builds/base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+{% if build_options_url %}
+  <a class="btn btn-secondary" href="{{ build_options_url }}">Back to build options</a>
+{% endif %}
+
+<br>
+
+{% if deployment_list %}
+{% for deployment in deployment_list %}
+<a class="btn btn-secondary" href="{{ deployment.get_absolute_url }}">{{ deployment }}</a>
+<br>
+{% endfor %}
+{% else %}
+{% trans 'No deployments available.' %}
+{% endif %}
+
+{% endblock %}
