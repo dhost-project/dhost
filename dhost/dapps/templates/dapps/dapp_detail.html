@@ -3,17 +3,19 @@
 
 {% block content %}
 
+<h1>{{ title }}</h1>
+
 Logs:
 {{ object.logs }}
 
 {% if bundle_list_url %}
-  <a href="{{ bundle_list_url }}">Bundles</a>
+  <a class="btn btn-secondary" href="{{ bundle_list_url }}">Bundles</a>
 {% endif %}
 {% if build_list_url %}
-  <a href="{{ build_list_url }}">Builds</a>
+  <a class="btn btn-secondary" href="{{ build_list_url }}">Builds</a>
 {% endif %}
 {% if deployement_list_url %}
-  <a href="{{ deployement_list_url }}">Deployements</a>
+  <a class="btn btn-secondary" href="{{ deployement_list_url }}">Deployements</a>
 {% endif %}
 
 {% endblock %}

@@ -2,12 +2,10 @@
 {% load i18n static crispy_forms_tags %}
 
 {% block content %}
-
 <div class="bg-light vh-100">
   <div class="container">
     <div class="row justify-content-md-center">
       <div class="col-md-auto">
-
         {% if user.is_authenticated %}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
           {% blocktranslate trimmed %}
@@ -17,36 +15,30 @@
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         {% endif %}
-
       </div>
     </div>
     <div class="row justify-content-md-center pt-5">
       <div class="col-lg-6 col-xl-4">
         <div class="card p-3">
           <p>Don't have an account? You can <a href="{% url "signup" %}">sign up now</a>.</p>
-
           <div class="pb-3">
             <a class="btn btn-primary w-100" href="{% url 'social:begin' 'github' %}">Login with Github</a>
           </div>
-
           <form action="{{ app_path }}" method="post" id="login-form">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ next }}">
             {{ form | crispy }}
             <button type="submit" class="btn btn-primary">{% translate "Login" %}</button>
           </form>
-
           {% url 'password_reset' as password_reset_url %}
           {% if password_reset_url %}
           <div class="my-2">
             <a href="{{ password_reset_url }}">{% translate "Forgotten your password or username?" %}</a>
           </div>
           {% endif %}
-
         </div>
       </div>
     </div>
   </div>
 </div>
-
 {% endblock %}

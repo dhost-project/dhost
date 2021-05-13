@@ -4,14 +4,14 @@
 {% block content %}
 
 {% if build_options_url %}
-  <a href="{{ build_options_url }}">Back to build options</a>
+  <a class="btn btn-secondary" href="{{ build_options_url }}">Back to build options</a>
 {% endif %}
 
 <br>
 
 {% if build_list %}
 {% for build in build_list %}
-<a href="{{ build.get_absolute_url }}">{{ build }}</a>
+<a class="btn btn-secondary" href="{{ build.get_absolute_url }}">{{ build }}</a>
 <br>
 {% endfor %}
 {% else %}
