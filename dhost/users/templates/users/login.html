@@ -1,54 +1,52 @@
 {% extends "users/base.html" %}
-{% load i18n static %}
+{% load i18n static crispy_forms_tags %}
 
 {% block content %}
 
-{% if form.non_field_errors %}
-{% for error in form.non_field_errors %}
-<p class="errornote">
-  {{ error }}
-</p>
-{% endfor %}
-{% endif %}
+<div class="bg-light vh-100">
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-md-auto">
 
-<div id="content-main">
+        {% if user.is_authenticated %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          {% blocktranslate trimmed %}
+          You are authenticated as {{ username }}, but are not authorized to
+          access this page. Would you like to login to a different account?
+          {% endblocktranslate %}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
 
-  {% if user.is_authenticated %}
-  <p class="errornote">
-    {% blocktranslate trimmed %}
-    You are authenticated as {{ username }}, but are not authorized to
-    access this page. Would you like to login to a different account?
-    {% endblocktranslate %}
-  </p>
-  {% endif %}
-
-  <p>Don't have an account? You can <a href="{% url "signup" %}">sign up now</a>.</p>
-
-  <button class="btn btn-primary mb-2">
-    <a href="{% url 'social:begin' 'github' %}">Login with Github</a>
-  </button>
-
-  <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
-    <div class="form-row">
-      {{ form.username.errors }}
-      {{ form.username.label_tag }} {{ form.username }}
+      </div>
     </div>
-    <div class="form-row">
-      {{ form.password.errors }}
-      {{ form.password.label_tag }} {{ form.password }}
-      <input type="hidden" name="next" value="{{ next }}">
-    </div>
-    {% url 'password_reset' as password_reset_url %}
-    {% if password_reset_url %}
-    <div class="password-reset-link">
-      <a href="{{ password_reset_url }}">{% translate "Forgotten your password or username?" %}</a>
-    </div>
-    {% endif %}
-    <div class="submit-row">
-      <input type="submit" value="{% translate "Login" %}">
-    </div>
-  </form>
+    <div class="row justify-content-md-center pt-5">
+      <div class="col-lg-6 col-xl-4">
+        <div class="card p-3">
+          <p>Don't have an account? You can <a href="{% url "signup" %}">sign up now</a>.</p>
 
+          <div class="pb-3">
+            <a class="btn btn-primary w-100" href="{% url 'social:begin' 'github' %}">Login with Github</a>
+          </div>
+
+          <form action="{{ app_path }}" method="post" id="login-form">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}">
+            {{ form | crispy }}
+            <button type="submit" class="btn btn-primary">{% translate "Login" %}</button>
+          </form>
+
+          {% url 'password_reset' as password_reset_url %}
+          {% if password_reset_url %}
+          <div class="my-2">
+            <a href="{{ password_reset_url }}">{% translate "Forgotten your password or username?" %}</a>
+          </div>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}

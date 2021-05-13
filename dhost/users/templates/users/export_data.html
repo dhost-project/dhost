@@ -1,11 +1,10 @@
-{% extends "users/base.html" %}
+{% extends "users/base_card.html" %}
 {% load i18n %}
 
 {% block content %}
-
+<a href="{% url 'account_settings' %}">back to settings</a>
 <form method="POST">
   {% csrf_token %}
-  <button class="btn btn-raised btn-primary" type="submit">{% trans "Export account's data." %}</button>
+  <button class="btn btn-primary" type="submit">{% trans "Export account's data." %}</button>
 </form>
-
 {% endblock %}

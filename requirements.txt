@@ -1,6 +1,8 @@
 boto3==1.17.20
+crispy-bootstrap5==0.3.1
 dj-database-url==0.5.0
 django==3.2rc1
+django-crispy-forms==1.11.2
 django-oauth-toolkit==1.4.0
 django-otp==1.0.2
 django-recaptcha==2.0.6
