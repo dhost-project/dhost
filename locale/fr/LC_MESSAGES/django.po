@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-16 20:20+0000\n"
+"POT-Creation-Date: 2021-05-13 20:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,137 +18,167 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: dhost/builds/models.py:29 dhost/builds/models.py:120
+#: dhost/builds/models.py:30 dhost/builds/models.py:132
 msgid "Source folder"
 msgstr "Dossier source"
 
-#: dhost/builds/models.py:32
+#: dhost/builds/models.py:33
 msgid "build command"
 msgstr "commande de build"
 
-#: dhost/builds/models.py:35
+#: dhost/builds/models.py:36
 msgid "Command used during the build process."
 msgstr "Commande utilisée pour le processus de build."
 
-#: dhost/builds/models.py:40
+#: dhost/builds/models.py:41
 msgid "Container used for the build process."
 msgstr "Commande utilisée pour le processus de build."
 
-#: dhost/builds/models.py:44
+#: dhost/builds/models.py:45
 msgid "build options"
 msgstr "options de build"
 
-#: dhost/builds/models.py:45
+#: dhost/builds/models.py:46
 msgid "builds options"
 msgstr "options des builds"
 
-#: dhost/builds/models.py:72
+#: dhost/builds/models.py:81
 msgid "folder"
 msgstr "dossier"
 
-#: dhost/builds/models.py:82 dhost/builds/models.py:127
+#: dhost/builds/models.py:91 dhost/builds/models.py:141
 msgid "bundle"
 msgstr "bundle"
 
-#: dhost/builds/models.py:83
+#: dhost/builds/models.py:92
 msgid "bundles"
 msgstr "bundles"
 
-#: dhost/builds/models.py:106
+#: dhost/builds/models.py:118
 msgid "Based on the build return code"
 msgstr "Basé sur le code de retour du build"
 
-#: dhost/builds/models.py:110
+#: dhost/builds/models.py:122
 msgid "Raw logs output of the build process"
 msgstr "Logs brut du processus de build"
 
-#: dhost/builds/models.py:134
+#: dhost/builds/models.py:148
 msgid "build"
 msgstr "build"
 
-#: dhost/builds/models.py:135
+#: dhost/builds/models.py:149
 msgid "builds"
 msgstr "builds"
 
-#: dhost/builds/models.py:207
+#: dhost/builds/models.py:224
 msgid "environment variable"
 msgstr "variable d'environnement"
 
-#: dhost/builds/models.py:208
+#: dhost/builds/models.py:225
 msgid "environment variables"
 msgstr "variables d'environnement"
 
-#: dhost/dapps/models.py:13
+#: dhost/builds/templates/builds/build_list.html:18
+msgid "No builds available."
+msgstr ""
+
+#: dhost/builds/templates/builds/buildoptions_create_form.html:8
+#: dhost/dapps/templates/dapps/dapp_create_form.html:8
+msgid "Create"
+msgstr "création"
+
+#: dhost/builds/templates/builds/buildoptions_form.html:9
+#: dhost/dapps/templates/dapps/dapp_form.html:9
+msgid "Update"
+msgstr "Mettre à jour"
+
+#: dhost/builds/templates/builds/bundle_list.html:18
+msgid "No bundles available."
+msgstr "Pas de bundles disponible"
+
+#: dhost/builds/templates/builds/environmentvariable_form.html:9
+msgid "Add"
+msgstr "Ajouter"
+
+#: dhost/builds/templates/builds/environmentvariable_list.html:12
+msgid "No environment variables set yet."
+msgstr "Pas encore de variables d'environnement assigné."
+
+#: dhost/dapps/models.py:14
 msgid "dapp name"
 msgstr "nom de la dapp"
 
-#: dhost/dapps/models.py:17
+#: dhost/dapps/models.py:18
 msgid "A dapp with that name already exists."
 msgstr "Une dapp avec ce nom existe déjà."
 
-#: dhost/dapps/models.py:22
+#: dhost/dapps/models.py:23
 msgid "owner"
 msgstr "propriétaire"
 
-#: dhost/dapps/models.py:28
+#: dhost/dapps/models.py:29 dhost/notifications/models.py:16
 msgid "URL"
 msgstr "URL"
 
-#: dhost/dapps/models.py:44 dhost/dapps/models.py:97
+#: dhost/dapps/models.py:45 dhost/dapps/models.py:101
 msgid "Stoped"
 msgstr "Arrêté"
 
-#: dhost/dapps/models.py:45
+#: dhost/dapps/models.py:46
 msgid "Building"
 msgstr "En construction"
 
-#: dhost/dapps/models.py:46
+#: dhost/dapps/models.py:47
 msgid "Builed"
 msgstr "Construit"
 
-#: dhost/dapps/models.py:47 dhost/dapps/models.py:98
+#: dhost/dapps/models.py:48 dhost/dapps/models.py:102
 msgid "Deploying"
 msgstr "En cours de déploiement"
 
-#: dhost/dapps/models.py:48 dhost/dapps/models.py:99
+#: dhost/dapps/models.py:49 dhost/dapps/models.py:103
 msgid "Starting"
 msgstr "En cour de démarrage"
 
-#: dhost/dapps/models.py:49 dhost/dapps/models.py:100
+#: dhost/dapps/models.py:50 dhost/dapps/models.py:104
 msgid "Running"
 msgstr "En route"
 
-#: dhost/dapps/models.py:50 dhost/dapps/models.py:101
+#: dhost/dapps/models.py:51 dhost/dapps/models.py:105
 msgid "Unavailable"
 msgstr "Indisponible"
 
-#: dhost/dapps/models.py:51
+#: dhost/dapps/models.py:52
 msgid "Error"
 msgstr "Erreur"
 
-#: dhost/dapps/models.py:54
+#: dhost/dapps/models.py:55
 msgid "status"
 msgstr "status"
 
-#: dhost/dapps/models.py:60
+#: dhost/dapps/models.py:61
 msgid "created"
 msgstr "création"
 
-#: dhost/dapps/models.py:63
+#: dhost/dapps/models.py:64
 msgid "dapp"
 msgstr "dapp"
 
-#: dhost/dapps/models.py:64
+#: dhost/dapps/models.py:65
 msgid "dapps"
 msgstr "dapps"
 
-#: dhost/dapps/models.py:113
+#: dhost/dapps/models.py:117
 msgid "deployment"
 msgstr "déploiement"
 
-#: dhost/dapps/models.py:114
+#: dhost/dapps/models.py:118
 msgid "deployments"
 msgstr "déploiements"
+
+#: dhost/dapps/templates/dapps/deployment_list.html:18
+msgid "No deployments available."
+msgstr "Pas de déploiements disponible."
 
 #: dhost/ipfs/models.py:10 dhost/ipfs/models.py:26
 msgid "IPFS hash"
@@ -169,6 +199,30 @@ msgstr "Déploiement IPFS"
 #: dhost/ipfs/models.py:30
 msgid "IPFS Deployments"
 msgstr "Déploiements IPFS"
+
+#: dhost/notifications/models.py:13
+msgid "subject"
+msgstr "sujet"
+
+#: dhost/notifications/models.py:14
+msgid "content"
+msgstr "contenu"
+
+#: dhost/notifications/models.py:15
+msgid "read"
+msgstr "lecture"
+
+#: dhost/notifications/models.py:17
+msgid "time"
+msgstr "heure"
+
+#: dhost/notifications/models.py:20
+msgid "notification"
+msgstr "notification"
+
+#: dhost/notifications/models.py:21
+msgid "notifications"
+msgstr "notifications"
 
 #: dhost/templates/400.html:4
 msgid "Bad request"
@@ -282,21 +336,21 @@ msgstr "utilisateur"
 msgid "users"
 msgstr "utilisateurs"
 
-#: dhost/users/templates/users/account_delete.html:10
-#: dhost/users/templates/users/account_settings.html:13
+#: dhost/users/templates/users/account_delete.html:8
+#: dhost/users/templates/users/account_settings.html:14
 #: dhost/users/views.py:203
 msgid "Delete account"
 msgstr "Supprimer le compte"
 
-#: dhost/users/templates/users/account_delete_done.html:6
-msgid "Your account have been successfully deleted."
+#: dhost/users/templates/users/account_delete_done.html:5
+msgid "Your account has been successfully deleted."
 msgstr "Votre compte à été supprimé avec succès"
 
-#: dhost/users/templates/users/account_settings.html:9
+#: dhost/users/templates/users/account_settings.html:8
 msgid "Update account"
 msgstr "Mettre à jour le compte"
 
-#: dhost/users/templates/users/account_settings.html:12
+#: dhost/users/templates/users/account_settings.html:11
 msgid "Change password"
 msgstr "Changer de mot de passe"
 
@@ -335,15 +389,16 @@ msgstr "Réinitialisation de mot de passe sur %(site_name)s"
 msgid "Export account's data."
 msgstr "Exporter les données de compte"
 
-#: dhost/users/templates/users/logged_out.html:6
+#: dhost/users/templates/users/logged_out.html:5
 msgid "Thanks for spending some quality time with the Web site today."
 msgstr "Merci d'avoir passé du temps de qualité sur notre site aujourd'hui."
 
-#: dhost/users/templates/users/logged_out.html:8
+#: dhost/users/templates/users/logged_out.html:6
 msgid "Log in again"
 msgstr "Connectez vous à nouveau"
 
-#: dhost/users/templates/users/login.html:18
+#: dhost/users/templates/users/login.html:11
+#: dhost/users/templates/users/signup.html:11
 #, python-format
 msgid ""
 "You are authenticated as %(username)s, but are not authorized to access this "
@@ -352,13 +407,13 @@ msgstr ""
 "Vous êtes connectés en tant que %(username)s, mais vous n'avez pas accès à "
 "cette page. Voulez vous vous connecter avec un compte différent ?"
 
-#: dhost/users/templates/users/login.html:44
-msgid "Forgotten your password or username?"
-msgstr "Mot de passe ou nom d'utilisateur oublié ?"
-
-#: dhost/users/templates/users/login.html:48
+#: dhost/users/templates/users/login.html:31
 msgid "Login"
 msgstr "Connexion"
+
+#: dhost/users/templates/users/login.html:36
+msgid "Forgotten your password or username?"
+msgstr "Mot de passe ou nom d'utilisateur oublié ?"
 
 #: dhost/users/templates/users/notifications.html:9
 msgid "Update notifications"
@@ -368,15 +423,7 @@ msgstr "Mettre à jour les notifications"
 msgid "Your password was changed."
 msgstr "Votre mot de passe a changé."
 
-#: dhost/users/templates/users/password_change_form.html:10
-msgid "Please correct the error below."
-msgstr "Merci de corriger l'erreur ci-dessous."
-
-#: dhost/users/templates/users/password_change_form.html:10
-msgid "Please correct the errors below."
-msgstr "Merci de corriger l'erreur ci-dessous."
-
-#: dhost/users/templates/users/password_change_form.html:15
+#: dhost/users/templates/users/password_change_form.html:7
 msgid ""
 "Please enter your old password, for security’s sake, and then enter your new "
 "password twice so we can verify you typed it in correctly."
@@ -385,21 +432,21 @@ msgstr ""
 "ensuite entrez votre nouveau mot de passe deux fois pour confirmer qu'il a "
 "été tapé correctement."
 
-#: dhost/users/templates/users/password_change_form.html:40
-#: dhost/users/templates/users/password_reset_confirm.html:23
+#: dhost/users/templates/users/password_change_form.html:12
+#: dhost/users/templates/users/password_reset_confirm.html:13
 msgid "Change my password"
 msgstr "Changer mon mot de passe"
 
-#: dhost/users/templates/users/password_reset_complete.html:6
+#: dhost/users/templates/users/password_reset_complete.html:5
 msgid "Your password has been set.  You may go ahead and log in now."
 msgstr ""
 "Votre mot de passe a été mis a jour. Vous pouvez désormais vous connecter."
 
-#: dhost/users/templates/users/password_reset_complete.html:8
+#: dhost/users/templates/users/password_reset_complete.html:6
 msgid "Log in"
 msgstr "Connexion"
 
-#: dhost/users/templates/users/password_reset_confirm.html:8
+#: dhost/users/templates/users/password_reset_confirm.html:7
 msgid ""
 "Please enter your new password twice so we can verify you typed it in "
 "correctly."
@@ -407,15 +454,7 @@ msgstr ""
 "Merci de saisir votre mot de passe deux fois afin que nous puissions "
 "confirmer que vous l'avez tapé correctement."
 
-#: dhost/users/templates/users/password_reset_confirm.html:15
-msgid "New password:"
-msgstr "Nouveau mot de passe:"
-
-#: dhost/users/templates/users/password_reset_confirm.html:20
-msgid "Confirm password:"
-msgstr "Confirmez le mot de passe:"
-
-#: dhost/users/templates/users/password_reset_confirm.html:30
+#: dhost/users/templates/users/password_reset_confirm.html:17
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a new password reset."
@@ -423,7 +462,7 @@ msgstr ""
 "Le lien de réinitialisation n'est pas valide, il a probablement déja été "
 "utilisé. Merci de refaire une demande de réinitialisation."
 
-#: dhost/users/templates/users/password_reset_done.html:7
+#: dhost/users/templates/users/password_reset_done.html:6
 msgid ""
 "We’ve emailed you instructions for setting your password, if an account "
 "exists with the email you entered. You should receive them shortly."
@@ -432,7 +471,7 @@ msgstr ""
 "votre mot de passe. Si un compte est lié à l'adresse renseigné, vous devriez "
 "les recevoir rapidement."
 
-#: dhost/users/templates/users/password_reset_done.html:11
+#: dhost/users/templates/users/password_reset_done.html:9
 msgid ""
 "If you don’t receive an email, please make sure you’ve entered the address "
 "you registered with, and check your spam folder."
@@ -440,7 +479,7 @@ msgstr ""
 "Si vous ne recevez pas de mail assurez vous que vous avez entré l'adresse "
 "avec laquelle vous vous êtes inscrit, et vérifiez votre dossier de spam."
 
-#: dhost/users/templates/users/password_reset_form.html:7
+#: dhost/users/templates/users/password_reset_form.html:6
 msgid ""
 "Forgotten your password? Enter your email address below, and we’ll email "
 "instructions for setting a new one."
@@ -448,15 +487,11 @@ msgstr ""
 "Mot de passe oublié ? Entrez votre adresse mail ci-dessous et nous allons "
 "vous envoyer les instructions pour le changer."
 
-#: dhost/users/templates/users/password_reset_form.html:14
-msgid "Email address:"
-msgstr "Adresse mail:"
-
-#: dhost/users/templates/users/password_reset_form.html:17
+#: dhost/users/templates/users/password_reset_form.html:11
 msgid "Reset my password"
 msgstr "Réinitialiser mon mot de passe"
 
-#: dhost/users/templates/users/signup.html:15
+#: dhost/users/templates/users/signup.html:30
 msgid "Sign Up"
 msgstr "Inscription"
 
