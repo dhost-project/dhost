@@ -10,6 +10,16 @@ from .forms import EnvironmentVariableForm
 from .models import Build, BuildOptions, Bundle, EnvironmentVariable
 
 
+class BuildOptionsCreateView(CreateView):
+    model = BuildOptions
+    fields = ['command', 'docker']
+
+    @method_decorator(csrf_protect)
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+
 class BuildOptionsDetailView(DetailView):
     """Build options overview, show logs, links to builds, bundles settings"""
     model = BuildOptions

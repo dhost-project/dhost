@@ -4,6 +4,11 @@ from . import views
 
 urlpatterns = [
     path(
+        'new',
+        views.DappCreateView.as_view(),
+        name='dapp_create',
+    ),
+    path(
         '<int:pk>/',
         views.DappDetailView.as_view(),
         name='dapp_detail',

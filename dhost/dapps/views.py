@@ -7,6 +7,19 @@ from dhost.builds import views as builds_views
 from .models import Dapp
 
 
+class DappCreateView(builds_views.BuildOptionsCreateView):
+    model = Dapp
+    fields = ['name', 'command', 'docker']
+    template_name = 'dapps/dapp_create_form.html'
+
+    def form_valid(self, form):
+        """Automatically attribute current user to the build option"""
+        build_option = form.save(commit=False)
+        if self.request.user.is_authenticated:
+            build_option.owner = self.request.user
+        return super().form_valid(form)
+
+
 class DappDetailView(builds_views.BuildOptionsDetailView):
     model = Dapp
 
