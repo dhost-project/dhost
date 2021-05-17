@@ -176,6 +176,12 @@ REST_FRAMEWORK = {
     ],
 }
 
+if DEBUG and 'localhost' in ALLOWED_HOSTS:
+    # for faster testing in local dev, to be removed later
+    REST_FRAMEWORK['DEFAULT_PERMISSION_CLASSES'] = [
+        'rest_framework.permissions.AllowAny'
+    ]
+
 # OAuth2 provider
 SCOPES_BACKEND_CLASS = 'oauth2.scopes.SettingsScopes'
 OAUTH2_PROVIDER_APPLICATION_MODEL = 'oauth2.Application'

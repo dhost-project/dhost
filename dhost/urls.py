@@ -1,12 +1,24 @@
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
+from rest_framework import routers
+
+from .builds import views as build_views
+from .ipfs import views as ipfs_views
+
+router = routers.SimpleRouter()
+router.register('bundles', build_views.BundleViewSet)
+router.register('builds', build_views.BuildsViewSet)
+router.register('envvar', build_views.EnvironmentVariableViewSet)
+router.register('ipfs', ipfs_views.IPFSDappViewSet)
+router.register('ipfs_deploy', ipfs_views.IPFSDeploymentViewSet)
 
 urlpatterns = [
     path('oauth2/', include('dhost.oauth2.urls', namespace='oauth2_provider')),
     path('social/', include('social_django.urls', namespace='social')),
     path('u/', include('dhost.users.urls')),
     path('build/', include('dhost.builds.urls')),
+    path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
 ]
 

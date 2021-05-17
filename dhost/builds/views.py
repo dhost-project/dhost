@@ -1,8 +1,26 @@
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from rest_framework import viewsets
 
 from .forms import EnvironmentVariableForm
 from .models import Build, BuildOptions, Bundle, EnvironmentVariable
+from .serializers import (BuildSerializer, BundleSerializer,
+                          EnvironmentVariableSerializer)
+
+
+class BundleViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Bundle.objects.all()
+    serializer_class = BundleSerializer
+
+
+class BuildsViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Build.objects.all()
+    serializer_class = BuildSerializer
+
+
+class EnvironmentVariableViewSet(viewsets.ModelViewSet):
+    queryset = EnvironmentVariable.objects.all()
+    serializer_class = EnvironmentVariableSerializer
 
 
 class BuildOptionsUpdateView(UpdateView):
