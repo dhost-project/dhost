@@ -45,12 +45,6 @@ class BuildOptions(models.Model):
         verbose_name = _('build options')
         verbose_name_plural = _('builds options')
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        # TODO REMOVE, ONLY for testing purposes
-        # will build the bundle whenever the build options are saved
-        self.build()
-
     def __str__(self):
         return '{} ({})'.format(self.docker, self.command)
 
