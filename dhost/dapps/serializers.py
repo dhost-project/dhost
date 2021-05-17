@@ -2,10 +2,13 @@ from rest_framework import serializers
 
 from dhost.builds.serializers import BuildOptionsSerializer
 
+from .models import Dapp
 
-class AbstractDappSerializer(BuildOptionsSerializer):
+
+class DappSerializer(BuildOptionsSerializer):
 
     class Meta(BuildOptionsSerializer.Meta):
+        model = Dapp
         fields = BuildOptionsSerializer.Meta.fields + [
             'name', 'slug', 'url', 'owner', 'status', 'created_at'
         ]

@@ -1,17 +1,14 @@
-from dhost.dapps.serializers import (AbstractDappSerializer,
-                                     AbstractDeploymentSerializer)
+from dhost.dapps.serializers import AbstractDeploymentSerializer, DappSerializer
 
 from .models import IPFSDapp, IPFSDeployment
 
 
-class IPFSDappSerializer(AbstractDappSerializer):
+class IPFSDappSerializer(DappSerializer):
 
-    class Meta(AbstractDappSerializer.Meta):
+    class Meta(DappSerializer.Meta):
         model = IPFSDapp
-        fields = AbstractDappSerializer.Meta.fields + ['hash']
-        read_only_fields = AbstractDappSerializer.Meta.read_only_fields + [
-            'hash'
-        ]
+        fields = DappSerializer.Meta.fields + ['hash']
+        read_only_fields = DappSerializer.Meta.read_only_fields + ['hash']
 
 
 class IPFSDeploymentSerializer(AbstractDeploymentSerializer):

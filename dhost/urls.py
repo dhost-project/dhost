@@ -17,7 +17,6 @@ urlpatterns = [
     path('oauth2/', include('dhost.oauth2.urls', namespace='oauth2_provider')),
     path('social/', include('social_django.urls', namespace='social')),
     path('u/', include('dhost.users.urls')),
-    path('build/', include('dhost.builds.urls')),
     path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
 ]

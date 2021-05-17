@@ -1,6 +1,4 @@
-from rest_framework import serializers, status
-from rest_framework.decorators import action
-from rest_framework.response import Response
+from rest_framework import serializers
 
 from .models import Build, BuildOptions, Bundle, EnvironmentVariable
 
@@ -21,15 +19,6 @@ class BuildOptionsSerializer(serializers.ModelSerializer):
         model = BuildOptions
         fields = ['command', 'docker', 'builds', 'bundles']
         read_only_fields = []
-
-    @action(detail=True, methods=['get'])
-    def start_build(self, request, pk=None):
-        build_options = self.get_object()
-        is_success, _ = build_options.build()
-        if is_success:
-            return Response({'status': 'build successfull'})
-        else:
-            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class BundleSerializer(serializers.ModelSerializer):
