@@ -175,7 +175,10 @@ class Build(models.Model):
         """
         bundle_path_var = self.start_build()
         if self.is_success:
-            bundle = Bundle.objects.create(folder=bundle_path_var)
+            bundle = Bundle.objects.create(
+                options=self.options,
+                folder=bundle_path_var,
+            )
             bundle.save()
             self.bundle = bundle
             self.save()
