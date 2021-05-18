@@ -89,6 +89,13 @@ class AbstractDeployment(models.Model):
     """Model representing a single deployment process"""
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    dapp = models.ForeignKey(
+        Dapp,
+        related_name='deployments',
+        related_query_name='deployments',
+        on_delete=models.CASCADE,
+        null=True,
+    )
     bundle = models.ForeignKey(
         Bundle,
         related_name='deployments',
