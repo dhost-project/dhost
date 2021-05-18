@@ -6,9 +6,9 @@ from django.utils.translation import gettext_lazy as _
 
 from dhost.dapps.models import Dapp
 
-ADDITION = 1
-CHANGE = 2
-DELETION = 3
+ENV_VAR_ADDITION = 1
+ENV_VAR_CHANGE = 2
+ENV_VAR_DELETION = 3
 START_BUILD = 4
 BUILD_SUCCESS = 5
 BUILD_FAIL = 6
@@ -17,9 +17,9 @@ DEPLOY_SUCCESS = 8
 DEPLOY_FAIL = 9
 
 ACTION_FLAG_CHOICES = (
-    (ADDITION, _('Addition')),
-    (CHANGE, _('Change')),
-    (DELETION, _('Deletion')),
+    (ENV_VAR_ADDITION, _('New environment variable')),
+    (ENV_VAR_CHANGE, _('Environment variable updated')),
+    (ENV_VAR_DELETION, _('Environment variable removed')),
     (START_BUILD, _('Start build')),
     (BUILD_SUCCESS, _('Build successful')),
     (BUILD_FAIL, _('Build failed')),
