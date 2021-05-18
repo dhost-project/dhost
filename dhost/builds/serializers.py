@@ -17,7 +17,7 @@ class BuildOptionsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BuildOptions
-        fields = ['command', 'docker', 'builds', 'bundles']
+        fields = ['id', 'command', 'docker', 'builds', 'bundles']
         read_only_fields = []
 
 

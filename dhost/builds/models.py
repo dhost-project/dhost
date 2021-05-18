@@ -19,6 +19,7 @@ def bundle_path():
 
 
 class BuildOptions(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     source = models.FilePathField(
         null=True,
         blank=True,
