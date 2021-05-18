@@ -50,9 +50,12 @@ INSTALLED_APPS = [
     'dhost.dapps',
     'dhost.github',
     'dhost.ipfs',
+    'dhost.notifications',
     'dhost.users',
     'dhost.oauth2',
     # External apps
+    'crispy_forms',
+    'crispy_bootstrap5',
     'django_otp',
     'django_otp.plugins.otp_static',
     'django_otp.plugins.otp_totp',
@@ -239,6 +242,10 @@ if SENTRY_DSN:
         traces_sample_rate=1.0,
         send_default_pii=True,
     )
+
+# Crispy forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 # Debug-toolbar
 ENABLE_DEBUG_TOOLBAR = env_bool('ENABLE_DEBUG_TOOLBAR', False)

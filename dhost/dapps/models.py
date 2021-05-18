@@ -2,6 +2,7 @@ import uuid
 
 from django.conf import settings
 from django.db import models
+from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -79,6 +80,9 @@ class Dapp(AbstractDapp, BuildOptions):
 
     class Meta(AbstractDapp.Meta):
         pass
+
+    def get_absolute_url(self):
+        return reverse_lazy('dapp_update', kwargs={'pk': self.id})
 
 
 class AbstractDeployment(models.Model):
