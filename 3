@@ -13,12 +13,21 @@ class IPFSDapp(Dapp):
         verbose_name = _('IPFS Dapp')
         verbose_name_plural = _('IPFS Dapps')
 
-    def create_deployment(self, bundle=None):
+    def deploy(self, bundle=None):
+        """Create an `IPFSDeployment` object and start the deployment process
+        from the bundled files
+        """
+        if bundle is None and len(self.bundles.all()) > 0:
+            bundle = self.bundles.all()[0]
+        print('='*20, '\n'  + self.bundles.all())
+
         deployment = IPFSDeployment(
             dapp=self,
             bundle=bundle,
         )
-        return deployment
+        deployment.save()
+        is_success = deployment.deploy()
+        return is_success
 
     def _get_url(self):
         """Generate URL based on hash and IPFS gateway"""

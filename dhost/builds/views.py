@@ -12,7 +12,7 @@ class BuildOptionsViewSet(viewsets.ModelViewSet):
     serializer_class = BuildOptionsSerializer
 
     @action(detail=True, methods=['get'])
-    def start_build(self, request, pk=None):
+    def build(self, request, pk=None):
         build_options = self.get_object()
         is_success, _ = build_options.build()
         if is_success:
