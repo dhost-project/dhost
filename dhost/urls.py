@@ -6,7 +6,7 @@ from rest_framework import routers
 from .builds import views as build_views
 from .ipfs import views as ipfs_views
 
-router = routers.SimpleRouter()
+router = routers.DefaultRouter()
 router.register('bundles', build_views.BundleViewSet)
 router.register('builds', build_views.BuildsViewSet)
 router.register('envvar', build_views.EnvironmentVariableViewSet)
