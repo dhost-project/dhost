@@ -23,7 +23,7 @@ class TestDataMixin:
                                           logs='1')
 
 
-@override_settings(ROOT_URLCONF="dhost.builds.tests.urls")
+@override_settings(ROOT_URLCONF='dhost.builds.tests.urls')
 class BuildOptionsAPITest(TestDataMixin, APITestCase):
 
     def test_build_options_create(self):

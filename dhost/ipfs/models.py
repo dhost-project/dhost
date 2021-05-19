@@ -8,6 +8,12 @@ class IPFSDapp(Dapp):
     """Dapp raidy to be deployed to the IPFS network"""
 
     hash = models.CharField(_('IPFS hash'), max_length=128, blank=True)
+    ipfs_gateway = models.URLField(
+        _('IPFS public gateway'),
+        default='https://ipfs.io/ipfs/',
+        null=True,
+        blank=True,
+    )
 
     class Meta(Dapp.Meta):
         verbose_name = _('IPFS Dapp')
@@ -20,9 +26,9 @@ class IPFSDapp(Dapp):
         )
         return deployment
 
-    def _get_url(self):
-        """Generate URL based on hash and IPFS gateway"""
-        pass
+    def get_public_url(self):
+        """Generate public URL based on hash and IPFS gateway"""
+        return '{}{}'.format(self.ipfs_gateway, self.hash)
 
 
 class IPFSDeployment(AbstractDeployment):
