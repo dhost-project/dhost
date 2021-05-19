@@ -1,11 +1,13 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.test import TestCase
+from django.test import TestCase, override_settings, tag
 
 from ..models import Dapp
 
 User = get_user_model()
 
 
+@override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
 class DappModelTest(TestCase):
 
     def create_dapp(
@@ -16,6 +18,7 @@ class DappModelTest(TestCase):
     ):
         return Dapp.objects.create(name=name, url=url, owner=owner)
 
+    @tag('fast')
     def test_str(self):
         """
         Test Dapp's `__str__` function

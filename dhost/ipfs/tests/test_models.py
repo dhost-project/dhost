@@ -1,5 +1,6 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.test import TestCase
+from django.test import TestCase, override_settings, tag
 
 from ..models import IPFSDapp, IPFSDeployment
 
@@ -27,27 +28,34 @@ class TestDataMixin:
         )
 
 
+@override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
 class IPFSModelsTestCase(TestDataMixin, TestCase):
 
+    @tag('core', 'slow')
     def test_can_deploy(self):
         deployments_number = self.ipfs1.deployments.all().count()
         self.ipfs1.deploy()
         deployments_number_after = self.ipfs1.deployments.all().count()
         self.assertEqual(deployments_number + 1, deployments_number_after)
 
+    @tag('fast')
     def test_get_public_url(self):
         public_url = self.ipfs1.get_public_url()
         self.assertIn(self.ipfs1.hash, public_url)
 
 
+@override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
 class IPFSDeploymentTestCase(TestDataMixin, TestCase):
 
+    @tag('fast')
     def test_str(self):
         self.assertEqual(type(str(self.deploy1)), str)
 
+    @tag('core', 'slow')
     def test_can_deploy(self):
         self.deploy1.deploy()
 
+    @tag('slow')
     def test_delete(self):
         deployments_number = IPFSDeployment.objects.all().count()
         self.deploy1.delete()
