@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from .models import Dapp
+from ..models import Dapp
 
 User = get_user_model()
 
