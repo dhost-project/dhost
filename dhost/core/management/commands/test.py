@@ -1,3 +1,4 @@
+import os
 import shutil
 
 from django.conf import settings
@@ -20,9 +21,13 @@ class Command(TestCommand):
         super().handle(*test_labels, **options)
 
         if not options.get('keepdata', False):
-            print('Removing test dir...')
-
             try:
-                shutil.rmtree(settings.TEST_DIR)
+                if os.path.isdir(settings.TEST_DIR):
+                    shutil.rmtree(settings.TEST_DIR)
+                    return "Removing test dir at '{}'...".format(
+                        settings.TEST_DIR)
+                else:
+                    return "Test dir did not exist at '{}'".format(
+                        settings.TEST_DIR)
             except OSError:
                 raise CommandError('Error while deleting test dir.')

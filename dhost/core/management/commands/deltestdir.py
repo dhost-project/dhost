@@ -1,3 +1,4 @@
+import os
 import shutil
 
 from django.conf import settings
@@ -30,8 +31,13 @@ Are you sure you want to do this?
 
         if confirm == 'yes':
             try:
-                shutil.rmtree(settings.TEST_DIR)
-                return 'Test dir successfully deleted'
+                if os.path.isdir(settings.TEST_DIR):
+                    shutil.rmtree(settings.TEST_DIR)
+                    return "Removing test dir at '{}'...".format(
+                        settings.TEST_DIR)
+                else:
+                    return "Test dir did not exist at '{}'".format(
+                        settings.TEST_DIR)
             except OSError:
                 raise CommandError('Error while deleting test dir.')
         else:
