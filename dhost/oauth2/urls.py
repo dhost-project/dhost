@@ -18,7 +18,7 @@ oauth2_endpoint_views = [
     ),
 ]
 
-if settings.DEBUG:
+if settings.DEBUG:  # pragma: no cover
     # OAuth2 Application Management endpoints
     oauth2_endpoint_views += [
         path(

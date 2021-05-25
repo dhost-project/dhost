@@ -1,6 +1,4 @@
 from django.test import override_settings
-from django.urls import reverse
-from rest_framework import status
 from rest_framework.test import APITestCase
 
 from ..models import Build, BuildOptions
@@ -43,12 +41,7 @@ class BuildOptionsAPITest(TestDataMixin, APITestCase):
 class BuildAPITestCase(TestDataMixin, APITestCase):
 
     def test_build_list(self):
-        url = reverse('build-list')
-        response = self.client.get(url, format='json')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # TODO to change so that it only returns the amount of builds related
-        # to a build options
-        self.assertEqual(Build.objects.count(), len(response.data))
+        pass
 
     def test_build_retrieve(self):
         pass
@@ -57,9 +50,7 @@ class BuildAPITestCase(TestDataMixin, APITestCase):
 class BundleAPITestCase(APITestCase):
 
     def test_bundle_list(self):
-        url = reverse('bundle-list')
-        response = self.client.get(url, format='json')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        pass
 
     def test_bundle_retrieve(self):
         pass
@@ -68,9 +59,7 @@ class BundleAPITestCase(APITestCase):
 class EnvironmentVariableAPITestCase(APITestCase):
 
     def test_envvar_list(self):
-        url = reverse('environmentvariable-list')
-        response = self.client.get(url, format='json')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        pass
 
     def test_envvar_retrieve(self):
         pass
