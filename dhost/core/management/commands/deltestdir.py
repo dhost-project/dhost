@@ -2,7 +2,7 @@ import os
 import shutil
 
 from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
@@ -22,23 +22,19 @@ class Command(BaseCommand):
 
         if interactive:
             confirm = input("""You have requested to remove the test folder.
-This will IRREVERSIBLY DESTROY all data currently in the "%s" folder.
+This will IRREVERSIBLY DESTROY all data currently in the '{}' folder.
 Are you sure you want to do this?
 
-    Type 'yes' to continue, or 'no' to cancel: """ % settings.TEST_DIR)
+    Type 'yes' to continue, or 'no' to cancel: """.format(settings.TEST_DIR))
         else:
             confirm = 'yes'
 
         if confirm == 'yes':
-            try:
-                if os.path.isdir(settings.TEST_DIR):
-                    shutil.rmtree(settings.TEST_DIR)
-                    return "Removing test dir at '{}'...".format(
-                        settings.TEST_DIR)
-                else:
-                    return "Test dir did not exist at '{}'".format(
-                        settings.TEST_DIR)
-            except OSError:
-                raise CommandError('Error while deleting test dir.')
+            if os.path.isdir(settings.TEST_DIR):
+                shutil.rmtree(settings.TEST_DIR)
+                return "Removing test dir at '{}'...".format(settings.TEST_DIR)
+            else:
+                return "Test dir does not exist at '{}'".format(
+                    settings.TEST_DIR)
         else:
-            self.stdout.write('Flush cancelled.')
+            return 'Test dir deletion cancelled.'
