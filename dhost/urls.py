@@ -3,13 +3,13 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 
-from .builds import views as build_views
+from .dapps import views as dapps_views
 from .ipfs import views as ipfs_views
 
 router = routers.DefaultRouter()
-router.register('bundles', build_views.BundleViewSet)
-router.register('builds', build_views.BuildsViewSet)
-router.register('envvar', build_views.EnvironmentVariableViewSet)
+router.register('bundles', dapps_views.DappBundleViewSet)
+router.register('builds', dapps_views.DappBuildsViewSet)
+router.register('envvar', dapps_views.DappEnvironmentVariableViewSet)
 router.register('ipfs', ipfs_views.IPFSDappViewSet)
 router.register('ipfs_deploy', ipfs_views.IPFSDeploymentViewSet)
 
@@ -17,7 +17,7 @@ urlpatterns = [
     path('oauth2/', include('dhost.oauth2.urls', namespace='oauth2_provider')),
     path('social/', include('social_django.urls', namespace='social')),
     path('u/', include('dhost.users.urls')),
-    path('api/', include(router.urls)),
+    path('api/v1/', include(router.urls)),
     path('admin/', admin.site.urls),
 ]
 

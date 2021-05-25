@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'dhost.dapps',
     'dhost.github',
     'dhost.ipfs',
+    'dhost.logs',
     'dhost.notifications',
     'dhost.users',
     'dhost.oauth2',
@@ -179,12 +180,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-if DEBUG and 'localhost' in ALLOWED_HOSTS:
-    # for faster testing in local dev, to be removed later
-    REST_FRAMEWORK['DEFAULT_PERMISSION_CLASSES'] = [
-        'rest_framework.permissions.AllowAny'
-    ]
-
 # OAuth2 provider
 SCOPES_BACKEND_CLASS = 'oauth2.scopes.SettingsScopes'
 OAUTH2_PROVIDER_APPLICATION_MODEL = 'oauth2.Application'
@@ -192,6 +187,7 @@ OAUTH2_PROVIDER_APPLICATION_MODEL = 'oauth2.Application'
 
 # Social auth
 AUTHENTICATION_BACKENDS = [
+    'oauth2_provider.backends.OAuth2Backend',
     'social_core.backends.github.GithubOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 ]

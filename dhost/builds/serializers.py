@@ -50,4 +50,4 @@ class EnvironmentVariableSerializer(serializers.ModelSerializer):
     class Meta:
         model = EnvironmentVariable
         fields = ['options', 'variable', 'value']
-        read_only_fields = ['options']
+        # read_only_fields = ['options']

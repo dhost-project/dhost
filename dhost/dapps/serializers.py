@@ -20,5 +20,5 @@ class DappSerializer(BuildOptionsSerializer):
 class AbstractDeploymentSerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = ['id', 'bundle', 'status', 'start', 'end']
-        read_only_fields = ['id', 'bundle', 'status', 'start', 'end']
+        fields = ['id', 'dapp', 'bundle', 'status', 'start', 'end']
+        read_only_fields = ['id', 'dapp', 'bundle', 'status', 'start', 'end']

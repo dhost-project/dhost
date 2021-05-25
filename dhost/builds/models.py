@@ -3,7 +3,6 @@ import uuid
 
 from django.conf import settings
 from django.db import models
-from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -93,9 +92,6 @@ class Bundle(models.Model):
         # TODO delete bundle folder when deleting the object
         pass
 
-    def get_absolute_url(self):
-        return reverse_lazy('bundle_detail', kwargs={'pk': self.id})
-
 
 class Build(models.Model):
     """A single build instance"""
@@ -151,9 +147,6 @@ class Build(models.Model):
 
     def __str__(self):
         return 'build:{}'.format(self.id.hex[:7])
-
-    def get_absolute_url(self):
-        return reverse_lazy('build_detail', kwargs={'pk': self.id})
 
     def build(self):
         """
@@ -224,7 +217,3 @@ class EnvironmentVariable(models.Model):
 
     def __str__(self):
         return '{}={}'.format(self.variable, self.value)
-
-    def get_absolute_url(self):
-        return reverse_lazy('env_vars_list',
-                            kwargs={'build_op_pk': self.options.id})
