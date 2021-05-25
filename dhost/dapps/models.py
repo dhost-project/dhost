@@ -2,7 +2,6 @@ import uuid
 
 from django.conf import settings
 from django.db import models
-from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -81,14 +80,34 @@ class Dapp(AbstractDapp, BuildOptions):
     class Meta(AbstractDapp.Meta):
         pass
 
-    def get_absolute_url(self):
-        return reverse_lazy('dapp_update', kwargs={'pk': self.id})
+    def deploy(self, bundle=None):
+        """Create an `IPFSDeployment` object and start the deployment process
+        from the bundled files
+        """
+        if bundle is None and len(self.bundles.all()) > 0:
+            bundle = self.bundles.all()[0]
+
+        deployment = self.create_deployment(bundle)
+        deployment.save()
+        is_success = deployment.deploy()
+        return is_success
+
+    def create_deployment(self, bundle=None):
+        """Return a specific application deployment instance"""
+        return None
 
 
 class AbstractDeployment(models.Model):
     """Model representing a single deployment process"""
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    dapp = models.ForeignKey(
+        Dapp,
+        related_name='deployments',
+        related_query_name='deployments',
+        on_delete=models.CASCADE,
+        null=True,
+    )
     bundle = models.ForeignKey(
         Bundle,
         related_name='deployments',

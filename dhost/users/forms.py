@@ -28,10 +28,6 @@ class SignupForm(UserCreationForm):
 class CaptchaSignupForm(SignupForm):
     captcha = ReCaptchaField()
 
-    def save(self, request):
-        user = super().save(request)
-        return user
-
 
 class AccountSettingsForm(ModelForm):
 

@@ -3,7 +3,6 @@ import uuid
 
 from django.conf import settings
 from django.db import models
-from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -19,6 +18,7 @@ def bundle_path():
 
 
 class BuildOptions(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     source = models.FilePathField(
         null=True,
         blank=True,
@@ -44,12 +44,6 @@ class BuildOptions(models.Model):
     class Meta:
         verbose_name = _('build options')
         verbose_name_plural = _('builds options')
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        # TODO REMOVE, ONLY for testing purposes
-        # will build the bundle whenever the build options are saved
-        self.build()
 
     def __str__(self):
         return '{} ({})'.format(self.docker, self.command)
@@ -97,9 +91,6 @@ class Bundle(models.Model):
     def delete(self):
         # TODO delete bundle folder when deleting the object
         pass
-
-    def get_absolute_url(self):
-        return reverse_lazy('bundle_detail', kwargs={'pk': self.id})
 
 
 class Build(models.Model):
@@ -157,9 +148,6 @@ class Build(models.Model):
     def __str__(self):
         return 'build:{}'.format(self.id.hex[:7])
 
-    def get_absolute_url(self):
-        return reverse_lazy('build_detail', kwargs={'pk': self.id})
-
     def build(self):
         """
         return:
@@ -172,7 +160,10 @@ class Build(models.Model):
         """
         bundle_path_var = self.start_build()
         if self.is_success:
-            bundle = Bundle.objects.create(folder=bundle_path_var)
+            bundle = Bundle.objects.create(
+                options=self.options,
+                folder=bundle_path_var,
+            )
             bundle.save()
             self.bundle = bundle
             self.save()
@@ -226,7 +217,3 @@ class EnvironmentVariable(models.Model):
 
     def __str__(self):
         return '{}={}'.format(self.variable, self.value)
-
-    def get_absolute_url(self):
-        return reverse_lazy('env_vars_list',
-                            kwargs={'build_op_pk': self.options.id})

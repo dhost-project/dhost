@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'dhost.dapps',
     'dhost.github',
     'dhost.ipfs',
+    'dhost.logs',
     'dhost.notifications',
     'dhost.users',
     'dhost.oauth2',
@@ -186,6 +187,7 @@ OAUTH2_PROVIDER_APPLICATION_MODEL = 'oauth2.Application'
 
 # Social auth
 AUTHENTICATION_BACKENDS = [
+    'oauth2_provider.backends.OAuth2Backend',
     'social_core.backends.github.GithubOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 ]
