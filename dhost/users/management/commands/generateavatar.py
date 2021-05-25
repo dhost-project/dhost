@@ -12,7 +12,6 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
             'username',
-            nargs='?',
             help='Username to generate the avatar for.',
         )
         parser.add_argument(
@@ -24,14 +23,12 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if options['username']:
             username = options['username']
-        else:
-            username = input('username: ')
 
         try:
             u = UserModel._default_manager.using(
                 options['database']).get(**{UserModel.USERNAME_FIELD: username})
         except UserModel.DoesNotExist:
-            raise CommandError("user '%s' does not exist" % username)
+            raise CommandError("User '%s' does not exist." % username)
 
         u.generate_avatar()
         u.save()
