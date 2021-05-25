@@ -13,18 +13,8 @@ jobs:
       max-parallel: 4
       matrix:
         python-version: [3.8, 3.9]
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: dhost
-          POSTGRES_PASSWORD: dhost
-          POSTGRES_DB: dhost
-        ports:
-          - 5432:5432
     env:
       DEBUG: "False"
-      DATABASE_URL: "postgres://dhost:dhost@127.0.0.1:5432/dhost"
       SECRET_KEY: verysecretkey
     steps:
     - uses: actions/checkout@v2
