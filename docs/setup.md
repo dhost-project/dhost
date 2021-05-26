@@ -14,21 +14,34 @@ This file alone is enought to host the site on Heroku, but there is some extra s
 
 You should check the [Django's deployement guide](https://docs.djangoproject.com/en/3.1/howto/deployment/).
 
-### Commands
-
-First thing you need to do is migrate the database, you can do so with:
+Create the environment.
 ```
-python manage.py migrate
+python3.9 -m venv venv
+```
+
+Activate it (on linux).
+```
+source ./venv/bin/activate
+```
+
+Install the requirements.
+```
+pip install -r requirements.txt
+```
+
+Migrate the database.
+```
+./manage.py migrate
 ```
 
 We will need to compile the translation `.po` files located in the `locale` folder with:
 ```
-python manage.py compilemessages
+./manage.py compilemessages
 ```
 
 Then you must collect static files with:
 ```
-python manage.py collectstatic
+./manage.py collectstatic
 ```
 
 This will create a folder containing all the static files raidy to be served by your server.
@@ -37,7 +50,7 @@ To serve your static files you can setup a server, or use an AWS S3 bucket, set 
 
 Then you will need to create a super user to access the admin page:
 ```
-python manage.py createsuperuser
+./manage.py createsuperuser
 ```
 
 Then you will be able to start the server, for this we will need nginx and we use gunicorn with async support.
@@ -46,28 +59,33 @@ Then you will be able to start the server, for this we will need nginx and we us
 
 For developpement you can use a virtual environment.
 
-Create the environment:
+Create the environment.
 ```
 python3.9 -m venv venv
 ```
 
-Then activate it with (on linux):
+Activate it (on linux).
 ```
 source ./venv/bin/activate
 ```
 
-Then you can install the requirements with:
+Activate it (on windows cmd).
+```
+.\venv\Script\activate.bat
+```
+
+Install the requirements.
 ```
 pip install -r requirements.txt
 pip install -r requirements_dev.txt
 ```
 
-You also the pre-commit git hook to run checks before every commits with:
+You also use pre-commit git hook to run checks before every commits.
 ```
 pre-commit install
 ```
 
-Test it with:
+Run pre-commit hooks.
 ```
 pre-commit run --all-files
 ```
@@ -78,7 +96,7 @@ Now every time you commit the checks will run `yapf`, `flake8` and other usefull
 
 You can and should test the code, you can do so with:
 ```
-python manage.py test
+./manage.py test
 ```
 
 You should also check the `coverage` package wich generate a report about the tests coverage of the app, use it with:
@@ -102,12 +120,12 @@ More infos in the `docs/test.md` file.
 
 If you change a model you must create a migrations:
 ```
-python manage.py makemigrations
+./manage.py makemigrations
 ```
 
 And then migrate it you your DB with:
 ```
-python manage.py migrate
+./manage.py migrate
 ```
 
 ### Commands
