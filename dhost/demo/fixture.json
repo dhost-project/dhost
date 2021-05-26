@@ -104,6 +104,71 @@
         }
     },
     {
+        "model": "admin.logentry",
+        "pk": 9,
+        "fields": {
+            "action_time": "2021-05-26T08:54:59.073Z",
+            "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
+            "content_type": 18,
+            "object_id": "b0aeaea9-1777-4b72-a734-0e9d950a224f",
+            "object_repr": "usertwo",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 10,
+        "fields": {
+            "action_time": "2021-05-26T08:55:38.263Z",
+            "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
+            "content_type": 18,
+            "object_id": "854f8484-a8c1-4c3c-8796-3d87994cc1f3",
+            "object_repr": "userone",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Email address\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 11,
+        "fields": {
+            "action_time": "2021-05-26T08:55:47.172Z",
+            "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
+            "content_type": 18,
+            "object_id": "b0aeaea9-1777-4b72-a734-0e9d950a224f",
+            "object_repr": "usertwo",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Email address\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 12,
+        "fields": {
+            "action_time": "2021-05-26T08:59:42.239Z",
+            "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
+            "content_type": 19,
+            "object_id": "2",
+            "object_repr": "DHost dashboard",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 13,
+        "fields": {
+            "action_time": "2021-05-26T08:59:58.566Z",
+            "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
+            "content_type": 19,
+            "object_id": "1",
+            "object_repr": "DHost public CLI",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Name\"]}}]"
+        }
+    },
+    {
         "model": "auth.permission",
         "pk": 1,
         "fields": {
@@ -1468,14 +1533,6 @@
         }
     },
     {
-        "model": "sessions.session",
-        "pk": "gufq4apons5u2uefh555l4qc1eybyzmh",
-        "fields": {
-            "session_data": ".eJxVzDsOwjAQRdG9uMZW_Lcp6VlDNOPxkACKpXwqxN4hUgqo3z3vJXrY1qHfljr3I4mzQK4I3luZa9HSEaKE3EUZkaPRQDoAiNMvQyiPOu2W7jDdmiptWucR1Z6oY13UtVF9Xo7272CAZfhqU6K3yeUUgK3zPrqUnSZwlCGxsaAt1YRdKDYmMB274rPJhpkLUtDi_QFsUkGt:1llYUD:gazDOYxsBxAmZwhPQsm-5sEUUj6tm4wGlfp-Ef8_1Qs",
-            "expire_date": "2021-06-08T14:56:49.438Z"
-        }
-    },
-    {
         "model": "sites.site",
         "pk": 1,
         "fields": {
@@ -1569,11 +1626,30 @@
             "username": "userone",
             "first_name": "",
             "last_name": "",
-            "email": "",
+            "email": "userone@example.com",
             "avatar": "avatars/userone.png",
             "is_staff": false,
             "is_active": true,
-            "date_joined": "2021-05-25T14:59:56.692Z",
+            "date_joined": "2021-05-25T14:59:56Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "users.user",
+        "pk": "b0aeaea9-1777-4b72-a734-0e9d950a224f",
+        "fields": {
+            "password": "pbkdf2_sha256$260000$UjVf1p6VBoDekRlEMYlUVx$QBghbpKawdvVlUJU4ixOTdP2Ai44S+mv+Y1ZCG6if0E=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "usertwo",
+            "first_name": "",
+            "last_name": "",
+            "email": "usertwo@example.com",
+            "avatar": "avatars/usertwo.png",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-26T08:54:58Z",
             "groups": [],
             "user_permissions": []
         }
@@ -1607,12 +1683,31 @@
             "client_type": "public",
             "authorization_grant_type": "password",
             "client_secret": "",
-            "name": "",
+            "name": "DHost public CLI",
             "skip_authorization": false,
             "created": "2021-05-25T14:57:05.973Z",
-            "updated": "2021-05-25T14:57:05.973Z",
+            "updated": "2021-05-26T08:59:58.563Z",
             "algorithm": "",
             "logo": "oauth2_provider_app_logos/dhost_cli_IFWYlQ1.png",
+            "description": ""
+        }
+    },
+    {
+        "model": "oauth2.application",
+        "pk": 2,
+        "fields": {
+            "client_id": "dhost_dashboard",
+            "user": null,
+            "redirect_uris": "http://localhost:3000/login/",
+            "client_type": "confidential",
+            "authorization_grant_type": "authorization-code",
+            "client_secret": "Jqa0e47XoXxPsWVfVMoO2iRCJvfzOtF6lyeuU4hGewpwhwU3LFeOMIA6VT8vMQV8ZVc7nAYVwJgEqOhOf2FWIAsTsZeuIQgZRBZ02La3nesvareMGjicA4aaEJEK7ODN",
+            "name": "DHost dashboard",
+            "skip_authorization": false,
+            "created": "2021-05-26T08:59:42.237Z",
+            "updated": "2021-05-26T08:59:42.237Z",
+            "algorithm": "",
+            "logo": "oauth2_provider_app_logos/dhost_dashboard.png",
             "description": ""
         }
     },
