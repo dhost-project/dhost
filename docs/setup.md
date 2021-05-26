@@ -44,7 +44,7 @@ Then you will be able to start the server, for this we will need nginx and we us
 
 ## Dev
 
-For developpement you can use a virtual environment.
+For development you can use a virtual environment.
 
 Create the environment:
 ```
@@ -62,6 +62,29 @@ pip install -r requirements.txt
 pip install -r requirements_dev.txt
 ```
 
+You can now run the development server with:
+```
+python manage.py runserver
+```
+
+### Demo
+
+Their is a fixture containing some data that can be loaded inside the database for and easy demo. The fixture is located at `dhost/demo/fixture.json`.
+
+To load the fixture inside the current database use:
+```
+python manage.py loaddata ./dhost/demo/fixture.json
+```
+
+If you don't wan't to load the data in the database but still want to demo the app you can use the [testserver](https://docs.djangoproject.com/en/3.2/ref/django-admin/#testserver) command and load the fixture inside it.
+```
+python manage.py testserver dhost/demo/fixture.json
+```
+
+If you restart the test server all data will be earased and reloaded form the fixture.
+
+### Pre-commit hooks
+
 You also the pre-commit git hook to run checks before every commits with:
 ```
 pre-commit install
@@ -76,10 +99,14 @@ Learn more about [pre-commit](https://pre-commit.com/).
 
 Now every time you commit the checks will run `yapf`, `flake8` and other usefull tools to format the code.
 
+### Tests
+
 You can and should test the code, you can do so with:
 ```
 python manage.py test
 ```
+
+#### Coverage
 
 You should also check the `coverage` package wich generate a report about the tests coverage of the app, use it with:
 ```
@@ -96,23 +123,34 @@ To see the report in HTML format use:
 coverage html
 ```
 
-There is also an editorconfig file (`.editorconfig`) that can be used with your IDE or text editor, more infos [here](https://editorconfig.org/).
-
 More infos in the `docs/test.md` file.
 
-If you change a model you must create a migrations:
+### Editor config
+
+There is also an editorconfig file (`.editorconfig`) that can be used with your IDE or text editor, more infos [here](https://editorconfig.org/).
+
+### Django models
+
+If you change a model you must create a migrations with [makemigrations](https://docs.djangoproject.com/en/3.2/ref/django-admin/#migrate).
 ```
 python manage.py makemigrations
 ```
 
-And then migrate it you your DB with:
+And then migrate it you your DB with [migrate](https://docs.djangoproject.com/en/3.2/ref/django-admin/#migrate).
 ```
 python manage.py migrate
 ```
 
+If you did multiple migrations and you want to squash them you can use:
+```
+python manage.py squashmigrations
+```
+
+More infos [here](https://docs.djangoproject.com/en/3.2/ref/django-admin/#squashmigrations)
+
 ### Commands
 
-The list of commands can be found in the `docs/commands.md` file.
+The list of custom commands can be found in the `docs/commands.md` file.
 
 ## Config
 
