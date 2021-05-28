@@ -3,7 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from dhost.builds.views import (BuildOptionsViewSet, BuildsViewSet,
+from dhost.builds.views import (BuildOptionsViewSet, BuildViewSet,
                                 BundleViewSet, EnvironmentVariableViewSet)
 
 from .models import Dapp
@@ -49,7 +49,7 @@ class DappBundleViewSet(BundleViewSet):
     pass
 
 
-class DappBuildsViewSet(BuildsViewSet):
+class DappBuildViewSet(BuildViewSet):
     pass
 
 
