@@ -5,13 +5,17 @@ from rest_framework import routers
 
 from .dapps import views as dapps_views
 from .ipfs import views as ipfs_views
+from .logs import views as logs_views
+from .users.api import views as users_views
 
 router = routers.DefaultRouter()
 router.register('bundles', dapps_views.DappBundleViewSet)
-router.register('builds', dapps_views.DappBuildsViewSet)
+router.register('builds', dapps_views.DappBuildViewSet)
 router.register('envvar', dapps_views.DappEnvironmentVariableViewSet)
 router.register('ipfs', ipfs_views.IPFSDappViewSet)
 router.register('ipfs_deploy', ipfs_views.IPFSDeploymentViewSet)
+router.register('logs', logs_views.DashboardLogEntryViewSet)
+router.register('users', users_views.UserViewSet)
 
 urlpatterns = [
     path('oauth2/', include('dhost.oauth2.urls', namespace='oauth2_provider')),
@@ -31,6 +35,8 @@ if settings.DEBUG:  # pragma: no cover
     from django.views import defaults as default_views
 
     urlpatterns += [
+        path('api-auth/',
+             include('rest_framework.urls', namespace='rest_framework')),
         path(
             "400/",
             default_views.bad_request,

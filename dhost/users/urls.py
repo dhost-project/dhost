@@ -1,11 +1,6 @@
 from django.urls import path
 
 from . import views
-from .api import views as api_views
-
-apipatterns = [
-    path('users/<pk>/', api_views.UserDetails.as_view()),
-]
 
 urlpatterns = [
     path('login/', views.LoginView.as_view(), name='login'),
@@ -61,4 +56,4 @@ urlpatterns = [
         views.AccountDeleteDoneView.as_view(),
         name='account_delete_done',
     ),
-] + apipatterns
+]

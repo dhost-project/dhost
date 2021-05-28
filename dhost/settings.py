@@ -180,6 +180,11 @@ REST_FRAMEWORK = {
     ],
 }
 
+if DEBUG:
+    # for browsabler api
+    REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'].append(
+        'rest_framework.authentication.SessionAuthentication',)
+
 # OAuth2 provider
 SCOPES_BACKEND_CLASS = 'oauth2.scopes.SettingsScopes'
 OAUTH2_PROVIDER_APPLICATION_MODEL = 'oauth2.Application'
