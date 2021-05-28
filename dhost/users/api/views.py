@@ -17,6 +17,5 @@ class UserViewSet(viewsets.GenericViewSet):
 
     @action(detail=False, methods=['get'])
     def me(self, request, pk=None):
-        user = self.request.user
-        serializer = self.get_serializer(user)
+        serializer = self.get_serializer(request.user)
         return Response(serializer.data)
