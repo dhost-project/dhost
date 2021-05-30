@@ -182,6 +182,19 @@
     }
   },
   {
+    "model": "admin.logentry",
+    "pk": 15,
+    "fields": {
+      "action_time": "2021-05-28T21:30:06.574Z",
+      "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
+      "content_type": 19,
+      "object_id": "2",
+      "object_repr": "DHost dashboard",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Redirect uris\", \"Skip authorization\"]}}]"
+    }
+  },
+  {
     "model": "auth.permission",
     "pk": 1,
     "fields": {
@@ -1546,14 +1559,6 @@
     }
   },
   {
-    "model": "sessions.session",
-    "pk": "8ziosxp5ps2q0eyn8y3jyalenmmznbed",
-    "fields": {
-      "session_data": ".eJxVjEsOwjAMBe-SNYmcpE0JS_acobJjmxZQK_WzQtydVuoClk8z896mxXXp2nWWqe3ZXAypENZ1tFmKtxUTWczQ2Ia0CR7ZJ0Rz-s0Iy1OGveUHDvfRlXFYpp7crriDzu42sryuh_t30OHcbXVMAgAlq4gwlnAuoLptCpqyxCCQGUIV0SMgn1MNWIkWT-o9BCrm8wW0EkLt:1lmdae:Q1We6w5dGaqKT-YnMBJTvmX5wMRHTt5UuIznnvWn5Zc",
-      "expire_date": "2021-06-11T14:35:56.981Z"
-    }
-  },
-  {
     "model": "sites.site",
     "pk": 1,
     "fields": {
@@ -1680,7 +1685,7 @@
     "pk": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
     "fields": {
       "password": "pbkdf2_sha256$260000$4M7CWNjM0ExKAr95FU6ndG$TOWl94aVYH948b3es5dd2IMDAvtnnIjvHpI3579CIAw=",
-      "last_login": "2021-05-28T14:35:56.977Z",
+      "last_login": "2021-05-28T21:29:55.644Z",
       "is_superuser": true,
       "username": "admin",
       "first_name": "",
@@ -1719,14 +1724,14 @@
     "fields": {
       "client_id": "dhost_dashboard",
       "user": null,
-      "redirect_uris": "http://localhost:3001/authorize/",
+      "redirect_uris": "http://localhost:3001/authorize",
       "client_type": "confidential",
       "authorization_grant_type": "authorization-code",
       "client_secret": "dhost_dashboard_secret",
       "name": "DHost dashboard",
-      "skip_authorization": false,
+      "skip_authorization": true,
       "created": "2021-05-26T08:59:42.237Z",
-      "updated": "2021-05-28T14:37:39.645Z",
+      "updated": "2021-05-28T21:30:06.573Z",
       "algorithm": "",
       "logo": "oauth2_provider_app_logos/dhost_dashboard.png",
       "description": ""
