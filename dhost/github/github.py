@@ -1,6 +1,13 @@
 # https://docs.github.com/en/developers/apps/scopes-for-oauth-apps#available-scopes
 import requests
 
+from django.core.exceptions import ObjectDoesNotExist
+
+
+class GithubNotLinkedError(Exception):
+    def __init__(self, message="Github account linked."):
+        super().__init__(message)
+
 
 class GithubAPI:
     """A github REST API wrapper"""
@@ -18,11 +25,10 @@ class GithubAPI:
     def _get_social(self):
         try:
             self.social = self.user.social_auth.get(provider='github')
-        # TODO Do not use bare 'except'
-        except:  # noqa
-            raise Exception("User doesn't have github account linked.")
+        except ObjectDoesNotExist:
+            raise GithubNotLinkedError()
         else:
-            self.github_name = self.social['login']
+            self.github_name = self.social.extra_data['login']
             return self.social
 
     def _get_token(self):
@@ -39,15 +45,18 @@ class GithubAPI:
 
     def _get_headers(self):
         headers = {'Accept': 'application/vnd.github.v3+json'}
-        headers = headers.update(self._get_authorization_header())
+        headers.update(self._get_authorization_header())
         return headers
+
+    def get_headers(self):
+        return self._get_headers()
 
     def get(self, url, headers=None, *args, **kwargs):
         if headers is None:
-            headers = self._get_headers()
+            headers = self.get_headers()
         r = requests.get(url, headers=headers, *args, **kwargs)
         if r.status_code == 200:
-            return r.response.json()
+            return r.json()
         else:
             raise Exception(
                 'Error trying to access `{}`, error code: {}'.format(

@@ -1,10 +1,10 @@
 from django.contrib import admin
 
-from .models import Github, GithubCommit
+from .models import GithubRepository, GithubCommit
 
 
-@admin.register(Github)
-class GithubAdmin(admin.ModelAdmin):
+@admin.register(GithubRepository)
+class GithubRepositoryAdmin(admin.ModelAdmin):
     pass
 
 

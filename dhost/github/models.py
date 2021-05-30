@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class AbstractGit(models.Model):
@@ -15,7 +16,7 @@ class AbstractGit(models.Model):
         abstract = True
 
     def download_source(self):
-        pass
+        raise NotImplementedError
 
 
 class CommitMixin(models.Model):
@@ -29,15 +30,17 @@ class CommitMixin(models.Model):
         return self.commit_hash
 
 
-class Github(AbstractGit):
+class GithubRepository(AbstractGit):
     repo_url = models.URLField()
 
     class Meta(AbstractGit.Meta):
-        pass
+        verbose_name = _('Github repository')
+        verbose_name_plural = _('Github repositories')
 
 
 class GithubCommit(CommitMixin):
-    git = models.ForeignKey(Github, on_delete=models.CASCADE)
+    git = models.ForeignKey(GithubRepository, on_delete=models.CASCADE)
 
     class Meta(CommitMixin.Meta):
-        pass
+        verbose_name = _('Github commit')
+        verbose_name_plural = _('Github commits')

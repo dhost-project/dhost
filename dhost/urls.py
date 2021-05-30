@@ -4,6 +4,7 @@ from django.urls import include, path
 from rest_framework import routers
 
 from .dapps import views as dapps_views
+from .github import views as github_views
 from .ipfs import views as ipfs_views
 from .logs import views as logs_views
 from .users.api import views as users_views
@@ -12,6 +13,7 @@ router = routers.DefaultRouter()
 router.register('bundles', dapps_views.DappBundleViewSet)
 router.register('builds', dapps_views.DappBuildViewSet)
 router.register('envvar', dapps_views.DappEnvironmentVariableViewSet)
+router.register('github', github_views.GithubRepositoryViewSet)
 router.register('ipfs', ipfs_views.IPFSDappViewSet)
 router.register('ipfs_deploy', ipfs_views.IPFSDeploymentViewSet)
 router.register('logs', logs_views.DashboardLogEntryViewSet)
