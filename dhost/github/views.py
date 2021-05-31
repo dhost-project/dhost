@@ -10,7 +10,7 @@ class GithubRepositoryViewSet(viewsets.GenericViewSet):
     queryset = GithubRepository.objects.all()
 
     @action(detail=False, methods=['get'])
-    def repositories(self, request):
+    def repos(self, request):
         try:
             github = GithubAPI(user=request.user)
         except GithubNotLinkedError as e:

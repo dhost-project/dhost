@@ -201,6 +201,7 @@ SOCIAL_AUTH_GITHUB_SECRET = env('SOCIAL_AUTH_GITHUB_SECRET')
 SOCIAL_AUTH_GITHUB_SCOPE = [
     'repo',
     # 'read:repo_hook',
+    'user:email',
 ]
 
 # AWS S3
