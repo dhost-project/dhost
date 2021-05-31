@@ -1,17 +1,20 @@
-# https://docs.github.com/en/developers/apps/scopes-for-oauth-apps#available-scopes
+"""
+A wrapper for the Github REST API with OAuth
+"""
 import requests
-
 from django.core.exceptions import ObjectDoesNotExist
 
 
 class GithubNotLinkedError(Exception):
+
     def __init__(self, message="Github account linked."):
         super().__init__(message)
 
 
 class GithubAPI:
     """A github REST API wrapper"""
-    TOKEN_NAME = 'token'
+    GITHUB_API_URL = 'https://api.github.com'
+    TOKEN_TYPE = 'token'
 
     def __init__(self, user):
         self.user = user
@@ -40,27 +43,39 @@ class GithubAPI:
 
     def _get_authorization_header(self):
         token = self.token
-        token_name = self.TOKEN_NAME
-        return {'Authorization': '{} {}'.format(token_name, token)}
+        token_type = self.TOKEN_TYPE
+        return {'Authorization': '{} {}'.format(token_type, token)}
 
-    def _get_headers(self):
+    def _get_headers(self, additionnal_headers):
         headers = {'Accept': 'application/vnd.github.v3+json'}
         headers.update(self._get_authorization_header())
+        headers.update(headers)
         return headers
 
-    def get_headers(self):
-        return self._get_headers()
+    def get_headers(self, additionnal_headers):
+        return self._get_headers(additionnal_headers)
 
-    def get(self, url, headers=None, *args, **kwargs):
-        if headers is None:
-            headers = self.get_headers()
+    def get(self, url=None, headers=None, full_url=None, *args, **kwargs):
+        url = full_url if full_url else self.GITHUB_API_URL + url
+        headers = self.get_headers(additionnal_headers=headers)
         r = requests.get(url, headers=headers, *args, **kwargs)
         if r.status_code == 200:
             return r.json()
         else:
             raise Exception(
-                'Error trying to access `{}`, error code: {}'.format(
-                    url, r.status_code))
+                'Error trying to access `{}`, error code: {}, message: {}'.
+                format(url, r.status_code, r.content))
+
+    def head(self, url=None, headers=None, full_url=None, *args, **kwargs):
+        url = full_url if full_url else self.GITHUB_API_URL + url
+        headers = self.get_headers(additionnal_headers=headers)
+        r = requests.head(url, headers=headers, *args, **kwargs)
+        if r.status_code == 200:
+            return r.headers
+        else:
+            raise Exception(
+                'Error trying to access `{}`, error code: {}, message: {}'.
+                format(url, r.status_code, r.content))
 
     def request_private_repo_access(self):
         """Request access to public and private repositories hooks.
@@ -68,13 +83,26 @@ class GithubAPI:
         """
         pass
 
-    def get_repos(self):
-        """Return a list of accessible repositories from te current token"""
-        github_repos_url = 'https://api.github.com/user/repos'
-        return self.get(url=github_repos_url)
+    def get_scopes(self):
+        """Return oauth scopes"""
+        username = self.github_name
+        check_scopes = f'/users/{username}'
+        head = self.head(check_scopes)
+        scopes = head['X-OAuth-Scopes']
+        return scopes
 
-    def get_repo(self, repo_name: str):
+    def get_user(self):
+        username = self.github_name
+        user_url = f'/users/{username}'
+        return self.get(user_url)
+
+    def get_repos(self):
+        """Return a list of accessible repositories from the current token"""
+        list_repo = '/user/repos'
+        return self.get(list_repo)
+
+    def get_repo(self, repo: str, owner: str = None):
         """Return a single repository"""
-        github_repo_url = 'https://api.github.com/users/{}/repos/{}'
-        url = github_repo_url.format(self.github_name, repo_name)
-        return self.get(url=url)
+        owner = owner if owner else self.github_name
+        repo_details = f'/users/{owner}/repos/{repo}'
+        return self.get(repo_details)

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import GithubRepository, GithubCommit
+from .models import GithubCommit, GithubRepository
 
 
 @admin.register(GithubRepository)

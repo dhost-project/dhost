@@ -18,6 +18,9 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterModelOptions(
             name='githubrepository',
-            options={'verbose_name': 'Github repository', 'verbose_name_plural': 'Github repositories'},
+            options={
+                'verbose_name': 'Github repository',
+                'verbose_name_plural': 'Github repositories'
+            },
         ),
     ]

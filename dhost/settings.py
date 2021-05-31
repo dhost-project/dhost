@@ -189,16 +189,19 @@ if DEBUG:
 SCOPES_BACKEND_CLASS = 'oauth2.scopes.SettingsScopes'
 OAUTH2_PROVIDER_APPLICATION_MODEL = 'oauth2.Application'
 # REFRESH_TOKEN_EXPIRE_SECONDS = env('REFRESH_TOKEN_EXPIRE_SECONDS')
-
-# Social auth
 AUTHENTICATION_BACKENDS = [
     'oauth2_provider.backends.OAuth2Backend',
-    'social_core.backends.github.GithubOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+# Social auth
+AUTHENTICATION_BACKENDS.append('social_core.backends.github.GithubOAuth2')
 SOCIAL_AUTH_GITHUB_KEY = env('SOCIAL_AUTH_GITHUB_KEY')
 SOCIAL_AUTH_GITHUB_SECRET = env('SOCIAL_AUTH_GITHUB_SECRET')
+SOCIAL_AUTH_GITHUB_SCOPE = [
+    'repo',
+    # 'read:repo_hook',
+]
 
 # AWS S3
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
