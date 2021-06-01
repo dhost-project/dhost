@@ -13,7 +13,7 @@ class DelTestDirTest(TestCase):
     def setUp(self):
         # Creating TEST_DIR folder if it doesn't exist
         if not os.path.isdir(settings.TEST_DIR):
-            os.mkdir(settings.TEST_DIR)
+            os.makedirs(settings.TEST_DIR)
 
     def test_command_output(self):
         out = StringIO()

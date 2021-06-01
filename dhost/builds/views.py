@@ -26,7 +26,7 @@ class BundleViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = BundleSerializer
 
 
-class BuildsViewSet(viewsets.ReadOnlyModelViewSet):
+class BuildViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Build.objects.all()
     serializer_class = BuildSerializer
 
