@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SITE_ID = env('SITE_ID', 1)
 
-DEBUG = env_bool('DEBUG', True)
+DEBUG = env_bool('DEBUG', False)
 
 SECRET_KEY = env('SECRET_KEY')
 if not SECRET_KEY and DEBUG:
@@ -142,8 +142,15 @@ LANGUAGES = [
     ('fr', 'Français'),
 ]
 
-CSRF_COOKIE_SECURE = env_bool('CSRF_COOKIE_SECURE', False)
-SESSION_COOKIE_SECURE = env_bool('SESSION_COOKIE_SECURE', False)
+ENABLE_SSL = env_bool('ENABLE_SSL', not (DEBUG))
+if ENABLE_SSL:
+    SECURE_SSL_REDIRECT = env_bool('SECURE_SSL_REDIRECT', True)
+    CSRF_COOKIE_SECURE = env_bool('CSRF_COOKIE_SECURE', True)
+    SESSION_COOKIE_SECURE = env_bool('SESSION_COOKIE_SECURE', True)
+    SECURE_HSTS_SECONDS = int(env('SECURE_HSTS_SECONDS', 60))
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = env_bool('SECURE_HSTS_INCLUDE_SUBDOMAINS',
+                                              True)
+    SECURE_HSTS_PRELOAD = env_bool('SECURE_HSTS_PRELOAD', True)
 
 STATIC_URL = env('STATIC_URL', '/static/')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
