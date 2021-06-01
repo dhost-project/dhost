@@ -16,36 +16,14 @@ class GithubAPI:
     GITHUB_API_URL = 'https://api.github.com'
     TOKEN_TYPE = 'token'
 
-    def __init__(self, user):
-        """
-        :user: django user object
-        """
-        self.user = user
-        self.social = None
-        self.token = None
-        self.github_name = None
+    def __init__(self, token: str):
+        self.token = token
 
-        self._get_social()
-        self._get_token()
-
-    def _get_social(self):
-        try:
-            self.social = self.user.social_auth.get(provider='github')
-        except ObjectDoesNotExist:
-            raise GithubNotLinkedError()
-        else:
-            self.github_name = self.social.extra_data['login']
-            return self.social
-
-    def _get_token(self):
-        if self.social is not None:
-            self.token = self.social.extra_data['access_token']
-            return self.token
-        else:
-            raise Exception("Social is not set, call `_get_social` first.")
+    def get_token(self):
+        return self.token
 
     def _get_authorization_header(self):
-        token = self.token
+        token = self.get_token()
         token_type = self.TOKEN_TYPE
         return {'Authorization': '{} {}'.format(token_type, token)}
 
@@ -113,7 +91,8 @@ class GithubAPI:
         """Download a repository"""
         owner = owner if owner else self.github_name
         dhost_username = self.user.username
-        url, headers = self._prepare_request(f'/repos/{owner}/{repo}/tarball/{ref}')
+        url, headers = self._prepare_request(
+            f'/repos/{owner}/{repo}/tarball/{ref}')
         r = requests.get(url, headers=headers, allow_redirects=True)
         if r.status_code == 200:
             with open(f'{dhost_username}_{owner}_{repo}.tar', 'wb') as source:
@@ -124,3 +103,28 @@ class GithubAPI:
             raise Exception(
                 'Error trying to access `{}`, error code: {}, message: {}'.
                 format(url, r.status_code, r.content))
+
+
+class DjangoGithubAPI(GithubAPI):
+    """Get the token from Django social auth"""
+
+    def __init__(self, user):
+        """
+        :user: django user object
+        """
+        self.user = user
+        self.social = self.get_social()
+        self.github_name = self.get_github_name()
+        self.token = self.get_token()
+
+    def get_social(self):
+        try:
+            return self.user.social_auth.get(provider='github')
+        except ObjectDoesNotExist:
+            raise GithubNotLinkedError()
+
+    def get_github_name(self):
+        return self.get_social().extra_data['login']
+
+    def get_token(self):
+        return self.get_social().extra_data['access_token']
