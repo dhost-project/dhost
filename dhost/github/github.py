@@ -82,12 +82,12 @@ class GithubAPI:
         """Return a list of accessible repositories from the current token"""
         return self.get('/user/repos')
 
-    def get_repo(self, repo: str, owner: str = None):
-        """Return a single repository"""
+    def get_repo(self, repo, owner=None):
+        """Return a single repository."""
         owner = owner if owner else self.github_name
         return self.get(f'/repos/{owner}/{repo}')
 
-    def download_repo(self, repo: str, owner: str = None, ref: str = ''):
+    def download_repo(self, repo, owner=None, ref=''):
         """Download a repository"""
         owner = owner if owner else self.github_name
         dhost_username = self.user.username
@@ -98,7 +98,6 @@ class GithubAPI:
             with open(f'{dhost_username}_{owner}_{repo}.tar', 'wb') as source:
                 source.write(r.content)
                 source.close()
-            return 'Repository successfully downloaded.'
         else:
             raise Exception(
                 'Error trying to access `{}`, error code: {}, message: {}'.
@@ -106,25 +105,30 @@ class GithubAPI:
 
 
 class DjangoGithubAPI(GithubAPI):
-    """Get the token from Django social auth"""
+    """
+    Get the token from Django social auth, and create objects to be stored in
+    the db, for easier access, and less calls to the Github API.
+    """
 
-    def __init__(self, user):
-        """
-        :user: django user object
-        """
-        self.user = user
-        self.social = self.get_social()
+    def __init__(self, github_social=None, user=None):
+        if github_social:
+            self.github_social = github_social
+        else:
+            self.github_social = self.get_social(user)
         self.github_name = self.get_github_name()
         self.token = self.get_token()
 
-    def get_social(self):
+    @classmethod
+    def get_social(cls, user):
         try:
-            return self.user.social_auth.get(provider='github')
+            return user.social_auth.get(provider='github')
         except ObjectDoesNotExist:
             raise GithubNotLinkedError()
 
     def get_github_name(self):
-        return self.get_social().extra_data['login']
+        # TODO catch error in case 'login' is not present in extra_data
+        return self.github_social.extra_data['login']
 
     def get_token(self):
-        return self.get_social().extra_data['access_token']
+        # TODO catch error in case 'access_token' is not present in extra_data
+        return self.github_social.extra_data['access_token']
