@@ -54,7 +54,6 @@ class GithubRepoManager(models.Manager):
 
 
 class GithubRepo(AbstractGit):
-    # `{owner}/{repo}`.
     github_owner = models.CharField(max_length=256)
     github_repo = models.CharField(max_length=256)
     # full raw output from the Github API
@@ -74,7 +73,10 @@ class GithubRepo(AbstractGit):
         self.updated = timezone.now()
         self.save()
 
-    def download_repo(self):
+    def download_repo(self, path):
         """Download repo from Github API."""
         g = DjangoGithubAPI(social=self.owner)
-        g.download_repo(self.github_full_name)
+        tar_name = g.download_repo(self.github_full_name, path)
+        # TODO decompress
+        source_path = None
+        return source_path
