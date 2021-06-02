@@ -1,43 +1,36 @@
-from rest_framework import status, viewsets
+from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .github import GithubAPI, GithubNotLinkedError
-from .models import GithubRepository
+from .models import GithubRepo
+from .permissions import HasGithubLinked
+from .serializers import GithubRepoSerializer
 
 
-class GithubRepositoryViewSet(viewsets.GenericViewSet):
-    queryset = GithubRepository.objects.all()
+class GithubRepoViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
+                        viewsets.GenericViewSet):
 
-    @action(detail=False, methods=['get'])
-    def repos(self, request):
-        try:
-            github = GithubAPI(user=request.user)
-        except GithubNotLinkedError as e:
-            data = {'details': str(e)}
-            return Response(data, status=status.HTTP_404_NOT_FOUND)
-        else:
-            data = github.get_repos()
-            return Response(data)
+    queryset = GithubRepo.objects.all()
+    serializer_class = GithubRepoSerializer
+    permission_classes = [HasGithubLinked]
 
-    @action(detail=False, methods=['get'])
-    def me(self, request):
-        try:
-            github = GithubAPI(user=request.user)
-        except GithubNotLinkedError as e:
-            data = {'details': str(e)}
-            return Response(data, status=status.HTTP_404_NOT_FOUND)
-        else:
-            data = github.get_user()
-            return Response(data)
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        social = self.request.user.social_auth.get(provider='github')
+        queryset = queryset.filter(owner=social)
+        return queryset
+
+    @action(detail=True, methods=['get'])
+    def fetch(self, request, pk=None):
+        """Update a single repo from Github API."""
+        repo = self.get_object()
+        repo.fetch_repo()
+        serializer = self.get_serializer(repo)
+        return Response(serializer.data)
 
     @action(detail=False, methods=['get'])
-    def scopes(self, request):
-        try:
-            github = GithubAPI(user=request.user)
-        except GithubNotLinkedError as e:
-            data = {'details': str(e)}
-            return Response(data, status=status.HTTP_404_NOT_FOUND)
-        else:
-            data = github.get_scopes()
-            return Response(data)
+    def fetch_all(self, request):
+        """Update every Github repos for user from the Github API."""
+        user = request.user
+        repos = GithubRepo.objects.fetch(user)
+        return Response(repos)
