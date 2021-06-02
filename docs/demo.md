@@ -4,10 +4,12 @@ For demo purposes a fixture is available, it will load data intot the database s
 
 The demo fixture is in `dhost/demo/fixture.json`.
 
-To load it run:
+Load fixture.
 ```
 ./manage.py loaddata dhost/demo/fixture.json
 ```
+
+For more infos check out the `Demo` in the `docs/setup.md` file.
 
 ## Users
 

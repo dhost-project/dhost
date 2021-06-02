@@ -4,58 +4,7 @@
 
 The `Dockerfile` file is a great way to start the site with Docker.
 
-## Heroku
-
-The `Procfile` file is a config for [Heroku](https://www.heroku.com/), it define how the app should be started and what commands should be executed before starting it.
-
-This file alone is enought to host the site on Heroku, but there is some extra steps you need to take, main one is setting the environment variables to point to the database. This can be done in the **Settings** tab in your heroku dashboard. Also note that there is a `Heroku Postgres` add-ons available for free [here](https://elements.heroku.com/addons/heroku-postgresql).
-
-## Bare metal
-
-You should check the [Django's deployement guide](https://docs.djangoproject.com/en/3.1/howto/deployment/).
-
-Create the environment.
-```
-python3.9 -m venv venv
-```
-
-Activate it (on linux).
-```
-source ./venv/bin/activate
-```
-
-Install the requirements.
-```
-pip install -r requirements.txt
-```
-
-Migrate the database.
-```
-./manage.py migrate
-```
-
-We will need to compile the translation `.po` files located in the `locale` folder with:
-```
-./manage.py compilemessages
-```
-
-Then you must collect static files with:
-```
-./manage.py collectstatic
-```
-
-This will create a folder containing all the static files raidy to be served by your server.
-
-To serve your static files you can setup a server, or use an AWS S3 bucket, set the permissions to public and collect them there.
-
-Then you will need to create a super user to access the admin page:
-```
-./manage.py createsuperuser
-```
-
-Then you will be able to start the server, for this we will need nginx and we use gunicorn with async support.
-
-## Dev
+## Development
 
 For development you can use a virtual environment.
 
@@ -82,7 +31,7 @@ pip install -r requirements_dev.txt
 
 You can now run the development server with:
 ```
-python manage.py runserver
+./manage.py runserver
 ```
 
 ### Demo
@@ -91,12 +40,12 @@ Their is a fixture containing some data that can be loaded inside the database f
 
 To load the fixture inside the current database use:
 ```
-python manage.py loaddata ./dhost/demo/fixture.json
+./manage.py loaddata ./dhost/demo/fixture.json
 ```
 
 If you don't wan't to load the data in the database but still want to demo the app you can use the [testserver](https://docs.djangoproject.com/en/3.2/ref/django-admin/#testserver) command and load the fixture inside it.
 ```
-python manage.py testserver dhost/demo/fixture.json
+./manage.py testserver dhost/demo/fixture.json
 ```
 
 If you restart the test server all data will be earased and reloaded form the fixture.
@@ -147,25 +96,6 @@ More infos in the `docs/test.md` file.
 
 There is also an editorconfig file (`.editorconfig`) that can be used with your IDE or text editor, more infos [here](https://editorconfig.org/).
 
-### Django models
-
-If you change a model you must create a migrations with [makemigrations](https://docs.djangoproject.com/en/3.2/ref/django-admin/#migrate).
-```
-./manage.py makemigrations
-```
-
-And then migrate it you your DB with [migrate](https://docs.djangoproject.com/en/3.2/ref/django-admin/#migrate).
-```
-./manage.py migrate
-```
-
-If you did multiple migrations and you want to squash them you can use:
-```
-python manage.py squashmigrations
-```
-
-More infos [here](https://docs.djangoproject.com/en/3.2/ref/django-admin/#squashmigrations)
-
 ### Commands
 
 The list of custom commands can be found in the `docs/commands.md` file.
@@ -182,4 +112,61 @@ The list of variables there default values and descriptions can be found in the 
 
 ### AWS
 
+AWS can be used for static and media storage inside a bucket.
 The AWS environment variables can be found in the `docs/aws_setup.md` file.
+
+## Heroku
+
+The `Procfile` file is a config for [Heroku](https://www.heroku.com/), it define how the app should be started and what commands should be executed before starting it.
+
+This file alone is enought to host the site on Heroku, but there is some extra steps you need to take, main one is setting the environment variables to point to the database. This can be done in the **Settings** tab in your heroku dashboard. Also note that there is a `Heroku Postgres` add-ons available for free [here](https://elements.heroku.com/addons/heroku-postgresql).
+
+You should check the `docs/environment_variables.md` file for more informations about variables.
+
+## Bare metal
+
+You should check the [Django's deployement guide](https://docs.djangoproject.com/en/3.1/howto/deployment/).
+
+Create the environment.
+```
+python3.9 -m venv venv
+```
+
+Activate it (on linux).
+```
+source ./venv/bin/activate
+```
+
+Install the requirements.
+```
+pip install -r requirements.txt
+```
+
+At this point you should check the `docs/environment_variables.md` file for more informations about variables.
+Mainly `DEBUG`, `SECRET_KEY` and `DATABASE_URL`.
+
+Migrate the database.
+```
+./manage.py migrate
+```
+
+We will need to compile the translation `.po` files located in the `locale` folder with:
+```
+./manage.py compilemessages
+```
+
+Then you must collect static files with:
+```
+./manage.py collectstatic
+```
+
+This will create a folder containing all the static files raidy to be served by your server.
+
+To serve your static files you can setup a server, or use an AWS S3 bucket, set the permissions to public and collect them there.
+
+Then you will need to create a super user to access the admin page:
+```
+./manage.py createsuperuser
+```
+
+Then you will be able to start the server, for this we will need nginx and we use gunicorn with async support.
