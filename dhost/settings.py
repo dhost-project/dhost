@@ -142,8 +142,7 @@ LANGUAGES = [
     ('fr', 'Français'),
 ]
 
-# ENABLE_SSL = env_bool('ENABLE_SSL', not (DEBUG))
-ENABLE_SSL = False
+ENABLE_SSL = env_bool('ENABLE_SSL', not (DEBUG))
 if ENABLE_SSL:
     SECURE_SSL_REDIRECT = env_bool('SECURE_SSL_REDIRECT', True)
     CSRF_COOKIE_SECURE = env_bool('CSRF_COOKIE_SECURE', True)
