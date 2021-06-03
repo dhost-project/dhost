@@ -1,6 +1,6 @@
 # Auth OAuth2 provider and OAuth2 clients API routes
 
-Create a superuser with:
+Create a superuser.
 ```
 ./manage.py createsuperuser
 ```

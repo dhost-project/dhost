@@ -69,7 +69,7 @@ class AbstractDapp(models.Model):
 
     def deploy(self):
         """One of the function to overwrite when inheriting"""
-        raise Exception("The deployment process is not implemented.")
+        raise NotImplementedError
 
 
 class Dapp(AbstractDapp, BuildOptions):
@@ -139,3 +139,6 @@ class AbstractDeployment(models.Model):
 
     def __str__(self):
         return 'dplmt:{}'.format(self.id.hex[:7])
+
+    def deploy(self):
+        raise NotImplementedError

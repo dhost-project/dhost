@@ -88,9 +88,9 @@ class Bundle(models.Model):
     def __str__(self):
         return 'bundl:{}'.format(self.id.hex[:7])
 
-    def delete(self):
+    def delete(self, *args, **kwargs):
         # TODO delete bundle folder when deleting the object
-        pass
+        super().delete(*args, **kwargs)
 
 
 class Build(models.Model):

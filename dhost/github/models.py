@@ -1,43 +1,82 @@
-from django.conf import settings
 from django.db import models
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
+from social_django.models import UserSocialAuth
+
+from .github import DjangoGithubAPI
 
 
 class AbstractGit(models.Model):
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        UserSocialAuth,
         on_delete=models.CASCADE,
     )
-    repo_name = models.CharField(max_length=1024)
-    branch = models.CharField(max_length=1024, default='master')
+    # max repo name length on Github is 100
+    name = models.CharField(max_length=256)
+    branch = models.CharField(max_length=256, default='main')
+    size = models.SmallIntegerField(null=True, blank=True)
     auto_deploy = models.BooleanField(default=False)
+    updated = models.DateTimeField(
+        null=True,
+        blank=True,
+        editable=False,
+        help_text='Last updated from external source.',
+    )
+    created = models.DateTimeField(auto_now_add=True, help_text='Created at.')
+    modified = models.DateTimeField(
+        auto_now=True,
+        help_text='Last modified by user or external source.',
+    )
 
     class Meta:
         abstract = True
 
     def download_source(self):
+        raise NotImplementedError
+
+
+class GithubRepoManager(models.Manager):
+
+    def create_from_api(self, repo_json):
+        """Create a GithubRepository from a Github API response."""
+        github_owner = repo_json['owner']['login']
+        github_repo = repo_json['name']
+        github_extra_data = repo_json
+        return self.create(github_owner=github_owner,
+                           github_repo=github_repo,
+                           github_extra_data=github_extra_data)
+
+    def get_or_create_from_api(self, repo_json):
+        """Like get_or_create but from Github API response"""
         pass
+        # TODO
+        # return self.get_or_create()
 
 
-class CommitMixin(models.Model):
-    git = None
-    commit_hash = models.CharField(max_length=42)
-
-    class Meta:
-        abstract = True
-
-    def __str__(self):
-        return self.commit_hash
-
-
-class Github(AbstractGit):
-    repo_url = models.URLField()
+class GithubRepo(AbstractGit):
+    github_owner = models.CharField(max_length=256)
+    github_repo = models.CharField(max_length=256)
+    # full raw output from the Github API
+    github_extra_data = models.JSONField(null=True, blank=True)
+    objects = GithubRepoManager()
 
     class Meta(AbstractGit.Meta):
-        pass
+        verbose_name = _('Github repository')
+        verbose_name_plural = _('Github repositories')
 
+    def fetch_repo(self):
+        """Fetch repo from Github API and update it."""
+        g = DjangoGithubAPI(github_social=self.owner)
+        repo_json = g.get_repo(owner=self.github_owner, repo=self.github_repo)
+        self.size = repo_json['size']
+        self.github_extra_data = repo_json
+        self.updated = timezone.now()
+        self.save()
 
-class GithubCommit(CommitMixin):
-    git = models.ForeignKey(Github, on_delete=models.CASCADE)
-
-    class Meta(CommitMixin.Meta):
-        pass
+    def download_repo(self, path):
+        """Download repo from Github API."""
+        g = DjangoGithubAPI(social=self.owner)
+        tar_name = g.download_repo(self.github_full_name, path)
+        # TODO decompress
+        source_path = None
+        return source_path

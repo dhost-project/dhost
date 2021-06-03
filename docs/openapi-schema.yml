@@ -1,0 +1,789 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+paths:
+  /api/v1/bundles/:
+    get:
+      operationId: listBundles
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bundle'
+          description: ''
+      tags:
+      - api
+  /api/v1/bundles/{id}/:
+    get:
+      operationId: retrieveBundle
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this bundle.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bundle'
+          description: ''
+      tags:
+      - api
+  /api/v1/builds/:
+    get:
+      operationId: listBuilds
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Build'
+          description: ''
+      tags:
+      - api
+  /api/v1/builds/{id}/:
+    get:
+      operationId: retrieveBuild
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this build.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Build'
+          description: ''
+      tags:
+      - api
+  /api/v1/envvar/:
+    get:
+      operationId: listEnvironmentVariables
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EnvironmentVariable'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createEnvironmentVariable
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariable'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariable'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariable'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariable'
+          description: ''
+      tags:
+      - api
+  /api/v1/envvar/{id}/:
+    get:
+      operationId: retrieveEnvironmentVariable
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this environment variable.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariable'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateEnvironmentVariable
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this environment variable.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariable'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariable'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariable'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariable'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateEnvironmentVariable
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this environment variable.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariable'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariable'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariable'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariable'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyEnvironmentVariable
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this environment variable.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/v1/github/:
+    get:
+      operationId: listGithubRepos
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GithubRepo'
+          description: ''
+      tags:
+      - api
+  /api/v1/github/fetch_all/:
+    get:
+      operationId: fetchAllGithubRepo
+      description: Update every Github repos for user from the Github API.
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GithubRepo'
+          description: ''
+      tags:
+      - api
+  /api/v1/github/{id}/:
+    get:
+      operationId: retrieveGithubRepo
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this Github repository.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GithubRepo'
+          description: ''
+      tags:
+      - api
+  /api/v1/github/{id}/fetch/:
+    get:
+      operationId: fetchGithubRepo
+      description: Update a single repo from Github API.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this Github repository.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GithubRepo'
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/:
+    get:
+      operationId: listIPFSDapps
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IPFSDapp'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createIPFSDapp
+      description: Add `owner` when creating the dapp
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IPFSDapp'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/IPFSDapp'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/IPFSDapp'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPFSDapp'
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{id}/:
+    get:
+      operationId: retrieveIPFSDapp
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this IPFS Dapp.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPFSDapp'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateIPFSDapp
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this IPFS Dapp.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IPFSDapp'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/IPFSDapp'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/IPFSDapp'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPFSDapp'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateIPFSDapp
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this IPFS Dapp.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IPFSDapp'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/IPFSDapp'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/IPFSDapp'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPFSDapp'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyIPFSDapp
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this IPFS Dapp.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{id}/build/:
+    get:
+      operationId: buildIPFSDapp
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this IPFS Dapp.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPFSDapp'
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{id}/deploy/:
+    get:
+      operationId: deployIPFSDapp
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this IPFS Dapp.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPFSDapp'
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs_deploy/:
+    get:
+      operationId: listIPFSDeployments
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IPFSDeployment'
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs_deploy/{id}/:
+    get:
+      operationId: retrieveIPFSDeployment
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this IPFS Deployment.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPFSDeployment'
+          description: ''
+      tags:
+      - api
+  /api/v1/logs/:
+    get:
+      operationId: listDashboardLogEntrys
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DashboardLogEntry'
+          description: ''
+      tags:
+      - api
+  /api/v1/logs/{id}/:
+    get:
+      operationId: retrieveDashboardLogEntry
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this dashboard log entry.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardLogEntry'
+          description: ''
+      tags:
+      - api
+  /api/v1/users/me/:
+    get:
+      operationId: meUser
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+components:
+  schemas:
+    Bundle:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        options:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+    Build:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        options:
+          type: string
+          readOnly: true
+        is_success:
+          type: boolean
+          readOnly: true
+          description: Based on the build return code
+        logs:
+          type: string
+          readOnly: true
+          description: Raw logs output of the build process
+        bundle:
+          type: string
+          readOnly: true
+        start:
+          type: string
+          format: date-time
+          readOnly: true
+        end:
+          type: string
+          format: date-time
+          readOnly: true
+    EnvironmentVariable:
+      type: object
+      properties:
+        options:
+          type: string
+        variable:
+          type: string
+          maxLength: 1024
+        value:
+          type: string
+          maxLength: 8192
+      required:
+      - options
+      - variable
+      - value
+    GithubRepo:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        branch:
+          type: string
+          maxLength: 256
+        auto_deploy:
+          type: boolean
+        github_owner:
+          type: string
+          readOnly: true
+        github_repo:
+          type: string
+          readOnly: true
+        size:
+          type: integer
+          readOnly: true
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Last updated from external source.
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Created at.
+        modified:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Last modified by user or external source.
+    IPFSDapp:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        command:
+          type: string
+          description: Command used during the build process.
+          maxLength: 2048
+        docker:
+          type: string
+          description: Container used for the build process.
+          maxLength: 128
+        builds:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        bundles:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 128
+        slug:
+          type: string
+          nullable: true
+          maxLength: 50
+          pattern: ^[-a-zA-Z0-9_]+$
+        url:
+          type: string
+          readOnly: true
+        owner:
+          type: string
+        status:
+          enum:
+          - SO
+          - BI
+          - BT
+          - DP
+          - SA
+          - UP
+          - UA
+          - ER
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        deployments:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        hash:
+          type: string
+          readOnly: true
+      required:
+      - name
+      - owner
+    IPFSDeployment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        dapp:
+          type: string
+          readOnly: true
+        bundle:
+          type: string
+          readOnly: true
+        status:
+          enum:
+          - SO
+          - DP
+          - SA
+          - UP
+          - UA
+          type: string
+          readOnly: true
+        start:
+          type: string
+          format: date-time
+          readOnly: true
+        end:
+          type: string
+          format: date-time
+          readOnly: true
+        hash:
+          type: string
+          readOnly: true
+    DashboardLogEntry:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          type: string
+          readOnly: true
+        action_flag:
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          - 8
+          - 9
+          type: integer
+          readOnly: true
+        change_message:
+          type: string
+          readOnly: true
+        action_time:
+          type: string
+          format: date-time
+          readOnly: true
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        username:
+          type: string
+          pattern: ^[\w.@+-]+\z
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        avatar:
+          type: string
+          format: binary
+          readOnly: true
+      required:
+      - username

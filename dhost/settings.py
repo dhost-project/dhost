@@ -142,8 +142,15 @@ LANGUAGES = [
     ('fr', 'Français'),
 ]
 
-CSRF_COOKIE_SECURE = env_bool('CSRF_COOKIE_SECURE', False)
-SESSION_COOKIE_SECURE = env_bool('SESSION_COOKIE_SECURE', False)
+ENABLE_SSL = env_bool('ENABLE_SSL', not (DEBUG))
+if ENABLE_SSL:
+    SECURE_SSL_REDIRECT = env_bool('SECURE_SSL_REDIRECT', True)
+    CSRF_COOKIE_SECURE = env_bool('CSRF_COOKIE_SECURE', True)
+    SESSION_COOKIE_SECURE = env_bool('SESSION_COOKIE_SECURE', True)
+    SECURE_HSTS_SECONDS = int(env('SECURE_HSTS_SECONDS', 60))
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = env_bool('SECURE_HSTS_INCLUDE_SUBDOMAINS',
+                                              True)
+    SECURE_HSTS_PRELOAD = env_bool('SECURE_HSTS_PRELOAD', True)
 
 STATIC_URL = env('STATIC_URL', '/static/')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -189,16 +196,21 @@ if DEBUG:
 SCOPES_BACKEND_CLASS = 'oauth2.scopes.SettingsScopes'
 OAUTH2_PROVIDER_APPLICATION_MODEL = 'oauth2.Application'
 # REFRESH_TOKEN_EXPIRE_SECONDS = env('REFRESH_TOKEN_EXPIRE_SECONDS')
-
-# Social auth
 AUTHENTICATION_BACKENDS = [
     'oauth2_provider.backends.OAuth2Backend',
-    'social_core.backends.github.GithubOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+# Social auth
+AUTHENTICATION_BACKENDS.append('social_core.backends.github.GithubOAuth2')
 SOCIAL_AUTH_GITHUB_KEY = env('SOCIAL_AUTH_GITHUB_KEY')
 SOCIAL_AUTH_GITHUB_SECRET = env('SOCIAL_AUTH_GITHUB_SECRET')
+SOCIAL_AUTH_GITHUB_SCOPE = [
+    # 'repo',
+    # 'repo_deployment',
+    # 'read:repo_hook',
+    # 'user:email',
+]
 
 # AWS S3
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
