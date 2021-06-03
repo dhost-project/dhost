@@ -35,10 +35,21 @@ if settings.ENABLE_DEBUG_TOOLBAR:  # pragma: no cover
 if settings.DEBUG:  # pragma: no cover
     from django.conf.urls.static import static
     from django.views import defaults as default_views
+    from rest_framework.permissions import AllowAny
+    from rest_framework.schemas import get_schema_view
 
     urlpatterns += [
         path('api-auth/',
              include('rest_framework.urls', namespace='rest_framework')),
+        path('openapi',
+             get_schema_view(
+                 title="DHost",
+                 description="API",
+                 version="1.0.0",
+                 url="http://localhost:8000/",
+                 permission_classes=[AllowAny],
+             ),
+             name='openapi-schema'),
         path(
             "400/",
             default_views.bad_request,
