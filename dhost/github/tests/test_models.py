@@ -17,7 +17,7 @@ class GithubModelTest(TestCase):
             user=self.u1,
             provider='github',
             uid='1234',
-            extra_data = {'access_token': 'token123'},
+            extra_data={'access_token': 'token123'},
         )
         self.repo1 = GithubRepo.objects.create(
             owner=self.s1,
