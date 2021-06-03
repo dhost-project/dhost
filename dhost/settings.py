@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SITE_ID = env('SITE_ID', 1)
 
-DEBUG = env_bool('DEBUG', False)
+DEBUG = env_bool('DEBUG', True)
 
 SECRET_KEY = env('SECRET_KEY')
 if not SECRET_KEY and DEBUG:
