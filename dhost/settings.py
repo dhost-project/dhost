@@ -199,9 +199,10 @@ AUTHENTICATION_BACKENDS.append('social_core.backends.github.GithubOAuth2')
 SOCIAL_AUTH_GITHUB_KEY = env('SOCIAL_AUTH_GITHUB_KEY')
 SOCIAL_AUTH_GITHUB_SECRET = env('SOCIAL_AUTH_GITHUB_SECRET')
 SOCIAL_AUTH_GITHUB_SCOPE = [
-    'repo',
+    # 'repo',
+    # 'repo_deployment',
     # 'read:repo_hook',
-    'user:email',
+    # 'user:email',
 ]
 
 # AWS S3
