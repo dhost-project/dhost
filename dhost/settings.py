@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'dhost.users',
     'dhost.oauth2',
     # External apps
+    'corsheaders',
     'crispy_forms',
     'crispy_bootstrap5',
     'django_otp',
@@ -70,6 +71,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'oauth2_provider.middleware.OAuth2TokenMiddleware',
@@ -191,6 +193,10 @@ if DEBUG:
     # for browsabler api
     REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'].append(
         'rest_framework.authentication.SessionAuthentication',)
+
+# CORS
+CORS_ALLOW_ALL_ORIGINS = env_bool('CORS_ALLOW_ALL_ORIGINS', DEBUG)
+CORS_ALLOWED_ORIGINS = env_list('CORS_ALLOWED_ORIGINS', 'http://localhost:8000')
 
 # OAuth2 provider
 SCOPES_BACKEND_CLASS = 'oauth2.scopes.SettingsScopes'
