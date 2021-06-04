@@ -31,6 +31,6 @@ class GithubRepoViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
     @action(detail=False, methods=['get'])
     def fetch_all(self, request):
         """Update every Github repos for user from the Github API."""
-        user = request.user
-        repos = GithubRepo.objects.fetch(user)
+        social = request.user.social_auth.get(provider='github')
+        repos = GithubRepo.objects.fetch_all(social)
         return Response(repos)

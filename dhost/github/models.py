@@ -37,6 +37,12 @@ class AbstractGit(models.Model):
 
 class GithubRepoManager(models.Manager):
 
+    def fetch_all(self, github_social):
+        g = DjangoGithubAPI(github_social=github_social)
+        repos = g.get_repos()
+        # TODO get_or_create_from_api new GithubRepo from response
+        return repos
+
     def create_from_api(self, repo_json):
         """Create a GithubRepository from a Github API response."""
         github_owner = repo_json['owner']['login']
