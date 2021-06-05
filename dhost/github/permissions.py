@@ -4,8 +4,8 @@ from rest_framework import permissions
 class HasGithubLinked(permissions.BasePermission):
 
     def has_permission(self, request, view):
-        # if the user has not linked his account with Github
         if request.user.is_authenticated:
+            # if the user has linked his account with Github
             if len(request.user.social_auth.filter(provider='github')) > 0:
                 return True
         return False
