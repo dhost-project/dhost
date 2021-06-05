@@ -105,10 +105,7 @@ class GithubAPI:
 
 
 class DjangoGithubAPI(GithubAPI):
-    """
-    Get the token from Django social auth, and create objects to be stored in
-    the db, for easier access, and less calls to the Github API.
-    """
+    """Get the token from Django social auth."""
 
     def __init__(self, github_social=None, user=None):
         if github_social:
@@ -126,9 +123,17 @@ class DjangoGithubAPI(GithubAPI):
             raise GithubNotLinkedError()
 
     def get_github_name(self):
-        # TODO catch error in case 'login' is not present in extra_data
+        if 'login' not in self.github_social.extra_data:
+            raise Exception(
+                "'login' not present in github_social.extra_data for "
+                "user '{}' (id: '{}')".format(self.github_social.user,
+                                              self.github_social.user.id))
         return self.github_social.extra_data['login']
 
     def get_token(self):
-        # TODO catch error in case 'access_token' is not present in extra_data
+        if 'access_token' not in self.github_social.extra_data:
+            raise Exception(
+                "'access_token' not present in github_social.extra_data for "
+                "user '{}' (id: '{}')".format(self.github_social.user,
+                                              self.github_social.user.id))
         return self.github_social.extra_data['access_token']
