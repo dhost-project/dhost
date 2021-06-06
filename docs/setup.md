@@ -4,6 +4,24 @@
 
 The `Dockerfile` file is a great way to start the site with Docker.
 
+### Docker dev
+
+The `Dockerfile_dev` can spin up a server with demo data.
+
+Build the image.
+```
+docker build . -t 'api' -f Dockerfile_dev
+```
+
+Run it.
+```
+docker run -p 8000:8000 api
+```
+
+You should be able to visit it at: [http://localhost:8000/](http://localhost:8000/).
+
+Login with username: `admin` and password: `admin` to make requests on the browsable API at [http://localhost:8000/api/v1/](http://localhost:8000/api/v1/) or on the admin dashboard [http://localhost:8000/admin/](http://localhost:8000/admin/).
+
 ## Development
 
 For development you can use a virtual environment.
