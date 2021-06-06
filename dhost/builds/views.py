@@ -16,7 +16,7 @@ class BuildOptionsViewSet(viewsets.ModelViewSet):
         build_options = self.get_object()
         is_success, _ = build_options.build()
         if is_success:
-            return Response({'status': 'build successfull'})
+            return Response({'status': 'build started.'})
         else:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

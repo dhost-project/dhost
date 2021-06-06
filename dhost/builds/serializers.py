@@ -1,24 +1,7 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 
 from .models import Build, BuildOptions, Bundle, EnvironmentVariable
-
-
-class BuildOptionsSerializer(serializers.ModelSerializer):
-    builds = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='build-detail',
-    )
-    bundles = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='bundle-detail',
-    )
-
-    class Meta:
-        model = BuildOptions
-        fields = ['id', 'command', 'docker', 'builds', 'bundles']
-        read_only_fields = []
 
 
 class BundleSerializer(serializers.ModelSerializer):
@@ -26,22 +9,15 @@ class BundleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bundle
         fields = ['id', 'options', 'created_at']
-        read_only_fields = ['created_at']
 
 
 class BuildSerializer(serializers.ModelSerializer):
-    bundle = serializers.HyperlinkedRelatedField(
-        read_only=True,
-        view_name='bundle-detail',
-    )
+    bundle = BundleSerializer(read_only=True,)
 
     class Meta:
         model = Build
         fields = [
             'id', 'options', 'is_success', 'logs', 'bundle', 'start', 'end'
-        ]
-        read_only_fields = [
-            'id', 'options', 'is_success', 'logs', 'start', 'end'
         ]
 
 
@@ -51,3 +27,18 @@ class EnvironmentVariableSerializer(serializers.ModelSerializer):
         model = EnvironmentVariable
         fields = ['options', 'variable', 'value']
         # read_only_fields = ['options']
+        validators = [
+            UniqueTogetherValidator(queryset=EnvironmentVariable.objects.all(),
+                                    fields=['options', 'variable'])
+        ]
+
+
+class BuildOptionsSerializer(serializers.ModelSerializer):
+    builds = BuildSerializer(many=True, read_only=True)
+    bundles = BundleSerializer(many=True, read_only=True)
+    envvars = EnvironmentVariableSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = BuildOptions
+        fields = ['id', 'command', 'docker', 'builds', 'bundles', 'envvars']
+        read_only_fields = []

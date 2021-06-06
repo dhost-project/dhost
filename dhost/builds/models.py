@@ -206,7 +206,7 @@ class EnvironmentVariable(models.Model):
     options = models.ForeignKey(
         BuildOptions,
         on_delete=models.CASCADE,
-        related_name='envars',
+        related_name='envvars',
     )
     variable = models.CharField(max_length=1024)
     value = models.CharField(max_length=8192)
@@ -214,6 +214,10 @@ class EnvironmentVariable(models.Model):
     class Meta:
         verbose_name = _('environment variable')
         verbose_name_plural = _('environment variables')
+        constraints = [
+            models.UniqueConstraint(fields=['options', 'variable'],
+                                    name='unique variable'),
+        ]
 
     def __str__(self):
         return '{}={}'.format(self.variable, self.value)

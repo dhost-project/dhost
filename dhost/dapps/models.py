@@ -9,26 +9,19 @@ from dhost.builds.models import BuildOptions, Bundle
 
 
 class AbstractDapp(models.Model):
-    name = models.CharField(
-        _('dapp name'),
-        max_length=128,
-        unique=True,
-        error_messages={
-            'unique': _("A dapp with that name already exists."),
-        },
-    )
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_('owner'),
-        related_name="%(class)ss",
-        related_query_name="%(class)ss",
+        related_name="%(app_label)s_%(class)s",
+        related_query_name="%(app_label)s_%(class)s",
         on_delete=models.CASCADE,
     )
-    slug = models.SlugField(unique=True, blank=True, null=True)
+    slug = models.SlugField(help_text='{user}/{slug}')
     url = models.CharField(_('URL'), max_length=2048, blank=True)
 
     class Statuses(models.TextChoices):
-        """All the different statuses a Dapp can be in:
+        """
+        All the different statuses a Dapp can be in:
           - STOPED: When the Dapp is neither UP nor UNAVAILABLE nor doing any
             other change in state
           - BUILDING: In the process of building the bundle
@@ -68,7 +61,6 @@ class AbstractDapp(models.Model):
         return self.name
 
     def deploy(self):
-        """One of the function to overwrite when inheriting"""
         raise NotImplementedError
 
 
@@ -78,7 +70,10 @@ class Dapp(AbstractDapp, BuildOptions):
     """
 
     class Meta(AbstractDapp.Meta):
-        pass
+        constraints = [
+            models.UniqueConstraint(fields=['owner', 'slug'],
+                                    name='%(app_label)s_%(class)s_unique_slug'),
+        ]
 
     def deploy(self, bundle=None):
         """Create an `IPFSDeployment` object and start the deployment process
@@ -94,7 +89,7 @@ class Dapp(AbstractDapp, BuildOptions):
 
     def create_deployment(self, bundle=None):
         """Return a specific application deployment instance"""
-        return None
+        raise NotImplementedError
 
 
 class AbstractDeployment(models.Model):
