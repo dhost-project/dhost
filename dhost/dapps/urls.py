@@ -1,19 +1,43 @@
-from django.urls import include, path
+from django.urls import path
 
-from .views import DappBundleViewSet, DappViewSet
+from .views import (DappBuildViewSet, DappBundleViewSet, DappViewSet,
+                    EnvironmentVariableViewSet)
 
-dapp_list = DappViewSet.as_view({'get': 'list'})
-dapp_details = DappViewSet.as_view({'get': 'retrieve'})
+dapp_list = DappViewSet.as_view({'get': 'list', 'post': 'create'})
+dapp_details = DappViewSet.as_view({
+    'get': 'retrieve',
+    'put': 'update',
+    'patch': 'partial_update',
+    'delete': 'destroy'
+})
+dapp_build = DappViewSet.as_view({'get': 'build'})
+dapp_deploy = DappViewSet.as_view({'get': 'deploy'})
+envvar_list = EnvironmentVariableViewSet.as_view({
+    'get': 'list',
+    'post': 'create'
+})
+envvar_details = EnvironmentVariableViewSet.as_view({
+    'get': 'retrieve',
+    'put': 'update',
+    'patch': 'partial_update',
+    'delete': 'destroy'
+})
 bundle_list = DappBundleViewSet.as_view({'get': 'list'})
 bundle_details = DappBundleViewSet.as_view({'get': 'retrieve'})
-
-dapp_urlpatterns = [
-    path('', dapp_details),
-    path('bundles/', bundle_list),
-    path('bundles/<uuid:bundle__id>/', bundle_details),
-]
+build_list = DappBuildViewSet.as_view({'get': 'list'})
+build_details = DappBuildViewSet.as_view({'get': 'retrieve'})
 
 urlpatterns = [
-    path('<str:username>/', dapp_list),
-    path('<str:username>/<str:dapp__slug>/', include(dapp_urlpatterns)),
+    path('', dapp_list),
+    path('<slug:dapp__slug>/', dapp_details),
+    path('<slug:dapp__slug>/build/', dapp_build),
+    path('<slug:dapp__slug>/deploy/', dapp_deploy),
+    path('<slug:dapp__slug>/envvars/', envvar_list),
+    path('<slug:dapp__slug>/envvars/<uuid:pk>/', envvar_details),
+    path('<slug:dapp__slug>/bundles/', bundle_list),
+    path('<slug:dapp__slug>/bundles/<uuid:pk>/', bundle_details),
+    path('<slug:dapp__slug>/builds/', build_list),
+    path('<slug:dapp__slug>/builds/<uuid:pk>/', build_details),
+    path('<slug:dapp__slug>/deployments/', build_list),
+    path('<slug:dapp__slug>/deployments/<uuid:pk>/', build_details),
 ]

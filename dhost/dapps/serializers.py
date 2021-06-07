@@ -4,30 +4,31 @@ from rest_framework.validators import UniqueTogetherValidator
 from dhost.builds.serializers import BuildOptionsSerializer
 from dhost.users.api.serializers import UserSerializer
 
-from .models import Dapp
+from .models import Dapp, Deployment
+
+
+class DeploymentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Deployment
+        fields = ['id', 'dapp', 'bundle', 'status', 'start', 'end']
+        read_only_fields = ['id', 'dapp', 'bundle', 'status', 'start', 'end']
 
 
 class DappSerializer(BuildOptionsSerializer):
 
-    owner = UserSerializer(read_only=True,
-                           default=serializers.CurrentUserDefault())
+    owner = UserSerializer(read_only=True)
+    deployments = DeploymentSerializer(many=True, read_only=True)
 
     class Meta(BuildOptionsSerializer.Meta):
         model = Dapp
         fields = BuildOptionsSerializer.Meta.fields + [
-            'slug', 'url', 'owner', 'status', 'created_at'
+            'slug', 'url', 'owner', 'status', 'deployments', 'created_at'
         ]
         read_only_fields = BuildOptionsSerializer.Meta.read_only_fields + [
-            'url', 'owner', 'status', 'created_at'
+            'url', 'owner', 'status', 'deployments', 'created_at'
         ]
         validators = [
             UniqueTogetherValidator(queryset=Dapp.objects.all(),
                                     fields=['owner', 'slug'])
         ]
-
-
-class AbstractDeploymentSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        fields = ['id', 'dapp', 'bundle', 'status', 'start', 'end']
-        read_only_fields = ['id', 'dapp', 'bundle', 'status', 'start', 'end']

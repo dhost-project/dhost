@@ -58,7 +58,7 @@ class AbstractDapp(models.Model):
         abstract = True
 
     def __str__(self):
-        return self.name
+        return self.slug
 
     def deploy(self):
         raise NotImplementedError
@@ -74,6 +74,9 @@ class Dapp(AbstractDapp, BuildOptions):
             models.UniqueConstraint(fields=['owner', 'slug'],
                                     name='%(app_label)s_%(class)s_unique_slug'),
         ]
+
+    def __str__(self):
+        return self.slug
 
     def deploy(self, bundle=None):
         """Create an `IPFSDeployment` object and start the deployment process
@@ -137,3 +140,7 @@ class AbstractDeployment(models.Model):
 
     def deploy(self):
         raise NotImplementedError
+
+
+class Deployment(AbstractDeployment):
+    pass

@@ -1,4 +1,4 @@
-from dhost.dapps.views import AbstractDeploymentViewSet, DappViewSet
+from dhost.dapps.views import DappViewSet, DeploymentViewSet
 
 from .models import IPFSDapp, IPFSDeployment
 from .serializers import IPFSDappSerializer, IPFSDeploymentSerializer
@@ -9,6 +9,6 @@ class IPFSDappViewSet(DappViewSet):
     serializer_class = IPFSDappSerializer
 
 
-class IPFSDeploymentViewSet(AbstractDeploymentViewSet):
+class IPFSDeploymentViewSet(DeploymentViewSet):
     queryset = IPFSDeployment.objects.all()
     serializer_class = IPFSDeploymentSerializer
