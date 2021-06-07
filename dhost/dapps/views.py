@@ -1,3 +1,5 @@
+from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -9,10 +11,25 @@ from dhost.builds.views import (BuildOptionsViewSet, BuildViewSet,
 from .models import Dapp
 from .serializers import AbstractDeploymentSerializer, DappSerializer
 
+User = get_user_model()
+
 
 class DappViewSet(BuildOptionsViewSet):
     serializer_class = DappSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        queryset = self.filter_queryset(self.get_queryset())
+        user = get_object_or_404(User.objects.all(),
+                                 username=self.kwargs['username'])
+        print(user)
+        filter_kwargs = {
+            'owner': user,
+            'slug': self.kwargs['dapp__slug'],
+        }
+        obj = get_object_or_404(queryset, **filter_kwargs)
+        self.check_object_permissions(self.request, obj)
+        return obj
 
     def create(self, request):
         """Add `owner` when creating the dapp"""

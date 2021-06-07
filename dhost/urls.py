@@ -19,11 +19,16 @@ router.register('ipfs_deploy', ipfs_views.IPFSDeploymentViewSet)
 router.register('logs', logs_views.DashboardLogEntryViewSet)
 router.register('users', users_views.UserViewSet)
 
+api_urlpatterns = [
+    path('', include('dhost.dapps.urls')),
+]
+
 urlpatterns = [
     path('oauth2/', include('dhost.oauth2.urls', namespace='oauth2_provider')),
     path('social/', include('social_django.urls', namespace='social')),
     path('u/', include('dhost.users.urls')),
     path('api/v1/', include(router.urls)),
+    path('api/v2/', include(api_urlpatterns)),
     path('admin/', admin.site.urls),
 ]
 
