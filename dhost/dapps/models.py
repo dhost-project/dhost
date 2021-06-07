@@ -16,7 +16,8 @@ class AbstractDapp(models.Model):
         related_query_name="%(app_label)s_%(class)s",
         on_delete=models.CASCADE,
     )
-    slug = models.SlugField(help_text='{user}/{slug}')
+    slug = models.SlugField(_('dapp name'), max_length=256,
+                            help_text='[A-Za-z0-9_-]')
     url = models.CharField(_('URL'), max_length=2048, blank=True)
 
     class Statuses(models.TextChoices):
