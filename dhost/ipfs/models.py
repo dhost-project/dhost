@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from dhost.dapps.models import AbstractDeployment, Dapp
+from dhost.dapps.models import Dapp, Deployment
 
 
 class IPFSDapp(Dapp):
@@ -31,10 +31,10 @@ class IPFSDapp(Dapp):
         return '{}{}'.format(self.ipfs_gateway, self.hash)
 
 
-class IPFSDeployment(AbstractDeployment):
+class IPFSDeployment(Deployment):
     hash = models.CharField(_('IPFS hash'), max_length=128, blank=True)
 
-    class Meta(AbstractDeployment.Meta):
+    class Meta(Deployment.Meta):
         verbose_name = _('IPFS Deployment')
         verbose_name_plural = _('IPFS Deployments')
 

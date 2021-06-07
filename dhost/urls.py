@@ -1,29 +1,38 @@
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
-from rest_framework import routers
+from rest_framework_nested import routers
 
 from .dapps import views as dapps_views
 from .github import views as github_views
 from .ipfs import views as ipfs_views
-from .logs import views as logs_views
 from .users.api import views as users_views
 
 router = routers.DefaultRouter()
-router.register('bundles', dapps_views.DappBundleViewSet)
-router.register('builds', dapps_views.DappBuildViewSet)
-router.register('envvar', dapps_views.DappEnvironmentVariableViewSet)
+
+router.register('dapp', dapps_views.DappViewSet)
+dapp_router = routers.NestedSimpleRouter(router, 'dapp', lookup='dapp')
+dapp_router.register('deployments', dapps_views.DappDeploymentViewSet)
+dapp_router.register('bundles', dapps_views.DappBundleViewSet)
+dapp_router.register('builds', dapps_views.DappBuildViewSet)
+dapp_router.register('envvars', dapps_views.DappEnvironmentVariableViewSet)
+dapp_router.register('logs', dapps_views.DappDashboardLogEntryViewSet)
+
 router.register('github', github_views.GithubRepoViewSet)
 router.register('ipfs', ipfs_views.IPFSDappViewSet)
 router.register('ipfs_deploy', ipfs_views.IPFSDeploymentViewSet)
-router.register('logs', logs_views.DashboardLogEntryViewSet)
 router.register('users', users_views.UserViewSet)
+
+api_urlpatterns = [
+    path('', include(router.urls)),
+    path('', include(dapp_router.urls)),
+]
 
 urlpatterns = [
     path('oauth2/', include('dhost.oauth2.urls', namespace='oauth2_provider')),
     path('social/', include('social_django.urls', namespace='social')),
     path('u/', include('dhost.users.urls')),
-    path('api/v1/', include(router.urls)),
+    path('api/v1/', include(api_urlpatterns)),
     path('admin/', admin.site.urls),
 ]
 

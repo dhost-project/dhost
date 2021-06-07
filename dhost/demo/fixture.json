@@ -1311,6 +1311,42 @@
     }
   },
   {
+    "model": "auth.permission",
+    "pk": 125,
+    "fields": {
+      "name": "Can add Github repository",
+      "content_type": 32,
+      "codename": "add_githubrepo"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 126,
+    "fields": {
+      "name": "Can change Github repository",
+      "content_type": 32,
+      "codename": "change_githubrepo"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 127,
+    "fields": {
+      "name": "Can delete Github repository",
+      "content_type": 32,
+      "codename": "delete_githubrepo"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 128,
+    "fields": {
+      "name": "Can view Github repository",
+      "content_type": 32,
+      "codename": "view_githubrepo"
+    }
+  },
+  {
     "model": "contenttypes.contenttype",
     "pk": 1,
     "fields": {
@@ -1559,6 +1595,14 @@
     }
   },
   {
+    "model": "contenttypes.contenttype",
+    "pk": 32,
+    "fields": {
+      "app_label": "github",
+      "model": "githubrepo"
+    }
+  },
+  {
     "model": "sites.site",
     "pk": 1,
     "fields": {
@@ -1606,7 +1650,6 @@
     "model": "dapps.dapp",
     "pk": "344d41df-2f44-4950-99f6-5d4a4b6d3245",
     "fields": {
-      "name": "Dappy",
       "owner": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
       "slug": "dappy",
       "url": "https://ipfs.io/ipfs/bafybeifx7yeb55armcsxwwitkymga5xf53dxiarykms3ygqic223w5sk3m",
@@ -1618,7 +1661,6 @@
     "model": "dapps.dapp",
     "pk": "573e59f5-aae3-4682-98fc-a61745f0fffd",
     "fields": {
-      "name": "Decentralizator",
       "owner": "854f8484-a8c1-4c3c-8796-3d87994cc1f3",
       "slug": "decentralizator",
       "url": "",
@@ -1685,7 +1727,7 @@
     "pk": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
     "fields": {
       "password": "pbkdf2_sha256$260000$4M7CWNjM0ExKAr95FU6ndG$TOWl94aVYH948b3es5dd2IMDAvtnnIjvHpI3579CIAw=",
-      "last_login": "2021-05-28T21:29:55.644Z",
+      "last_login": "2021-06-07T08:00:28.429Z",
       "is_superuser": true,
       "username": "admin",
       "first_name": "",

@@ -1,30 +1,30 @@
-class DockerBuild:
+class BuildService:
 
     def __init__(self,
                  container,
                  source_path,
                  command=None,
-                 envars=None,
+                 envvars=None,
                  *args,
                  **kwargs):
         self.container = container
         self.source_path = source_path
         self.command = command
-        self.envars = envars
+        self.envvars = envvars
 
         self.is_success = None
         self.logs = None
         self.bundle_path = None
 
-        print('Initialized DockerBuild')
+        print('Initialized Build')
 
     def build(self):
         """Main build function to start the process"""
         print('Building source: {}, in container: {}, with command:`{}`'.format(
             str(self.source_path), str(self.container), str(self.command)))
-        if self.envars:
+        if self.envvars:
             print('Environment variables used:')
-            for key, value in self.envars.items():
+            for key, value in self.envvars.items():
                 print('{}={}'.format(key, value))
 
         # TODO code to generate the docker container, build the source folder

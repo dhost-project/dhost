@@ -1,13 +1,15 @@
 from django.contrib import admin
 
+from dhost.dapps.admin import DappAdmin, DeploymentAdmin
+
 from .models import IPFSDapp, IPFSDeployment
 
 
 @admin.register(IPFSDapp)
-class IPFSDappAdmin(admin.ModelAdmin):
+class IPFSDappAdmin(DappAdmin):
     pass
 
 
 @admin.register(IPFSDeployment)
-class IPFSDeploymentAdmin(admin.ModelAdmin):
+class IPFSDeploymentAdmin(DeploymentAdmin):
     pass

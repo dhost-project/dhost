@@ -6,7 +6,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from .docker import DockerBuild
+from .build_service import BuildService
 
 
 def source_path():
@@ -174,7 +174,7 @@ class Build(models.Model):
         return:
           - STR: bundle_path, path to the bundle folder
 
-        Build the bundle using the class DockerBuild and return the status
+        Build the bundle using the class Build and return the status
         (is success or not), the bundle path and the logs
         """
         container = self.options.docker
@@ -183,17 +183,17 @@ class Build(models.Model):
         self.start = timezone.now()
 
         # Generate dict of the environment variables
-        envars = {}
-        for var_object in self.options.envars.all():
-            envars[var_object.variable] = var_object.value
+        envvars = {}
+        for var_object in self.options.envvars.all():
+            envvars[var_object.variable] = var_object.value
 
-        docker_build = DockerBuild(
+        build_service = BuildService(
             container=container,
             source_path=source_path,
             command=command,
-            envars=envars,
+            envvars=envvars,
         )
-        is_success, logs, bundle_path = docker_build.build()
+        is_success, logs, bundle_path = build_service.build()
 
         self.is_success = is_success
         self.logs = logs
@@ -206,14 +206,18 @@ class EnvironmentVariable(models.Model):
     options = models.ForeignKey(
         BuildOptions,
         on_delete=models.CASCADE,
-        related_name='envars',
+        related_name='envvars',
     )
-    variable = models.CharField(max_length=1024)
+    variable = models.SlugField(max_length=1024)
     value = models.CharField(max_length=8192)
 
     class Meta:
         verbose_name = _('environment variable')
         verbose_name_plural = _('environment variables')
+        constraints = [
+            models.UniqueConstraint(fields=['options', 'variable'],
+                                    name='unique variable'),
+        ]
 
     def __str__(self):
         return '{}={}'.format(self.variable, self.value)
