@@ -35,3 +35,11 @@ class DappSerializer(BuildOptionsSerializer):
             UniqueTogetherValidator(queryset=Dapp.objects.all(),
                                     fields=['owner', 'slug'])
         ]
+
+
+class DappReadOnlySerializer(serializers.ModelSerializer):
+    dapp_type = serializers.CharField(source='get_dapp_type', read_only=True)
+
+    class Meta:
+        model = Dapp
+        fields = ['id', 'dapp_type', 'slug', 'url', 'owner', 'status']

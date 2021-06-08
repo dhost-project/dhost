@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -8,7 +9,8 @@ from dhost.logs.views import DashboardLogEntryViewSet
 
 from .models import Dapp, Deployment
 from .permissions import DappPermission
-from .serializers import DappSerializer, DeploymentSerializer
+from .serializers import (DappReadOnlySerializer, DappSerializer,
+                          DeploymentSerializer)
 
 
 class DappViewSet(BuildOptionsViewSet):
@@ -19,11 +21,12 @@ class DappViewSet(BuildOptionsViewSet):
 
     def get_queryset(self):
         """Filter user's apps"""
+        queryset = super().get_queryset()
         owner = self.request.user
-        return Dapp.objects.filter(owner=owner)
+        return queryset.filter(owner=owner)
 
     def create(self, request):
-        """Add `owner` when creating the dapp"""
+        # Add `owner` when creating the dapp
         data = request.data.copy()
         data.update({'owner': self.request.user.id})
         serializer = self.get_serializer(data=data)
@@ -45,7 +48,24 @@ class DappViewSet(BuildOptionsViewSet):
 
     @action(detail=True, methods=['get'])
     def build(self, request, slug=None):
+        # `pk` is replaced by `slug` because the lookup_field changed.
         return super().build(request)
+
+
+class DappReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    A list of every dapps, regardless of wich type they are.
+    """
+
+    queryset = Dapp.objects.all()
+    serializer_class = DappReadOnlySerializer
+    permission_classes = [DappPermission]
+    lookup_field = 'slug'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        owner = self.request.user
+        return queryset.filter(owner=owner)
 
 
 class DappViewMixin:
@@ -53,13 +73,14 @@ class DappViewMixin:
     Mixin to handle the nested router wich send an argument with the dapp slug
     used to filter the dapps.
     """
+    dapp_model_class = Dapp
     dapp_reverse_name = 'options'
     dapp_url_slug = 'dapp_slug'
 
     def get_dapp(self):
         owner = self.request.user
         slug = self.kwargs[self.dapp_url_slug]
-        return Dapp.objects.get(owner=owner, slug=slug)
+        return get_object_or_404(self.dapp_model_class, owner=owner, slug=slug)
 
     def get_queryset(self):
         dapp = self.get_dapp()

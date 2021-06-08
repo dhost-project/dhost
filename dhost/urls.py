@@ -9,23 +9,22 @@ from .ipfs import views as ipfs_views
 from .users.api import views as users_views
 
 router = routers.DefaultRouter()
+router.register('dapp', dapps_views.DappReadOnlyViewSet)
 
-router.register('dapp', dapps_views.DappViewSet)
-dapp_router = routers.NestedSimpleRouter(router, 'dapp', lookup='dapp')
-dapp_router.register('deployments', dapps_views.DappDeploymentViewSet)
-dapp_router.register('bundles', dapps_views.DappBundleViewSet)
-dapp_router.register('builds', dapps_views.DappBuildViewSet)
-dapp_router.register('envvars', dapps_views.DappEnvironmentVariableViewSet)
-dapp_router.register('logs', dapps_views.DappDashboardLogEntryViewSet)
+router.register('ipfs', ipfs_views.IPFSDappViewSet)
+ipfs_router = routers.NestedSimpleRouter(router, 'ipfs', lookup='dapp')
+ipfs_router.register('deployments', ipfs_views.IPFSDeploymentViewSet)
+ipfs_router.register('bundles', ipfs_views.IPFSDappBundleViewSet)
+ipfs_router.register('builds', ipfs_views.IPFSDappBuildViewSet)
+ipfs_router.register('envvars', ipfs_views.IPFSDappEnvironmentVariableViewSet)
+ipfs_router.register('logs', ipfs_views.IPFSDappDashboardLogEntryViewSet)
 
 router.register('github', github_views.GithubRepoViewSet)
-router.register('ipfs', ipfs_views.IPFSDappViewSet)
-router.register('ipfs_deploy', ipfs_views.IPFSDeploymentViewSet)
 router.register('users', users_views.UserViewSet)
 
 api_urlpatterns = [
     path('', include(router.urls)),
-    path('', include(dapp_router.urls)),
+    path('', include(ipfs_router.urls)),
 ]
 
 urlpatterns = [
