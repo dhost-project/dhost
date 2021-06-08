@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Build, BuildOptions, Bundle, EnvironmentVariable
+from .models import Build, BuildOptions, Bundle, EnvVar
 
 
 @admin.register(BuildOptions)
@@ -18,6 +18,6 @@ class BundleAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(EnvironmentVariable)
-class EnvironmentVariableAdmin(admin.ModelAdmin):
+@admin.register(EnvVar)
+class EnvVarAdmin(admin.ModelAdmin):
     pass

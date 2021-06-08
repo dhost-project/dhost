@@ -1,7 +1,7 @@
 from dhost.dapps.views import (DappBuildViewSet, DappBundleViewSet,
                                DappDashboardLogEntryViewSet,
-                               DappDeploymentViewSet,
-                               DappEnvironmentVariableViewSet, DappViewSet)
+                               DappDeploymentViewSet, DappEnvVarViewSet,
+                               DappViewSet)
 
 from .models import IPFSDapp, IPFSDeployment
 from .serializers import IPFSDappSerializer, IPFSDeploymentSerializer
@@ -29,8 +29,7 @@ class IPFSDappBuildViewSet(IPFSDappViewMixin, DappBuildViewSet):
     pass
 
 
-class IPFSDappEnvironmentVariableViewSet(IPFSDappViewMixin,
-                                         DappEnvironmentVariableViewSet):
+class IPFSDappEnvVarViewSet(IPFSDappViewMixin, DappEnvVarViewSet):
     pass
 
 

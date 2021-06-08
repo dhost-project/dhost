@@ -3,8 +3,47 @@
     "model": "admin.logentry",
     "pk": 1,
     "fields": {
-      "action_time": "2021-05-25T14:57:05.975Z",
-      "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
+      "action_time": "2021-06-08T14:29:23.401Z",
+      "user": "c2602166-2f06-4d51-8666-b68781da1281",
+      "content_type": 18,
+      "object_id": "da1855e3-884e-4bb9-9617-d767bb4101dc",
+      "object_repr": "userone",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+      "action_time": "2021-06-08T14:29:40.413Z",
+      "user": "c2602166-2f06-4d51-8666-b68781da1281",
+      "content_type": 18,
+      "object_id": "d1b427b0-e0d6-44f7-9581-9ca35c54d7b2",
+      "object_repr": "usertwo",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+      "action_time": "2021-06-08T14:30:13.924Z",
+      "user": "c2602166-2f06-4d51-8666-b68781da1281",
+      "content_type": 18,
+      "object_id": "d1b427b0-e0d6-44f7-9581-9ca35c54d7b2",
+      "object_repr": "usertwo",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"First name\", \"Email address\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+      "action_time": "2021-06-08T14:36:16.811Z",
+      "user": "c2602166-2f06-4d51-8666-b68781da1281",
       "content_type": 19,
       "object_id": "1",
       "object_repr": "dhost_cli",
@@ -14,52 +53,13 @@
   },
   {
     "model": "admin.logentry",
-    "pk": 2,
-    "fields": {
-      "action_time": "2021-05-25T14:59:06.665Z",
-      "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
-      "content_type": 14,
-      "object_id": "344d41df-2f44-4950-99f6-5d4a4b6d3245",
-      "object_repr": "Dappy",
-      "action_flag": 1,
-      "change_message": "[{\"added\": {}}]"
-    }
-  },
-  {
-    "model": "admin.logentry",
-    "pk": 3,
-    "fields": {
-      "action_time": "2021-05-25T14:59:10.601Z",
-      "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
-      "content_type": 14,
-      "object_id": "344d41df-2f44-4950-99f6-5d4a4b6d3245",
-      "object_repr": "Dappy",
-      "action_flag": 2,
-      "change_message": "[{\"changed\": {\"fields\": [\"IPFS public gateway\"]}}]"
-    }
-  },
-  {
-    "model": "admin.logentry",
-    "pk": 4,
-    "fields": {
-      "action_time": "2021-05-25T14:59:31.569Z",
-      "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
-      "content_type": 14,
-      "object_id": "344d41df-2f44-4950-99f6-5d4a4b6d3245",
-      "object_repr": "Dappy",
-      "action_flag": 2,
-      "change_message": "[{\"changed\": {\"fields\": [\"URL\"]}}]"
-    }
-  },
-  {
-    "model": "admin.logentry",
     "pk": 5,
     "fields": {
-      "action_time": "2021-05-25T14:59:56.826Z",
-      "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
-      "content_type": 18,
-      "object_id": "854f8484-a8c1-4c3c-8796-3d87994cc1f3",
-      "object_repr": "userone",
+      "action_time": "2021-06-08T14:38:29.894Z",
+      "user": "c2602166-2f06-4d51-8666-b68781da1281",
+      "content_type": 19,
+      "object_id": "2",
+      "object_repr": "dhost_dashboard",
       "action_flag": 1,
       "change_message": "[{\"added\": {}}]"
     }
@@ -68,99 +68,34 @@
     "model": "admin.logentry",
     "pk": 6,
     "fields": {
-      "action_time": "2021-05-25T15:00:48.458Z",
-      "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
-      "content_type": 14,
-      "object_id": "573e59f5-aae3-4682-98fc-a61745f0fffd",
-      "object_repr": "Decentralizator",
-      "action_flag": 1,
-      "change_message": "[{\"added\": {}}]"
+      "action_time": "2021-06-08T14:38:49.338Z",
+      "user": "c2602166-2f06-4d51-8666-b68781da1281",
+      "content_type": 19,
+      "object_id": "1",
+      "object_repr": "Dhost public CLI",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Name\"]}}]"
     }
   },
   {
     "model": "admin.logentry",
     "pk": 7,
     "fields": {
-      "action_time": "2021-05-25T15:03:10.576Z",
-      "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
-      "content_type": 8,
-      "object_id": "1",
-      "object_repr": "SECRET=very_secret_env_var_123",
-      "action_flag": 1,
-      "change_message": "[{\"added\": {}}]"
+      "action_time": "2021-06-08T14:39:01.441Z",
+      "user": "c2602166-2f06-4d51-8666-b68781da1281",
+      "content_type": 19,
+      "object_id": "2",
+      "object_repr": "DHost dashboard",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Name\"]}}]"
     }
   },
   {
     "model": "admin.logentry",
     "pk": 8,
     "fields": {
-      "action_time": "2021-05-25T15:03:36.385Z",
-      "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
-      "content_type": 8,
-      "object_id": "2",
-      "object_repr": "SECRET=secret_env_var",
-      "action_flag": 1,
-      "change_message": "[{\"added\": {}}]"
-    }
-  },
-  {
-    "model": "admin.logentry",
-    "pk": 9,
-    "fields": {
-      "action_time": "2021-05-26T08:54:59.073Z",
-      "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
-      "content_type": 18,
-      "object_id": "b0aeaea9-1777-4b72-a734-0e9d950a224f",
-      "object_repr": "usertwo",
-      "action_flag": 1,
-      "change_message": "[{\"added\": {}}]"
-    }
-  },
-  {
-    "model": "admin.logentry",
-    "pk": 10,
-    "fields": {
-      "action_time": "2021-05-26T08:55:38.263Z",
-      "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
-      "content_type": 18,
-      "object_id": "854f8484-a8c1-4c3c-8796-3d87994cc1f3",
-      "object_repr": "userone",
-      "action_flag": 2,
-      "change_message": "[{\"changed\": {\"fields\": [\"Email address\"]}}]"
-    }
-  },
-  {
-    "model": "admin.logentry",
-    "pk": 11,
-    "fields": {
-      "action_time": "2021-05-26T08:55:47.172Z",
-      "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
-      "content_type": 18,
-      "object_id": "b0aeaea9-1777-4b72-a734-0e9d950a224f",
-      "object_repr": "usertwo",
-      "action_flag": 2,
-      "change_message": "[{\"changed\": {\"fields\": [\"Email address\"]}}]"
-    }
-  },
-  {
-    "model": "admin.logentry",
-    "pk": 12,
-    "fields": {
-      "action_time": "2021-05-26T08:59:42.239Z",
-      "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
-      "content_type": 19,
-      "object_id": "2",
-      "object_repr": "DHost dashboard",
-      "action_flag": 1,
-      "change_message": "[{\"added\": {}}]"
-    }
-  },
-  {
-    "model": "admin.logentry",
-    "pk": 13,
-    "fields": {
-      "action_time": "2021-05-26T08:59:58.566Z",
-      "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
+      "action_time": "2021-06-08T14:39:14.223Z",
+      "user": "c2602166-2f06-4d51-8666-b68781da1281",
       "content_type": 19,
       "object_id": "1",
       "object_repr": "DHost public CLI",
@@ -170,28 +105,54 @@
   },
   {
     "model": "admin.logentry",
-    "pk": 14,
+    "pk": 9,
     "fields": {
-      "action_time": "2021-05-28T14:37:39.646Z",
-      "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
-      "content_type": 19,
-      "object_id": "2",
-      "object_repr": "DHost dashboard",
-      "action_flag": 2,
-      "change_message": "[{\"changed\": {\"fields\": [\"Redirect uris\", \"Client secret\"]}}]"
+      "action_time": "2021-06-08T14:40:40.811Z",
+      "user": "c2602166-2f06-4d51-8666-b68781da1281",
+      "content_type": 14,
+      "object_id": "c32faffa-238c-42f2-bd37-dc91922cf695",
+      "object_repr": "dappy",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
     }
   },
   {
     "model": "admin.logentry",
-    "pk": 15,
+    "pk": 10,
     "fields": {
-      "action_time": "2021-05-28T21:30:06.574Z",
-      "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
-      "content_type": 19,
-      "object_id": "2",
-      "object_repr": "DHost dashboard",
-      "action_flag": 2,
-      "change_message": "[{\"changed\": {\"fields\": [\"Redirect uris\", \"Skip authorization\"]}}]"
+      "action_time": "2021-06-08T14:41:17.827Z",
+      "user": "c2602166-2f06-4d51-8666-b68781da1281",
+      "content_type": 14,
+      "object_id": "ba8b6ac5-3956-48b2-99ea-59138ce4de14",
+      "object_repr": "U1_dapp",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 11,
+    "fields": {
+      "action_time": "2021-06-08T14:41:40.162Z",
+      "user": "c2602166-2f06-4d51-8666-b68781da1281",
+      "content_type": 14,
+      "object_id": "a6a8e5ee-622f-4f7b-a197-7b2254ce492a",
+      "object_repr": "dapp_v2",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 12,
+    "fields": {
+      "action_time": "2021-06-08T14:42:25.378Z",
+      "user": "c2602166-2f06-4d51-8666-b68781da1281",
+      "content_type": 14,
+      "object_id": "b9b96358-8fa0-4bef-83c2-c13be68b296e",
+      "object_repr": "DHost_IPFS",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
     }
   },
   {
@@ -452,7 +413,7 @@
     "fields": {
       "name": "Can add environment variable",
       "content_type": 8,
-      "codename": "add_environmentvariable"
+      "codename": "add_envvar"
     }
   },
   {
@@ -461,7 +422,7 @@
     "fields": {
       "name": "Can change environment variable",
       "content_type": 8,
-      "codename": "change_environmentvariable"
+      "codename": "change_envvar"
     }
   },
   {
@@ -470,7 +431,7 @@
     "fields": {
       "name": "Can delete environment variable",
       "content_type": 8,
-      "codename": "delete_environmentvariable"
+      "codename": "delete_envvar"
     }
   },
   {
@@ -479,7 +440,7 @@
     "fields": {
       "name": "Can view environment variable",
       "content_type": 8,
-      "codename": "view_environmentvariable"
+      "codename": "view_envvar"
     }
   },
   {
@@ -594,72 +555,72 @@
     "model": "auth.permission",
     "pk": 45,
     "fields": {
-      "name": "Can add github",
+      "name": "Can add deployment",
       "content_type": 12,
-      "codename": "add_github"
+      "codename": "add_deployment"
     }
   },
   {
     "model": "auth.permission",
     "pk": 46,
     "fields": {
-      "name": "Can change github",
+      "name": "Can change deployment",
       "content_type": 12,
-      "codename": "change_github"
+      "codename": "change_deployment"
     }
   },
   {
     "model": "auth.permission",
     "pk": 47,
     "fields": {
-      "name": "Can delete github",
+      "name": "Can delete deployment",
       "content_type": 12,
-      "codename": "delete_github"
+      "codename": "delete_deployment"
     }
   },
   {
     "model": "auth.permission",
     "pk": 48,
     "fields": {
-      "name": "Can view github",
+      "name": "Can view deployment",
       "content_type": 12,
-      "codename": "view_github"
+      "codename": "view_deployment"
     }
   },
   {
     "model": "auth.permission",
     "pk": 49,
     "fields": {
-      "name": "Can add github commit",
+      "name": "Can add Github repository",
       "content_type": 13,
-      "codename": "add_githubcommit"
+      "codename": "add_githubrepo"
     }
   },
   {
     "model": "auth.permission",
     "pk": 50,
     "fields": {
-      "name": "Can change github commit",
+      "name": "Can change Github repository",
       "content_type": 13,
-      "codename": "change_githubcommit"
+      "codename": "change_githubrepo"
     }
   },
   {
     "model": "auth.permission",
     "pk": 51,
     "fields": {
-      "name": "Can delete github commit",
+      "name": "Can delete Github repository",
       "content_type": 13,
-      "codename": "delete_githubcommit"
+      "codename": "delete_githubrepo"
     }
   },
   {
     "model": "auth.permission",
     "pk": 52,
     "fields": {
-      "name": "Can view github commit",
+      "name": "Can view Github repository",
       "content_type": 13,
-      "codename": "view_githubcommit"
+      "codename": "view_githubrepo"
     }
   },
   {
@@ -1311,42 +1272,6 @@
     }
   },
   {
-    "model": "auth.permission",
-    "pk": 125,
-    "fields": {
-      "name": "Can add Github repository",
-      "content_type": 32,
-      "codename": "add_githubrepo"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 126,
-    "fields": {
-      "name": "Can change Github repository",
-      "content_type": 32,
-      "codename": "change_githubrepo"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 127,
-    "fields": {
-      "name": "Can delete Github repository",
-      "content_type": 32,
-      "codename": "delete_githubrepo"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 128,
-    "fields": {
-      "name": "Can view Github repository",
-      "content_type": 32,
-      "codename": "view_githubrepo"
-    }
-  },
-  {
     "model": "contenttypes.contenttype",
     "pk": 1,
     "fields": {
@@ -1407,7 +1332,7 @@
     "pk": 8,
     "fields": {
       "app_label": "builds",
-      "model": "environmentvariable"
+      "model": "envvar"
     }
   },
   {
@@ -1438,8 +1363,8 @@
     "model": "contenttypes.contenttype",
     "pk": 12,
     "fields": {
-      "app_label": "github",
-      "model": "github"
+      "app_label": "dapps",
+      "model": "deployment"
     }
   },
   {
@@ -1447,7 +1372,7 @@
     "pk": 13,
     "fields": {
       "app_label": "github",
-      "model": "githubcommit"
+      "model": "githubrepo"
     }
   },
   {
@@ -1595,11 +1520,11 @@
     }
   },
   {
-    "model": "contenttypes.contenttype",
-    "pk": 32,
+    "model": "sessions.session",
+    "pk": "l10xvermw91iw0iril435940sk441l3c",
     "fields": {
-      "app_label": "github",
-      "model": "githubrepo"
+      "session_data": ".eJxVjEsOgzAMBe-SdYliA3bSZfc9A0riuPQjkPisqt69ILFol08z896mi-vSd-tcpu4u5mwykkMgqlAdVY20UHnaZiLPHiQCejCn3yzF_CzD3sojDrfR5nFYpnuyu2IPOtvrKOV1Ody_gz7O_VbHooiNA6DALitxLY4U1AcMELxK4kBacxRtW2ooNsgCmLRO4JjZfL4cvj9K:1lqcgr:l3xT_DbJukN4uxvquvm225gkDYHlH8BTgg4X50elH6s",
+      "expire_date": "2021-06-22T14:26:49.281Z"
     }
   },
   {
@@ -1612,7 +1537,7 @@
   },
   {
     "model": "builds.buildoptions",
-    "pk": "344d41df-2f44-4950-99f6-5d4a4b6d3245",
+    "pk": "a6a8e5ee-622f-4f7b-a197-7b2254ce492a",
     "fields": {
       "source": "",
       "command": "npm build",
@@ -1621,7 +1546,16 @@
   },
   {
     "model": "builds.buildoptions",
-    "pk": "573e59f5-aae3-4682-98fc-a61745f0fffd",
+    "pk": "b9b96358-8fa0-4bef-83c2-c13be68b296e",
+    "fields": {
+      "source": "",
+      "command": "npm build",
+      "docker": "node:14.2"
+    }
+  },
+  {
+    "model": "builds.buildoptions",
+    "pk": "ba8b6ac5-3956-48b2-99ea-59138ce4de14",
     "fields": {
       "source": "",
       "command": "yarn build",
@@ -1629,114 +1563,236 @@
     }
   },
   {
-    "model": "builds.environmentvariable",
+    "model": "builds.buildoptions",
+    "pk": "c32faffa-238c-42f2-bd37-dc91922cf695",
+    "fields": {
+      "source": "",
+      "command": "npm build",
+      "docker": "node:12"
+    }
+  },
+  {
+    "model": "builds.build",
+    "pk": "2ec3a1f7-e8f7-4c03-8c5e-594d97085ab8",
+    "fields": {
+      "options": "a6a8e5ee-622f-4f7b-a197-7b2254ce492a",
+      "is_success": null,
+      "logs": "",
+      "source_path": "",
+      "bundle": null,
+      "start": "2021-06-08T14:42:45.785Z",
+      "end": null
+    }
+  },
+  {
+    "model": "builds.build",
+    "pk": "9876c05b-5362-4f1b-9df3-35f35bc1ef07",
+    "fields": {
+      "options": "a6a8e5ee-622f-4f7b-a197-7b2254ce492a",
+      "is_success": null,
+      "logs": "",
+      "source_path": "",
+      "bundle": null,
+      "start": "2021-06-08T14:43:18.392Z",
+      "end": null
+    }
+  },
+  {
+    "model": "builds.build",
+    "pk": "e3f26b10-51f6-4199-b831-eba2daf19e95",
+    "fields": {
+      "options": "a6a8e5ee-622f-4f7b-a197-7b2254ce492a",
+      "is_success": null,
+      "logs": "",
+      "source_path": "",
+      "bundle": null,
+      "start": "2021-06-08T14:43:10.698Z",
+      "end": null
+    }
+  },
+  {
+    "model": "builds.envvar",
     "pk": 1,
     "fields": {
-      "options": "344d41df-2f44-4950-99f6-5d4a4b6d3245",
+      "options": "c32faffa-238c-42f2-bd37-dc91922cf695",
       "variable": "SECRET",
-      "value": "very_secret_env_var_123"
+      "value": "my_super_secret_key123"
     }
   },
   {
-    "model": "builds.environmentvariable",
+    "model": "builds.envvar",
     "pk": 2,
     "fields": {
-      "options": "573e59f5-aae3-4682-98fc-a61745f0fffd",
-      "variable": "SECRET",
-      "value": "secret_env_var"
+      "options": "c32faffa-238c-42f2-bd37-dc91922cf695",
+      "variable": "OTHER_VAR",
+      "value": "One_Other_Var"
     }
   },
   {
     "model": "dapps.dapp",
-    "pk": "344d41df-2f44-4950-99f6-5d4a4b6d3245",
+    "pk": "a6a8e5ee-622f-4f7b-a197-7b2254ce492a",
     "fields": {
-      "owner": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
-      "slug": "dappy",
-      "url": "https://ipfs.io/ipfs/bafybeifx7yeb55armcsxwwitkymga5xf53dxiarykms3ygqic223w5sk3m",
-      "status": "SO",
-      "created_at": "2021-05-25T14:57:41Z"
+      "owner": "c2602166-2f06-4d51-8666-b68781da1281",
+      "slug": "dapp_v2",
+      "url": "",
+      "status": "UP",
+      "created_at": "2021-06-08T14:41:19Z"
     }
   },
   {
     "model": "dapps.dapp",
-    "pk": "573e59f5-aae3-4682-98fc-a61745f0fffd",
+    "pk": "b9b96358-8fa0-4bef-83c2-c13be68b296e",
     "fields": {
-      "owner": "854f8484-a8c1-4c3c-8796-3d87994cc1f3",
-      "slug": "decentralizator",
+      "owner": "c2602166-2f06-4d51-8666-b68781da1281",
+      "slug": "DHost_IPFS",
+      "url": "",
+      "status": "BT",
+      "created_at": "2021-06-08T14:41:43Z"
+    }
+  },
+  {
+    "model": "dapps.dapp",
+    "pk": "ba8b6ac5-3956-48b2-99ea-59138ce4de14",
+    "fields": {
+      "owner": "da1855e3-884e-4bb9-9617-d767bb4101dc",
+      "slug": "U1_dapp",
       "url": "",
       "status": "SO",
-      "created_at": "2021-05-25T15:00:07Z"
+      "created_at": "2021-06-08T14:40:42Z"
+    }
+  },
+  {
+    "model": "dapps.dapp",
+    "pk": "c32faffa-238c-42f2-bd37-dc91922cf695",
+    "fields": {
+      "owner": "c2602166-2f06-4d51-8666-b68781da1281",
+      "slug": "dappy",
+      "url": "",
+      "status": "SO",
+      "created_at": "2021-06-08T14:40:06Z"
+    }
+  },
+  {
+    "model": "dapps.deployment",
+    "pk": "63a8c936-93f4-4fcd-8e5a-1984e19c68f2",
+    "fields": {
+      "dapp": "a6a8e5ee-622f-4f7b-a197-7b2254ce492a",
+      "bundle": null,
+      "status": "SO",
+      "start": "2021-06-08T14:43:12.169Z",
+      "end": null
+    }
+  },
+  {
+    "model": "dapps.deployment",
+    "pk": "6970c541-1c5a-433f-9d4a-d660a24c7ad2",
+    "fields": {
+      "dapp": "a6a8e5ee-622f-4f7b-a197-7b2254ce492a",
+      "bundle": null,
+      "status": "SO",
+      "start": "2021-06-08T14:43:03.643Z",
+      "end": null
     }
   },
   {
     "model": "ipfs.ipfsdapp",
-    "pk": "344d41df-2f44-4950-99f6-5d4a4b6d3245",
+    "pk": "a6a8e5ee-622f-4f7b-a197-7b2254ce492a",
     "fields": {
-      "hash": "bafybeifx7yeb55armcsxwwitkymga5xf53dxiarykms3ygqic223w5sk3m",
-      "ipfs_gateway": "https://ipfs.io/ipfs/bafybeifx7yeb55armcsxwwitkymga5xf53dxiarykms3ygqic223w5sk3m"
-    }
-  },
-  {
-    "model": "ipfs.ipfsdapp",
-    "pk": "573e59f5-aae3-4682-98fc-a61745f0fffd",
-    "fields": {
-      "hash": "",
+      "ipfs_hash": "bafybeifx7yeb55armcsxwwitkymga5xf53dxiarykms3ygqic223w5sk3m",
       "ipfs_gateway": "https://ipfs.io/ipfs/"
     }
   },
   {
-    "model": "users.user",
-    "pk": "854f8484-a8c1-4c3c-8796-3d87994cc1f3",
+    "model": "ipfs.ipfsdapp",
+    "pk": "b9b96358-8fa0-4bef-83c2-c13be68b296e",
     "fields": {
-      "password": "pbkdf2_sha256$260000$WaBSw1kMcSa0F8zwuh0Tp1$A1umoxW169rMTrSjuPVy2IHI9bj0b9RGI6QFigvYEw0=",
-      "last_login": null,
-      "is_superuser": false,
-      "username": "userone",
-      "first_name": "",
-      "last_name": "",
-      "email": "userone@example.com",
-      "avatar": "avatars/userone.png",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-05-25T14:59:56Z",
-      "groups": [],
-      "user_permissions": []
+      "ipfs_hash": "bafybeifx7yeb55armcsxwwitkymga5xf53dxiarykms3ygqic223w5sk3m",
+      "ipfs_gateway": "https://ipfs.io/ipfs/"
+    }
+  },
+  {
+    "model": "ipfs.ipfsdapp",
+    "pk": "ba8b6ac5-3956-48b2-99ea-59138ce4de14",
+    "fields": {
+      "ipfs_hash": "",
+      "ipfs_gateway": "https://ipfs.io/ipfs/"
+    }
+  },
+  {
+    "model": "ipfs.ipfsdapp",
+    "pk": "c32faffa-238c-42f2-bd37-dc91922cf695",
+    "fields": {
+      "ipfs_hash": "bafybeifx7yeb55armcsxwwitkymga5xf53dxiarykms3ygqic223w5sk3m",
+      "ipfs_gateway": "https://ipfs.io/ipfs/"
+    }
+  },
+  {
+    "model": "ipfs.ipfsdeployment",
+    "pk": "63a8c936-93f4-4fcd-8e5a-1984e19c68f2",
+    "fields": {
+      "ipfs_hash": ""
+    }
+  },
+  {
+    "model": "ipfs.ipfsdeployment",
+    "pk": "6970c541-1c5a-433f-9d4a-d660a24c7ad2",
+    "fields": {
+      "ipfs_hash": ""
     }
   },
   {
     "model": "users.user",
-    "pk": "b0aeaea9-1777-4b72-a734-0e9d950a224f",
+    "pk": "c2602166-2f06-4d51-8666-b68781da1281",
     "fields": {
-      "password": "pbkdf2_sha256$260000$UjVf1p6VBoDekRlEMYlUVx$QBghbpKawdvVlUJU4ixOTdP2Ai44S+mv+Y1ZCG6if0E=",
-      "last_login": null,
-      "is_superuser": false,
-      "username": "usertwo",
-      "first_name": "",
-      "last_name": "",
-      "email": "usertwo@example.com",
-      "avatar": "avatars/usertwo.png",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-05-26T08:54:58Z",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
-    "fields": {
-      "password": "pbkdf2_sha256$260000$4M7CWNjM0ExKAr95FU6ndG$TOWl94aVYH948b3es5dd2IMDAvtnnIjvHpI3579CIAw=",
-      "last_login": "2021-06-07T08:00:28.429Z",
+      "password": "pbkdf2_sha256$260000$weFPjSCALlDILVNBrC3VJR$t4MaBo0rJ7sXb3KjGb5NOa+ls7JgIPvDK4Nnl9Aulwk=",
+      "last_login": "2021-06-08T14:26:49.277Z",
       "is_superuser": true,
       "username": "admin",
       "first_name": "",
       "last_name": "",
       "email": "admin@example.com",
-      "avatar": "avatars/admin_Ot0l83j.png",
+      "avatar": "avatars/admin_v0pmfv4.png",
       "is_staff": true,
       "is_active": true,
-      "date_joined": "2021-05-25T14:56:42.146Z",
+      "date_joined": "2021-06-08T14:26:43.672Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": "d1b427b0-e0d6-44f7-9581-9ca35c54d7b2",
+    "fields": {
+      "password": "pbkdf2_sha256$260000$5tnuR4E6EwMhf3AfKTTcny$pcTQ/HGdxtJ1mgUuFDoxi3TbGf2wTYjf5bzaqObDbbU=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "usertwo",
+      "first_name": "Jeff",
+      "last_name": "",
+      "email": "jeff@example.com",
+      "avatar": "avatars/usertwo_E8rqsxg.png",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-06-08T14:29:40Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": "da1855e3-884e-4bb9-9617-d767bb4101dc",
+    "fields": {
+      "password": "pbkdf2_sha256$260000$kiUdMM8hMtLR1jYkIGrSfR$r04Yx0FiXbRHOYCIpPONGTQl6sOjRoUYLMS46uUefNc=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "userone",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "avatar": "avatars/userone_Z6UHURy.png",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-06-08T14:29:23.207Z",
       "groups": [],
       "user_permissions": []
     }
@@ -1753,10 +1809,10 @@
       "client_secret": "",
       "name": "DHost public CLI",
       "skip_authorization": false,
-      "created": "2021-05-25T14:57:05.973Z",
-      "updated": "2021-05-26T08:59:58.563Z",
+      "created": "2021-06-08T14:36:16.809Z",
+      "updated": "2021-06-08T14:39:14.221Z",
       "algorithm": "",
-      "logo": "oauth2_provider_app_logos/dhost_cli_IFWYlQ1.png",
+      "logo": "oauth2_provider_app_logos/dhost_cli_H4hGTF5.png",
       "description": ""
     }
   },
@@ -1766,45 +1822,17 @@
     "fields": {
       "client_id": "dhost_dashboard",
       "user": null,
-      "redirect_uris": "http://localhost:3001/authorize",
+      "redirect_uris": "http://localhost:3000/login/",
       "client_type": "confidential",
       "authorization_grant_type": "authorization-code",
-      "client_secret": "dhost_dashboard_secret",
+      "client_secret": "Jqa0e47XoXxPsWVfVMoO2iRCJvfzOtF6l",
       "name": "DHost dashboard",
       "skip_authorization": true,
-      "created": "2021-05-26T08:59:42.237Z",
-      "updated": "2021-05-28T21:30:06.573Z",
+      "created": "2021-06-08T14:38:29.890Z",
+      "updated": "2021-06-08T14:39:01.440Z",
       "algorithm": "",
-      "logo": "oauth2_provider_app_logos/dhost_dashboard.png",
+      "logo": "oauth2_provider_app_logos/dhost_dashboard_cyesD15.png",
       "description": ""
-    }
-  },
-  {
-    "model": "oauth2_provider.accesstoken",
-    "pk": 1,
-    "fields": {
-      "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
-      "source_refresh_token": null,
-      "token": "EOD7urzbOvymIRujtMlJs4lfFdi8f0",
-      "id_token": null,
-      "application": 1,
-      "expires": "2021-05-26T00:57:14.396Z",
-      "scope": "read write",
-      "created": "2021-05-25T14:57:14.397Z",
-      "updated": "2021-05-25T14:57:14.397Z"
-    }
-  },
-  {
-    "model": "oauth2_provider.refreshtoken",
-    "pk": 1,
-    "fields": {
-      "user": "bfeba553-9ec1-4dbb-a907-7bf721ad16aa",
-      "token": "C6g3eGN2WrOFs9vrvSo4vmxMkoL45P",
-      "application": 1,
-      "access_token": 1,
-      "created": "2021-05-25T14:57:14.397Z",
-      "updated": "2021-05-25T14:57:14.397Z",
-      "revoked": null
     }
   }
 ]

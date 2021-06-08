@@ -16,7 +16,7 @@ ipfs_router = routers.NestedSimpleRouter(router, 'ipfs', lookup='dapp')
 ipfs_router.register('deployments', ipfs_views.IPFSDeploymentViewSet)
 ipfs_router.register('bundles', ipfs_views.IPFSDappBundleViewSet)
 ipfs_router.register('builds', ipfs_views.IPFSDappBuildViewSet)
-ipfs_router.register('envvars', ipfs_views.IPFSDappEnvironmentVariableViewSet)
+ipfs_router.register('envvars', ipfs_views.IPFSDappEnvVarViewSet)
 ipfs_router.register('logs', ipfs_views.IPFSDappDashboardLogEntryViewSet)
 
 router.register('github', github_views.GithubRepoViewSet)

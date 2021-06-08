@@ -3,7 +3,6 @@ from rest_framework.validators import UniqueTogetherValidator
 
 from dhost.builds.serializers import BuildOptionsSerializer
 from dhost.logs.serializers import DashboardLogEntrySerializer
-from dhost.users.api.serializers import UserSerializer
 
 from .models import Dapp, Deployment
 
@@ -18,7 +17,6 @@ class DeploymentSerializer(serializers.ModelSerializer):
 
 class DappSerializer(BuildOptionsSerializer):
 
-    owner = UserSerializer(read_only=True)
     deployments = DeploymentSerializer(many=True, read_only=True)
     logs = DashboardLogEntrySerializer(many=True, read_only=True)
 

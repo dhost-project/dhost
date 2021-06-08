@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from dhost.builds.views import (BuildOptionsViewSet, BuildViewSet,
-                                BundleViewSet, EnvironmentVariableViewSet)
+                                BundleViewSet, EnvVarViewSet)
 from dhost.logs.views import DashboardLogEntryViewSet
 
 from .models import Dapp, Deployment
@@ -105,8 +105,19 @@ class DappBuildViewSet(DappViewMixin, BuildViewSet):
     pass
 
 
-class DappEnvironmentVariableViewSet(DappViewMixin, EnvironmentVariableViewSet):
-    pass
+class DappEnvVarViewSet(DappViewMixin, EnvVarViewSet):
+
+    def create(self, request):
+        # Auto add `option` (dapp) when creating the envvar
+        data = request.data.copy()
+        data.update({'option': self.get_dapp()})
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data,
+                        status=status.HTTP_201_CREATED,
+                        headers=headers)
 
 
 class DappDashboardLogEntryViewSet(DappViewMixin, DashboardLogEntryViewSet):

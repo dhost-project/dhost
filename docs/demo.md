@@ -15,21 +15,25 @@ For more infos check out the `Demo` in the `docs/setup.md` file.
 
 This fixture contain users that you can use to connect to the API, or admin site.
 
-### Admin user
-
-Username: `admin`.
-Password: `admin`.
-Role: `superuser`.
+| Username | Password | Role |
+| --- | --- | --- |
+| `admin` | `admin` | `superuser` |
+| `userone` | `vW5yhEsNhQeQhm2gFf` | |
+| `usertwo` | `pVD2tvtaxAWpsqeXEc` | |
 
 ## OAuth2 provider
 
-App `DHost public CLI`, used for the CLI localy.
-Client id: `dhost_cli`
-Client type: `public`
-Authorization grant type: `Resource owner password-based`
+| App | `DHost public CLI` |
+| --- | --- |
+| Client id | `dhost_cli` |
+| Client type | `public` |
+| Grant type | `Resource owner password-based` |
 
-App `DHost dashboard`, used for the dashboard localy.
-Client id: `dhost_dashboard`
-Client secret: `Jqa0e47XoXxPsWVfVMoO2iRCJvfzOtF6lyeuU4hGewpwhwU3LFeOMIA6VT8vMQV8ZVc7nAYVwJgEqOhOf2FWIAsTsZeuIQgZRBZ02La3nesvareMGjicA4aaEJEK7ODN`
-Redirect uris: `http://localhost:3000/login/`
-Client type: `Confidential`
+| App | `DHost dashboard` |
+| --- | --- |
+| Client id | `dhost_dashboard` |
+| Client secret | `Jqa0e47XoXxPsWVfVMoO2iRCJvfzOtF6l` |
+| Redirect uris | `http://localhost:3000/login/` |
+| Client type | `Confidential` |
+| Grant type | `Authorization code` |
+| Skip authorization | `True` |

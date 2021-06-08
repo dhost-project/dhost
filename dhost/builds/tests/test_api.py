@@ -56,7 +56,7 @@ class BundleAPITestCase(APITestCase):
         pass
 
 
-class EnvironmentVariableAPITestCase(APITestCase):
+class EnvVarAPITestCase(APITestCase):
 
     def test_envvar_list(self):
         pass
