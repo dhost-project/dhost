@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 from dhost.builds.views import (BuildOptionsViewSet, BuildViewSet,
                                 BundleViewSet, EnvVarViewSet)
-from dhost.logs.views import DashboardLogEntryViewSet
+from dhost.logs.views import APILogViewSet
 
 from .models import Dapp, Deployment
 from .permissions import DappPermission
@@ -120,5 +120,5 @@ class DappEnvVarViewSet(DappViewMixin, EnvVarViewSet):
                         headers=headers)
 
 
-class DappDashboardLogEntryViewSet(DappViewMixin, DashboardLogEntryViewSet):
+class DappAPILogViewSet(DappViewMixin, APILogViewSet):
     pass

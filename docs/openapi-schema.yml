@@ -3,10 +3,10 @@ info:
   title: ''
   version: ''
 paths:
-  /api/v1/bundles/:
+  /api/v1/dapp/:
     get:
-      operationId: listBundles
-      description: ''
+      operationId: listDapps
+      description: A list of every dapps, regardless of wich type they are.
       parameters: []
       responses:
         '200':
@@ -15,19 +15,19 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Bundle'
+                  $ref: '#/components/schemas/DappReadOnly'
           description: ''
       tags:
       - api
-  /api/v1/bundles/{id}/:
+  /api/v1/dapp/{slug}/:
     get:
-      operationId: retrieveBundle
-      description: ''
+      operationId: retrieveDapp
+      description: A list of every dapps, regardless of wich type they are.
       parameters:
-      - name: id
+      - name: slug
         in: path
         required: true
-        description: A UUID string identifying this bundle.
+        description: '[A-Za-z0-9_-]'
         schema:
           type: string
       responses:
@@ -35,13 +35,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Bundle'
+                $ref: '#/components/schemas/DappReadOnly'
           description: ''
       tags:
       - api
-  /api/v1/builds/:
+  /api/v1/ipfs/:
     get:
-      operationId: listBuilds
+      operationId: listIPFSDapps
       description: ''
       parameters: []
       responses:
@@ -51,79 +51,43 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Build'
-          description: ''
-      tags:
-      - api
-  /api/v1/builds/{id}/:
-    get:
-      operationId: retrieveBuild
-      description: ''
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: A UUID string identifying this build.
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Build'
-          description: ''
-      tags:
-      - api
-  /api/v1/envvar/:
-    get:
-      operationId: listEnvironmentVariables
-      description: ''
-      parameters: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/EnvironmentVariable'
+                  $ref: '#/components/schemas/IPFSDapp'
           description: ''
       tags:
       - api
     post:
-      operationId: createEnvironmentVariable
+      operationId: createIPFSDapp
       description: ''
       parameters: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EnvironmentVariable'
+              $ref: '#/components/schemas/IPFSDapp'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/EnvironmentVariable'
+              $ref: '#/components/schemas/IPFSDapp'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/EnvironmentVariable'
+              $ref: '#/components/schemas/IPFSDapp'
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentVariable'
+                $ref: '#/components/schemas/IPFSDapp'
           description: ''
       tags:
       - api
-  /api/v1/envvar/{id}/:
+  /api/v1/ipfs/{slug}/:
     get:
-      operationId: retrieveEnvironmentVariable
+      operationId: retrieveIPFSDapp
       description: ''
       parameters:
-      - name: id
+      - name: slug
         in: path
         required: true
-        description: A unique integer value identifying this environment variable.
+        description: '[A-Za-z0-9_-]'
         schema:
           type: string
       responses:
@@ -131,82 +95,122 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentVariable'
+                $ref: '#/components/schemas/IPFSDapp'
           description: ''
       tags:
       - api
     put:
-      operationId: updateEnvironmentVariable
+      operationId: updateIPFSDapp
       description: ''
       parameters:
-      - name: id
+      - name: slug
         in: path
         required: true
-        description: A unique integer value identifying this environment variable.
+        description: '[A-Za-z0-9_-]'
         schema:
           type: string
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EnvironmentVariable'
+              $ref: '#/components/schemas/IPFSDapp'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/EnvironmentVariable'
+              $ref: '#/components/schemas/IPFSDapp'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/EnvironmentVariable'
+              $ref: '#/components/schemas/IPFSDapp'
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentVariable'
+                $ref: '#/components/schemas/IPFSDapp'
           description: ''
       tags:
       - api
     patch:
-      operationId: partialUpdateEnvironmentVariable
+      operationId: partialUpdateIPFSDapp
       description: ''
       parameters:
-      - name: id
+      - name: slug
         in: path
         required: true
-        description: A unique integer value identifying this environment variable.
+        description: '[A-Za-z0-9_-]'
         schema:
           type: string
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EnvironmentVariable'
+              $ref: '#/components/schemas/IPFSDapp'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/EnvironmentVariable'
+              $ref: '#/components/schemas/IPFSDapp'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/EnvironmentVariable'
+              $ref: '#/components/schemas/IPFSDapp'
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentVariable'
+                $ref: '#/components/schemas/IPFSDapp'
           description: ''
       tags:
       - api
     delete:
-      operationId: destroyEnvironmentVariable
+      operationId: destroyIPFSDapp
       description: ''
       parameters:
-      - name: id
+      - name: slug
         in: path
         required: true
-        description: A unique integer value identifying this environment variable.
+        description: '[A-Za-z0-9_-]'
         schema:
           type: string
       responses:
         '204':
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{slug}/build/:
+    get:
+      operationId: buildIPFSDapp
+      description: ''
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        description: '[A-Za-z0-9_-]'
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPFSDapp'
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{slug}/deploy/:
+    get:
+      operationId: deployIPFSDapp
+      description: ''
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        description: '[A-Za-z0-9_-]'
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPFSDapp'
           description: ''
       tags:
       - api
@@ -280,9 +284,9 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/:
+  /api/v1/users/me/:
     get:
-      operationId: listIPFSDapps
+      operationId: meUser
       description: ''
       parameters: []
       responses:
@@ -290,176 +294,21 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/IPFSDapp'
+                $ref: '#/components/schemas/User'
           description: ''
       tags:
       - api
-    post:
-      operationId: createIPFSDapp
-      description: Add `owner` when creating the dapp
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IPFSDapp'
-          description: ''
-      tags:
-      - api
-  /api/v1/ipfs/{id}/:
-    get:
-      operationId: retrieveIPFSDapp
-      description: ''
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: A UUID string identifying this IPFS Dapp.
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IPFSDapp'
-          description: ''
-      tags:
-      - api
-    put:
-      operationId: updateIPFSDapp
-      description: ''
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: A UUID string identifying this IPFS Dapp.
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IPFSDapp'
-          description: ''
-      tags:
-      - api
-    patch:
-      operationId: partialUpdateIPFSDapp
-      description: ''
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: A UUID string identifying this IPFS Dapp.
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IPFSDapp'
-          description: ''
-      tags:
-      - api
-    delete:
-      operationId: destroyIPFSDapp
-      description: ''
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: A UUID string identifying this IPFS Dapp.
-        schema:
-          type: string
-      responses:
-        '204':
-          description: ''
-      tags:
-      - api
-  /api/v1/ipfs/{id}/build/:
-    get:
-      operationId: buildIPFSDapp
-      description: ''
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: A UUID string identifying this IPFS Dapp.
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IPFSDapp'
-          description: ''
-      tags:
-      - api
-  /api/v1/ipfs/{id}/deploy/:
-    get:
-      operationId: deployIPFSDapp
-      description: ''
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: A UUID string identifying this IPFS Dapp.
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IPFSDapp'
-          description: ''
-      tags:
-      - api
-  /api/v1/ipfs_deploy/:
+  /api/v1/ipfs/{dapp_slug}/deployments/:
     get:
       operationId: listIPFSDeployments
       description: ''
-      parameters: []
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -471,11 +320,17 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs_deploy/{id}/:
+  /api/v1/ipfs/{dapp_slug}/deployments/{id}/:
     get:
       operationId: retrieveIPFSDeployment
       description: ''
       parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
       - name: id
         in: path
         required: true
@@ -491,31 +346,15 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/logs/:
+  /api/v1/ipfs/{dapp_slug}/bundles/:
     get:
-      operationId: listDashboardLogEntrys
-      description: ''
-      parameters: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/DashboardLogEntry'
-          description: ''
-      tags:
-      - api
-  /api/v1/logs/{id}/:
-    get:
-      operationId: retrieveDashboardLogEntry
+      operationId: listBundles
       description: ''
       parameters:
-      - name: id
+      - name: dapp_slug
         in: path
         required: true
-        description: A unique integer value identifying this dashboard log entry.
+        description: ''
         schema:
           type: string
       responses:
@@ -523,84 +362,544 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DashboardLogEntry'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bundle'
           description: ''
       tags:
       - api
-  /api/v1/users/me/:
+  /api/v1/ipfs/{dapp_slug}/bundles/{id}/:
     get:
-      operationId: meUser
+      operationId: retrieveBundle
       description: ''
-      parameters: []
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this bundle.
+        schema:
+          type: string
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/Bundle'
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{dapp_slug}/builds/:
+    get:
+      operationId: listBuilds
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Build'
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{dapp_slug}/builds/{id}/:
+    get:
+      operationId: retrieveBuild
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this build.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Build'
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{dapp_slug}/envvars/:
+    get:
+      operationId: listEnvVars
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EnvVar'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createEnvVar
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvVar'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EnvVar'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EnvVar'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvVar'
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{dapp_slug}/envvars/{id}/:
+    get:
+      operationId: retrieveEnvVar
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this environment variable.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvVar'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateEnvVar
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this environment variable.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvVar'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EnvVar'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EnvVar'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvVar'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateEnvVar
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this environment variable.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvVar'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EnvVar'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EnvVar'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvVar'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyEnvVar
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this environment variable.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{dapp_slug}/logs/:
+    get:
+      operationId: listAPILogs
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/APILog'
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{dapp_slug}/logs/{id}/:
+    get:
+      operationId: retrieveAPILog
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this dashboard log entry.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APILog'
           description: ''
       tags:
       - api
 components:
   schemas:
-    Bundle:
+    DappReadOnly:
       type: object
       properties:
         id:
           type: string
           format: uuid
           readOnly: true
-        options:
+        dapp_type:
           type: string
-          nullable: true
+          readOnly: true
+        slug:
+          type: string
+          description: '[A-Za-z0-9_-]'
+          maxLength: 256
+          pattern: ^[-a-zA-Z0-9_]+$
+        url:
+          type: string
+          maxLength: 2048
+        owner:
+          type: string
+        status:
+          enum:
+          - SO
+          - BI
+          - BT
+          - DP
+          - SA
+          - UP
+          - UA
+          - ER
+          type: string
+      required:
+      - slug
+      - owner
+    IPFSDapp:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        command:
+          type: string
+          description: Command used during the build process.
+          maxLength: 2048
+        docker:
+          type: string
+          description: Container used for the build process.
+          maxLength: 128
+        builds:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                readOnly: true
+              options:
+                type: string
+              is_success:
+                type: boolean
+                nullable: true
+                description: Based on the build return code
+              logs:
+                type: string
+                description: Raw logs output of the build process
+              bundle:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  options:
+                    type: string
+                    nullable: true
+                  created_at:
+                    type: string
+                    format: date-time
+                readOnly: true
+              start:
+                type: string
+                format: date-time
+              end:
+                type: string
+                format: date-time
+                nullable: true
+            required:
+            - options
+          readOnly: true
+        bundles:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                readOnly: true
+              options:
+                type: string
+                nullable: true
+              created_at:
+                type: string
+                format: date-time
+          readOnly: true
+        envvars:
+          type: array
+          items:
+            type: object
+            properties:
+              options:
+                type: string
+              variable:
+                type: string
+                maxLength: 1024
+                pattern: ^[-a-zA-Z0-9_]+$
+              value:
+                type: string
+                maxLength: 8192
+            required:
+            - options
+            - variable
+            - value
+          readOnly: true
+        slug:
+          type: string
+          description: '[A-Za-z0-9_-]'
+          maxLength: 256
+          pattern: ^[-a-zA-Z0-9_]+$
+        url:
+          type: string
+          readOnly: true
+        owner:
+          type: string
+          readOnly: true
+        status:
+          enum:
+          - SO
+          - BI
+          - BT
+          - DP
+          - SA
+          - UP
+          - UA
+          - ER
+          type: string
+          readOnly: true
+        deployments:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                readOnly: true
+              dapp:
+                type: string
+                readOnly: true
+              bundle:
+                type: string
+                readOnly: true
+              status:
+                enum:
+                - SO
+                - DP
+                - SA
+                - UP
+                - UA
+                type: string
+                readOnly: true
+              start:
+                type: string
+                format: date-time
+                readOnly: true
+              end:
+                type: string
+                format: date-time
+                readOnly: true
+              ipfs_hash:
+                type: string
+                readOnly: true
+          readOnly: true
+        logs:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                readOnly: true
+              user:
+                type: string
+                readOnly: true
+              action_flag:
+                enum:
+                - 1
+                - 2
+                - 3
+                - 4
+                - 5
+                - 6
+                - 7
+                - 8
+                - 9
+                type: integer
+                readOnly: true
+              change_message:
+                type: string
+                readOnly: true
+              action_time:
+                type: string
+                format: date-time
+                readOnly: true
+          readOnly: true
         created_at:
           type: string
           format: date-time
           readOnly: true
-    Build:
-      type: object
-      properties:
-        id:
+        ipfs_gateway:
           type: string
-          format: uuid
-          readOnly: true
-        options:
-          type: string
-          readOnly: true
-        is_success:
-          type: boolean
-          readOnly: true
-          description: Based on the build return code
-        logs:
+          format: uri
+          nullable: true
+          maxLength: 200
+          pattern: "^(?:[a-z0-9.+-]*)://(?:[^\\s:@/]+(?::[^\\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\\\
+            d|[0-1]?\\d?\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3}|\\[[0-9a-f:.]+\\\
+            ]|([a-z\xA1-\uFFFF0-9](?:[a-z\xA1-\uFFFF0-9-]{0,61}[a-z\xA1-\uFFFF0-9])?(?:\\\
+            .(?!-)[a-z\xA1-\uFFFF0-9-]{1,63}(?<!-))*\\.(?!-)(?:[a-z\xA1-\uFFFF-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\\\
+            .?|localhost))(?::\\d{2,5})?(?:[/?#][^\\s]*)?\\z"
+        ipfs_hash:
           type: string
           readOnly: true
-          description: Raw logs output of the build process
-        bundle:
-          type: string
-          readOnly: true
-        start:
-          type: string
-          format: date-time
-          readOnly: true
-        end:
-          type: string
-          format: date-time
-          readOnly: true
-    EnvironmentVariable:
-      type: object
-      properties:
-        options:
-          type: string
-        variable:
-          type: string
-          maxLength: 1024
-        value:
-          type: string
-          maxLength: 8192
       required:
-      - options
-      - variable
-      - value
+      - slug
     GithubRepo:
       type: object
       properties:
@@ -639,71 +938,27 @@ components:
           format: date-time
           readOnly: true
           description: Last modified by user or external source.
-    IPFSDapp:
+    User:
       type: object
       properties:
         id:
           type: string
           format: uuid
           readOnly: true
-        command:
+        username:
           type: string
-          description: Command used during the build process.
-          maxLength: 2048
-        docker:
+          pattern: ^[\w.@+-]+\z
+          maxLength: 150
+        email:
           type: string
-          description: Container used for the build process.
-          maxLength: 128
-        builds:
-          type: array
-          items:
-            type: string
-          readOnly: true
-        bundles:
-          type: array
-          items:
-            type: string
-          readOnly: true
-        name:
+          format: email
+          maxLength: 254
+        avatar:
           type: string
-          maxLength: 128
-        slug:
-          type: string
-          nullable: true
-          maxLength: 50
-          pattern: ^[-a-zA-Z0-9_]+$
-        url:
-          type: string
-          readOnly: true
-        owner:
-          type: string
-        status:
-          enum:
-          - SO
-          - BI
-          - BT
-          - DP
-          - SA
-          - UP
-          - UA
-          - ER
-          type: string
-          readOnly: true
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        deployments:
-          type: array
-          items:
-            type: string
-          readOnly: true
-        hash:
-          type: string
+          format: binary
           readOnly: true
       required:
-      - name
-      - owner
+      - username
     IPFSDeployment:
       type: object
       properties:
@@ -734,14 +989,83 @@ components:
           type: string
           format: date-time
           readOnly: true
-        hash:
+        ipfs_hash:
           type: string
           readOnly: true
-    DashboardLogEntry:
+    Bundle:
       type: object
       properties:
         id:
-          type: integer
+          type: string
+          format: uuid
+          readOnly: true
+        options:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+    Build:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        options:
+          type: string
+        is_success:
+          type: boolean
+          nullable: true
+          description: Based on the build return code
+        logs:
+          type: string
+          description: Raw logs output of the build process
+        bundle:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              readOnly: true
+            options:
+              type: string
+              nullable: true
+            created_at:
+              type: string
+              format: date-time
+          readOnly: true
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+      - options
+    EnvVar:
+      type: object
+      properties:
+        options:
+          type: string
+        variable:
+          type: string
+          maxLength: 1024
+          pattern: ^[-a-zA-Z0-9_]+$
+        value:
+          type: string
+          maxLength: 8192
+      required:
+      - options
+      - variable
+      - value
+    APILog:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
           readOnly: true
         user:
           type: string
@@ -766,24 +1090,3 @@ components:
           type: string
           format: date-time
           readOnly: true
-    User:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-        username:
-          type: string
-          pattern: ^[\w.@+-]+\z
-          maxLength: 150
-        email:
-          type: string
-          format: email
-          maxLength: 254
-        avatar:
-          type: string
-          format: binary
-          readOnly: true
-      required:
-      - username

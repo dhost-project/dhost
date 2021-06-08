@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from .models import DashboardLogEntry
+from .models import APILog
 
 
-@admin.register(DashboardLogEntry)
-class DashboardLogEntryAdmin(admin.ModelAdmin):
+@admin.register(APILog)
+class APILogAdmin(admin.ModelAdmin):
     pass

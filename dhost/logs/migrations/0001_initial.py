@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='DashboardLogEntry',
+            name='APILog',
             fields=[
                 ('id',
                  models.UUIDField(default=uuid.uuid4,

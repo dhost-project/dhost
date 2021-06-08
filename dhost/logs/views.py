@@ -1,9 +1,9 @@
 from rest_framework import viewsets
 
-from .models import DashboardLogEntry
-from .serializers import DashboardLogEntrySerializer
+from .models import APILog
+from .serializers import APILogSerializer
 
 
-class DashboardLogEntryViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = DashboardLogEntry.objects.all()
-    serializer_class = DashboardLogEntrySerializer
+class APILogViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = APILog.objects.all()
+    serializer_class = APILogSerializer

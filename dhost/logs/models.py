@@ -31,7 +31,12 @@ ACTION_FLAG_CHOICES = (
 )
 
 
-class DashboardLogEntry(models.Model):
+class APILog(models.Model):
+    """
+    API log entry, each state changing command (POST, PUT, PATCH, DELETE) sent
+    to the API server it is recorded in the form of an APILog object.
+    """
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     options = models.ForeignKey(Dapp,
