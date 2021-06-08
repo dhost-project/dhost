@@ -15,6 +15,10 @@ class GithubRepoViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
     permission_classes = [HasGithubLinked]
 
     def get_queryset(self):
+        """Overwriting `get_queryset` allow us to return 404 instead of return
+        403 when the repo exist but the user doesn't have access (because it's
+        not his for example).
+        """
         queryset = super().get_queryset()
         social = self.request.user.social_auth.get(provider='github')
         queryset = queryset.filter(owner=social)

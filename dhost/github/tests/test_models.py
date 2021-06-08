@@ -9,7 +9,7 @@ User = get_user_model()
 
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
-class GithubModelTest(TestCase):
+class GithubRepoTestCase(TestCase):
 
     def setUp(self):
         self.u1 = User.objects.create(username='john', password='john')
@@ -22,6 +22,7 @@ class GithubModelTest(TestCase):
         self.repo1 = GithubRepo.objects.create(
             owner=self.s1,
             name='dhost-front',
+            github_id=1,
             github_owner='dhost-project',
             github_repo='dhost-front',
             github_extra_data={'size': 52},
@@ -34,5 +35,68 @@ class GithubModelTest(TestCase):
         github_str = str(self.repo1)
         self.assertEqual(str, type(github_str))
 
-    def test_create_from_api(self):
+    def test_create_from_json(self):
+        repo_json = {
+            "id": 191538244,
+            "name": "MineSweeper",
+            "owner": {
+                "login": "2O4",
+            },
+            "size": 42,
+        }
+        nbr_repos = GithubRepo.objects.count()
+        repo = GithubRepo.objects.create_from_json(owner=self.s1,
+                                                   repo_json=repo_json)
+        nbr_repos_after = GithubRepo.objects.count()
+        self.assertEqual(nbr_repos + 1, nbr_repos_after)
+        self.assertEqual(repo.github_id, repo_json['id'])
+        self.assertEqual(repo.github_extra_data, repo_json)
+
+    def test_update_or_create_from_json_exist(self):
+        repo_json = {
+            "id": 1,
+            "name": "dhost-front",
+            "owner": {
+                "login": "dhost-project",
+            },
+            "size": 42,
+        }
+        nbr_repos = GithubRepo.objects.count()
+        repo = GithubRepo.objects.update_or_create_from_json(
+            owner=self.s1, repo_json=repo_json)
+        nbr_repos_after = GithubRepo.objects.count()
+        self.assertEqual(nbr_repos, nbr_repos_after)
+        self.assertEqual(repo.github_id, repo_json['id'])
+        self.assertEqual(repo.github_extra_data, repo_json)
+
+    def test_update_or_create_from_json_doesnt_exist(self):
+        repo_json = {
+            "id": 191538244,
+            "name": "MineSweeper",
+            "owner": {
+                "login": "2O4",
+            },
+            "size": 42,
+        }
+        nbr_repos = GithubRepo.objects.count()
+        repo = GithubRepo.objects.update_or_create_from_json(
+            owner=self.s1, repo_json=repo_json)
+        nbr_repos_after = GithubRepo.objects.count()
+        self.assertEqual(nbr_repos + 1, nbr_repos_after)
+        self.assertEqual(repo.github_id, repo_json['id'])
+        self.assertEqual(repo.github_extra_data, repo_json)
+
+    # mock 'get_repos' function
+    def test_fetch_all(self):
+        pass
+
+    # mock 'get_repo' function
+    def test_fetch_repo(self):
+        pass
+
+    def test_update_from_json(self):
+        pass
+
+    # mock 'downlaod_repo' function
+    def test_download_repo(self):
         pass
