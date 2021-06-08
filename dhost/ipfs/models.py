@@ -7,7 +7,7 @@ from dhost.dapps.models import Dapp, Deployment
 class IPFSDapp(Dapp):
     """Dapp raidy to be deployed to the IPFS network"""
 
-    hash = models.CharField(_('IPFS hash'), max_length=128, blank=True)
+    ipfs_hash = models.CharField(_('IPFS hash'), max_length=128, blank=True)
     ipfs_gateway = models.URLField(
         _('IPFS public gateway'),
         default='https://ipfs.io/ipfs/',
@@ -28,11 +28,11 @@ class IPFSDapp(Dapp):
 
     def get_public_url(self):
         """Generate public URL based on hash and IPFS gateway"""
-        return '{}{}'.format(self.ipfs_gateway, self.hash)
+        return '{}{}'.format(self.ipfs_gateway, self.ipfs_hash)
 
 
 class IPFSDeployment(Deployment):
-    hash = models.CharField(_('IPFS hash'), max_length=128, blank=True)
+    ipfs_hash = models.CharField(_('IPFS hash'), max_length=128, blank=True)
 
     class Meta(Deployment.Meta):
         verbose_name = _('IPFS Deployment')

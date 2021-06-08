@@ -66,8 +66,8 @@ class AbstractDapp(models.Model):
 
 
 class Dapp(AbstractDapp, BuildOptions):
-    """A fully functionnal Dapp with options and ability to build from
-    options
+    """
+    A fully functionnal Dapp with options and ability to build from options.
     """
 
     class Meta(AbstractDapp.Meta):
@@ -94,6 +94,12 @@ class Dapp(AbstractDapp, BuildOptions):
     def create_deployment(self, bundle=None):
         """Return a specific application deployment instance"""
         raise NotImplementedError
+
+    def get_dapp_type(self):
+        """Return the available dapp implementation."""
+        if hasattr(self, 'ipfsdapp'):
+            return 'ipfs'
+        return None
 
 
 class AbstractDeployment(models.Model):
