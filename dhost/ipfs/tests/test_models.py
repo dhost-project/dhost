@@ -19,12 +19,13 @@ class TestDataMixin:
             command='npm build',
             docker='node:12',
             owner=cls.user1,
-            hash='bafybeifx7yeb55armcsxwwitkymga5xf53dxiarykms3ygqic223w5sk3m',
+            ipfs_hash='bafybeifx7yeb55armcsxwwitkymga5xf53dxiarykms3ygqic223w5s'
+            'k3m',
         )
 
         cls.deploy1 = IPFSDeployment.objects.create(
             dapp=cls.ipfs1,
-            hash=cls.ipfs1.hash,
+            ipfs_hash=cls.ipfs1.ipfs_hash,
         )
 
 
@@ -41,7 +42,7 @@ class IPFSModelsTestCase(TestDataMixin, TestCase):
     @tag('fast')
     def test_get_public_url(self):
         public_url = self.ipfs1.get_public_url()
-        self.assertIn(self.ipfs1.hash, public_url)
+        self.assertIn(self.ipfs1.ipfs_hash, public_url)
 
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)

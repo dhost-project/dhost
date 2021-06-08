@@ -104,7 +104,4 @@ class GithubRepo(AbstractGit):
         """Download repo from Github API."""
         g = DjangoGithubAPI(social=self.owner)
         tar_name = g.download_repo(self.github_full_name, path)
-        # TODO decompress
-        print(tar_name)
-        source_path = None
-        return source_path
+        return tar_name
