@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from .models import GithubRepo
+from .models import Repository
 
 
-@admin.register(GithubRepo)
-class GithubRepoAdmin(admin.ModelAdmin):
+@admin.register(Repository)
+class RepositoryAdmin(admin.ModelAdmin):
     pass

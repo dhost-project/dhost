@@ -30,7 +30,7 @@ def serialize_github_webhook(webhook_json):
     }
 
 
-class GithubRepoManager(models.Manager):
+class RepositoryManager(models.Manager):
 
     def fetch_all(self, github_social):
         # TODO remove repos that are not present in the response because they
@@ -42,7 +42,7 @@ class GithubRepoManager(models.Manager):
         return repos
 
     def create_from_json(self, owner, repo_json):
-        """Create a GithubRepository from a Github API response."""
+        """Create a Repositorysitory from a Github API response."""
         data = self.serialize(repo_json)
         data.update({'owner': owner})
         return self.create(**data)
@@ -52,13 +52,13 @@ class GithubRepoManager(models.Manager):
         Like get_or_create but from Github API response and update instead of
         just getting the object when it exist.
         """
-        GithubRepo = apps.get_model('github.GithubRepo')
+        Repository = apps.get_model('github.Repository')
         github_id = repo_json['id']
         try:
             github_repo = self.get(github_id=github_id, owner=owner)
             github_repo.update_from_json(repo_json)
             return github_repo
-        except GithubRepo.DoesNotExist:
+        except Repository.DoesNotExist:
             return self.create_from_json(owner, repo_json)
 
     def serialize(self, repo_json):
@@ -95,7 +95,7 @@ class BranchManager(models.Manager):
         return serialize_github_branch(branch_json)
 
 
-class GithubWebhooksManager(models.Manager):
+class WebhookManager(models.Manager):
 
     def create_github_webhook(self, repo, owner, name='web'):
         g = DjangoGithubAPI()
@@ -108,13 +108,13 @@ class GithubWebhooksManager(models.Manager):
         return self.create(**data)
 
     def update_or_create_from_json(self, repo, webhook_json):
-        GithubWebhooks = apps.get_model('github.GithubWebhooks')
+        Webhook = apps.get_model('github.Webhook')
         github_id = webhook_json['github_id']
         try:
             webhook = self.get(github_id=github_id, repo=repo)
             webhook.update_from_json(webhook_json)
             return webhook
-        except GithubWebhooks.DoesNotExist:
+        except Webhook.DoesNotExist:
             return self.create_from_json(repo, webhook_json)
 
     def serialize(self, webhook_json):

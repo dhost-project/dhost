@@ -2,16 +2,16 @@ from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .models import GithubRepo
+from .models import Repository
 from .permissions import HasGithubLinked
-from .serializers import GithubRepoSerializer
+from .serializers import RepositorySerializer
 
 
-class GithubRepoViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
+class RepositoryViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
                         viewsets.GenericViewSet):
 
-    queryset = GithubRepo.objects.all()
-    serializer_class = GithubRepoSerializer
+    queryset = Repository.objects.all()
+    serializer_class = RepositorySerializer
     permission_classes = [HasGithubLinked]
 
     def get_queryset(self):
@@ -36,5 +36,5 @@ class GithubRepoViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
     def fetch_all(self, request):
         """Update every Github repos for user from the Github API."""
         social = request.user.social_auth.get(provider='github')
-        repos = GithubRepo.objects.fetch_all(social)
+        repos = Repository.objects.fetch_all(social)
         return Response(repos)

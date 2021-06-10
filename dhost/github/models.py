@@ -4,11 +4,11 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from .github import DjangoGithubAPI
-from .managers import (BranchManager, GithubRepoManager, GithubWebhooksManager,
+from .managers import (BranchManager, RepositoryManager, WebhookManager,
                        serialize_github_branch, serialize_github_repo)
 
 
-class GithubRepo(models.Model):
+class Repository(models.Model):
     """
     Model representing a Github repository, the instance is created and
     updated from the response of the Github API.
@@ -30,7 +30,7 @@ class GithubRepo(models.Model):
         default=timezone.now,
         help_text=_('Last updated from the Github API.'),
     )
-    objects = GithubRepoManager()
+    objects = RepositoryManager()
 
     class Meta:
         verbose_name = _('Github repository')
@@ -59,12 +59,12 @@ class GithubRepo(models.Model):
     def create_webhook(self, **kwargs):
         """Create a webhook object linked to this Github repo."""
         kwargs.update({'repo': self.id})
-        GithubWebhooks.objects.create_github_webhook(**kwargs)
+        Webhook.objects.create_github_webhook(**kwargs)
 
 
 class Branch(models.Model):
     repo = models.ForeignKey(
-        GithubRepo,
+        Repository,
         on_delete=models.CASCADE,
         related_name='branches',
         related_query_name='branches',
@@ -83,9 +83,9 @@ class Branch(models.Model):
         self.save()
 
 
-class GithubWebhooks(models.Model):
+class Webhook(models.Model):
     repo = models.ForeignKey(
-        GithubRepo,
+        Repository,
         on_delete=models.CASCADE,
         related_name='webhooks',
         related_query_name='webhooks',
@@ -104,7 +104,7 @@ class GithubWebhooks(models.Model):
         blank=True,
         help_text=_('Last called by Github.'),
     )
-    objects = GithubWebhooksManager()
+    objects = WebhookManager()
 
     class Meta:
         verbose_name = _('Github webhook')

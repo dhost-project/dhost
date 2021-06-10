@@ -3,13 +3,13 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings
 from social_django.models import UserSocialAuth
 
-from ..models import Branch, GithubRepo, GithubWebhooks
+from ..models import Branch, Repository, Webhook
 
 User = get_user_model()
 
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
-class GithubRepoTestCase(TestCase):
+class RepositoryTestCase(TestCase):
 
     def setUp(self):
         self.u1 = User.objects.create(username='john', password='john')
@@ -19,7 +19,7 @@ class GithubRepoTestCase(TestCase):
             uid='1234',
             extra_data={'access_token': 'token123'},
         )
-        self.repo1 = GithubRepo.objects.create(
+        self.repo1 = Repository.objects.create(
             owner=self.u1,
             github_id=1,
             github_owner='dhost-project',
@@ -44,10 +44,10 @@ class GithubRepoTestCase(TestCase):
 
     def test_create_from_json(self):
         repo_json = self.repo_json
-        nbr_repos = GithubRepo.objects.count()
-        repo = GithubRepo.objects.create_from_json(owner=self.u1,
+        nbr_repos = Repository.objects.count()
+        repo = Repository.objects.create_from_json(owner=self.u1,
                                                    repo_json=repo_json)
-        nbr_repos_after = GithubRepo.objects.count()
+        nbr_repos_after = Repository.objects.count()
         self.assertEqual(nbr_repos + 1, nbr_repos_after)
         self.assertEqual(repo.github_id, repo_json['id'])
         self.assertEqual(repo.extra_data, repo_json)
@@ -55,20 +55,20 @@ class GithubRepoTestCase(TestCase):
     def test_update_or_create_from_json_exist(self):
         repo_json = self.repo_json
         repo_json.update({'id': 1})
-        nbr_repos = GithubRepo.objects.count()
-        repo = GithubRepo.objects.update_or_create_from_json(
+        nbr_repos = Repository.objects.count()
+        repo = Repository.objects.update_or_create_from_json(
             owner=self.u1, repo_json=repo_json)
-        nbr_repos_after = GithubRepo.objects.count()
+        nbr_repos_after = Repository.objects.count()
         self.assertEqual(nbr_repos, nbr_repos_after)
         self.assertEqual(repo.github_id, repo_json['id'])
         self.assertEqual(repo.extra_data, repo_json)
 
     def test_update_or_create_from_json_doesnt_exist(self):
         repo_json = self.repo_json
-        nbr_repos = GithubRepo.objects.count()
-        repo = GithubRepo.objects.update_or_create_from_json(
+        nbr_repos = Repository.objects.count()
+        repo = Repository.objects.update_or_create_from_json(
             owner=self.u1, repo_json=repo_json)
-        nbr_repos_after = GithubRepo.objects.count()
+        nbr_repos_after = Repository.objects.count()
         self.assertEqual(nbr_repos + 1, nbr_repos_after)
         self.assertEqual(repo.github_id, repo_json['id'])
         self.assertEqual(repo.extra_data, repo_json)
@@ -100,7 +100,7 @@ class BranchTestCase(TestCase):
             uid='1234',
             extra_data={'access_token': 'token123'},
         )
-        self.repo1 = GithubRepo.objects.create(
+        self.repo1 = Repository.objects.create(
             owner=self.u1,
             github_id=1,
             github_owner='dhost-project',
@@ -165,14 +165,14 @@ class WebhookTestCase(TestCase):
             uid='1234',
             extra_data={'access_token': 'token123'},
         )
-        self.repo1 = GithubRepo.objects.create(
+        self.repo1 = Repository.objects.create(
             owner=self.u1,
             github_id=1,
             github_owner='dhost-project',
             github_repo='dhost-front',
             extra_data={'size': 52},
         )
-        self.webhook1 = GithubWebhooks.objects.create(
+        self.webhook1 = Webhook.objects.create(
             repo=self.repo1,
             github_id=1,
         )
@@ -201,8 +201,8 @@ class WebhookTestCase(TestCase):
 
     def test_create_from_json(self):
         webhook_json = self.webhook_json
-        webhook = GithubWebhooks.objects.create_from_json(
-            repo=self.repo1, webhook_json=webhook_json)
-        self.assertEqual(2, GithubWebhooks.objects.count())
+        webhook = Webhook.objects.create_from_json(repo=self.repo1,
+                                                   webhook_json=webhook_json)
+        self.assertEqual(2, Webhook.objects.count())
         self.assertEqual(webhook.github_id, 12345678)
         self.assertEqual(webhook.extra_data, webhook_json)

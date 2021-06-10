@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from dhost.builds.models import BuildOptions, Bundle
-from dhost.github.models import GithubRepo
+from dhost.github.models import Repository
 
 
 class AbstractDapp(models.Model):
@@ -21,7 +21,7 @@ class AbstractDapp(models.Model):
                             help_text='[A-Za-z0-9_-]')
     url = models.CharField(_('URL'), max_length=2048, blank=True)
     github_repo = models.ForeignKey(
-        GithubRepo,
+        Repository,
         on_delete=models.CASCADE,
         null=True,
         blank=True,
