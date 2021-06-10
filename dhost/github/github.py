@@ -12,9 +12,10 @@ class GithubNotLinkedError(Exception):
 
 
 class GithubAPI:
-    """A github REST API wrapper"""
+    """A github REST API wrapper."""
     GITHUB_API_URL = 'https://api.github.com'
-    TOKEN_TYPE = 'token'
+    GITHUB_TOKEN_TYPE = 'token'
+    GITHUB_WEBHOOK_URL = 'https://localhost:8000/github/webhook/'
 
     def __init__(self, token: str):
         self.token = token
@@ -24,7 +25,7 @@ class GithubAPI:
 
     def _get_authorization_header(self):
         token = self.get_token()
-        token_type = self.TOKEN_TYPE
+        token_type = self.GITHUB_TOKEN_TYPE
         return {'Authorization': '{} {}'.format(token_type, token)}
 
     def _get_headers(self, additionnal_headers=None):
@@ -78,7 +79,7 @@ class GithubAPI:
         username = self.github_name
         return self.get(f'/users/{username}')
 
-    def get_repos(self):
+    def list_repos(self):
         """Return a list of accessible repositories from the current token"""
         return self.get('/user/repos')
 
@@ -86,6 +87,10 @@ class GithubAPI:
         """Return a single repository."""
         owner = owner if owner else self.github_name
         return self.get(f'/repos/{owner}/{repo}')
+
+    def list_branches(self, repo, owner=None):
+        owner = owner if owner else self.github_name
+        return self.get(f'/repos/{owner}/{repo}/branches')
 
     def download_repo(self, repo, owner=None, ref=''):
         """Download a repository"""
@@ -102,6 +107,22 @@ class GithubAPI:
             raise Exception(
                 'Error trying to access `{}`, error code: {}, message: {}'.
                 format(url, r.status_code, r.content))
+
+    def list_hooks(self):
+        pass
+
+    def create_hook(self, repo, owner=None, active=True, name='web'):
+        """Create a Github repository webhook."""
+        owner = owner if owner else self.github_name
+        active = active
+        data = {
+            'name': name,
+            'config': {
+                'url': self.GITHUB_WEBHOOK_URL,
+                'insecure_ssl': False,
+            }
+        }
+        return self.post(f'/repos/{owner}/{repo}/hooks', data=data)
 
 
 class DjangoGithubAPI(GithubAPI):

@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from dhost.builds.models import BuildOptions, Bundle
+from dhost.github.models import GithubRepo
 
 
 class AbstractDapp(models.Model):
@@ -19,6 +20,12 @@ class AbstractDapp(models.Model):
     slug = models.SlugField(_('dapp name'), max_length=256,
                             help_text='[A-Za-z0-9_-]')
     url = models.CharField(_('URL'), max_length=2048, blank=True)
+    github_repo = models.ForeignKey(
+        GithubRepo,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
 
     class Statuses(models.TextChoices):
         """
