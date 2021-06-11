@@ -16,7 +16,11 @@ class RepositorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Repository
-        fields = ['id', 'github_owner', 'github_repo', 'branches', 'added_at', 'updated_at']
+        fields = [
+            'id', 'github_owner', 'github_repo', 'branches', 'added_at',
+            'updated_at'
+        ]
         read_only_fields = [
-            'id', 'github_owner', 'github_repo', 'branches', 'added_at', 'updated_at'
+            'id', 'github_owner', 'github_repo', 'branches', 'added_at',
+            'updated_at'
         ]
