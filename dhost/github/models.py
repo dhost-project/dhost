@@ -24,7 +24,7 @@ class Repository(models.Model):
     github_owner = models.CharField(max_length=256)
     github_repo = models.CharField(max_length=256)
     # full raw output from the Github API
-    extra_data = models.JSONField(null=True, blank=True)
+    extra_data = models.JSONField(default=dict, blank=True)
     added_at = models.DateTimeField(auto_now_add=True, help_text=_('Added at.'))
     updated_at = models.DateTimeField(
         default=timezone.now,
@@ -76,7 +76,7 @@ class Branch(models.Model):
         related_query_name='branches',
     )
     name = models.CharField(max_length=255)
-    extra_data = models.JSONField(blank=True)
+    extra_data = models.JSONField(default=dict, blank=True)
     updated_at = models.DateTimeField(
         default=timezone.now,
         help_text=_('Last updated from the Github API.'),
@@ -109,7 +109,7 @@ class Webhook(models.Model):
     )
     name = models.CharField(max_length=255, default='web')
     active = models.BooleanField(default=True)
-    extra_data = models.JSONField(null=True, blank=True)
+    extra_data = models.JSONField(default=dict, blank=True)
     added_at = models.DateTimeField(auto_now_add=True, help_text=_('Added at.'))
     updated_at = models.DateTimeField(
         default=timezone.now,
