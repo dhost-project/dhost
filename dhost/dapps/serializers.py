@@ -51,4 +51,4 @@ class DappGithubRepoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DappGithubRepo
-        fields = ['id', 'repo', 'branch', 'auto_deploy', 'confirm_ci']
+        fields = ['repo', 'branch', 'auto_deploy', 'confirm_ci']

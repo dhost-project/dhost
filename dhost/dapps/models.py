@@ -165,7 +165,7 @@ class DappGithubRepo(models.Model):
         related_name='github_repo',
         related_query_name='github_repo',
         on_delete=models.CASCADE,
-    )  # only delete this mdoel and not the underlying model (Repository)
+    )
     repo = models.ForeignKey(
         Repository,
         on_delete=models.CASCADE,
