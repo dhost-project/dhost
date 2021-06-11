@@ -42,9 +42,29 @@ class GithubAPI:
         headers = self.get_headers(additionnal_headers=headers)
         return url, headers
 
-    def get(self, url=None, headers=None, full_url=None, *args, **kwargs):
+    def get(self, url, headers, code=200, full_url=None, *args, **kwargs):
         url, headers = self._prepare_request(url, headers, full_url)
         r = requests.get(url, headers=headers, *args, **kwargs)
+        if r.status_code == code:
+            return r.json()
+        else:
+            raise Exception(
+                'Error trying to access `{}`, error code: {}, message: {}'.
+                format(url, r.status_code, r.content))
+
+    def post(self, url, headers, data, full_url=None, *args, **kwargs):
+        url, headers = self._prepare_request(url, headers, full_url)
+        r = requests.post(url, headers=headers, data=data, *args, **kwargs)
+        if r.status_code == 201:
+            return r.json()
+        else:
+            raise Exception(
+                'Error trying to access `{}`, error code: {}, message: {}'.
+                format(url, r.status_code, r.content))
+
+    def patch(self, url, headers, data, full_url=None, *args, **kwargs):
+        url, headers = self._prepare_request(url, headers, full_url)
+        r = requests.patch(url, headers=headers, data=data, *args, **kwargs)
         if r.status_code == 200:
             return r.json()
         else:
@@ -60,6 +80,16 @@ class GithubAPI:
         else:
             raise Exception(
                 'Error trying to access `{}`, error code: {}, message: {}'.
+                format(url, r.status_code, r.content))
+
+    def delete(self, url, headers, full_url=None, *args, **kwargs):
+        url, headers = self._prepare_request(url, headers, *args, **kwargs)
+        r = requests.delete(url, headers=headers, *args, **kwargs)
+        if r.status_code == 204:
+            return r.json()
+        else:
+            raise Exception(
+                'Error trying to delete `{}`, error code: {}, message: {}'.
                 format(url, r.status_code, r.content))
 
     def request_private_repo_access(self):
@@ -83,22 +113,19 @@ class GithubAPI:
         """Return a list of accessible repositories from the current token"""
         return self.get('/user/repos')
 
-    def get_repo(self, repo, owner=None):
+    def get_repo(self, owner, repo):
         """Return a single repository."""
-        owner = owner if owner else self.github_name
         return self.get(f'/repos/{owner}/{repo}')
 
-    def list_branches(self, repo, owner=None):
-        owner = owner if owner else self.github_name
+    def list_branches(self, owner, repo):
         return self.get(f'/repos/{owner}/{repo}/branches')
 
-    def download_repo(self, repo, owner=None, ref=''):
+    def download_repo(self, owner, repo, ref):
         """Download a repository"""
-        owner = owner if owner else self.github_name
-        dhost_username = self.user.username
         url, headers = self._prepare_request(
             f'/repos/{owner}/{repo}/tarball/{ref}')
         r = requests.get(url, headers=headers, allow_redirects=True)
+        dhost_username = self.user.username
         if r.status_code == 200:
             with open(f'{dhost_username}_{owner}_{repo}.tar', 'wb') as source:
                 source.write(r.content)
@@ -108,12 +135,17 @@ class GithubAPI:
                 'Error trying to access `{}`, error code: {}, message: {}'.
                 format(url, r.status_code, r.content))
 
-    def list_hooks(self):
-        pass
+    def list_hooks(self, owner, repo):
+        return self.get(f'/repos/{owner}/{repo}/hooks')
 
-    def create_hook(self, repo, owner=None, active=True, name='web'):
+    def get_hook(self, owner, repo, hook_id):
+        return self.get(f'/repos/{owner}/{repo}/hooks/{hook_id}')
+
+    def get_hook_config(self, owner, repo, hook_id):
+        return self.get(f'/repos/{owner}/{repo}/hooks/{hook_id}/config')
+
+    def create_hook(self, owner, repo, active=True, name='web'):
         """Create a Github repository webhook."""
-        owner = owner if owner else self.github_name
         active = active
         data = {
             'name': name,
@@ -122,7 +154,20 @@ class GithubAPI:
                 'insecure_ssl': False,
             }
         }
-        return self.post(f'/repos/{owner}/{repo}/hooks', data=data)
+        return self.post(f'/repos/{owner}/{repo}/hooks', data)
+
+    def update_hook(self, owner, repo, hook_id, data):
+        return self.patch(f'/repos/{owner}/{repo}/hooks/{hook_id}', data)
+
+    def update_hook_config(self, owner, repo, hook_id, data):
+        return self.patch(f'/repos/{owner}/{repo}/hooks/{hook_id}/config', data)
+
+    def delete_hook(self, owner, repo, hook_id):
+        return self.delete(f'/repos/{owner}/{repo}/hooks/{hook_id}')
+
+    def ping_hook(self, owner, repo, hook_id):
+        return self.get(f'/repos/{owner}/{repo}/hooks/{hook_id}/pings',
+                        code=204)
 
 
 class DjangoGithubAPI(GithubAPI):

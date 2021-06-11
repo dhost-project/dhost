@@ -18,8 +18,9 @@ ipfs_router.register('bundles', ipfs_views.IPFSDappBundleViewSet)
 ipfs_router.register('deployments', ipfs_views.IPFSDeploymentViewSet)
 ipfs_router.register('envvars', ipfs_views.IPFSDappEnvVarViewSet)
 ipfs_router.register('logs', ipfs_views.IPFSDappAPILogViewSet)
+ipfs_router.register('github', ipfs_views.IPFSDappGithubRepoViewSet)
 
-router.register('github', github_views.RepositoryViewSet)
+router.register('github_webhook', github_views.WebhookViewSet)
 router.register('users', users_views.UserViewSet)
 
 api_urlpatterns = [

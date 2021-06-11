@@ -2,9 +2,10 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
 from dhost.builds.serializers import BuildOptionsSerializer
+from dhost.github.serializers import BranchSerializer, RepositorySerializer
 from dhost.logs.serializers import APILogSerializer
 
-from .models import Dapp, Deployment
+from .models import Dapp, DappGithubRepo, Deployment
 
 
 class DeploymentSerializer(serializers.ModelSerializer):
@@ -41,3 +42,13 @@ class DappReadOnlySerializer(serializers.ModelSerializer):
     class Meta:
         model = Dapp
         fields = ['id', 'dapp_type', 'slug', 'url', 'owner', 'status']
+
+
+class DappGithubRepoSerializer(serializers.ModelSerializer):
+
+    repo = RepositorySerializer(read_only=True)
+    branch = BranchSerializer()
+
+    class Meta:
+        model = DappGithubRepo
+        fields = ['id', 'repo', 'branch', 'auto_deploy', 'confirm_ci']
