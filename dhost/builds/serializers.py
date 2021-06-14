@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
-from .models import Build, BuildOptions, Bundle, EnvVar
+from .models import Build, Bundle, EnvVar
 
 
 class BundleSerializer(serializers.ModelSerializer):
@@ -31,14 +31,3 @@ class EnvVarSerializer(serializers.ModelSerializer):
             UniqueTogetherValidator(queryset=EnvVar.objects.all(),
                                     fields=['options', 'variable'])
         ]
-
-
-class BuildOptionsSerializer(serializers.ModelSerializer):
-    builds = BuildSerializer(many=True, read_only=True)
-    bundles = BundleSerializer(many=True, read_only=True)
-    envvars = EnvVarSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = BuildOptions
-        fields = ['id', 'command', 'docker', 'builds', 'bundles', 'envvars']
-        read_only_fields = []
