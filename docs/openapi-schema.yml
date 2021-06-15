@@ -3,7 +3,7 @@ info:
   title: ''
   version: ''
 paths:
-  /api/v1/dapp/:
+  /api/v1/dapps/:
     get:
       operationId: listDapps
       description: A list of every dapps, regardless of wich type they are.
@@ -19,7 +19,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/dapp/{slug}/:
+  /api/v1/dapps/{slug}/:
     get:
       operationId: retrieveDapp
       description: A list of every dapps, regardless of wich type they are.
@@ -214,76 +214,6 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/github/:
-    get:
-      operationId: listGithubRepos
-      description: ''
-      parameters: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/GithubRepo'
-          description: ''
-      tags:
-      - api
-  /api/v1/github/fetch_all/:
-    get:
-      operationId: fetchAllGithubRepo
-      description: Update every Github repos for user from the Github API.
-      parameters: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GithubRepo'
-          description: ''
-      tags:
-      - api
-  /api/v1/github/{id}/:
-    get:
-      operationId: retrieveGithubRepo
-      description: ''
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: A unique integer value identifying this Github repository.
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GithubRepo'
-          description: ''
-      tags:
-      - api
-  /api/v1/github/{id}/fetch/:
-    get:
-      operationId: fetchGithubRepo
-      description: Update a single repo from Github API.
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: A unique integer value identifying this Github repository.
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GithubRepo'
-          description: ''
-      tags:
-      - api
   /api/v1/users/me/:
     get:
       operationId: meUser
@@ -298,9 +228,9 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/deployments/:
+  /api/v1/ipfs/{dapp_slug}/builds/:
     get:
-      operationId: listIPFSDeployments
+      operationId: listBuilds
       description: ''
       parameters:
       - name: dapp_slug
@@ -316,13 +246,13 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/IPFSDeployment'
+                  $ref: '#/components/schemas/Build'
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/deployments/{id}/:
+  /api/v1/ipfs/{dapp_slug}/builds/{id}/:
     get:
-      operationId: retrieveIPFSDeployment
+      operationId: retrieveBuild
       description: ''
       parameters:
       - name: dapp_slug
@@ -334,7 +264,7 @@ paths:
       - name: id
         in: path
         required: true
-        description: A UUID string identifying this IPFS Deployment.
+        description: A UUID string identifying this build.
         schema:
           type: string
       responses:
@@ -342,7 +272,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IPFSDeployment'
+                $ref: '#/components/schemas/Build'
           description: ''
       tags:
       - api
@@ -394,9 +324,9 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/builds/:
+  /api/v1/ipfs/{dapp_slug}/deployments/:
     get:
-      operationId: listBuilds
+      operationId: listIPFSDeployments
       description: ''
       parameters:
       - name: dapp_slug
@@ -412,13 +342,13 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Build'
+                  $ref: '#/components/schemas/IPFSDeployment'
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/builds/{id}/:
+  /api/v1/ipfs/{dapp_slug}/deployments/{id}/:
     get:
-      operationId: retrieveBuild
+      operationId: retrieveIPFSDeployment
       description: ''
       parameters:
       - name: dapp_slug
@@ -430,7 +360,7 @@ paths:
       - name: id
         in: path
         required: true
-        description: A UUID string identifying this build.
+        description: A UUID string identifying this IPFS Deployment.
         schema:
           type: string
       responses:
@@ -438,7 +368,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Build'
+                $ref: '#/components/schemas/IPFSDeployment'
           description: ''
       tags:
       - api
@@ -661,6 +591,127 @@ paths:
           description: ''
       tags:
       - api
+  /api/v1/ipfs/{dapp_slug}/github/:
+    get:
+      operationId: listDappGithubRepos
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DappGithubRepo'
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{dapp_slug}/github/fetch_all/:
+    get:
+      operationId: fetchAllDappGithubRepo
+      description: Update every Github repos for user from the Github API.
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DappGithubRepo'
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{dapp_slug}/github/{id}/:
+    get:
+      operationId: retrieveDappGithubRepo
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this Dapp Github repository.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DappGithubRepo'
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{dapp_slug}/github/{id}/fetch/:
+    get:
+      operationId: fetchDappGithubRepo
+      description: Update a single repo from Github API.
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this Dapp Github repository.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DappGithubRepo'
+          description: ''
+      tags:
+      - api
+  /api/v1/github_webhook/{id}/payload/:
+    post:
+      operationId: payloadWebhook
+      description: View to receive webhooks from Github and handle them.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Github webhook unique ID.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - api
 components:
   schemas:
     DappReadOnly:
@@ -704,100 +755,12 @@ components:
           type: string
           format: uuid
           readOnly: true
-        command:
-          type: string
-          description: Command used during the build process.
-          maxLength: 2048
-        docker:
-          type: string
-          description: Container used for the build process.
-          maxLength: 128
-        builds:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                format: uuid
-                readOnly: true
-              options:
-                type: string
-              is_success:
-                type: boolean
-                nullable: true
-                description: Based on the build return code
-              logs:
-                type: string
-                description: Raw logs output of the build process
-              bundle:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                    readOnly: true
-                  options:
-                    type: string
-                    nullable: true
-                  created_at:
-                    type: string
-                    format: date-time
-                readOnly: true
-              start:
-                type: string
-                format: date-time
-              end:
-                type: string
-                format: date-time
-                nullable: true
-            required:
-            - options
-          readOnly: true
-        bundles:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                format: uuid
-                readOnly: true
-              options:
-                type: string
-                nullable: true
-              created_at:
-                type: string
-                format: date-time
-          readOnly: true
-        envvars:
-          type: array
-          items:
-            type: object
-            properties:
-              options:
-                type: string
-              variable:
-                type: string
-                maxLength: 1024
-                pattern: ^[-a-zA-Z0-9_]+$
-              value:
-                type: string
-                maxLength: 8192
-            required:
-            - options
-            - variable
-            - value
-          readOnly: true
         slug:
           type: string
           description: '[A-Za-z0-9_-]'
           maxLength: 256
           pattern: ^[-a-zA-Z0-9_]+$
         url:
-          type: string
-          readOnly: true
-        owner:
           type: string
           readOnly: true
         status:
@@ -885,6 +848,91 @@ components:
           type: string
           format: date-time
           readOnly: true
+        command:
+          type: string
+          description: Command used during the build process.
+          maxLength: 2048
+        docker:
+          type: string
+          description: Container used for the build process.
+          maxLength: 128
+        builds:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                readOnly: true
+              options:
+                type: string
+              is_success:
+                type: boolean
+                nullable: true
+                description: Based on the build return code
+              logs:
+                type: string
+                description: Raw logs output of the build process
+              bundle:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  options:
+                    type: string
+                    nullable: true
+                  created_at:
+                    type: string
+                    format: date-time
+                readOnly: true
+              start:
+                type: string
+                format: date-time
+              end:
+                type: string
+                format: date-time
+                nullable: true
+            required:
+            - options
+          readOnly: true
+        bundles:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                readOnly: true
+              options:
+                type: string
+                nullable: true
+              created_at:
+                type: string
+                format: date-time
+          readOnly: true
+        envvars:
+          type: array
+          items:
+            type: object
+            properties:
+              options:
+                type: string
+              variable:
+                type: string
+                maxLength: 1024
+                pattern: ^[-a-zA-Z0-9_]+$
+              value:
+                type: string
+                maxLength: 8192
+            required:
+            - options
+            - variable
+            - value
+          readOnly: true
         ipfs_gateway:
           type: string
           format: uri
@@ -900,44 +948,6 @@ components:
           readOnly: true
       required:
       - slug
-    GithubRepo:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          readOnly: true
-        branch:
-          type: string
-          maxLength: 256
-        auto_deploy:
-          type: boolean
-        github_owner:
-          type: string
-          readOnly: true
-        github_repo:
-          type: string
-          readOnly: true
-        size:
-          type: integer
-          readOnly: true
-        updated:
-          type: string
-          format: date-time
-          readOnly: true
-          description: Last updated from external source.
-        created:
-          type: string
-          format: date-time
-          readOnly: true
-          description: Created at.
-        modified:
-          type: string
-          format: date-time
-          readOnly: true
-          description: Last modified by user or external source.
     User:
       type: object
       properties:
@@ -959,52 +969,6 @@ components:
           readOnly: true
       required:
       - username
-    IPFSDeployment:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-        dapp:
-          type: string
-          readOnly: true
-        bundle:
-          type: string
-          readOnly: true
-        status:
-          enum:
-          - SO
-          - DP
-          - SA
-          - UP
-          - UA
-          type: string
-          readOnly: true
-        start:
-          type: string
-          format: date-time
-          readOnly: true
-        end:
-          type: string
-          format: date-time
-          readOnly: true
-        ipfs_hash:
-          type: string
-          readOnly: true
-    Bundle:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-        options:
-          type: string
-          nullable: true
-        created_at:
-          type: string
-          format: date-time
     Build:
       type: object
       properties:
@@ -1044,6 +1008,52 @@ components:
           nullable: true
       required:
       - options
+    Bundle:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        options:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+    IPFSDeployment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        dapp:
+          type: string
+          readOnly: true
+        bundle:
+          type: string
+          readOnly: true
+        status:
+          enum:
+          - SO
+          - DP
+          - SA
+          - UP
+          - UA
+          type: string
+          readOnly: true
+        start:
+          type: string
+          format: date-time
+          readOnly: true
+        end:
+          type: string
+          format: date-time
+          readOnly: true
+        ipfs_hash:
+          type: string
+          readOnly: true
     EnvVar:
       type: object
       properties:
@@ -1090,3 +1100,59 @@ components:
           type: string
           format: date-time
           readOnly: true
+    DappGithubRepo:
+      type: object
+      properties:
+        repo:
+          type: object
+          properties:
+            id:
+              type: integer
+              readOnly: true
+              description: Github repository unique ID.
+            github_owner:
+              type: string
+              readOnly: true
+            github_repo:
+              type: string
+              readOnly: true
+            branches:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    maxLength: 255
+                required:
+                - name
+            added_at:
+              type: string
+              format: date-time
+              readOnly: true
+              description: Added at.
+            updated_at:
+              type: string
+              format: date-time
+              readOnly: true
+              description: Last updated from the Github API.
+          required:
+          - branches
+          readOnly: true
+        branch:
+          type: object
+          properties:
+            name:
+              type: string
+              maxLength: 255
+          required:
+          - name
+        auto_deploy:
+          type: boolean
+          description: Automaticaly deploy the dapp when a webhook is called.
+        confirm_ci:
+          type: boolean
+          description: Wait for CI to be done before deploying the dapp whenauto deploy
+            is on.
+      required:
+      - branch
