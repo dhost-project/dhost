@@ -1,5 +1,7 @@
 from rest_framework import permissions
 
+from dhost.github.permissions import HasGithubLinked
+
 
 class DappPermission(permissions.BasePermission):
 
@@ -11,3 +13,9 @@ class DappPermission(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return True
         return obj.owner == request.user
+
+
+class DappHasGithubLinked(HasGithubLinked):
+
+    def has_object_permission(self, request, view, obj):
+        return obj.repo.users.filter(id=request.user.id).exists()

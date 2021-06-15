@@ -9,17 +9,18 @@ from .ipfs import views as ipfs_views
 from .users.api import views as users_views
 
 router = routers.DefaultRouter()
-router.register('dapp', dapps_views.DappReadOnlyViewSet)
+router.register('dapps', dapps_views.DappReadOnlyViewSet)
 
 router.register('ipfs', ipfs_views.IPFSDappViewSet)
 ipfs_router = routers.NestedSimpleRouter(router, 'ipfs', lookup='dapp')
-ipfs_router.register('deployments', ipfs_views.IPFSDeploymentViewSet)
-ipfs_router.register('bundles', ipfs_views.IPFSDappBundleViewSet)
 ipfs_router.register('builds', ipfs_views.IPFSDappBuildViewSet)
-ipfs_router.register('envvars', ipfs_views.IPFSDappEnvironmentVariableViewSet)
-ipfs_router.register('logs', ipfs_views.IPFSDappDashboardLogEntryViewSet)
+ipfs_router.register('bundles', ipfs_views.IPFSDappBundleViewSet)
+ipfs_router.register('deployments', ipfs_views.IPFSDeploymentViewSet)
+ipfs_router.register('envvars', ipfs_views.IPFSDappEnvVarViewSet)
+ipfs_router.register('logs', ipfs_views.IPFSDappAPILogViewSet)
+ipfs_router.register('github', ipfs_views.IPFSDappGithubRepoViewSet)
 
-router.register('github', github_views.GithubRepoViewSet)
+router.register('github_webhook', github_views.WebhookViewSet)
 router.register('users', users_views.UserViewSet)
 
 api_urlpatterns = [

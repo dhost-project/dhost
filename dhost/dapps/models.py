@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from dhost.builds.models import BuildOptions, Bundle
+from dhost.github.models import Branch, Repository
 
 
 class AbstractDapp(models.Model):
@@ -151,3 +152,35 @@ class AbstractDeployment(models.Model):
 
 class Deployment(AbstractDeployment):
     pass
+
+
+class DappGithubRepo(models.Model):
+    """
+    Represent the link between a Dapp and a Github repository, it also add some
+    options related to the deployment `auto_deploy` specifies if the Dapp
+    should be re-deployed when a webhook linked to that repo is called.
+    """
+    dapp = models.OneToOneField(
+        Dapp,
+        related_name='github_repo',
+        related_query_name='github_repo',
+        on_delete=models.CASCADE,
+    )
+    repo = models.ForeignKey(
+        Repository,
+        on_delete=models.CASCADE,
+    )
+    branch = models.ForeignKey(Branch, null=True, on_delete=models.SET_NULL)
+    auto_deploy = models.BooleanField(
+        default=False,
+        help_text=_('Automaticaly deploy the dapp when a webhook is called.'),
+    )
+    confirm_ci = models.BooleanField(
+        default=False,
+        help_text=_('Wait for CI to be done before deploying the dapp when'
+                    'auto deploy is on.'),
+    )
+
+    class Meta:
+        verbose_name = _('Dapp Github repository')
+        verbose_name_plural = _('Dapp Github repositories')

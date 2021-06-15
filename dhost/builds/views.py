@@ -2,14 +2,11 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .models import Build, BuildOptions, Bundle, EnvironmentVariable
-from .serializers import (BuildOptionsSerializer, BuildSerializer,
-                          BundleSerializer, EnvironmentVariableSerializer)
+from .models import Build, Bundle, EnvVar
+from .serializers import BuildSerializer, BundleSerializer, EnvVarSerializer
 
 
 class BuildOptionsViewSet(viewsets.ModelViewSet):
-    queryset = BuildOptions.objects.all()
-    serializer_class = BuildOptionsSerializer
 
     @action(detail=True, methods=['get'])
     def build(self, request, pk=None):
@@ -31,6 +28,6 @@ class BuildViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = BuildSerializer
 
 
-class EnvironmentVariableViewSet(viewsets.ModelViewSet):
-    queryset = EnvironmentVariable.objects.all()
-    serializer_class = EnvironmentVariableSerializer
+class EnvVarViewSet(viewsets.ModelViewSet):
+    queryset = EnvVar.objects.all()
+    serializer_class = EnvVarSerializer

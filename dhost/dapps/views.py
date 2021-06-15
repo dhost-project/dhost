@@ -4,13 +4,14 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from dhost.builds.views import (BuildOptionsViewSet, BuildViewSet,
-                                BundleViewSet, EnvironmentVariableViewSet)
-from dhost.logs.views import DashboardLogEntryViewSet
+                                BundleViewSet, EnvVarViewSet)
+from dhost.github.views import BranchViewSet, RepositoryViewSet
+from dhost.logs.views import APILogViewSet
 
-from .models import Dapp, Deployment
-from .permissions import DappPermission
-from .serializers import (DappReadOnlySerializer, DappSerializer,
-                          DeploymentSerializer)
+from .models import Dapp, DappGithubRepo, Deployment
+from .permissions import DappHasGithubLinked, DappPermission
+from .serializers import (DappGithubRepoSerializer, DappReadOnlySerializer,
+                          DappSerializer, DeploymentSerializer)
 
 
 class DappViewSet(BuildOptionsViewSet):
@@ -105,9 +106,40 @@ class DappBuildViewSet(DappViewMixin, BuildViewSet):
     pass
 
 
-class DappEnvironmentVariableViewSet(DappViewMixin, EnvironmentVariableViewSet):
+class DappEnvVarViewSet(DappViewMixin, EnvVarViewSet):
+
+    def create(self, request):
+        # Auto add `option` (dapp) when creating the envvar
+        data = request.data.copy()
+        data.update({'option': self.get_dapp()})
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data,
+                        status=status.HTTP_201_CREATED,
+                        headers=headers)
+
+
+class DappAPILogViewSet(DappViewMixin, APILogViewSet):
     pass
 
 
-class DappDashboardLogEntryViewSet(DappViewMixin, DashboardLogEntryViewSet):
-    pass
+class DappGithubRepoViewSet(DappViewMixin, RepositoryViewSet):
+    queryset = DappGithubRepo.objects.all()
+    serializer_class = DappGithubRepoSerializer
+    permission_classes = [DappHasGithubLinked]
+    dapp_reverse_name = 'dapp'
+
+    def get_repo(self):
+        return get_object_or_404(DappGithubRepo.objects.all(),
+                                 dapp=self.get_dapp())
+
+    def list(self, request, dapp_slug):
+        repo = self.get_repo()
+        serializer = self.get_serializer(repo)
+        return Response(serializer.data)
+
+
+class DappBranchViewSet(DappViewMixin, BranchViewSet):
+    dapp_reverse_name = 'dapp'

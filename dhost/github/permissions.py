@@ -11,5 +11,4 @@ class HasGithubLinked(permissions.BasePermission):
         return False
 
     def has_object_permission(self, request, view, obj):
-        # user's social_auth object must be the owner of the Github repo
-        return obj.owner == request.user.social_auth.get(provider='github')
+        return obj.users.filter(id=request.user.id).exists()

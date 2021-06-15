@@ -170,13 +170,6 @@ class Build(models.Model):
         return self.is_success, self.bundle
 
     def start_build(self):
-        """
-        return:
-          - STR: bundle_path, path to the bundle folder
-
-        Build the bundle using the class Build and return the status
-        (is success or not), the bundle path and the logs
-        """
         container = self.options.docker
         source_path = self.source_path
         command = self.options.command
@@ -193,16 +186,16 @@ class Build(models.Model):
             command=command,
             envvars=envvars,
         )
-        is_success, logs, bundle_path = build_service.build()
+        return build_service.build()
 
+    def stop_build(self, is_success=False, logs=None):
         self.is_success = is_success
         self.logs = logs
         self.end = timezone.now()
         self.save()
-        return bundle_path
 
 
-class EnvironmentVariable(models.Model):
+class EnvVar(models.Model):
     options = models.ForeignKey(
         BuildOptions,
         on_delete=models.CASCADE,

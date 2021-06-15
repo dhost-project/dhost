@@ -1,12 +1,12 @@
 from rest_framework import serializers
 
-from .models import DashboardLogEntry
+from .models import APILog
 
 
-class DashboardLogEntrySerializer(serializers.ModelSerializer):
+class APILogSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = DashboardLogEntry
+        model = APILog
         fields = ['id', 'user', 'action_flag', 'change_message', 'action_time']
         read_only_fields = [
             'id', 'user', 'action_flag', 'change_message', 'action_time'
