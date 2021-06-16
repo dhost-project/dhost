@@ -5,10 +5,10 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from dhost.builds.models import BuildOptions, Bundle
+from dhost.builds.models import Bundle
 
 
-class Dapp(BuildOptions):
+class Dapp(models.Model):
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_('owner'),
