@@ -3,17 +3,13 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from dhost.builds.views import (BuildOptionsViewSet, BuildViewSet,
-                                BundleViewSet, EnvVarViewSet)
-from dhost.logs.views import APILogViewSet
-
-from .models import Dapp, Deployment
+from .models import Bundle, Dapp, Deployment
 from .permissions import DappPermission
-from .serializers import (DappReadOnlySerializer, DappSerializer,
-                          DeploymentSerializer)
+from .serializers import (BundleSerializer, DappReadOnlySerializer,
+                          DappSerializer, DeploymentSerializer)
 
 
-class DappViewSet(BuildOptionsViewSet):
+class DappViewSet(viewsets.ModelViewSet):
     queryset = Dapp.objects.all()
     serializer_class = DappSerializer
     permission_classes = [DappPermission]
@@ -88,37 +84,11 @@ class DappViewMixin:
         return super().get_queryset().filter(**filter_kwargs)
 
 
-class DeploymentViewSet(viewsets.ReadOnlyModelViewSet):
+class DeploymentViewSet(DappViewMixin, viewsets.ReadOnlyModelViewSet):
     queryset = Deployment.objects.all()
     serializer_class = DeploymentSerializer
 
 
-class DappDeploymentViewSet(DappViewMixin, DeploymentViewSet):
-    pass
-
-
-class DappBundleViewSet(DappViewMixin, BundleViewSet):
-    pass
-
-
-class DappBuildViewSet(DappViewMixin, BuildViewSet):
-    pass
-
-
-class DappEnvVarViewSet(DappViewMixin, EnvVarViewSet):
-
-    def create(self, request):
-        # Auto add `option` (dapp) when creating the envvar
-        data = request.data.copy()
-        data.update({'option': self.get_dapp()})
-        serializer = self.get_serializer(data=data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data,
-                        status=status.HTTP_201_CREATED,
-                        headers=headers)
-
-
-class DappAPILogViewSet(DappViewMixin, APILogViewSet):
-    pass
+class BundleViewSet(DappViewMixin, viewsets.ReadOnlyModelViewSet):
+    queryset = Bundle.objects.all()
+    serializer_class = BundleSerializer

@@ -1,3 +1,4 @@
+import os
 import uuid
 
 from django.conf import settings
@@ -5,7 +6,9 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from dhost.builds.models import Bundle
+
+def bundle_path():
+    return os.path.join(settings.MEDIA_ROOT, 'bundle')
 
 
 class Dapp(models.Model):
@@ -85,6 +88,40 @@ class Dapp(models.Model):
         if hasattr(self, 'ipfsdapp'):
             return 'ipfs'
         return None
+
+
+class Bundle(models.Model):
+    """Bundled web app raidy for deployment"""
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    dapp = models.ForeignKey(
+        Dapp,
+        on_delete=models.CASCADE,
+        related_name='bundles',
+        related_query_name='bundles',
+        null=True,
+        blank=True,
+    )
+    folder = models.FilePathField(
+        _('folder'),
+        null=True,
+        blank=True,
+        path=bundle_path,
+        allow_files=True,
+        allow_folders=True,
+    )
+    created_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        verbose_name = _('bundle')
+        verbose_name_plural = _('bundles')
+
+    def __str__(self):
+        return 'bundl:{}'.format(self.id.hex[:7])
+
+    def delete(self, *args, **kwargs):
+        # TODO delete bundle folder when deleting the object
+        super().delete(*args, **kwargs)
 
 
 class Deployment(models.Model):

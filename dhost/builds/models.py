@@ -6,15 +6,13 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from dhost.dapps.models import Bundle
+
 from .build_service import BuildService
 
 
 def source_path():
     return os.path.join(settings.MEDIA_ROOT, 'source')
-
-
-def bundle_path():
-    return os.path.join(settings.MEDIA_ROOT, 'bundle')
 
 
 class BuildOptions(models.Model):
@@ -59,40 +57,6 @@ class BuildOptions(models.Model):
         return is_success, bundle
 
 
-class Bundle(models.Model):
-    """Bundled web app raidy for deployment"""
-
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    options = models.ForeignKey(
-        BuildOptions,
-        on_delete=models.CASCADE,
-        related_name='bundles',
-        related_query_name='bundles',
-        null=True,
-        blank=True,
-    )
-    folder = models.FilePathField(
-        _('folder'),
-        null=True,
-        blank=True,
-        path=bundle_path,
-        allow_files=True,
-        allow_folders=True,
-    )
-    created_at = models.DateTimeField(default=timezone.now)
-
-    class Meta:
-        verbose_name = _('bundle')
-        verbose_name_plural = _('bundles')
-
-    def __str__(self):
-        return 'bundl:{}'.format(self.id.hex[:7])
-
-    def delete(self, *args, **kwargs):
-        # TODO delete bundle folder when deleting the object
-        super().delete(*args, **kwargs)
-
-
 class Build(models.Model):
     """A single build instance"""
 
@@ -123,7 +87,7 @@ class Build(models.Model):
         help_text=_('Source folder'),
     )
     bundle = models.OneToOneField(
-        Bundle,
+        'dapps.Bundle',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,

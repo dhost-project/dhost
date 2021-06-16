@@ -1,7 +1,7 @@
-from dhost.dapps.views import (DappAPILogViewSet, DappBuildViewSet,
-                               DappBundleViewSet, DappDeploymentViewSet,
-                               DappEnvVarViewSet, DappViewSet)
+from dhost.builds.views import BuildViewSet, EnvVarViewSet
+from dhost.dapps.views import BundleViewSet, DappViewSet, DeploymentViewSet
 from dhost.github.views import GithubOptionsViewSet
+from dhost.logs.views import APILogViewSet
 
 from .models import IPFSDapp, IPFSDeployment
 from .serializers import IPFSDappSerializer, IPFSDeploymentSerializer
@@ -16,24 +16,24 @@ class IPFSDappViewMixin:
     dapp_model_class = IPFSDapp
 
 
-class IPFSDeploymentViewSet(IPFSDappViewMixin, DappDeploymentViewSet):
+class IPFSDeploymentViewSet(IPFSDappViewMixin, DeploymentViewSet):
     queryset = IPFSDeployment.objects.all()
     serializer_class = IPFSDeploymentSerializer
 
 
-class IPFSDappBundleViewSet(IPFSDappViewMixin, DappBundleViewSet):
+class IPFSDappBundleViewSet(IPFSDappViewMixin, BundleViewSet):
     pass
 
 
-class IPFSDappBuildViewSet(IPFSDappViewMixin, DappBuildViewSet):
+class IPFSDappBuildViewSet(IPFSDappViewMixin, BuildViewSet):
     pass
 
 
-class IPFSDappEnvVarViewSet(IPFSDappViewMixin, DappEnvVarViewSet):
+class IPFSDappEnvVarViewSet(IPFSDappViewMixin, EnvVarViewSet):
     pass
 
 
-class IPFSDappAPILogViewSet(IPFSDappViewMixin, DappAPILogViewSet):
+class IPFSDappAPILogViewSet(IPFSDappViewMixin, APILogViewSet):
     pass
 
 

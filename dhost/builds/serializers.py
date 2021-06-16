@@ -1,18 +1,10 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
-from .models import Build, Bundle, EnvVar
-
-
-class BundleSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Bundle
-        fields = ['id', 'options', 'created_at']
+from .models import Build, EnvVar
 
 
 class BuildSerializer(serializers.ModelSerializer):
-    bundle = BundleSerializer(read_only=True,)
 
     class Meta:
         model = Build

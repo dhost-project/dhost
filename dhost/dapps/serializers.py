@@ -1,11 +1,17 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
-from dhost.builds.serializers import (BuildSerializer, BundleSerializer,
-                                      EnvVarSerializer)
+from dhost.builds.serializers import BuildSerializer, EnvVarSerializer
 from dhost.logs.serializers import APILogSerializer
 
-from .models import Dapp, Deployment
+from .models import Bundle, Dapp, Deployment
+
+
+class BundleSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Bundle
+        fields = ['id', 'options', 'created_at']
 
 
 class DeploymentSerializer(serializers.ModelSerializer):
