@@ -39,10 +39,10 @@ class APILog(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    options = models.ForeignKey(Dapp,
-                                on_delete=models.CASCADE,
-                                related_name='logs',
-                                related_query_name='logs')
+    dapp = models.ForeignKey(Dapp,
+                             on_delete=models.CASCADE,
+                             related_name='logs',
+                             related_query_name='logs')
     content_type = models.ForeignKey(
         ContentType,
         on_delete=models.SET_NULL,
