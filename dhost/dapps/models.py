@@ -9,7 +9,7 @@ from dhost.builds.models import BuildOptions, Bundle
 from dhost.github.models import Branch, Repository
 
 
-class AbstractDapp(models.Model):
+class Dapp(BuildOptions):
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_('owner'),
@@ -57,21 +57,6 @@ class AbstractDapp(models.Model):
     class Meta:
         verbose_name = _('dapp')
         verbose_name_plural = _('dapps')
-        abstract = True
-
-    def __str__(self):
-        return self.slug
-
-    def deploy(self):
-        raise NotImplementedError
-
-
-class Dapp(AbstractDapp, BuildOptions):
-    """
-    A fully functionnal Dapp with options and ability to build from options.
-    """
-
-    class Meta(AbstractDapp.Meta):
         constraints = [
             models.UniqueConstraint(fields=['owner', 'slug'],
                                     name='%(app_label)s_%(class)s_unique_slug'),
@@ -103,7 +88,7 @@ class Dapp(AbstractDapp, BuildOptions):
         return None
 
 
-class AbstractDeployment(models.Model):
+class Deployment(models.Model):
     """Model representing a single deployment process"""
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -141,17 +126,12 @@ class AbstractDeployment(models.Model):
     class Meta:
         verbose_name = _('deployment')
         verbose_name_plural = _('deployments')
-        abstract = True
 
     def __str__(self):
         return 'dplmt:{}'.format(self.id.hex[:7])
 
     def deploy(self):
         raise NotImplementedError
-
-
-class Deployment(AbstractDeployment):
-    pass
 
 
 class DappGithubRepo(models.Model):
