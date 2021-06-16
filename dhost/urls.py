@@ -18,7 +18,7 @@ ipfs_router.register('bundles', ipfs_views.IPFSDappBundleViewSet)
 ipfs_router.register('deployments', ipfs_views.IPFSDeploymentViewSet)
 ipfs_router.register('envvars', ipfs_views.IPFSDappEnvVarViewSet)
 ipfs_router.register('logs', ipfs_views.IPFSDappAPILogViewSet)
-ipfs_router.register('github', ipfs_views.IPFSDappGithubRepoViewSet)
+ipfs_router.register('github', ipfs_views.IPFSDappGithubOptionsViewSet)
 
 router.register('github_webhook', github_views.WebhookViewSet)
 router.register('users', users_views.UserViewSet)
@@ -55,8 +55,8 @@ if settings.DEBUG:  # pragma: no cover
              get_schema_view(
                  title="DHost",
                  description="API",
-                 version="1.0.0",
-                 url="http://localhost:8000/",
+                 version="1.1.0",
+                 url="",
                  permission_classes=[AllowAny],
              ),
              name='openapi-schema'),

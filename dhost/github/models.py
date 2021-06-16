@@ -3,6 +3,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from dhost.dapps.models import Dapp
+
 from .github import DjangoGithubAPI
 from .managers import (BranchManager, RepositoryManager, WebhookManager,
                        serialize_branch, serialize_repository,
@@ -147,3 +149,34 @@ class Webhook(models.Model):
         `auto_deploy` turned on.
         """
         pass
+
+
+class GithubOptions(models.Model):
+    """
+    Represent the link between a Dapp and a Github repository, it also add some
+    options related to the deployment `auto_deploy` specifies if the Dapp
+    should be re-deployed when a webhook linked to that repo is called.
+    It also contains the branch to be used when downloading the repo.
+    """
+    dapp = models.OneToOneField(
+        Dapp,
+        on_delete=models.CASCADE,
+    )
+    repo = models.ForeignKey(
+        Repository,
+        on_delete=models.CASCADE,
+    )
+    branch = models.ForeignKey(Branch, null=True, on_delete=models.SET_NULL)
+    auto_deploy = models.BooleanField(
+        default=False,
+        help_text=_('Automaticaly deploy the dapp when a webhook is called.'),
+    )
+    confirm_ci = models.BooleanField(
+        default=False,
+        help_text=_('Wait for CI to be done before deploying the dapp when'
+                    'auto deploy is on.'),
+    )
+
+    class Meta:
+        verbose_name = _('Dapp Github options')
+        verbose_name_plural = _('Dapps Github options')

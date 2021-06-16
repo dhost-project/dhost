@@ -59,9 +59,8 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'dapp',
                 'verbose_name_plural': 'dapps',
-                'abstract': False,
             },
-            bases=('builds.buildoptions', models.Model),
+            bases=('builds.buildoptions',),
         ),
         migrations.CreateModel(
             name='Deployment',
@@ -98,7 +97,6 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'deployment',
                 'verbose_name_plural': 'deployments',
-                'abstract': False,
             },
         ),
         migrations.AddConstraint(
