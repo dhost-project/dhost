@@ -164,6 +164,7 @@ class EnvVar(models.Model):
         BuildOptions,
         on_delete=models.CASCADE,
         related_name='envvars',
+        related_query_name='envvars',
     )
     variable = models.SlugField(max_length=1024)
     value = models.CharField(max_length=8192)

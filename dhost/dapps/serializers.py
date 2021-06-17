@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
-from dhost.builds.serializers import BuildSerializer, EnvVarSerializer
 from dhost.logs.serializers import APILogSerializer
 
 from .models import Bundle, Dapp, Deployment
@@ -11,7 +10,7 @@ class BundleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Bundle
-        fields = ['id', 'options', 'created_at']
+        fields = ['id', 'created_at']
 
 
 class DeploymentSerializer(serializers.ModelSerializer):
@@ -25,9 +24,7 @@ class DeploymentSerializer(serializers.ModelSerializer):
 class DappSerializer(serializers.ModelSerializer):
 
     owner = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    builds = BuildSerializer(many=True, read_only=True)
     bundles = BundleSerializer(many=True, read_only=True)
-    envvars = EnvVarSerializer(many=True, read_only=True)
     deployments = DeploymentSerializer(many=True, read_only=True)
     logs = APILogSerializer(many=True, read_only=True)
 
@@ -35,7 +32,7 @@ class DappSerializer(serializers.ModelSerializer):
         model = Dapp
         fields = [
             'id', 'slug', 'url', 'owner', 'status', 'deployments', 'logs',
-            'created_at', 'command', 'docker', 'builds', 'bundles', 'envvars'
+            'created_at', 'bundles'
         ]
         read_only_fields = [
             'url', 'status', 'deployments', 'logs', 'created_at'
