@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from rest_framework.validators import UniqueTogetherValidator
 
 from dhost.logs.serializers import APILogSerializer
 
@@ -31,15 +30,11 @@ class DappSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dapp
         fields = [
-            'id', 'slug', 'url', 'owner', 'status', 'created_at',
-            'buildoptions', 'deployments', 'logs', 'bundles'
+            'slug', 'url', 'owner', 'status', 'created_at', 'buildoptions',
+            'deployments', 'logs', 'bundles'
         ]
         read_only_fields = [
             'url', 'status', 'created_at', 'buildoptions', 'deployments', 'logs'
-        ]
-        validators = [
-            UniqueTogetherValidator(queryset=Dapp.objects.all(),
-                                    fields=['owner', 'slug'])
         ]
 
 
@@ -48,4 +43,4 @@ class DappReadOnlySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Dapp
-        fields = ['id', 'dapp_type', 'slug', 'url', 'owner', 'status']
+        fields = ['slug', 'dapp_type', 'url', 'owner', 'status']

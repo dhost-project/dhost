@@ -12,6 +12,11 @@ def bundle_path():
 
 
 class Dapp(models.Model):
+    slug = models.SlugField(
+        _('dapp name'),
+        primary_key=True,
+        max_length=256,
+    )
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_('owner'),
@@ -19,7 +24,6 @@ class Dapp(models.Model):
         related_query_name="%(app_label)s_%(class)s",
         on_delete=models.CASCADE,
     )
-    slug = models.SlugField(_('dapp name'), max_length=256)
     url = models.CharField(_('URL'), max_length=2048, blank=True)
 
     class Statuses(models.TextChoices):
@@ -58,10 +62,6 @@ class Dapp(models.Model):
     class Meta:
         verbose_name = _('dapp')
         verbose_name_plural = _('dapps')
-        constraints = [
-            models.UniqueConstraint(fields=['owner', 'slug'],
-                                    name='%(app_label)s_%(class)s_unique_slug'),
-        ]
 
     def __str__(self):
         return self.slug
