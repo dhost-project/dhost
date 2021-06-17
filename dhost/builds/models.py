@@ -6,7 +6,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from dhost.dapps.models import Bundle
+from dhost.dapps.models import Bundle, Dapp
 
 from .build_service import BuildService
 
@@ -16,7 +16,11 @@ def source_path():
 
 
 class BuildOptions(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    dapp = models.OneToOneField(
+        Dapp,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
     source = models.FilePathField(
         null=True,
         blank=True,
@@ -47,9 +51,10 @@ class BuildOptions(models.Model):
         return '{} ({})'.format(self.docker, self.command)
 
     def build(self):
-        """Create a `Build` object and start the building process from the
-        source in the Docker container specified in `docker_container` and with
-        the command
+        """
+        Create a `Build` object and start the building process from the source
+        in the Docker container specified in `docker_container` and with the
+        command.
         """
         build = Build(options=self, source_path=self.source)
         build.save()
@@ -58,7 +63,9 @@ class BuildOptions(models.Model):
 
 
 class Build(models.Model):
-    """A single build instance"""
+    """
+    A single build instance.
+    """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     options = models.ForeignKey(
@@ -160,6 +167,10 @@ class Build(models.Model):
 
 
 class EnvVar(models.Model):
+    """
+    Environment variables used during the build process.
+    """
+
     options = models.ForeignKey(
         BuildOptions,
         on_delete=models.CASCADE,

@@ -31,11 +31,11 @@ class DappSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dapp
         fields = [
-            'id', 'slug', 'url', 'owner', 'status', 'deployments', 'logs',
-            'created_at', 'bundles'
+            'id', 'slug', 'url', 'owner', 'status', 'created_at',
+            'buildoptions', 'deployments', 'logs', 'bundles'
         ]
         read_only_fields = [
-            'url', 'status', 'deployments', 'logs', 'created_at'
+            'url', 'status', 'created_at', 'buildoptions', 'deployments', 'logs'
         ]
         validators = [
             UniqueTogetherValidator(queryset=Dapp.objects.all(),
