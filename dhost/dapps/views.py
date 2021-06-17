@@ -70,7 +70,7 @@ class DappViewMixin:
     used to filter the dapps.
     """
     dapp_model_class = Dapp
-    dapp_reverse_name = 'options'
+    dapp_reverse_name = 'dapp'
     dapp_url_slug = 'dapp_slug'
 
     def get_dapp(self):

@@ -68,7 +68,7 @@ class Build(models.Model):
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    options = models.ForeignKey(
+    buildoptions = models.ForeignKey(
         BuildOptions,
         on_delete=models.CASCADE,
         related_name='builds',
@@ -171,7 +171,7 @@ class EnvVar(models.Model):
     Environment variables used during the build process.
     """
 
-    options = models.ForeignKey(
+    buildoptions = models.ForeignKey(
         BuildOptions,
         on_delete=models.CASCADE,
         related_name='envvars',
@@ -184,7 +184,7 @@ class EnvVar(models.Model):
         verbose_name = _('environment variable')
         verbose_name_plural = _('environment variables')
         constraints = [
-            models.UniqueConstraint(fields=['options', 'variable'],
+            models.UniqueConstraint(fields=['buildoptions', 'variable'],
                                     name='unique variable'),
         ]
 

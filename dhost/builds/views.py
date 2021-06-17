@@ -2,9 +2,15 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from dhost.dapps.views import DappViewMixin
+
 from .models import Build, BuildOptions, EnvVar
 from .serializers import (BuildOptionsSerializer, BuildSerializer,
                           EnvVarSerializer)
+
+
+class BuildViewMixin(DappViewMixin):
+    dapp_reverse_name = 'buildoptions'
 
 
 class BuildOptionsViewSet(viewsets.ModelViewSet):
