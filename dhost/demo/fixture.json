@@ -117,6 +117,45 @@
     }
   },
   {
+    "model": "admin.logentry",
+    "pk": 10,
+    "fields": {
+      "action_time": "2021-06-18T13:02:29.130Z",
+      "user": "19bf9882-7033-456d-995b-66c2b88bec35",
+      "content_type": 22,
+      "object_id": "2",
+      "object_repr": "DHost dashboard",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Logo\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 11,
+    "fields": {
+      "action_time": "2021-06-18T13:07:58.095Z",
+      "user": "19bf9882-7033-456d-995b-66c2b88bec35",
+      "content_type": 21,
+      "object_id": "6872f28c-b8a2-4c35-93e1-7bd081268873",
+      "object_repr": "userone",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"password\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 12,
+    "fields": {
+      "action_time": "2021-06-18T13:08:01.526Z",
+      "user": "19bf9882-7033-456d-995b-66c2b88bec35",
+      "content_type": 21,
+      "object_id": "6872f28c-b8a2-4c35-93e1-7bd081268873",
+      "object_repr": "userone",
+      "action_flag": 2,
+      "change_message": "[]"
+    }
+  },
+  {
     "model": "auth.permission",
     "pk": 1,
     "fields": {
@@ -1613,22 +1652,6 @@
     }
   },
   {
-    "model": "sessions.session",
-    "pk": "4ae0gr6nk30uldkaxaskih9t1mrguiwj",
-    "fields": {
-      "session_data": ".eJxVjTsOwjAQRO_iGlvxb21TpucM0a69JgGUSPlUiLuTSCmgmWbmzXuLDre177aF524o4ip0oppiNDI01krnociUPEmAbChG4my9uPxihPnJ48GWB473SeVpXOeB1DFRZ7uo21T41Z7bv4Mel_4wBx-y02xyaTg0mJwBoF3LWtcYgQIS1D2rTt44zJiAomV0YC2zFZ8vmZlAzg:1lt8Ez:vVBXGRGelhyspGAWwd6X2LNrv9ULYZtoSDrxStwTr-8",
-      "expire_date": "2021-06-29T12:32:25.257Z"
-    }
-  },
-  {
-    "model": "sessions.session",
-    "pk": "iqt77zzjl9btekqgqwoa67hd3l65yig1",
-    "fields": {
-      "session_data": ".eJxVzLsOwjAMheF3yUyitHFah5GdZ6gc26EF1Eq9TIh3h0odYD7_d16mo23tu23RuRvEnA0GjshBbZOFLAiwTaFurRZocpUSafbm9Msy8UPH3cqdxtvkeBrXechuT9yxLu46iT4vR_t30NPSf3ULyioeWEpUIR8Dt-g9U6wBMAlirFIlGiCWJpZQF0TgBBlQ0Ys37w9E3kFh:1lt8G7:F8n2llCI2WnEPvVKx0mEo1Otahb3njz88I3vsM6Nc5w",
-      "expire_date": "2021-06-29T12:33:35.446Z"
-    }
-  },
-  {
     "model": "sites.site",
     "pk": 1,
     "fields": {
@@ -1637,11 +1660,29 @@
     }
   },
   {
+    "model": "dapps.dapp",
+    "pk": "dhost",
+    "fields": {
+      "owner": "19bf9882-7033-456d-995b-66c2b88bec35",
+      "url": "",
+      "status": "SO",
+      "created_at": "2021-06-18T13:05:39.315Z"
+    }
+  },
+  {
+    "model": "ipfs.ipfsdapp",
+    "pk": "dhost",
+    "fields": {
+      "ipfs_hash": "",
+      "ipfs_gateway": ""
+    }
+  },
+  {
     "model": "users.user",
     "pk": "19bf9882-7033-456d-995b-66c2b88bec35",
     "fields": {
       "password": "pbkdf2_sha256$260000$QU9iDKelTfEmiqNAtTxE6n$l0r9OJ8QXFSZiPLnI112flWT9fnYdSPD/W1yhW2AlqQ=",
-      "last_login": "2021-06-18T11:35:44.004Z",
+      "last_login": "2021-06-18T13:07:12.936Z",
       "is_superuser": true,
       "username": "admin",
       "first_name": "",
@@ -1659,8 +1700,8 @@
     "model": "users.user",
     "pk": "6872f28c-b8a2-4c35-93e1-7bd081268873",
     "fields": {
-      "password": "pbkdf2_sha256$260000$sWpE6gaDndxuX2fgCEzUvo$EtONG2xfFCDoSHlFgpnIicynjlA97yIukWH+hnGe4t0=",
-      "last_login": "2021-06-15T12:33:10.138Z",
+      "password": "pbkdf2_sha256$260000$YBEH6MydMtQNmpGgwjKhwa$GEd11q+OD053E235YY0i/Rk67XjEymNl2iUgbECGwGQ=",
+      "last_login": "2021-06-18T13:08:20.365Z",
       "is_superuser": false,
       "username": "userone",
       "first_name": "",
@@ -1669,7 +1710,7 @@
       "avatar": "avatars/userone_eq1tZ4Y.png",
       "is_staff": false,
       "is_active": true,
-      "date_joined": "2021-06-15T12:33:09.921Z",
+      "date_joined": "2021-06-15T12:33:09Z",
       "groups": [],
       "user_permissions": []
     }
@@ -1679,7 +1720,7 @@
     "pk": "83c58c3e-6bda-4d4c-9327-ef46b199aeb0",
     "fields": {
       "password": "pbkdf2_sha256$260000$BiGqA5PL2TZusm1lEVxIAq$oVLiDfuC98i4r6A3Vruoxhysw0l5RxhAXHBB3JK65Z0=",
-      "last_login": "2021-06-15T12:33:35.442Z",
+      "last_login": "2021-06-18T13:06:46.459Z",
       "is_superuser": false,
       "username": "usertwo",
       "first_name": "",

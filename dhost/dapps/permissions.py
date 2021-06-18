@@ -9,5 +9,4 @@ class DappPermission(permissions.BasePermission):
         return False
 
     def has_object_permission(self, request, view, obj):
-        return True
         return obj.owner == request.user
