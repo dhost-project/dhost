@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Branch, Repository, Webhook
+from .models import Branch, GithubOptions, Repository, Webhook
 
 
 @admin.register(Repository)
@@ -15,4 +15,9 @@ class BranchAdmin(admin.ModelAdmin):
 
 @admin.register(Webhook)
 class WebhookAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(GithubOptions)
+class GithubOptionsAdmin(admin.ModelAdmin):
     pass

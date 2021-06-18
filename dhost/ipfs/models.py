@@ -15,7 +15,7 @@ class IPFSDapp(Dapp):
         blank=True,
     )
 
-    class Meta(Dapp.Meta):
+    class Meta:
         verbose_name = _('IPFS Dapp')
         verbose_name_plural = _('IPFS Dapps')
 
@@ -34,7 +34,7 @@ class IPFSDapp(Dapp):
 class IPFSDeployment(Deployment):
     ipfs_hash = models.CharField(_('IPFS hash'), max_length=128, blank=True)
 
-    class Meta(Deployment.Meta):
+    class Meta:
         verbose_name = _('IPFS Deployment')
         verbose_name_plural = _('IPFS Deployments')
 

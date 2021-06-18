@@ -1,3 +1,4 @@
+import os
 import uuid
 
 from django.conf import settings
@@ -5,11 +6,17 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from dhost.builds.models import BuildOptions, Bundle
-from dhost.github.models import Branch, Repository
+
+def bundle_path():
+    return os.path.join(settings.MEDIA_ROOT, 'bundle')
 
 
-class AbstractDapp(models.Model):
+class Dapp(models.Model):
+    slug = models.SlugField(
+        _('dapp name'),
+        primary_key=True,
+        max_length=256,
+    )
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_('owner'),
@@ -17,8 +24,6 @@ class AbstractDapp(models.Model):
         related_query_name="%(app_label)s_%(class)s",
         on_delete=models.CASCADE,
     )
-    slug = models.SlugField(_('dapp name'), max_length=256,
-                            help_text='[A-Za-z0-9_-]')
     url = models.CharField(_('URL'), max_length=2048, blank=True)
 
     class Statuses(models.TextChoices):
@@ -57,25 +62,6 @@ class AbstractDapp(models.Model):
     class Meta:
         verbose_name = _('dapp')
         verbose_name_plural = _('dapps')
-        abstract = True
-
-    def __str__(self):
-        return self.slug
-
-    def deploy(self):
-        raise NotImplementedError
-
-
-class Dapp(AbstractDapp, BuildOptions):
-    """
-    A fully functionnal Dapp with options and ability to build from options.
-    """
-
-    class Meta(AbstractDapp.Meta):
-        constraints = [
-            models.UniqueConstraint(fields=['owner', 'slug'],
-                                    name='%(app_label)s_%(class)s_unique_slug'),
-        ]
 
     def __str__(self):
         return self.slug
@@ -103,7 +89,41 @@ class Dapp(AbstractDapp, BuildOptions):
         return None
 
 
-class AbstractDeployment(models.Model):
+class Bundle(models.Model):
+    """Bundled web app raidy for deployment"""
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    dapp = models.ForeignKey(
+        Dapp,
+        on_delete=models.CASCADE,
+        related_name='bundles',
+        related_query_name='bundles',
+        null=True,
+        blank=True,
+    )
+    folder = models.FilePathField(
+        _('folder'),
+        null=True,
+        blank=True,
+        path=bundle_path,
+        allow_files=True,
+        allow_folders=True,
+    )
+    created_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        verbose_name = _('bundle')
+        verbose_name_plural = _('bundles')
+
+    def __str__(self):
+        return 'bundl:{}'.format(self.id.hex[:7])
+
+    def delete(self, *args, **kwargs):
+        # TODO delete bundle folder when deleting the object
+        super().delete(*args, **kwargs)
+
+
+class Deployment(models.Model):
     """Model representing a single deployment process"""
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -141,46 +161,9 @@ class AbstractDeployment(models.Model):
     class Meta:
         verbose_name = _('deployment')
         verbose_name_plural = _('deployments')
-        abstract = True
 
     def __str__(self):
         return 'dplmt:{}'.format(self.id.hex[:7])
 
     def deploy(self):
         raise NotImplementedError
-
-
-class Deployment(AbstractDeployment):
-    pass
-
-
-class DappGithubRepo(models.Model):
-    """
-    Represent the link between a Dapp and a Github repository, it also add some
-    options related to the deployment `auto_deploy` specifies if the Dapp
-    should be re-deployed when a webhook linked to that repo is called.
-    """
-    dapp = models.OneToOneField(
-        Dapp,
-        related_name='github_repo',
-        related_query_name='github_repo',
-        on_delete=models.CASCADE,
-    )
-    repo = models.ForeignKey(
-        Repository,
-        on_delete=models.CASCADE,
-    )
-    branch = models.ForeignKey(Branch, null=True, on_delete=models.SET_NULL)
-    auto_deploy = models.BooleanField(
-        default=False,
-        help_text=_('Automaticaly deploy the dapp when a webhook is called.'),
-    )
-    confirm_ci = models.BooleanField(
-        default=False,
-        help_text=_('Wait for CI to be done before deploying the dapp when'
-                    'auto deploy is on.'),
-    )
-
-    class Meta:
-        verbose_name = _('Dapp Github repository')
-        verbose_name_plural = _('Dapp Github repositories')

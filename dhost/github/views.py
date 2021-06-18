@@ -3,9 +3,12 @@ from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .models import Branch, Repository, Webhook
+from dhost.dapps.views import DappViewMixin
+
+from .models import Branch, GithubOptions, Repository, Webhook
 from .permissions import HasGithubLinked
-from .serializers import BranchSerializer, RepositorySerializer
+from .serializers import (BranchSerializer, GithubOptionsSerializer,
+                          RepositorySerializer)
 from .webhook import PayloadHandler
 
 
@@ -89,3 +92,13 @@ class WebhookViewSet(GithubViewMixin, viewsets.ViewSet):
         payload = request.json()
         response = self.get_payload_handler(payload)
         return Response(response)
+
+
+class GithubOptionsViewSet(DappViewMixin, GithubViewMixin, viewsets.ViewSet):
+    queryset = GithubOptions.objects.all()
+    serializer_class = GithubOptionsSerializer
+
+    def get_repo(self):
+        # The repo is linked to `Dapp` via the `GithubOptions` model with
+        # related_name `github_repo`
+        return self.get_dapp().github_repo.repo

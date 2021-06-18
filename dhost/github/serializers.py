@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Branch, Repository
+from .models import Branch, GithubOptions, Repository
 
 
 class BranchSerializer(serializers.ModelSerializer):
@@ -24,3 +24,13 @@ class RepositorySerializer(serializers.ModelSerializer):
             'id', 'github_owner', 'github_repo', 'branches', 'added_at',
             'updated_at'
         ]
+
+
+class GithubOptionsSerializer(serializers.ModelSerializer):
+
+    repo = RepositorySerializer(read_only=True)
+    branch = BranchSerializer()
+
+    class Meta:
+        model = GithubOptions
+        fields = ['repo', 'branch', 'auto_deploy', 'confirm_ci']

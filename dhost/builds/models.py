@@ -6,6 +6,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from dhost.dapps.models import Bundle, Dapp
+
 from .build_service import BuildService
 
 
@@ -13,12 +15,12 @@ def source_path():
     return os.path.join(settings.MEDIA_ROOT, 'source')
 
 
-def bundle_path():
-    return os.path.join(settings.MEDIA_ROOT, 'bundle')
-
-
 class BuildOptions(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    dapp = models.OneToOneField(
+        Dapp,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
     source = models.FilePathField(
         null=True,
         blank=True,
@@ -49,9 +51,10 @@ class BuildOptions(models.Model):
         return '{} ({})'.format(self.docker, self.command)
 
     def build(self):
-        """Create a `Build` object and start the building process from the
-        source in the Docker container specified in `docker_container` and with
-        the command
+        """
+        Create a `Build` object and start the building process from the source
+        in the Docker container specified in `docker_container` and with the
+        command.
         """
         build = Build(options=self, source_path=self.source)
         build.save()
@@ -59,45 +62,13 @@ class BuildOptions(models.Model):
         return is_success, bundle
 
 
-class Bundle(models.Model):
-    """Bundled web app raidy for deployment"""
-
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    options = models.ForeignKey(
-        BuildOptions,
-        on_delete=models.CASCADE,
-        related_name='bundles',
-        related_query_name='bundles',
-        null=True,
-        blank=True,
-    )
-    folder = models.FilePathField(
-        _('folder'),
-        null=True,
-        blank=True,
-        path=bundle_path,
-        allow_files=True,
-        allow_folders=True,
-    )
-    created_at = models.DateTimeField(default=timezone.now)
-
-    class Meta:
-        verbose_name = _('bundle')
-        verbose_name_plural = _('bundles')
-
-    def __str__(self):
-        return 'bundl:{}'.format(self.id.hex[:7])
-
-    def delete(self, *args, **kwargs):
-        # TODO delete bundle folder when deleting the object
-        super().delete(*args, **kwargs)
-
-
 class Build(models.Model):
-    """A single build instance"""
+    """
+    A single build instance.
+    """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    options = models.ForeignKey(
+    buildoptions = models.ForeignKey(
         BuildOptions,
         on_delete=models.CASCADE,
         related_name='builds',
@@ -123,7 +94,7 @@ class Build(models.Model):
         help_text=_('Source folder'),
     )
     bundle = models.OneToOneField(
-        Bundle,
+        'dapps.Bundle',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -196,10 +167,15 @@ class Build(models.Model):
 
 
 class EnvVar(models.Model):
-    options = models.ForeignKey(
+    """
+    Environment variables used during the build process.
+    """
+
+    buildoptions = models.ForeignKey(
         BuildOptions,
         on_delete=models.CASCADE,
         related_name='envvars',
+        related_query_name='envvars',
     )
     variable = models.SlugField(max_length=1024)
     value = models.CharField(max_length=8192)
@@ -208,7 +184,7 @@ class EnvVar(models.Model):
         verbose_name = _('environment variable')
         verbose_name_plural = _('environment variables')
         constraints = [
-            models.UniqueConstraint(fields=['options', 'variable'],
+            models.UniqueConstraint(fields=['buildoptions', 'variable'],
                                     name='unique variable'),
         ]
 
