@@ -24,10 +24,7 @@ class EnvVarSerializer(serializers.ModelSerializer):
 
 
 class BuildOptionsSerializer(serializers.ModelSerializer):
-    builds = BuildSerializer(many=True, read_only=True)
-    envvars = EnvVarSerializer(many=True, read_only=True)
 
     class Meta:
         model = BuildOptions
-        fields = ['command', 'docker', 'builds', 'envvars']
-        read_only_fields = ['builds', 'envvars']
+        fields = ['command', 'docker']

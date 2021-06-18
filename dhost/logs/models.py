@@ -34,7 +34,7 @@ ACTION_FLAG_CHOICES = (
 class APILog(models.Model):
     """
     API log entry, each state changing command (POST, PUT, PATCH, DELETE) sent
-    to the API server it is recorded in the form of an APILog object.
+    to the API server is recorded in the form of an APILog object.
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -59,8 +59,8 @@ class APILog(models.Model):
     action_time = models.DateTimeField(default=timezone.now, editable=False)
 
     class Meta:
-        verbose_name = _('dashboard log entry')
-        verbose_name_plural = _('dashboard log entries')
+        verbose_name = _('API log entry')
+        verbose_name_plural = _('API log entries')
         ordering = ['-action_time']
 
     def __str__(self):

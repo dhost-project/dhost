@@ -12,7 +12,6 @@ class IPFSDeploymentSerializer(DeploymentSerializer):
 
 
 class IPFSDappSerializer(DappSerializer):
-    deployments = IPFSDeploymentSerializer(many=True, read_only=True)
 
     class Meta(DappSerializer.Meta):
         model = IPFSDapp

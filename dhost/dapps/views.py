@@ -16,22 +16,9 @@ class DappViewSet(viewsets.ModelViewSet):
     lookup_field = 'slug'
 
     def get_queryset(self):
-        """Filter user's apps"""
         queryset = super().get_queryset()
         owner = self.request.user
         return queryset.filter(owner=owner)
-
-    def create(self, request):
-        # Add `owner` when creating the dapp
-        data = request.data.copy()
-        data.update({'owner': self.request.user.id})
-        serializer = self.get_serializer(data=data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data,
-                        status=status.HTTP_201_CREATED,
-                        headers=headers)
 
     @action(detail=True, methods=['get'])
     def deploy(self, request, slug=None):
@@ -41,11 +28,6 @@ class DappViewSet(viewsets.ModelViewSet):
             return Response({'status': 'deployment successfull'})
         else:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-    @action(detail=True, methods=['get'])
-    def build(self, request, slug=None):
-        # `pk` is replaced by `slug` because the lookup_field changed.
-        return super().build(request)
 
 
 class DappReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):
@@ -70,8 +52,8 @@ class DappViewMixin:
     used to filter the dapps.
     """
     dapp_model_class = Dapp
-    dapp_reverse_name = 'dapp'
-    dapp_url_slug = 'dapp_slug'
+    dapp_reverse_name = 'dapp'  # name of the model field linked to the Dapp
+    dapp_url_slug = 'dapp_slug'  # URL slug for the Dapp
 
     def get_dapp(self):
         owner = self.request.user

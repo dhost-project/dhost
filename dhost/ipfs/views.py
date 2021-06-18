@@ -1,4 +1,4 @@
-from dhost.builds.views import BuildViewSet, EnvVarViewSet
+from dhost.builds.views import BuildOptionsViewSet, BuildViewSet, EnvVarViewSet
 from dhost.dapps.views import BundleViewSet, DappViewSet, DeploymentViewSet
 from dhost.github.views import GithubOptionsViewSet
 from dhost.logs.views import APILogViewSet
@@ -22,6 +22,10 @@ class IPFSDeploymentViewSet(IPFSDappViewMixin, DeploymentViewSet):
 
 
 class IPFSDappBundleViewSet(IPFSDappViewMixin, BundleViewSet):
+    pass
+
+
+class IPFSDappBuildOptionsViewSet(IPFSDappViewMixin, BuildOptionsViewSet):
     pass
 
 

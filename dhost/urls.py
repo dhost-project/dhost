@@ -13,12 +13,17 @@ router.register('dapps', dapps_views.DappReadOnlyViewSet)
 
 router.register('ipfs', ipfs_views.IPFSDappViewSet)
 ipfs_router = routers.NestedSimpleRouter(router, 'ipfs', lookup='dapp')
-ipfs_router.register('builds', ipfs_views.IPFSDappBuildViewSet)
+ipfs_router.register('buildoptions', ipfs_views.IPFSDappBuildOptionsViewSet)
 ipfs_router.register('bundles', ipfs_views.IPFSDappBundleViewSet)
 ipfs_router.register('deployments', ipfs_views.IPFSDeploymentViewSet)
-ipfs_router.register('envvars', ipfs_views.IPFSDappEnvVarViewSet)
 ipfs_router.register('logs', ipfs_views.IPFSDappAPILogViewSet)
-ipfs_router.register('github', ipfs_views.IPFSDappGithubOptionsViewSet)
+ipfs_router.register('githuboptions', ipfs_views.IPFSDappGithubOptionsViewSet)
+
+ipfs_build_router = routers.NestedSimpleRouter(ipfs_router,
+                                               'buildoptions',
+                                               lookup='buildoptions')
+ipfs_build_router.register('builds', ipfs_views.IPFSDappBuildViewSet)
+ipfs_build_router.register('envvars', ipfs_views.IPFSDappEnvVarViewSet)
 
 router.register('github_webhook', github_views.WebhookViewSet)
 router.register('users', users_views.UserViewSet)
@@ -26,6 +31,7 @@ router.register('users', users_views.UserViewSet)
 api_urlpatterns = [
     path('', include(router.urls)),
     path('', include(ipfs_router.urls)),
+    path('', include(ipfs_build_router.urls)),
 ]
 
 urlpatterns = [
