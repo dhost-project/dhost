@@ -78,6 +78,45 @@
     }
   },
   {
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+      "action_time": "2021-06-18T11:33:36.251Z",
+      "user": "19bf9882-7033-456d-995b-66c2b88bec35",
+      "content_type": 22,
+      "object_id": "2",
+      "object_repr": "DHost dashboar",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Redirect uris\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+      "action_time": "2021-06-18T11:34:09.359Z",
+      "user": "19bf9882-7033-456d-995b-66c2b88bec35",
+      "content_type": 22,
+      "object_id": "2",
+      "object_repr": "DHost dashboar",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Redirect uris\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 9,
+    "fields": {
+      "action_time": "2021-06-18T11:35:34.480Z",
+      "user": "19bf9882-7033-456d-995b-66c2b88bec35",
+      "content_type": 22,
+      "object_id": "2",
+      "object_repr": "DHost dashboard",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Redirect uris\", \"Name\"]}}]"
+    }
+  },
+  {
     "model": "auth.permission",
     "pk": 1,
     "fields": {
@@ -1602,7 +1641,7 @@
     "pk": "19bf9882-7033-456d-995b-66c2b88bec35",
     "fields": {
       "password": "pbkdf2_sha256$260000$QU9iDKelTfEmiqNAtTxE6n$l0r9OJ8QXFSZiPLnI112flWT9fnYdSPD/W1yhW2AlqQ=",
-      "last_login": "2021-06-15T12:32:25.254Z",
+      "last_login": "2021-06-18T11:35:44.004Z",
       "is_superuser": true,
       "username": "admin",
       "first_name": "",
@@ -1679,14 +1718,14 @@
     "fields": {
       "client_id": "dhost_dashboard",
       "user": null,
-      "redirect_uris": "http://localhost:3000/login/",
+      "redirect_uris": "http://localhost:3001/authorize",
       "client_type": "confidential",
       "authorization_grant_type": "authorization-code",
       "client_secret": "Jqa0e47XoXxPsWVfVMoO2iRCJvfzOtF6l",
-      "name": "DHost dashboar",
+      "name": "DHost dashboard",
       "skip_authorization": true,
       "created": "2021-06-15T12:37:20.838Z",
-      "updated": "2021-06-15T12:37:31.591Z",
+      "updated": "2021-06-18T11:35:34.478Z",
       "algorithm": "",
       "logo": "oauth2_provider_app_logos/dhost_dashboard_pEnrFzv.png",
       "description": ""
