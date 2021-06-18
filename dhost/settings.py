@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
     # Local apps
-    'dhost.api',
     'dhost.builds',
     'dhost.core',
     'dhost.dapps',
