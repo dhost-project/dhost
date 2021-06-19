@@ -7,8 +7,8 @@ from dhost.dapps.models import Dapp
 
 from .github import DjangoGithubAPI
 from .managers import (BranchManager, RepositoryManager, WebhookManager,
-                       serialize_branch,
-                       serialize_repository, serialize_webhook)
+                       serialize_branch, serialize_repository,
+                       serialize_webhook)
 from .utils import get_user_github_account
 
 
