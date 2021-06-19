@@ -1,15 +1,13 @@
-from django.shortcuts import get_object_or_404
-from rest_framework import mixins, viewsets
+from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from dhost.dapps.views import DappViewMixin
 
-from .models import Branch, GithubOptions, Repository, Webhook
+from .models import GithubOptions, Repository, Webhook
 from .permissions import HasGithubLinked
-from .serializers import (BranchSerializer, GithubOptionsSerializer,
-                          RepositorySerializer)
+from .serializers import GithubOptionsSerializer, RepositorySerializer
 from .webhook import PayloadHandler
 
 
