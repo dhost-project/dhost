@@ -25,7 +25,8 @@ ipfs_build_router = routers.NestedSimpleRouter(ipfs_router,
 ipfs_build_router.register('builds', ipfs_views.IPFSDappBuildViewSet)
 ipfs_build_router.register('envvars', ipfs_views.IPFSDappEnvVarViewSet)
 
-router.register('github_webhook', github_views.WebhookViewSet)
+router.register('github/repositories', github_views.RepositoryViewSet)
+router.register('github/webhook', github_views.WebhookViewSet)
 router.register('users', users_views.UserViewSet)
 
 api_urlpatterns = [
