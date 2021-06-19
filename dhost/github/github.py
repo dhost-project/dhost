@@ -42,7 +42,7 @@ class GithubAPI:
         headers = self.get_headers(additionnal_headers=headers)
         return url, headers
 
-    def get(self, url, headers, code=200, full_url=None, *args, **kwargs):
+    def get(self, url, headers=None, code=200, full_url=None, *args, **kwargs):
         url, headers = self._prepare_request(url, headers, full_url)
         r = requests.get(url, headers=headers, *args, **kwargs)
         if r.status_code == code:
@@ -52,7 +52,7 @@ class GithubAPI:
                 'Error trying to access `{}`, error code: {}, message: {}'.
                 format(url, r.status_code, r.content))
 
-    def post(self, url, headers, data, full_url=None, *args, **kwargs):
+    def post(self, url, data, headers=None, full_url=None, *args, **kwargs):
         url, headers = self._prepare_request(url, headers, full_url)
         r = requests.post(url, headers=headers, data=data, *args, **kwargs)
         if r.status_code == 201:
@@ -62,7 +62,7 @@ class GithubAPI:
                 'Error trying to access `{}`, error code: {}, message: {}'.
                 format(url, r.status_code, r.content))
 
-    def patch(self, url, headers, data, full_url=None, *args, **kwargs):
+    def patch(self, url, data, headers=None, full_url=None, *args, **kwargs):
         url, headers = self._prepare_request(url, headers, full_url)
         r = requests.patch(url, headers=headers, data=data, *args, **kwargs)
         if r.status_code == 200:
@@ -173,11 +173,11 @@ class GithubAPI:
 class DjangoGithubAPI(GithubAPI):
     """Get the token from Django social auth."""
 
-    def __init__(self, github_social=None, user=None):
-        if github_social:
-            self.github_social = github_social
+    def __init__(self, github_account=None, user=None):
+        if github_account:
+            self.github_account = github_account
         else:
-            self.github_social = self.get_social(user)
+            self.github_account = self.get_social(user)
         self.github_name = self.get_github_name()
         self.token = self.get_token()
 
@@ -189,17 +189,17 @@ class DjangoGithubAPI(GithubAPI):
             raise GithubNotLinkedError()
 
     def get_github_name(self):
-        if 'login' not in self.github_social.extra_data:
+        if 'login' not in self.github_account.extra_data:
             raise Exception(
-                "'login' not present in github_social.extra_data for "
-                "user '{}' (id: '{}')".format(self.github_social.user,
-                                              self.github_social.user.id))
-        return self.github_social.extra_data['login']
+                "'login' not present in github_account.extra_data for "
+                "user '{}' (id: '{}')".format(self.github_account.user,
+                                              self.github_account.user.id))
+        return self.github_account.extra_data['login']
 
     def get_token(self):
-        if 'access_token' not in self.github_social.extra_data:
+        if 'access_token' not in self.github_account.extra_data:
             raise Exception(
-                "'access_token' not present in github_social.extra_data for "
-                "user '{}' (id: '{}')".format(self.github_social.user,
-                                              self.github_social.user.id))
-        return self.github_social.extra_data['access_token']
+                "'access_token' not present in github_account.extra_data for "
+                "user '{}' (id: '{}')".format(self.github_account.user,
+                                              self.github_account.user.id))
+        return self.github_account.extra_data['access_token']

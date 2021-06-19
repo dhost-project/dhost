@@ -2,6 +2,7 @@ from django.apps import apps
 from django.db import models
 
 from .github import DjangoGithubAPI
+from .utils import get_user_github_account
 
 
 def serialize_repository(repo_json):
@@ -32,14 +33,26 @@ def serialize_webhook(webhook_json):
 
 class RepositoryManager(models.Manager):
 
-    def fetch_all(self, github_social):
-        # TODO remove repos that are not present in the response because they
-        # are either deleted or unavailable
-        g = DjangoGithubAPI(github_social=github_social)
-        repos = g.list_repos()
-        for repo in repos:
-            self.update_or_create_from_json(github_social, repo)
-        return repos
+    def fetch_all(self, user):
+        github_account = get_user_github_account(user)
+        g = DjangoGithubAPI(github_account=github_account)
+        repo_list = g.list_repos()
+        for repo in repo_list:
+            self.update_or_create_from_json(repo_json=repo, user=user)
+        self.remove_unavailable_list(repo_list=repo_list, user=user)
+        return repo_list
+
+    def remove_unavailable_list(self, repo_list, user):
+        """Remove user from unavailable repo_list."""
+        # TODO
+        Repository = apps.get_model('github.Repository')
+        repo_obj_list = Repository.objects.filter(users=user)
+        print(repo_obj_list)
+
+    def remove_unavailable(self, repo, user):
+        """Remove user from unavailable repo."""
+        # TODO
+        pass
 
     def create_from_json(self, repo_json, user):
         """Create a `Repository` from a Github API response."""
@@ -68,14 +81,30 @@ class RepositoryManager(models.Manager):
 
 class BranchManager(models.Manager):
 
-    def fetch_repo_branches(self, repo, github_social):
+    def fetch_repo_branches(self, repo, user):
         # TODO remove branches that are not present in the response because
         # they are either deleted or inavailable
-        g = DjangoGithubAPI(github_social=github_social)
-        branches = g.list_branches(repo=repo)
-        for branch in branches:
+        github_account = get_user_github_account(user)
+        g = DjangoGithubAPI(github_account=github_account)
+        branch_list = g.list_branches(owner=repo.github_owner,
+                                      repo=repo.github_repo)
+        for branch in branch_list:
             self.update_or_create_from_json(repo, branch)
-        return branches
+        self.remove_unavailable_list(branch_list, repo)
+        return branch_list
+
+    def remove_unavailable_list(self, branch_list, repo):
+        """
+        Check and remove branch from repo if it exist in the DB and not in the
+        list.
+        """
+        # TODO
+        pass
+
+    def remove_unavailable(self, branch, repo):
+        """Remove branch from repo."""
+        # TODO
+        pass
 
     def create_from_json(self, repo, branch_json):
         data = self.serialize(branch_json)

@@ -27,7 +27,7 @@ paths:
       - name: slug
         in: path
         required: true
-        description: '[A-Za-z0-9_-]'
+        description: A unique value identifying this dapp.
         schema:
           type: string
       responses:
@@ -87,7 +87,7 @@ paths:
       - name: slug
         in: path
         required: true
-        description: '[A-Za-z0-9_-]'
+        description: A unique value identifying this IPFS Dapp.
         schema:
           type: string
       responses:
@@ -106,7 +106,7 @@ paths:
       - name: slug
         in: path
         required: true
-        description: '[A-Za-z0-9_-]'
+        description: A unique value identifying this IPFS Dapp.
         schema:
           type: string
       requestBody:
@@ -136,7 +136,7 @@ paths:
       - name: slug
         in: path
         required: true
-        description: '[A-Za-z0-9_-]'
+        description: A unique value identifying this IPFS Dapp.
         schema:
           type: string
       requestBody:
@@ -166,31 +166,11 @@ paths:
       - name: slug
         in: path
         required: true
-        description: '[A-Za-z0-9_-]'
+        description: A unique value identifying this IPFS Dapp.
         schema:
           type: string
       responses:
         '204':
-          description: ''
-      tags:
-      - api
-  /api/v1/ipfs/{slug}/build/:
-    get:
-      operationId: buildIPFSDapp
-      description: ''
-      parameters:
-      - name: slug
-        in: path
-        required: true
-        description: '[A-Za-z0-9_-]'
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IPFSDapp'
           description: ''
       tags:
       - api
@@ -202,7 +182,7 @@ paths:
       - name: slug
         in: path
         required: true
-        description: '[A-Za-z0-9_-]'
+        description: A unique value identifying this IPFS Dapp.
         schema:
           type: string
       responses:
@@ -211,6 +191,96 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IPFSDapp'
+          description: ''
+      tags:
+      - api
+  /api/v1/github/repositories/:
+    get:
+      operationId: listRepositorys
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Repository'
+          description: ''
+      tags:
+      - api
+  /api/v1/github/repositories/fetch_all/:
+    get:
+      operationId: fetchAllRepository
+      description: Update every Github repos for user from the Github API.
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Repository'
+          description: ''
+      tags:
+      - api
+  /api/v1/github/repositories/{id}/:
+    get:
+      operationId: retrieveRepository
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Github repository unique ID.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Repository'
+          description: ''
+      tags:
+      - api
+  /api/v1/github/repositories/{id}/fetch/:
+    get:
+      operationId: fetchRepository
+      description: Update a single repo from Github API.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Github repository unique ID.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Repository'
+          description: ''
+      tags:
+      - api
+  /api/v1/github/repositories/{id}/fetch_branches/:
+    get:
+      operationId: fetchBranchesRepository
+      description: Update repo's branches from the Github API.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Github repository unique ID.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Repository'
           description: ''
       tags:
       - api
@@ -228,9 +298,9 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/builds/:
+  /api/v1/ipfs/{dapp_slug}/buildoptions/:
     get:
-      operationId: listBuilds
+      operationId: listBuildOptions
       description: ''
       parameters:
       - name: dapp_slug
@@ -246,13 +316,12 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Build'
+                  $ref: '#/components/schemas/BuildOptions'
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/builds/{id}/:
-    get:
-      operationId: retrieveBuild
+    post:
+      operationId: createBuildOptions
       description: ''
       parameters:
       - name: dapp_slug
@@ -261,10 +330,41 @@ paths:
         description: ''
         schema:
           type: string
-      - name: id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuildOptions'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BuildOptions'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BuildOptions'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildOptions'
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{dapp_slug}/buildoptions/{dapp}/:
+    get:
+      operationId: retrieveBuildOptions
+      description: ''
+      parameters:
+      - name: dapp_slug
         in: path
         required: true
-        description: A UUID string identifying this build.
+        description: ''
+        schema:
+          type: string
+      - name: dapp
+        in: path
+        required: true
+        description: A unique value identifying this build options.
         schema:
           type: string
       responses:
@@ -272,7 +372,126 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Build'
+                $ref: '#/components/schemas/BuildOptions'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateBuildOptions
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: dapp
+        in: path
+        required: true
+        description: A unique value identifying this build options.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuildOptions'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BuildOptions'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BuildOptions'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildOptions'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateBuildOptions
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: dapp
+        in: path
+        required: true
+        description: A unique value identifying this build options.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuildOptions'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BuildOptions'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BuildOptions'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildOptions'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyBuildOptions
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: dapp
+        in: path
+        required: true
+        description: A unique value identifying this build options.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{dapp_slug}/buildoptions/{dapp}/build/:
+    get:
+      operationId: buildBuildOptions
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: dapp
+        in: path
+        required: true
+        description: A unique value identifying this build options.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildOptions'
           description: ''
       tags:
       - api
@@ -372,12 +591,297 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/envvars/:
+  /api/v1/ipfs/{dapp_slug}/logs/:
+    get:
+      operationId: listAPILogs
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/APILog'
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{dapp_slug}/logs/{id}/:
+    get:
+      operationId: retrieveAPILog
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this API log entry.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APILog'
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{dapp_slug}/githuboptions/:
+    get:
+      operationId: listGithubOptions
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GithubOptions'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createGithubOptions
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GithubOptions'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GithubOptions'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GithubOptions'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GithubOptions'
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{dapp_slug}/githuboptions/{dapp}/:
+    get:
+      operationId: retrieveGithubOptions
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: dapp
+        in: path
+        required: true
+        description: A unique value identifying this Dapp Github options.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GithubOptions'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateGithubOptions
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: dapp
+        in: path
+        required: true
+        description: A unique value identifying this Dapp Github options.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GithubOptions'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GithubOptions'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GithubOptions'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GithubOptions'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateGithubOptions
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: dapp
+        in: path
+        required: true
+        description: A unique value identifying this Dapp Github options.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GithubOptions'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GithubOptions'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GithubOptions'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GithubOptions'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyGithubOptions
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: dapp
+        in: path
+        required: true
+        description: A unique value identifying this Dapp Github options.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{dapp_slug}/buildoptions/{buildoptions_pk}/builds/:
+    get:
+      operationId: listBuilds
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: buildoptions_pk
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Build'
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{dapp_slug}/buildoptions/{buildoptions_pk}/builds/{id}/:
+    get:
+      operationId: retrieveBuild
+      description: ''
+      parameters:
+      - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: buildoptions_pk
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this build.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Build'
+          description: ''
+      tags:
+      - api
+  /api/v1/ipfs/{dapp_slug}/buildoptions/{buildoptions_pk}/envvars/:
     get:
       operationId: listEnvVars
       description: ''
       parameters:
       - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: buildoptions_pk
         in: path
         required: true
         description: ''
@@ -404,6 +908,12 @@ paths:
         description: ''
         schema:
           type: string
+      - name: buildoptions_pk
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -424,12 +934,18 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/envvars/{id}/:
+  /api/v1/ipfs/{dapp_slug}/buildoptions/{buildoptions_pk}/envvars/{id}/:
     get:
       operationId: retrieveEnvVar
       description: ''
       parameters:
       - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: buildoptions_pk
         in: path
         required: true
         description: ''
@@ -455,6 +971,12 @@ paths:
       description: ''
       parameters:
       - name: dapp_slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: buildoptions_pk
         in: path
         required: true
         description: ''
@@ -496,6 +1018,12 @@ paths:
         description: ''
         schema:
           type: string
+      - name: buildoptions_pk
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
       - name: id
         in: path
         required: true
@@ -532,6 +1060,12 @@ paths:
         description: ''
         schema:
           type: string
+      - name: buildoptions_pk
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
       - name: id
         in: path
         required: true
@@ -543,152 +1077,10 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/logs/:
-    get:
-      operationId: listAPILogs
-      description: ''
-      parameters:
-      - name: dapp_slug
-        in: path
-        required: true
-        description: ''
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/APILog'
-          description: ''
-      tags:
-      - api
-  /api/v1/ipfs/{dapp_slug}/logs/{id}/:
-    get:
-      operationId: retrieveAPILog
-      description: ''
-      parameters:
-      - name: dapp_slug
-        in: path
-        required: true
-        description: ''
-        schema:
-          type: string
-      - name: id
-        in: path
-        required: true
-        description: A UUID string identifying this dashboard log entry.
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APILog'
-          description: ''
-      tags:
-      - api
-  /api/v1/ipfs/{dapp_slug}/github/:
-    get:
-      operationId: listDappGithubRepos
-      description: ''
-      parameters:
-      - name: dapp_slug
-        in: path
-        required: true
-        description: ''
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/DappGithubRepo'
-          description: ''
-      tags:
-      - api
-  /api/v1/ipfs/{dapp_slug}/github/fetch_all/:
-    get:
-      operationId: fetchAllDappGithubRepo
-      description: Update every Github repos for user from the Github API.
-      parameters:
-      - name: dapp_slug
-        in: path
-        required: true
-        description: ''
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DappGithubRepo'
-          description: ''
-      tags:
-      - api
-  /api/v1/ipfs/{dapp_slug}/github/{id}/:
-    get:
-      operationId: retrieveDappGithubRepo
-      description: ''
-      parameters:
-      - name: dapp_slug
-        in: path
-        required: true
-        description: ''
-        schema:
-          type: string
-      - name: id
-        in: path
-        required: true
-        description: A unique integer value identifying this Dapp Github repository.
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DappGithubRepo'
-          description: ''
-      tags:
-      - api
-  /api/v1/ipfs/{dapp_slug}/github/{id}/fetch/:
-    get:
-      operationId: fetchDappGithubRepo
-      description: Update a single repo from Github API.
-      parameters:
-      - name: dapp_slug
-        in: path
-        required: true
-        description: ''
-        schema:
-          type: string
-      - name: id
-        in: path
-        required: true
-        description: A unique integer value identifying this Dapp Github repository.
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DappGithubRepo'
-          description: ''
-      tags:
-      - api
-  /api/v1/github_webhook/{id}/payload/:
+  /api/v1/github/webhook/{id}/payload/:
     post:
       operationId: payloadWebhook
-      description: View to receive webhooks from Github and handle them.
+      description: Receive a webhook payload from Github.
       parameters:
       - name: id
         in: path
@@ -717,18 +1109,13 @@ components:
     DappReadOnly:
       type: object
       properties:
-        id:
+        slug:
           type: string
-          format: uuid
-          readOnly: true
+          maxLength: 256
+          pattern: ^[-a-zA-Z0-9_]+$
         dapp_type:
           type: string
           readOnly: true
-        slug:
-          type: string
-          description: '[A-Za-z0-9_-]'
-          maxLength: 256
-          pattern: ^[-a-zA-Z0-9_]+$
         url:
           type: string
           maxLength: 2048
@@ -751,13 +1138,8 @@ components:
     IPFSDapp:
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
         slug:
           type: string
-          description: '[A-Za-z0-9_-]'
           maxLength: 256
           pattern: ^[-a-zA-Z0-9_]+$
         url:
@@ -775,179 +1157,59 @@ components:
           - ER
           type: string
           readOnly: true
-        deployments:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                format: uuid
-                readOnly: true
-              dapp:
-                type: string
-                readOnly: true
-              bundle:
-                type: string
-                readOnly: true
-              status:
-                enum:
-                - SO
-                - DP
-                - SA
-                - UP
-                - UA
-                type: string
-                readOnly: true
-              start:
-                type: string
-                format: date-time
-                readOnly: true
-              end:
-                type: string
-                format: date-time
-                readOnly: true
-              ipfs_hash:
-                type: string
-                readOnly: true
-          readOnly: true
-        logs:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                format: uuid
-                readOnly: true
-              user:
-                type: string
-                readOnly: true
-              action_flag:
-                enum:
-                - 1
-                - 2
-                - 3
-                - 4
-                - 5
-                - 6
-                - 7
-                - 8
-                - 9
-                type: integer
-                readOnly: true
-              change_message:
-                type: string
-                readOnly: true
-              action_time:
-                type: string
-                format: date-time
-                readOnly: true
-          readOnly: true
         created_at:
           type: string
           format: date-time
-          readOnly: true
-        command:
-          type: string
-          description: Command used during the build process.
-          maxLength: 2048
-        docker:
-          type: string
-          description: Container used for the build process.
-          maxLength: 128
-        builds:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                format: uuid
-                readOnly: true
-              options:
-                type: string
-              is_success:
-                type: boolean
-                nullable: true
-                description: Based on the build return code
-              logs:
-                type: string
-                description: Raw logs output of the build process
-              bundle:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                    readOnly: true
-                  options:
-                    type: string
-                    nullable: true
-                  created_at:
-                    type: string
-                    format: date-time
-                readOnly: true
-              start:
-                type: string
-                format: date-time
-              end:
-                type: string
-                format: date-time
-                nullable: true
-            required:
-            - options
-          readOnly: true
-        bundles:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                format: uuid
-                readOnly: true
-              options:
-                type: string
-                nullable: true
-              created_at:
-                type: string
-                format: date-time
-          readOnly: true
-        envvars:
-          type: array
-          items:
-            type: object
-            properties:
-              options:
-                type: string
-              variable:
-                type: string
-                maxLength: 1024
-                pattern: ^[-a-zA-Z0-9_]+$
-              value:
-                type: string
-                maxLength: 8192
-            required:
-            - options
-            - variable
-            - value
           readOnly: true
         ipfs_gateway:
           type: string
           format: uri
           nullable: true
           maxLength: 200
-          pattern: "^(?:[a-z0-9.+-]*)://(?:[^\\s:@/]+(?::[^\\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\\\
-            d|[0-1]?\\d?\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3}|\\[[0-9a-f:.]+\\\
-            ]|([a-z\xA1-\uFFFF0-9](?:[a-z\xA1-\uFFFF0-9-]{0,61}[a-z\xA1-\uFFFF0-9])?(?:\\\
-            .(?!-)[a-z\xA1-\uFFFF0-9-]{1,63}(?<!-))*\\.(?!-)(?:[a-z\xA1-\uFFFF-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\\\
-            .?|localhost))(?::\\d{2,5})?(?:[/?#][^\\s]*)?\\z"
+          pattern: "^(?:[a-z0-9.+-]*)://(?:[^\\s:@/]+(?::[^\\s:@/]*)?@)?(?:(?:0|25[0-5]|2[0-4]\\\
+            d|1\\d?\\d?|[1-9]\\d?)(?:\\.(?:0|25[0-5]|2[0-4]\\d|1\\d?\\d?|[1-9]\\d?)){3}|\\\
+            [[0-9a-f:.]+\\]|([a-z\xA1-\uFFFF0-9](?:[a-z\xA1-\uFFFF0-9-]{0,61}[a-z\xA1\
+            -\uFFFF0-9])?(?:\\.(?!-)[a-z\xA1-\uFFFF0-9-]{1,63}(?<!-))*\\.(?!-)(?:[a-z\xA1\
+            -\uFFFF-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\\.?|localhost))(?::\\d{2,5})?(?:[/?#][^\\\
+            s]*)?\\z"
         ipfs_hash:
           type: string
           readOnly: true
       required:
       - slug
+    Repository:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Github repository unique ID.
+        github_owner:
+          type: string
+          readOnly: true
+        github_repo:
+          type: string
+          readOnly: true
+        branches:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                readOnly: true
+        added_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Added at.
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Last updated from the Github API.
+      required:
+      - branches
     User:
       type: object
       properties:
@@ -969,45 +1231,17 @@ components:
           readOnly: true
       required:
       - username
-    Build:
+    BuildOptions:
       type: object
       properties:
-        id:
+        command:
           type: string
-          format: uuid
-          readOnly: true
-        options:
+          description: Command used during the build process.
+          maxLength: 2048
+        docker:
           type: string
-        is_success:
-          type: boolean
-          nullable: true
-          description: Based on the build return code
-        logs:
-          type: string
-          description: Raw logs output of the build process
-        bundle:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
-              readOnly: true
-            options:
-              type: string
-              nullable: true
-            created_at:
-              type: string
-              format: date-time
-          readOnly: true
-        start:
-          type: string
-          format: date-time
-        end:
-          type: string
-          format: date-time
-          nullable: true
-      required:
-      - options
+          description: Container used for the build process.
+          maxLength: 128
     Bundle:
       type: object
       properties:
@@ -1015,9 +1249,6 @@ components:
           type: string
           format: uuid
           readOnly: true
-        options:
-          type: string
-          nullable: true
         created_at:
           type: string
           format: date-time
@@ -1054,22 +1285,6 @@ components:
         ipfs_hash:
           type: string
           readOnly: true
-    EnvVar:
-      type: object
-      properties:
-        options:
-          type: string
-        variable:
-          type: string
-          maxLength: 1024
-          pattern: ^[-a-zA-Z0-9_]+$
-        value:
-          type: string
-          maxLength: 8192
-      required:
-      - options
-      - variable
-      - value
     APILog:
       type: object
       properties:
@@ -1100,59 +1315,57 @@ components:
           type: string
           format: date-time
           readOnly: true
-    DappGithubRepo:
+    GithubOptions:
       type: object
       properties:
         repo:
-          type: object
-          properties:
-            id:
-              type: integer
-              readOnly: true
-              description: Github repository unique ID.
-            github_owner:
-              type: string
-              readOnly: true
-            github_repo:
-              type: string
-              readOnly: true
-            branches:
-              type: array
-              items:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    maxLength: 255
-                required:
-                - name
-            added_at:
-              type: string
-              format: date-time
-              readOnly: true
-              description: Added at.
-            updated_at:
-              type: string
-              format: date-time
-              readOnly: true
-              description: Last updated from the Github API.
-          required:
-          - branches
-          readOnly: true
+          type: string
         branch:
-          type: object
-          properties:
-            name:
-              type: string
-              maxLength: 255
-          required:
-          - name
+          type: integer
+          nullable: true
         auto_deploy:
           type: boolean
-          description: Automaticaly deploy the dapp when a webhook is called.
+          description: Automatically deploy the dapp when a push is made on the selected
+            branch.
         confirm_ci:
           type: boolean
-          description: Wait for CI to be done before deploying the dapp whenauto deploy
-            is on.
+          description: Wait for CI to pass before automatically deploying the dapp.
       required:
-      - branch
+      - repo
+    Build:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        is_success:
+          type: boolean
+          nullable: true
+          description: Based on the build return code
+        logs:
+          type: string
+          description: Raw logs output of the build process
+        bundle:
+          type: string
+          nullable: true
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+          nullable: true
+    EnvVar:
+      type: object
+      properties:
+        variable:
+          type: string
+          maxLength: 1024
+          pattern: ^[-a-zA-Z0-9_]+$
+        value:
+          type: string
+          maxLength: 8192
+      required:
+      - variable
+      - value

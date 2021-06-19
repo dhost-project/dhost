@@ -7,14 +7,15 @@ from dhost.dapps.models import Dapp
 
 from .github import DjangoGithubAPI
 from .managers import (BranchManager, RepositoryManager, WebhookManager,
-                       serialize_branch, serialize_repository,
-                       serialize_webhook)
+                       serialize_branch,
+                       serialize_repository, serialize_webhook)
+from .utils import get_user_github_account
 
 
 class Repository(models.Model):
     """
-    Model representing a Github repository, the instance is created and
-    updated from the response of the Github API.
+    Model representing a Github repository, the instance is created and updated
+    from the response of the Github API.
     """
     id = models.IntegerField(
         _('Github ID'),
@@ -38,9 +39,10 @@ class Repository(models.Model):
         verbose_name = _('Github repository')
         verbose_name_plural = _('Github repositories')
 
-    def fetch_repo(self):
+    def fetch_repo(self, user):
         """Fetch repo from the Github API and update it."""
-        g = DjangoGithubAPI(github_social=self.owner)
+        github_account = get_user_github_account(user)
+        g = DjangoGithubAPI(github_account=github_account)
         repo_json = g.get_repo(owner=self.github_owner, repo=self.github_repo)
         self.update_from_json(repo_json)
 
@@ -60,9 +62,8 @@ class Repository(models.Model):
         tar_name = g.download_repo(self.github_full_name, path)
         return tar_name
 
-    def fetch_branches(self):
-        Branch.objects.fetch_repo_branches(self)
-        return self.branches.all()
+    def fetch_branches(self, user):
+        Branch.objects.fetch_repo_branches(self, user)
 
     def create_webhook(self, **kwargs):
         """Create a webhook object linked to this Github repo."""
@@ -161,6 +162,7 @@ class GithubOptions(models.Model):
     dapp = models.OneToOneField(
         Dapp,
         on_delete=models.CASCADE,
+        primary_key=True,
     )
     repo = models.ForeignKey(
         Repository,
@@ -169,12 +171,16 @@ class GithubOptions(models.Model):
     branch = models.ForeignKey(Branch, null=True, on_delete=models.SET_NULL)
     auto_deploy = models.BooleanField(
         default=False,
-        help_text=_('Automaticaly deploy the dapp when a webhook is called.'),
+        help_text=_('Automatically deploy the dapp when a push is made on the '
+                    'selected branch.'),
     )
+    # If auto_deploy is True and confirm_ci is True it will auto deploy but
+    # only if the CI are successful
     confirm_ci = models.BooleanField(
         default=False,
-        help_text=_('Wait for CI to be done before deploying the dapp when'
-                    'auto deploy is on.'),
+        help_text=_(
+            'Wait for CI to pass before automatically deploying the dapp.'
+        ),
     )
 
     class Meta:
