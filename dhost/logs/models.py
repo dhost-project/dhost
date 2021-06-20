@@ -8,26 +8,40 @@ from django.utils.translation import gettext_lazy as _
 
 from dhost.dapps.models import Dapp
 
-ENV_VAR_ADDITION = 1
-ENV_VAR_CHANGE = 2
-ENV_VAR_DELETION = 3
-START_BUILD = 4
-BUILD_SUCCESS = 5
-BUILD_FAIL = 6
-START_DEPLOY = 7
-DEPLOY_SUCCESS = 8
-DEPLOY_FAIL = 9
+DAPP_ADDITION = 1
+DAPP_CHANGE = 2
+AUTO_DEPLOY_START = 4
+DEPLOY_START = 5
+DEPLOY_SUCCESS = 6
+DEPLOY_FAIL = 7
+BUILD_OPTIONS_ADDITION = 8
+BUILD_OPTIONS_CHANGE = 9
+BUILD_OPTIONS_DELETION = 10
+AUTO_BUILD_START = 11
+BUILD_START = 12
+BUILD_SUCCESS = 13
+BUILD_FAIL = 14
+ENV_VAR_ADDITION = 15
+ENV_VAR_CHANGE = 16
+ENV_VAR_DELETION = 17
 
 ACTION_FLAG_CHOICES = (
+    (DAPP_ADDITION, _('Dapp created')),
+    (DAPP_CHANGE, _('Dapp updated')),
+    (AUTO_DEPLOY_START, _('Auto deployment started')),
+    (DEPLOY_START, _('Deployment started')),
+    (DEPLOY_SUCCESS, _('Deployment successful')),
+    (DEPLOY_FAIL, _('Deployment failed')),
+    (BUILD_OPTIONS_ADDITION, _('Build options created')),
+    (BUILD_OPTIONS_CHANGE, _('Build options updated')),
+    (BUILD_OPTIONS_DELETION, _('Build options removed')),
+    (AUTO_BUILD_START, _('Auto build started')),
+    (BUILD_START, _('Build started')),
+    (BUILD_SUCCESS, _('Build successful')),
+    (BUILD_FAIL, _('Build failed')),
     (ENV_VAR_ADDITION, _('New environment variable')),
     (ENV_VAR_CHANGE, _('Environment variable updated')),
     (ENV_VAR_DELETION, _('Environment variable removed')),
-    (START_BUILD, _('Start build')),
-    (BUILD_SUCCESS, _('Build successful')),
-    (BUILD_FAIL, _('Build failed')),
-    (START_DEPLOY, _('Start deployment')),
-    (DEPLOY_SUCCESS, _('Deployment successful')),
-    (DEPLOY_FAIL, _('Deployment failed')),
 )
 
 
