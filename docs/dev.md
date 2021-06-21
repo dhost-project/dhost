@@ -39,6 +39,11 @@ If you add a package run `sort-requirements` to order the list.
 sort-requirements requirements.txt
 ```
 
+You can also run `pre-commit` to re-order the requirements.
+```
+pre-commit run --all-file
+```
+
 You can upgrade packages with `pip-upgrader`.
 ```
 pip-upgrade
