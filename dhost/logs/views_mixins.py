@@ -9,6 +9,11 @@ BUNDLE_MODELS_LIST = ['bundle']
 BUILD_OPTIONS_MODEL_LIST = ['buildoptions']
 GITHUB_OPTIONS_MODEL_LIST = ['githuboptions']
 
+# The list of name of inherited `Dapp` models
+DAPP_MODELS_LIST = ['ipfsdapp']
+ENV_VAR_MODEL_LIST = ['envvar']
+BUILD_OPTIONS_MODEL_LIST = ['buildoptions']
+
 
 class APILogViewSetMixin:
     """Add the ability to log actions, logged actions are on state changing
