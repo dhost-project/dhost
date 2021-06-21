@@ -34,7 +34,7 @@ Note:
 | `EMAIL_PORT` | 🍪 | `1025` | More infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#email-port). |
 | `CSRF_COOKIE_SECURE` | 🍪 | `False` | Whether to use a secure cookie for the CSRF cookie. More infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#csrf-cookie-secure). |
 | `SESSION_COOKIE_SECURE` | 🍪 | `False` | Whether to use a secure cookie for the session cookie. More infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#session-cookie-secure). |
-| `DEBUG_TOOLBAR` | ❌ | `False` | Activate or not the Django debug toolbar, more infos [here](https://django-debug-toolbar.readthedocs.io/en/latest/). |
+| `ENABLE_DEBUG_TOOLBAR` | ❌ | *DEBUG* | Activate or not the Django debug toolbar, more infos [here](https://django-debug-toolbar.readthedocs.io/en/latest/). |
 | `STATIC_URL` | 🍪 | `/static/` | URL to use when referring to static files. More infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#static-url). |
 | `STATIC_ROOT` | ❓ | `BASE_DIR / 'static'` | The absolute path to the directory where collectstatic will collect static files. More infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#static-root). |
 | `MEDIA_URL` | 🍪 | `/media/` | URL that handles the media served. More infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#media-url). |

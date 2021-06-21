@@ -126,6 +126,6 @@ dmypy.json
 /.vscode
 
 /static/
-/staticfiles/
+dhost/staticfiles/
 db.sqlite3
-/media/
+dhost/media/
