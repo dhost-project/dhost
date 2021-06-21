@@ -2,13 +2,14 @@
 # This file is distributed under the same license as the dhost package.
 #
 # Translators:
-# 2O4, 2021
+# 2O4 (https://github.com/2O4), 2021
+# Nysis1 (https://github.com/Nysis1), 2021
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-13 20:08+0000\n"
+"POT-Creation-Date: 2021-06-21 08:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -119,8 +120,8 @@ msgid "status"
 msgstr "status"
 
 #: dhost/dapps/models.py:60
-msgid "created"
-msgstr "créé"
+msgid "created at"
+msgstr "date de création"
 
 #: dhost/dapps/models.py:63
 msgid "dapp"
@@ -525,7 +526,7 @@ msgid "Change my password"
 msgstr "Changer mon mot de passe"
 
 #: dhost/users/templates/users/password_reset_complete.html:5
-msgid "Your password has been set. You may go ahead and log in now."
+msgid "Your password has been set.  You may go ahead and log in now."
 msgstr ""
 "Votre mot de passe a été mis a jour. Vous pouvez désormais vous connecter."
 
@@ -544,7 +545,7 @@ msgstr ""
 #: dhost/users/templates/users/password_reset_confirm.html:17
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
-"used. Please request a new password reset."
+"used.  Please request a new password reset."
 msgstr ""
 "Le lien de réinitialisation n'est pas valide, il a probablement déja été "
 "utilisé. Merci de refaire une demande de réinitialisation."
@@ -555,8 +556,8 @@ msgid ""
 "exists with the email you entered. You should receive them shortly."
 msgstr ""
 "Nous vous avons envoyé un mail avec les instructions pour réinitialiser "
-"votre mot de passe. Si un compte est lié à l'adresse renseignée, vous devriez "
-"les recevoir rapidement."
+"votre mot de passe. Si un compte est lié à l'adresse renseignée, vous "
+"devriez les recevoir rapidement."
 
 #: dhost/users/templates/users/password_reset_done.html:9
 msgid ""

@@ -57,7 +57,7 @@ class Dapp(models.Model):
         default=Statuses.STOPED,
     )
 
-    created_at = models.DateTimeField(_('created'), default=timezone.now)
+    created_at = models.DateTimeField(_('created at'), default=timezone.now)
 
     class Meta:
         verbose_name = _('dapp')
