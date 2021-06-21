@@ -1,29 +1,44 @@
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
-from rest_framework import routers
+from rest_framework_nested import routers
 
 from .dapps import views as dapps_views
 from .github import views as github_views
 from .ipfs import views as ipfs_views
-from .logs import views as logs_views
 from .users.api import views as users_views
 
 router = routers.DefaultRouter()
-router.register('bundles', dapps_views.DappBundleViewSet)
-router.register('builds', dapps_views.DappBuildViewSet)
-router.register('envvar', dapps_views.DappEnvironmentVariableViewSet)
-router.register('github', github_views.GithubRepoViewSet)
+router.register('dapps', dapps_views.DappReadOnlyViewSet)
+
 router.register('ipfs', ipfs_views.IPFSDappViewSet)
-router.register('ipfs_deploy', ipfs_views.IPFSDeploymentViewSet)
-router.register('logs', logs_views.DashboardLogEntryViewSet)
+ipfs_router = routers.NestedSimpleRouter(router, 'ipfs', lookup='dapp')
+ipfs_router.register('buildoptions', ipfs_views.IPFSDappBuildOptionsViewSet)
+ipfs_router.register('bundles', ipfs_views.IPFSDappBundleViewSet)
+ipfs_router.register('deployments', ipfs_views.IPFSDeploymentViewSet)
+ipfs_router.register('logs', ipfs_views.IPFSDappAPILogViewSet)
+ipfs_router.register('githuboptions', ipfs_views.IPFSDappGithubOptionsViewSet)
+
+ipfs_build_router = routers.NestedSimpleRouter(ipfs_router,
+                                               'buildoptions',
+                                               lookup='buildoptions')
+ipfs_build_router.register('builds', ipfs_views.IPFSDappBuildViewSet)
+ipfs_build_router.register('envvars', ipfs_views.IPFSDappEnvVarViewSet)
+
+router.register('github_webhook', github_views.WebhookViewSet)
 router.register('users', users_views.UserViewSet)
+
+api_urlpatterns = [
+    path('', include(router.urls)),
+    path('', include(ipfs_router.urls)),
+    path('', include(ipfs_build_router.urls)),
+]
 
 urlpatterns = [
     path('oauth2/', include('dhost.oauth2.urls', namespace='oauth2_provider')),
     path('social/', include('social_django.urls', namespace='social')),
     path('u/', include('dhost.users.urls')),
-    path('api/v1/', include(router.urls)),
+    path('api/v1/', include(api_urlpatterns)),
     path('admin/', admin.site.urls),
 ]
 
@@ -35,6 +50,7 @@ if settings.ENABLE_DEBUG_TOOLBAR:  # pragma: no cover
 if settings.DEBUG:  # pragma: no cover
     from django.conf.urls.static import static
     from django.views import defaults as default_views
+    from django.views.generic import TemplateView
     from rest_framework.permissions import AllowAny
     from rest_framework.schemas import get_schema_view
 
@@ -45,11 +61,16 @@ if settings.DEBUG:  # pragma: no cover
              get_schema_view(
                  title="DHost",
                  description="API",
-                 version="1.0.0",
-                 url="http://localhost:8000/",
+                 version="1.1.0",
+                 url="",
                  permission_classes=[AllowAny],
              ),
              name='openapi-schema'),
+        path('redoc/',
+             TemplateView.as_view(
+                 template_name='redoc.html',
+                 extra_context={'schema_url': 'openapi-schema'}),
+             name='redoc'),
         path(
             "400/",
             default_views.bad_request,

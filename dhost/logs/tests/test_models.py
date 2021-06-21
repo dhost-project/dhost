@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-# from ..models import DashboardLogEntry
+# from ..models import APILog
 
 
-class DashboardLogEntryTestCase(TestCase):
+class APILogTestCase(TestCase):
     pass

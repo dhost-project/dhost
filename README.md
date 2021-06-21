@@ -2,14 +2,16 @@
 
 ## Setup
 
-For a complete guid on setup go to [docs/setup.md](docs/setup.md) or use Docker:
+For a complete setup guide go to [docs/setup.md](docs/setup.md) or use Docker:
 
 ```
-docker build . -t 'api'
+docker build . -t 'api' -f Dockerfile_dev
 ```
 
 ```
-docker run api
+docker run -p 8000:8000 api
 ```
 
-You should be able to visit it at: [http://localhost:8000/](http://localhost:8000/).
+Visit the browsable API: [http://localhost:8000/api/v1/](http://localhost:8000/api/v1/).
+
+Login with `admin` `admin` to make requests.

@@ -12,11 +12,11 @@ class DappModelTest(TestCase):
 
     def create_dapp(
         self,
-        name='test dapp',
+        slug='test_dapp',
         url='http://example.com/',
         owner=None,
     ):
-        return Dapp.objects.create(name=name, url=url, owner=owner)
+        return Dapp.objects.create(slug=slug, url=url, owner=owner)
 
     @tag('fast')
     def test_str(self):

@@ -1,13 +1,13 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from dhost.dapps.models import AbstractDeployment, Dapp
+from dhost.dapps.models import Dapp, Deployment
 
 
 class IPFSDapp(Dapp):
     """Dapp raidy to be deployed to the IPFS network"""
 
-    hash = models.CharField(_('IPFS hash'), max_length=128, blank=True)
+    ipfs_hash = models.CharField(_('IPFS hash'), max_length=128, blank=True)
     ipfs_gateway = models.URLField(
         _('IPFS public gateway'),
         default='https://ipfs.io/ipfs/',
@@ -15,7 +15,7 @@ class IPFSDapp(Dapp):
         blank=True,
     )
 
-    class Meta(Dapp.Meta):
+    class Meta:
         verbose_name = _('IPFS Dapp')
         verbose_name_plural = _('IPFS Dapps')
 
@@ -28,13 +28,13 @@ class IPFSDapp(Dapp):
 
     def get_public_url(self):
         """Generate public URL based on hash and IPFS gateway"""
-        return '{}{}'.format(self.ipfs_gateway, self.hash)
+        return '{}{}'.format(self.ipfs_gateway, self.ipfs_hash)
 
 
-class IPFSDeployment(AbstractDeployment):
-    hash = models.CharField(_('IPFS hash'), max_length=128, blank=True)
+class IPFSDeployment(Deployment):
+    ipfs_hash = models.CharField(_('IPFS hash'), max_length=128, blank=True)
 
-    class Meta(AbstractDeployment.Meta):
+    class Meta:
         verbose_name = _('IPFS Deployment')
         verbose_name_plural = _('IPFS Deployments')
 

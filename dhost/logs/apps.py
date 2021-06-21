@@ -6,4 +6,4 @@ class LogsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'dhost.logs'
     app_label = 'logs'
-    verbose_name = _('Dashboard logs')
+    verbose_name = _('API logs')

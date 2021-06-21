@@ -1,17 +1,36 @@
 from rest_framework import serializers
 
-from .models import GithubRepo
+from .models import Branch, GithubOptions, Repository
 
 
-class GithubRepoSerializer(serializers.ModelSerializer):
+class BranchSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = GithubRepo
+        model = Branch
+        fields = ['name']
+
+
+class RepositorySerializer(serializers.ModelSerializer):
+
+    branches = BranchSerializer(many=True)
+
+    class Meta:
+        model = Repository
         fields = [
-            'id', 'name', 'branch', 'auto_deploy', 'github_owner',
-            'github_repo', 'size', 'updated', 'created', 'modified'
+            'id', 'github_owner', 'github_repo', 'branches', 'added_at',
+            'updated_at'
         ]
         read_only_fields = [
-            'id', 'name', 'github_owner', 'github_repo', 'size', 'updated',
-            'created', 'modified'
+            'id', 'github_owner', 'github_repo', 'branches', 'added_at',
+            'updated_at'
         ]
+
+
+class GithubOptionsSerializer(serializers.ModelSerializer):
+
+    repo = RepositorySerializer(read_only=True)
+    branch = BranchSerializer()
+
+    class Meta:
+        model = GithubOptions
+        fields = ['repo', 'branch', 'auto_deploy', 'confirm_ci']

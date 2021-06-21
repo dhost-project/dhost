@@ -1,83 +1,182 @@
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from social_django.models import UserSocialAuth
+
+from dhost.dapps.models import Dapp
 
 from .github import DjangoGithubAPI
+from .managers import (BranchManager, RepositoryManager, WebhookManager,
+                       serialize_branch, serialize_repository,
+                       serialize_webhook)
 
 
-class AbstractGit(models.Model):
-    owner = models.ForeignKey(
-        UserSocialAuth,
-        on_delete=models.CASCADE,
+class Repository(models.Model):
+    """
+    Model representing a Github repository, the instance is created and
+    updated from the response of the Github API.
+    """
+    id = models.IntegerField(
+        _('Github ID'),
+        primary_key=True,
+        unique=True,
+        help_text=_('Github repository unique ID.')
     )
-    # max repo name length on Github is 100
-    name = models.CharField(max_length=256)
-    branch = models.CharField(max_length=256, default='main')
-    size = models.SmallIntegerField(null=True, blank=True)
-    auto_deploy = models.BooleanField(default=False)
-    updated = models.DateTimeField(
-        null=True,
-        blank=True,
-        editable=False,
-        help_text='Last updated from external source.',
-    )
-    created = models.DateTimeField(auto_now_add=True, help_text='Created at.')
-    modified = models.DateTimeField(
-        auto_now=True,
-        help_text='Last modified by user or external source.',
-    )
-
-    class Meta:
-        abstract = True
-
-    def download_source(self):
-        raise NotImplementedError
-
-
-class GithubRepoManager(models.Manager):
-
-    def create_from_api(self, repo_json):
-        """Create a GithubRepository from a Github API response."""
-        github_owner = repo_json['owner']['login']
-        github_repo = repo_json['name']
-        github_extra_data = repo_json
-        return self.create(github_owner=github_owner,
-                           github_repo=github_repo,
-                           github_extra_data=github_extra_data)
-
-    def get_or_create_from_api(self, repo_json):
-        """Like get_or_create but from Github API response"""
-        pass
-        # TODO
-        # return self.get_or_create()
-
-
-class GithubRepo(AbstractGit):
+    users = models.ManyToManyField(settings.AUTH_USER_MODEL)
     github_owner = models.CharField(max_length=256)
     github_repo = models.CharField(max_length=256)
     # full raw output from the Github API
-    github_extra_data = models.JSONField(null=True, blank=True)
-    objects = GithubRepoManager()
+    extra_data = models.JSONField(default=dict, blank=True)
+    added_at = models.DateTimeField(auto_now_add=True, help_text=_('Added at.'))
+    updated_at = models.DateTimeField(
+        default=timezone.now,
+        help_text=_('Last updated from the Github API.'),
+    )
+    objects = RepositoryManager()
 
-    class Meta(AbstractGit.Meta):
+    class Meta:
         verbose_name = _('Github repository')
         verbose_name_plural = _('Github repositories')
 
     def fetch_repo(self):
-        """Fetch repo from Github API and update it."""
+        """Fetch repo from the Github API and update it."""
         g = DjangoGithubAPI(github_social=self.owner)
         repo_json = g.get_repo(owner=self.github_owner, repo=self.github_repo)
-        self.size = repo_json['size']
-        self.github_extra_data = repo_json
-        self.updated = timezone.now()
+        self.update_from_json(repo_json)
+
+    def update_from_json(self, repo_json, user=None):
+        data = serialize_repository(repo_json)
+        self.github_owner = data['github_owner']
+        self.github_repo = data['github_repo']
+        self.extra_data = data['extra_data']
+        if user not in self.users.all():
+            self.users.add(user)
+        self.updated_at = timezone.now()
         self.save()
 
-    def download_repo(self, path):
+    def download(self, path):
         """Download repo from Github API."""
         g = DjangoGithubAPI(social=self.owner)
         tar_name = g.download_repo(self.github_full_name, path)
-        # TODO decompress
-        print(tar_name)
-        source_path = None
-        return source_path
+        return tar_name
+
+    def fetch_branches(self):
+        Branch.objects.fetch_repo_branches(self)
+        return self.branches.all()
+
+    def create_webhook(self, **kwargs):
+        """Create a webhook object linked to this Github repo."""
+        kwargs.update({'repo': self.id})
+        Webhook.objects.create_github_webhook(**kwargs)
+
+
+class Branch(models.Model):
+    repo = models.ForeignKey(
+        Repository,
+        on_delete=models.CASCADE,
+        related_name='branches',
+        related_query_name='branches',
+    )
+    name = models.CharField(max_length=255)
+    extra_data = models.JSONField(default=dict, blank=True)
+    updated_at = models.DateTimeField(
+        default=timezone.now,
+        help_text=_('Last updated from the Github API.'),
+    )
+    objects = BranchManager()
+
+    class Meta:
+        verbose_name = _('Branch')
+        verbose_name_plural = _("Branches")
+
+    def update_from_json(self, branch_json):
+        data = serialize_branch(branch_json)
+        self.extra_data = data['extra_data']
+        self.updated_at = timezone.now()
+        self.save()
+
+
+class Webhook(models.Model):
+    id = models.IntegerField(
+        _('Github ID'),
+        primary_key=True,
+        unique=True,
+        help_text=_('Github webhook unique ID.')
+    )
+    repo = models.ForeignKey(
+        Repository,
+        on_delete=models.CASCADE,
+        related_name='webhooks',
+        related_query_name='webhooks',
+    )
+    name = models.CharField(max_length=255, default='web')
+    active = models.BooleanField(default=True)
+    extra_data = models.JSONField(default=dict, blank=True)
+    added_at = models.DateTimeField(auto_now_add=True, help_text=_('Added at.'))
+    updated_at = models.DateTimeField(
+        default=timezone.now,
+        help_text=_('Last updated from the Github API.'),
+    )
+    last_called_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text=_('Last called by Github.'),
+    )
+    objects = WebhookManager()
+
+    class Meta:
+        verbose_name = _('Github webhook')
+        verbose_name_plural = _('Github webhooks')
+
+    def delete(self, *args, **kwargs):
+        # TODO: signal Github to remove webhooks
+        return super().delete(*args, **kwargs)
+
+    def update_from_json(self, branch_json):
+        data = serialize_webhook(branch_json)
+        self.name = data['name']
+        self.active = data['active']
+        self.extra_data = data['extra_data']
+        self.updated_at = timezone.now()
+        self.save()
+
+    def activate(self):
+        pass
+
+    def deactivate(self):
+        """
+        Deactivate only if there is no DappGithubRepo linked to it that have
+        `auto_deploy` turned on.
+        """
+        pass
+
+
+class GithubOptions(models.Model):
+    """
+    Represent the link between a Dapp and a Github repository, it also add some
+    options related to the deployment `auto_deploy` specifies if the Dapp
+    should be re-deployed when a webhook linked to that repo is called.
+    It also contains the branch to be used when downloading the repo.
+    """
+    dapp = models.OneToOneField(
+        Dapp,
+        on_delete=models.CASCADE,
+    )
+    repo = models.ForeignKey(
+        Repository,
+        on_delete=models.CASCADE,
+    )
+    branch = models.ForeignKey(Branch, null=True, on_delete=models.SET_NULL)
+    auto_deploy = models.BooleanField(
+        default=False,
+        help_text=_('Automaticaly deploy the dapp when a webhook is called.'),
+    )
+    confirm_ci = models.BooleanField(
+        default=False,
+        help_text=_('Wait for CI to be done before deploying the dapp when'
+                    'auto deploy is on.'),
+    )
+
+    class Meta:
+        verbose_name = _('Dapp Github options')
+        verbose_name_plural = _('Dapps Github options')

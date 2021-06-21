@@ -1,3 +1,4 @@
+import os
 import uuid
 
 from django.conf import settings
@@ -5,30 +6,29 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from dhost.builds.models import BuildOptions, Bundle
+
+def bundle_path():
+    return os.path.join(settings.MEDIA_ROOT, 'bundle')
 
 
-class AbstractDapp(models.Model):
-    name = models.CharField(
+class Dapp(models.Model):
+    slug = models.SlugField(
         _('dapp name'),
-        max_length=128,
-        unique=True,
-        error_messages={
-            'unique': _("A dapp with that name already exists."),
-        },
+        primary_key=True,
+        max_length=256,
     )
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_('owner'),
-        related_name="%(class)ss",
-        related_query_name="%(class)ss",
+        related_name="%(app_label)s_%(class)s",
+        related_query_name="%(app_label)s_%(class)s",
         on_delete=models.CASCADE,
     )
-    slug = models.SlugField(unique=True, blank=True, null=True)
     url = models.CharField(_('URL'), max_length=2048, blank=True)
 
     class Statuses(models.TextChoices):
-        """All the different statuses a Dapp can be in:
+        """
+        All the different statuses a Dapp can be in:
           - STOPED: When the Dapp is neither UP nor UNAVAILABLE nor doing any
             other change in state
           - BUILDING: In the process of building the bundle
@@ -62,23 +62,9 @@ class AbstractDapp(models.Model):
     class Meta:
         verbose_name = _('dapp')
         verbose_name_plural = _('dapps')
-        abstract = True
 
     def __str__(self):
-        return self.name
-
-    def deploy(self):
-        """One of the function to overwrite when inheriting"""
-        raise NotImplementedError
-
-
-class Dapp(AbstractDapp, BuildOptions):
-    """A fully functionnal Dapp with options and ability to build from
-    options
-    """
-
-    class Meta(AbstractDapp.Meta):
-        pass
+        return self.slug
 
     def deploy(self, bundle=None):
         """Create an `IPFSDeployment` object and start the deployment process
@@ -94,10 +80,50 @@ class Dapp(AbstractDapp, BuildOptions):
 
     def create_deployment(self, bundle=None):
         """Return a specific application deployment instance"""
+        raise NotImplementedError
+
+    def get_dapp_type(self):
+        """Return the available dapp implementation."""
+        if hasattr(self, 'ipfsdapp'):
+            return 'ipfs'
         return None
 
 
-class AbstractDeployment(models.Model):
+class Bundle(models.Model):
+    """Bundled web app raidy for deployment"""
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    dapp = models.ForeignKey(
+        Dapp,
+        on_delete=models.CASCADE,
+        related_name='bundles',
+        related_query_name='bundles',
+        null=True,
+        blank=True,
+    )
+    folder = models.FilePathField(
+        _('folder'),
+        null=True,
+        blank=True,
+        path=bundle_path,
+        allow_files=True,
+        allow_folders=True,
+    )
+    created_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        verbose_name = _('bundle')
+        verbose_name_plural = _('bundles')
+
+    def __str__(self):
+        return 'bundl:{}'.format(self.id.hex[:7])
+
+    def delete(self, *args, **kwargs):
+        # TODO delete bundle folder when deleting the object
+        super().delete(*args, **kwargs)
+
+
+class Deployment(models.Model):
     """Model representing a single deployment process"""
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -135,7 +161,6 @@ class AbstractDeployment(models.Model):
     class Meta:
         verbose_name = _('deployment')
         verbose_name_plural = _('deployments')
-        abstract = True
 
     def __str__(self):
         return 'dplmt:{}'.format(self.id.hex[:7])

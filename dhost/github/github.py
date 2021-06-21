@@ -12,9 +12,10 @@ class GithubNotLinkedError(Exception):
 
 
 class GithubAPI:
-    """A github REST API wrapper"""
+    """A github REST API wrapper."""
     GITHUB_API_URL = 'https://api.github.com'
-    TOKEN_TYPE = 'token'
+    GITHUB_TOKEN_TYPE = 'token'
+    GITHUB_WEBHOOK_URL = 'https://localhost:8000/github/webhook/'
 
     def __init__(self, token: str):
         self.token = token
@@ -24,7 +25,7 @@ class GithubAPI:
 
     def _get_authorization_header(self):
         token = self.get_token()
-        token_type = self.TOKEN_TYPE
+        token_type = self.GITHUB_TOKEN_TYPE
         return {'Authorization': '{} {}'.format(token_type, token)}
 
     def _get_headers(self, additionnal_headers=None):
@@ -41,9 +42,29 @@ class GithubAPI:
         headers = self.get_headers(additionnal_headers=headers)
         return url, headers
 
-    def get(self, url=None, headers=None, full_url=None, *args, **kwargs):
+    def get(self, url, headers, code=200, full_url=None, *args, **kwargs):
         url, headers = self._prepare_request(url, headers, full_url)
         r = requests.get(url, headers=headers, *args, **kwargs)
+        if r.status_code == code:
+            return r.json()
+        else:
+            raise Exception(
+                'Error trying to access `{}`, error code: {}, message: {}'.
+                format(url, r.status_code, r.content))
+
+    def post(self, url, headers, data, full_url=None, *args, **kwargs):
+        url, headers = self._prepare_request(url, headers, full_url)
+        r = requests.post(url, headers=headers, data=data, *args, **kwargs)
+        if r.status_code == 201:
+            return r.json()
+        else:
+            raise Exception(
+                'Error trying to access `{}`, error code: {}, message: {}'.
+                format(url, r.status_code, r.content))
+
+    def patch(self, url, headers, data, full_url=None, *args, **kwargs):
+        url, headers = self._prepare_request(url, headers, full_url)
+        r = requests.patch(url, headers=headers, data=data, *args, **kwargs)
         if r.status_code == 200:
             return r.json()
         else:
@@ -59,6 +80,16 @@ class GithubAPI:
         else:
             raise Exception(
                 'Error trying to access `{}`, error code: {}, message: {}'.
+                format(url, r.status_code, r.content))
+
+    def delete(self, url, headers, full_url=None, *args, **kwargs):
+        url, headers = self._prepare_request(url, headers, *args, **kwargs)
+        r = requests.delete(url, headers=headers, *args, **kwargs)
+        if r.status_code == 204:
+            return r.json()
+        else:
+            raise Exception(
+                'Error trying to delete `{}`, error code: {}, message: {}'.
                 format(url, r.status_code, r.content))
 
     def request_private_repo_access(self):
@@ -78,22 +109,23 @@ class GithubAPI:
         username = self.github_name
         return self.get(f'/users/{username}')
 
-    def get_repos(self):
+    def list_repos(self):
         """Return a list of accessible repositories from the current token"""
         return self.get('/user/repos')
 
-    def get_repo(self, repo, owner=None):
+    def get_repo(self, owner, repo):
         """Return a single repository."""
-        owner = owner if owner else self.github_name
         return self.get(f'/repos/{owner}/{repo}')
 
-    def download_repo(self, repo, owner=None, ref=''):
+    def list_branches(self, owner, repo):
+        return self.get(f'/repos/{owner}/{repo}/branches')
+
+    def download_repo(self, owner, repo, ref):
         """Download a repository"""
-        owner = owner if owner else self.github_name
-        dhost_username = self.user.username
         url, headers = self._prepare_request(
             f'/repos/{owner}/{repo}/tarball/{ref}')
         r = requests.get(url, headers=headers, allow_redirects=True)
+        dhost_username = self.user.username
         if r.status_code == 200:
             with open(f'{dhost_username}_{owner}_{repo}.tar', 'wb') as source:
                 source.write(r.content)
@@ -103,12 +135,43 @@ class GithubAPI:
                 'Error trying to access `{}`, error code: {}, message: {}'.
                 format(url, r.status_code, r.content))
 
+    def list_hooks(self, owner, repo):
+        return self.get(f'/repos/{owner}/{repo}/hooks')
+
+    def get_hook(self, owner, repo, hook_id):
+        return self.get(f'/repos/{owner}/{repo}/hooks/{hook_id}')
+
+    def get_hook_config(self, owner, repo, hook_id):
+        return self.get(f'/repos/{owner}/{repo}/hooks/{hook_id}/config')
+
+    def create_hook(self, owner, repo, active=True, name='web'):
+        """Create a Github repository webhook."""
+        active = active
+        data = {
+            'name': name,
+            'config': {
+                'url': self.GITHUB_WEBHOOK_URL,
+                'insecure_ssl': False,
+            }
+        }
+        return self.post(f'/repos/{owner}/{repo}/hooks', data)
+
+    def update_hook(self, owner, repo, hook_id, data):
+        return self.patch(f'/repos/{owner}/{repo}/hooks/{hook_id}', data)
+
+    def update_hook_config(self, owner, repo, hook_id, data):
+        return self.patch(f'/repos/{owner}/{repo}/hooks/{hook_id}/config', data)
+
+    def delete_hook(self, owner, repo, hook_id):
+        return self.delete(f'/repos/{owner}/{repo}/hooks/{hook_id}')
+
+    def ping_hook(self, owner, repo, hook_id):
+        return self.get(f'/repos/{owner}/{repo}/hooks/{hook_id}/pings',
+                        code=204)
+
 
 class DjangoGithubAPI(GithubAPI):
-    """
-    Get the token from Django social auth, and create objects to be stored in
-    the db, for easier access, and less calls to the Github API.
-    """
+    """Get the token from Django social auth."""
 
     def __init__(self, github_social=None, user=None):
         if github_social:
@@ -126,9 +189,17 @@ class DjangoGithubAPI(GithubAPI):
             raise GithubNotLinkedError()
 
     def get_github_name(self):
-        # TODO catch error in case 'login' is not present in extra_data
+        if 'login' not in self.github_social.extra_data:
+            raise Exception(
+                "'login' not present in github_social.extra_data for "
+                "user '{}' (id: '{}')".format(self.github_social.user,
+                                              self.github_social.user.id))
         return self.github_social.extra_data['login']
 
     def get_token(self):
-        # TODO catch error in case 'access_token' is not present in extra_data
+        if 'access_token' not in self.github_social.extra_data:
+            raise Exception(
+                "'access_token' not present in github_social.extra_data for "
+                "user '{}' (id: '{}')".format(self.github_social.user,
+                                              self.github_social.user.id))
         return self.github_social.extra_data['access_token']
