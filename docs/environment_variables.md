@@ -2,6 +2,10 @@
 
 This document detail the env variables that you can/must set for the DHost app.
 
+## DJANGO_ENV
+
+The variable `DJANGO_ENV` define wich environment to use. By default it's `development`, and can be set to `production`.
+
 ## Legend
 
 | Emojie | Meaning |
@@ -20,7 +24,7 @@ Note:
 | Environment variables | Prod | Default values | Descriptions |
 | --- | --- | --- | --- |
 | `DEBUG` | ✅ | `True` | Set to `False` for production, more infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#debug). |
-| `SECRET_KEY` | ✅ | *auto generated* | Your website secret key, more infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#secret-key). |
+| `DJANGO_SECRET_KEY` | ✅ | *auto generated* | Your website secret key, more infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#secret-key). |
 | `SITE_ID` | ❓ | `1` | More infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#site-id). |
 | `ALLOWED_HOSTS` | ✅ | `localhost,127.0.0.1` | A list of strings representing the host/domain names that this Django site can serve. More infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#allowed-hosts). |
 | `CORS_ALLOWED_ORIGINS` | ✅ | `http://localhost:8000` | A list of strings representing the CORS allowed hosts. More infos [here](https://github.com/adamchainz/django-cors-headers). |
@@ -34,16 +38,12 @@ Note:
 | `EMAIL_PORT` | 🍪 | `1025` | More infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#email-port). |
 | `CSRF_COOKIE_SECURE` | 🍪 | `False` | Whether to use a secure cookie for the CSRF cookie. More infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#csrf-cookie-secure). |
 | `SESSION_COOKIE_SECURE` | 🍪 | `False` | Whether to use a secure cookie for the session cookie. More infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#session-cookie-secure). |
-| `ENABLE_DEBUG_TOOLBAR` | ❌ | *DEBUG* | Activate or not the Django debug toolbar, more infos [here](https://django-debug-toolbar.readthedocs.io/en/latest/). |
 | `STATIC_URL` | 🍪 | `/static/` | URL to use when referring to static files. More infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#static-url). |
 | `STATIC_ROOT` | ❓ | `BASE_DIR / 'static'` | The absolute path to the directory where collectstatic will collect static files. More infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#static-root). |
 | `MEDIA_URL` | 🍪 | `/media/` | URL that handles the media served. More infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#media-url). |
 | `MEDIA_ROOT` | ❌ | `BASE_DIR / 'media'` | Absolute filesystem path to the directory that will hold user-uploaded files. More infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#media-root). |
 | `SOCIAL_AUTH_GITHUB_KEY` | ✅ | | Github OAuth2 client ID. |
 | `SOCIAL_AUTH_GITHUB_SECRET` | ✅ | | Github OAuth2 client secret. |
-| `ENABLE_RECAPTCHA` | 🤷 | `False` | Enable the reCAPTCHA on forms. |
-| `RECAPTCHA_PUBLIC_KEY` | 🤷 | *dev key* | You need to create a Google reCAPTCHA V3 account [here](https://www.google.com/recaptcha/intro/index.html) to get the key. See [here](https://github.com/praekelt/django-recaptcha#installation) for more details. |
-| `RECAPTCHA_PRIVATE_KEY` | 🤷 | *dev key* | Same has for `RECAPTCHA_PUBLIC_KEY`. |
 | `AWS_ACCESS_KEY_ID` | ❓ | | AWS access key more infos [here](https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html). |
 | `AWS_SECRET_ACCESS_KEY` | ❓ | | AWS secret key. |
 | `AWS_DEFAULT_ACL` | ❓ | `None` | AWS ACL. |

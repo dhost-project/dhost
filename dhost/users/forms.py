@@ -1,4 +1,3 @@
-from captcha.fields import ReCaptchaField
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 from django.forms import ModelForm
@@ -23,10 +22,6 @@ class SignupForm(UserCreationForm):
 
     def get_user(self):
         return self.user
-
-
-class CaptchaSignupForm(SignupForm):
-    captcha = ReCaptchaField()
 
 
 class AccountSettingsForm(ModelForm):
