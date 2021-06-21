@@ -6,6 +6,7 @@ The demo fixture is in `dhost/demo/fixture.json`.
 
 ## Load fixture
 
+Note that `loaddata` will modify your database, make sure you don't user this in production.
 ```
 ./manage.py loaddata dhost/demo/fixture.json
 ```

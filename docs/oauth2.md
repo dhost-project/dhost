@@ -1,9 +1,6 @@
 # Auth OAuth2 provider and OAuth2 clients API routes
 
-Create a superuser.
-```
-./manage.py createsuperuser
-```
+The package [django-oauth-toolkit](https://django-oauth-toolkit.readthedocs.io/en/latest/) is used for the project.
 
 ## OAuth2 Authorization code flow
 
