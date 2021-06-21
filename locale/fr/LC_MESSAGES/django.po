@@ -32,7 +32,7 @@ msgstr "Commande utilisée pour le processus de build."
 
 #: dhost/builds/models.py:43
 msgid "Container used for the build process."
-msgstr "Commande utilisée pour le processus de build."
+msgstr "Container utilisé pour le processus de build."
 
 #: dhost/builds/models.py:47
 msgid "build options"
@@ -100,7 +100,7 @@ msgstr "En cours de déploiement"
 
 #: dhost/dapps/models.py:48 dhost/dapps/models.py:148
 msgid "Starting"
-msgstr "En cour de démarrage"
+msgstr "En cours de démarrage"
 
 #: dhost/dapps/models.py:49 dhost/dapps/models.py:149
 msgid "Running"
@@ -120,7 +120,7 @@ msgstr "status"
 
 #: dhost/dapps/models.py:60
 msgid "created"
-msgstr "création"
+msgstr "créé"
 
 #: dhost/dapps/models.py:63
 msgid "dapp"
@@ -185,7 +185,7 @@ msgstr "ID unique du webhook Github."
 
 #: dhost/github/models.py:124
 msgid "Last called by Github."
-msgstr "Dernier appel de Github."
+msgstr "Dernier appel par Github."
 
 #: dhost/github/models.py:129
 msgid "Github webhook"
@@ -209,7 +209,7 @@ msgstr ""
 
 #: dhost/github/models.py:187
 msgid "Dapp Github options"
-msgstr "Option Github d'une Dapp"
+msgstr "Option Github de la Dapp"
 
 #: dhost/github/models.py:188
 msgid "Dapps Github options"
@@ -249,7 +249,7 @@ msgstr "Nouvelle variable d'environnement"
 
 #: dhost/logs/models.py:23
 msgid "Environment variable updated"
-msgstr "Variable d'environnement mise a jour"
+msgstr "Variable d'environnement mise à jour"
 
 #: dhost/logs/models.py:24
 msgid "Environment variable removed"
@@ -261,7 +261,7 @@ msgstr "Démarrer la construction"
 
 #: dhost/logs/models.py:26
 msgid "Build successful"
-msgstr "Succes de la construction"
+msgstr "Succès de la construction"
 
 #: dhost/logs/models.py:27
 msgid "Build failed"
@@ -269,11 +269,11 @@ msgstr "Echec de la construction"
 
 #: dhost/logs/models.py:28
 msgid "Start deployment"
-msgstr "Demarrage du déploiement"
+msgstr "Démarrage du déploiement"
 
 #: dhost/logs/models.py:29
 msgid "Deployment successful"
-msgstr "Votre compte à bien été suprimé"
+msgstr "Votre compte a bien été suprimé"
 
 #: dhost/logs/models.py:30
 msgid "Deployment failed"
@@ -281,11 +281,11 @@ msgstr "Echec du déploiement"
 
 #: dhost/logs/models.py:62
 msgid "API log entry"
-msgstr "Entree de log API"
+msgstr "Entrée de log API"
 
 #: dhost/logs/models.py:63
 msgid "API log entries"
-msgstr "Entrees de logs API"
+msgstr "Entrées de logs API"
 
 #: dhost/notifications/models.py:13
 msgid "subject"
@@ -431,7 +431,7 @@ msgstr "Supprimer le compte"
 
 #: dhost/users/templates/users/account_delete_done.html:5
 msgid "Your account has been successfully deleted."
-msgstr "Votre compte à été supprimé avec succès"
+msgstr "Votre compte a été supprimé avec succès"
 
 #: dhost/users/templates/users/account_settings.html:8
 msgid "Update account"
@@ -525,7 +525,7 @@ msgid "Change my password"
 msgstr "Changer mon mot de passe"
 
 #: dhost/users/templates/users/password_reset_complete.html:5
-msgid "Your password has been set.  You may go ahead and log in now."
+msgid "Your password has been set. You may go ahead and log in now."
 msgstr ""
 "Votre mot de passe a été mis a jour. Vous pouvez désormais vous connecter."
 
@@ -544,7 +544,7 @@ msgstr ""
 #: dhost/users/templates/users/password_reset_confirm.html:17
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
-"used.  Please request a new password reset."
+"used. Please request a new password reset."
 msgstr ""
 "Le lien de réinitialisation n'est pas valide, il a probablement déja été "
 "utilisé. Merci de refaire une demande de réinitialisation."
@@ -555,7 +555,7 @@ msgid ""
 "exists with the email you entered. You should receive them shortly."
 msgstr ""
 "Nous vous avons envoyé un mail avec les instructions pour réinitialiser "
-"votre mot de passe. Si un compte est lié à l'adresse renseigné, vous devriez "
+"votre mot de passe. Si un compte est lié à l'adresse renseignée, vous devriez "
 "les recevoir rapidement."
 
 #: dhost/users/templates/users/password_reset_done.html:9
@@ -596,4 +596,4 @@ msgstr "Exporter les données"
 
 #: dhost/users/views.py:226
 msgid "Delete account successful"
-msgstr "Votre compte à bien été suprimé"
+msgstr "Votre compte a bien été suprimé"
