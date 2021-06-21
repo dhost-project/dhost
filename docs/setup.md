@@ -58,7 +58,7 @@ Their is a fixture containing some data that can be loaded inside the database f
 
 To load the fixture inside the current database use:
 ```
-./manage.py loaddata ./dhost/demo/fixture.json
+./manage.py loaddata dhost/demo/fixture.json
 ```
 
 If you don't wan't to load the data in the database but still want to demo the app you can use the [testserver](https://docs.djangoproject.com/en/3.2/ref/django-admin/#testserver) command and load the fixture inside it.
