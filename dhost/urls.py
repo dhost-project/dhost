@@ -43,8 +43,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 
-if settings.DEBUG:  # pragma: no cover
+if settings.DEBUG_TOOLBAR_CONFIG['SHOW_TOOLBAR_CALLBACK']:  # pragma: no cover
     import debug_toolbar
+
+    urlpatterns += [path('__debug__/', include(debug_toolbar.urls))]
+
+if settings.DEBUG:  # pragma: no cover
     from django.conf.urls.static import static
     from django.views import defaults as default_views
     from django.views.generic import TemplateView
@@ -52,7 +56,6 @@ if settings.DEBUG:  # pragma: no cover
     from rest_framework.schemas import get_schema_view
 
     urlpatterns += [
-        path('__debug__/', include(debug_toolbar.urls)),
         path('api-auth/',
              include('rest_framework.urls', namespace='rest_framework')),
         path('openapi',
