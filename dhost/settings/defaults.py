@@ -1,4 +1,3 @@
-import ast
 import os
 import warnings
 
@@ -8,10 +7,6 @@ from django.core.management.utils import get_random_secret_key
 
 def env(var, default=None):
     return os.environ.get(var, default)
-
-
-def env_bool(var, default=None):
-    return ast.literal_eval(env(var, str(default)))
 
 
 def env_list(var, default=None, separator=','):

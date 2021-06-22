@@ -16,7 +16,7 @@ MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')  # noqa
 # To work with Docker
 # https://stackoverflow.com/questions/26898597/django-debug-toolbar-and-docker
 def show_toolbar(request):
-    return True
+    return True  # pragma: no cover
 
 
 DEBUG_TOOLBAR_CONFIG = {

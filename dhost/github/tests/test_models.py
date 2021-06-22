@@ -85,30 +85,28 @@ class RepositoryTestCase(TestCase):
         self.assertTrue(repo.users.filter(id=self.u1.id).exists())
 
     @mock.patch('dhost.github.github.DjangoGithubAPI.list_repos',
-                mock.MagicMock(
-                    return_value=[
-                        {
-                        "id": 1,
-                        "name": "repo_1",
-                        "owner": {
-                            "login": "dhost-project",
-                        },
-                        "size": 100,
-                    },{
-                        "id": 2,
-                        "name": "repo_2",
-                        "owner": {
-                            "login": "dhost-project",
-                        },
-                        "size": 100,
-                    },{
-                        "id": 3,
-                        "name": "repo_3",
-                        "owner": {
-                            "login": "dhost-project",
-                        },
-                        "size": 100,
-                    }]))
+                mock.MagicMock(return_value=[{
+                    "id": 1,
+                    "name": "repo_1",
+                    "owner": {
+                        "login": "dhost-project",
+                    },
+                    "size": 100,
+                }, {
+                    "id": 2,
+                    "name": "repo_2",
+                    "owner": {
+                        "login": "dhost-project",
+                    },
+                    "size": 100,
+                }, {
+                    "id": 3,
+                    "name": "repo_3",
+                    "owner": {
+                        "login": "dhost-project",
+                    },
+                    "size": 100,
+                }]))
     def test_fetch_all(self):
         Repository.objects.fetch_all(self.u1)
         # 3 because 1 already exist, and 3 are added but one has the same ID
