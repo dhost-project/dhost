@@ -18,7 +18,7 @@ class DelTestDirTest(TestCase):
         self.avatar_path = os.path.join(settings.TEST_MEDIA_ROOT, 'avatars',
                                         'avataruser.png')
 
-        # Avatar is automaticaly generated when a user is created, we are
+        # Avatar is automatically generated when a user is created, we are
         # testing if it's created with this command so we delete it
         if os.path.exists(self.avatar_path):
             os.remove(self.avatar_path)
