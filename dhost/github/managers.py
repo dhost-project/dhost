@@ -38,19 +38,25 @@ class RepositoryManager(models.Manager):
         for repo in repo_list:
             self.update_or_create_from_json(repo_json=repo, user=user)
         self.remove_unavailable_list(repo_list=repo_list, user=user)
-        return repo_list
 
     def remove_unavailable_list(self, repo_list, user):
-        """Remove user from unavailable repo_list."""
-        # TODO
+        """
+        Remove user from available repos if they are not present in the Github
+        API `list_repos` response.
+        """
+        # Create a list of ID gathered during the Github API call
+        repo_id_list = [r['id'] for r in repo_list]
+
+        # Get all the user's repos
         Repository = apps.get_model('github.Repository')
         repo_obj_list = Repository.objects.filter(users=user)
-        print(repo_obj_list)
 
-    def remove_unavailable(self, repo, user):
-        """Remove user from unavailable repo."""
-        # TODO
-        pass
+        for repo_obj in repo_obj_list:
+            # If the repo object is not present in the `repo_id_list` it's not
+            # available anymore and thus the user should not be linked to that
+            # repo anymore.
+            if repo_obj.id not in repo_id_list:
+                repo_obj.remove_user(user)
 
     def create_from_json(self, repo_json, user):
         """Create a `Repository` from a Github API response."""

@@ -38,6 +38,9 @@ class Repository(models.Model):
         verbose_name = _('Github repository')
         verbose_name_plural = _('Github repositories')
 
+    def remove_user(self, user):
+        self.users.remove(user)
+
     def fetch_repo(self, user):
         """Fetch repo from the Github API and update it."""
         g = DjangoGithubAPI(user=user)
