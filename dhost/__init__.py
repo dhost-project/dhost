@@ -14,8 +14,9 @@ def prepare_env():
             "The `DJANGO_ENV` environment variable can only be one of two: "
             "`development` or `production`.")
 
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE',
-                          f'dhost.settings.{DJANGO_ENV}')
+    os.environ.setdefault(
+        'DJANGO_SETTINGS_MODULE',
+        'dhost.settings.{DJANGO_ENV}'.format(DJANGO_ENV=DJANGO_ENV))
 
 
 def manage():
