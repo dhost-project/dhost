@@ -2,7 +2,6 @@ from django.apps import apps
 from django.db import models
 
 from .github import DjangoGithubAPI
-from .utils import get_user_github_account
 
 
 def serialize_repository(repo_json):
@@ -34,8 +33,7 @@ def serialize_webhook(webhook_json):
 class RepositoryManager(models.Manager):
 
     def fetch_all(self, user):
-        github_account = get_user_github_account(user)
-        g = DjangoGithubAPI(github_account=github_account)
+        g = DjangoGithubAPI(user=user)
         repo_list = g.list_repos()
         for repo in repo_list:
             self.update_or_create_from_json(repo_json=repo, user=user)
@@ -84,8 +82,7 @@ class BranchManager(models.Manager):
     def fetch_repo_branches(self, repo, user):
         # TODO remove branches that are not present in the response because
         # they are either deleted or inavailable
-        github_account = get_user_github_account(user)
-        g = DjangoGithubAPI(github_account=github_account)
+        g = DjangoGithubAPI(user=user)
         branch_list = g.list_branches(owner=repo.github_owner,
                                       repo=repo.github_repo)
         for branch in branch_list:

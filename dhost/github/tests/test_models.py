@@ -1,3 +1,5 @@
+from unittest import mock
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings
@@ -18,7 +20,10 @@ class RepositoryTestCase(TestCase):
             user=self.u1,
             provider='github',
             uid='1234',
-            extra_data={'access_token': 'token123'},
+            extra_data={
+                'access_token': 'token123',
+                'login': 'john'
+            },
         )
         self.repo1 = Repository.objects.create(
             id=1,
@@ -54,6 +59,7 @@ class RepositoryTestCase(TestCase):
         self.assertTrue(Repository.objects.get(id=191538244))
 
     def test_update_or_create_from_json_exist(self):
+        # if the repo already exist (same id)
         repo_json = self.repo_json
         repo_json.update({'id': 1})
         repo = Repository.objects.update_or_create_from_json(
@@ -78,9 +84,36 @@ class RepositoryTestCase(TestCase):
     def test_fetch_all(self):
         pass
 
-    # mock 'get_repo' function
+    @mock.patch('dhost.github.github.DjangoGithubAPI.get_repo',
+                mock.MagicMock(
+                    return_value={
+                        "id": 1,
+                        "name": "dhost-front",
+                        "owner": {
+                            "login": "dhost-project",
+                        },
+                        "size": 100,
+                    }))
     def test_fetch_repo(self):
-        pass
+        self.repo1.fetch_repo(user=self.u1)
+        self.assertEqual(self.repo1.extra_data['size'], 100)
+
+    @mock.patch('dhost.github.github.DjangoGithubAPI.get_repo',
+                mock.MagicMock(
+                    return_value={
+                        "id": 222222,
+                        "name": "dhost-front",
+                        "owner": {
+                            "login": "dhost-project",
+                        },
+                        "size": 100,
+                    }))
+    def test_fetch_repo_wrong_id(self):
+        # If the Github ID doesn't match the local ID we shouldn't update the
+        # object with the new data.
+        with self.assertRaisesMessage(Exception, "The Github ID changed."):
+            self.repo1.fetch_repo(user=self.u1)
+            self.assertNotEqual(self.repo1.extra_data['size'], 100)
 
     def test_update_from_json(self):
         pass

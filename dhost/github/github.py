@@ -2,13 +2,8 @@
 A wrapper for the Github REST API with OAuth
 """
 import requests
-from django.core.exceptions import ObjectDoesNotExist
 
-
-class GithubNotLinkedError(Exception):
-
-    def __init__(self, message="Github account not linked."):
-        super().__init__(message)
+from .utils import get_token_from_github_account, get_user_github_account
 
 
 class GithubAPI:
@@ -18,6 +13,9 @@ class GithubAPI:
     GITHUB_WEBHOOK_URL = 'https://localhost:8000/github/webhook/'
 
     def __init__(self, token: str):
+        """
+        The Github API token used to make requests.
+        """
         self.token = token
 
     def get_token(self):
@@ -31,7 +29,7 @@ class GithubAPI:
     def _get_headers(self, additionnal_headers=None):
         headers = {'Accept': 'application/vnd.github.v3+json'}
         headers.update(self._get_authorization_header())
-        headers.update(headers)
+        headers.update(additionnal_headers)
         return headers
 
     def get_headers(self, additionnal_headers=None):
@@ -94,23 +92,21 @@ class GithubAPI:
 
     def request_private_repo_access(self):
         """Request access to public and private repositories hooks.
-        with the scope: `read:repo_hook`
+        with the scope: `read:repo_hook`.
         """
         pass
 
-    def get_scopes(self):
-        """Return oauth scopes"""
-        username = self.github_name
+    def get_scopes(self, username):
+        """Return oauth scopes."""
         head = self.head(f'/users/{username}')
         scopes = head['X-OAuth-Scopes']
         return scopes
 
-    def get_user(self):
-        username = self.github_name
+    def get_user(self, username):
         return self.get(f'/users/{username}')
 
     def list_repos(self):
-        """Return a list of accessible repositories from the current token"""
+        """Return a list of accessible repositories from the current token."""
         return self.get('/user/repos')
 
     def get_repo(self, owner, repo):
@@ -121,13 +117,12 @@ class GithubAPI:
         return self.get(f'/repos/{owner}/{repo}/branches')
 
     def download_repo(self, owner, repo, ref):
-        """Download a repository"""
+        """Download a repository."""
         url, headers = self._prepare_request(
             f'/repos/{owner}/{repo}/tarball/{ref}')
         r = requests.get(url, headers=headers, allow_redirects=True)
-        dhost_username = self.user.username
         if r.status_code == 200:
-            with open(f'{dhost_username}_{owner}_{repo}.tar', 'wb') as source:
+            with open(f'{owner}_{repo}.tar', 'wb') as source:
                 source.write(r.content)
                 source.close()
         else:
@@ -173,33 +168,16 @@ class GithubAPI:
 class DjangoGithubAPI(GithubAPI):
     """Get the token from Django social auth."""
 
-    def __init__(self, github_account=None, user=None):
-        if github_account:
-            self.github_account = github_account
-        else:
-            self.github_account = self.get_social(user)
-        self.github_name = self.get_github_name()
-        self.token = self.get_token()
+    def __init__(self, user):
+        self.user = user
 
-    @classmethod
-    def get_social(cls, user):
-        try:
-            return user.social_auth.get(provider='github')
-        except ObjectDoesNotExist:
-            raise GithubNotLinkedError()
+        # `get_user_github_account` will raise an exception if the user has no
+        # github account linked, you should always ensure that when calling
+        # this class you either catch exceptions or only call it if you know
+        # that the user has a linked account (use `user_has_github_account`).
+        self.github_account = get_user_github_account(self.user)
 
-    def get_github_name(self):
-        if 'login' not in self.github_account.extra_data:
-            raise Exception(
-                "'login' not present in github_account.extra_data for "
-                "user '{}' (id: '{}')".format(self.github_account.user,
-                                              self.github_account.user.id))
-        return self.github_account.extra_data['login']
+        # we can now get the token from the github_account
+        token = get_token_from_github_account(self.github_account)
 
-    def get_token(self):
-        if 'access_token' not in self.github_account.extra_data:
-            raise Exception(
-                "'access_token' not present in github_account.extra_data for "
-                "user '{}' (id: '{}')".format(self.github_account.user,
-                                              self.github_account.user.id))
-        return self.github_account.extra_data['access_token']
+        super().__init__(token=token)
