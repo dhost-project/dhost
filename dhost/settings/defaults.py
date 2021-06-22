@@ -200,12 +200,12 @@ SOCIAL_AUTH_GITHUB_KEY = env('SOCIAL_AUTH_GITHUB_KEY')
 
 SOCIAL_AUTH_GITHUB_SECRET = env('SOCIAL_AUTH_GITHUB_SECRET')
 
-SOCIAL_AUTH_GITHUB_SCOPE = (
+SOCIAL_AUTH_GITHUB_SCOPE = [
     # 'repo',
     # 'repo_deployment',
     # 'read:repo_hook',
     # 'user:email',
-)
+]
 
 # Crispy forms
 # https://django-crispy-forms.readthedocs.io/en/latest/
