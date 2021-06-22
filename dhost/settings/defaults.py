@@ -1,9 +1,7 @@
 import ast
 import os
-import warnings
 
 import dj_database_url
-from django.core.management.utils import get_random_secret_key
 
 
 def env(var, default=None):
@@ -25,13 +23,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SITE_ID = env('SITE_ID', 1)
 
 DEBUG = True
-
-SECRET_KEY = env('DJANGO_SECRET_KEY')
-
-if not SECRET_KEY:
-    warnings.warn(
-        "DJANGO_SECRET_KEY not configured, using a random temporary key.")
-    SECRET_KEY = get_random_secret_key()
 
 ALLOWED_HOSTS = env_list('ALLOWED_HOSTS', 'localhost,127.0.0.1')
 
