@@ -9,7 +9,7 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')  # noqa
 
 CORS_ALLOW_ALL_ORIGINS = False
 
-if env_bool('ENABLE_SSL', True):  # noqa
+if env('ENABLE_SSL', '1') == '1':  # noqa
 
     SECURE_SSL_REDIRECT = True
 

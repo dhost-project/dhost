@@ -1,4 +1,3 @@
-import ast
 import os
 
 import dj_database_url
@@ -6,10 +5,6 @@ import dj_database_url
 
 def env(var, default=None):
     return os.environ.get(var, default)
-
-
-def env_bool(var, default=None):
-    return ast.literal_eval(env(var, str(default)))
 
 
 def env_list(var, default=None, separator=','):

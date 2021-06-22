@@ -9,7 +9,6 @@ from .github import DjangoGithubAPI
 from .managers import (BranchManager, RepositoryManager, WebhookManager,
                        serialize_branch, serialize_repository,
                        serialize_webhook)
-from .utils import get_user_github_account
 
 
 class Repository(models.Model):
@@ -39,15 +38,27 @@ class Repository(models.Model):
         verbose_name = _('Github repository')
         verbose_name_plural = _('Github repositories')
 
+    def remove_user(self, user):
+        self.users.remove(user)
+
     def fetch_repo(self, user):
         """Fetch repo from the Github API and update it."""
-        github_account = get_user_github_account(user)
-        g = DjangoGithubAPI(github_account=github_account)
+        g = DjangoGithubAPI(user=user)
         repo_json = g.get_repo(owner=self.github_owner, repo=self.github_repo)
         self.update_from_json(repo_json)
 
     def update_from_json(self, repo_json, user=None):
         data = serialize_repository(repo_json)
+
+        # This should never happen, if it does it probably because a repo has
+        # been renamed or deleted and another has been created with the same
+        # name and owner, and it's not handled properly in the code.
+        # In this cass we should probably delete the current repo has it's not
+        # of use anymore (because it either has moved or has been deleted) and
+        # create a new one from the repo_json.
+        if data['id'] != self.id:
+            raise Exception('The Github ID changed.')
+
         self.github_owner = data['github_owner']
         self.github_repo = data['github_repo']
         self.extra_data = data['extra_data']

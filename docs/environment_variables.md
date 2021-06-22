@@ -29,6 +29,7 @@ Note:
 | `ALLOWED_HOSTS` | ✅ | `localhost,127.0.0.1` | A list of strings representing the host/domain names that this Django site can serve. More infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#allowed-hosts). |
 | `CORS_ALLOWED_ORIGINS` | ✅ | `http://localhost:8000` | A list of strings representing the CORS allowed hosts. More infos [here](https://github.com/adamchainz/django-cors-headers). |
 | `CORS_ALLOW_ALL_ORIGINS` | ❌ | *DEBUG* | Set allowed hosts to `*`, by default it take the value of `DEBUG`. |
+| `ENABLE_SSL` | ❌ | `1` | Enable all SSL (redirect, cookie), enabled by default in production only. |
 | `DATABASE_URL` | 🍪 | `sqlite:///db.sqlite3` | The database URL, more infos [here](https://github.com/jacobian/dj-database-url#url-schema). |
 | `REDIS_URL` | 🍪 | | The URL to the Redis server. |
 | `SENTRY_DSN` | 🍪 | | The Sentry DSN URL, more infos [here](https://sentry.io/welcome/). |
