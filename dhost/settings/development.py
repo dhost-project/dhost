@@ -1,4 +1,8 @@
+from django.core.management.utils import get_random_secret_key
+
 from .defaults import *  # noqa
+
+SECRET_KEY = get_random_secret_key()
 
 CORS_ALLOW_ALL_ORIGINS = True
 

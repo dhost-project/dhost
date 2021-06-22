@@ -5,6 +5,8 @@ from .defaults import *  # noqa
 
 DEBUG = False
 
+SECRET_KEY = env('DJANGO_SECRET_KEY')  # noqa
+
 CORS_ALLOW_ALL_ORIGINS = False
 
 if env('ENABLE_SSL', '1') == '1':  # noqa
