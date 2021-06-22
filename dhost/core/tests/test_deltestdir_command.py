@@ -27,15 +27,23 @@ class DelTestDirTest(TestCase):
         call_command('deltestdir', '--noinput', stdout=out)
         self.assertIn('Test dir does not exist', out.getvalue())
 
-    @mock.patch('builtins.input', lambda *args: 'yes')
+    @mock.patch('builtins.input', mock.MagicMock(return_value='yes'))
     def test_interactive_yes(self):
         out = StringIO()
         call_command('deltestdir', stdout=out)
         self.assertFalse(os.path.isdir(settings.TEST_DIR))
 
-    @mock.patch('builtins.input', lambda *args: 'no')
+    @mock.patch('builtins.input', mock.MagicMock(return_value='no'))
     def test_interactive_no(self):
         out = StringIO()
         call_command('deltestdir', stdout=out)
         self.assertTrue(os.path.isdir(settings.TEST_DIR))
         self.assertIn('cancelled', out.getvalue())
+
+    @mock.patch('builtins.input', mock.MagicMock(return_value='no'))
+    def test_interactive_input(self):
+        out = StringIO()
+        call_command('deltestdir', stdout=out)
+        self.assertIn(
+            "This will IRREVERSIBLY DESTROY all data currently in the '{}' "
+            "folder.".format(settings.TEST_DIR), input.call_args.args[0])
