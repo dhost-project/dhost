@@ -2,7 +2,7 @@
 import os
 import sys
 
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 
 DJANGO_ENV = os.environ.get('DJANGO_ENV', 'development')
 
