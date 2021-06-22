@@ -8,6 +8,12 @@ from django.core.management import call_command
 from django.test import TestCase
 
 
+def mock_print_input(message):
+    out = StringIO()
+    out.append(message)
+    return 'yes'
+
+
 class DelTestDirTest(TestCase):
 
     def setUp(self):
@@ -39,3 +45,9 @@ class DelTestDirTest(TestCase):
         call_command('deltestdir', stdout=out)
         self.assertTrue(os.path.isdir(settings.TEST_DIR))
         self.assertIn('cancelled', out.getvalue())
+
+    @mock.patch('builtins.input', mock_print_input)
+    def test_interactive_input(self):
+        out = StringIO()
+        call_command('deltestdir', stdout=out)
+        self.assertIn('IRREVERSIBLY DESTROY', out.getvalue())
