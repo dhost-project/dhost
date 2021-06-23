@@ -60,28 +60,28 @@ class GithubAPI:
         r = requests.post(url, headers=headers, data=data, *args, **kwargs)
         if r.status_code == 201:
             return r.json()
-        self._request_error(response=r, expected_code=code, url=url)
+        self._request_error(response=r, expected_code=201, url=url)
 
     def patch(self, url, data, headers=None, full_url=None, *args, **kwargs):
         url, headers = self._prepare_request(url, headers, full_url)
         r = requests.patch(url, headers=headers, data=data, *args, **kwargs)
         if r.status_code == 200:
             return r.json()
-        self._request_error(response=r, expected_code=code, url=url)
+        self._request_error(response=r, expected_code=200, url=url)
 
     def head(self, url=None, headers=None, full_url=None, *args, **kwargs):
         url, headers = self._prepare_request(url, headers, full_url)
         r = requests.head(url, headers=headers, *args, **kwargs)
         if r.status_code == 200:
             return r.headers
-        self._request_error(response=r, expected_code=code, url=url)
+        self._request_error(response=r, expected_code=200, url=url)
 
     def delete(self, url, headers, full_url=None, *args, **kwargs):
         url, headers = self._prepare_request(url, headers, *args, **kwargs)
         r = requests.delete(url, headers=headers, *args, **kwargs)
         if r.status_code == 204:
             return r.json()
-        self._request_error(response=r, expected_code=code, url=url)
+        self._request_error(response=r, expected_code=204, url=url)
 
     def request_private_repo_access(self):
         """Request access to public and private repositories hooks.
