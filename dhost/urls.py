@@ -43,7 +43,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 
-if settings.DEBUG_TOOLBAR_CONFIG['SHOW_TOOLBAR_CALLBACK']:  # pragma: no cover
+if settings.ENABLE_DEBUG_TOOLBAR:  # pragma: no cover
     import debug_toolbar
 
     urlpatterns += [path('__debug__/', include(debug_toolbar.urls))]

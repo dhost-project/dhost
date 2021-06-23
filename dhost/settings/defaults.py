@@ -218,3 +218,5 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 TEST_DIR = os.path.join(env('TEST_DIR', '.cache'), '.test_dir')
 
 TEST_MEDIA_ROOT = env('TEST_MEDIA_ROOT', os.path.join(TEST_DIR, 'media'))
+
+ENABLE_DEBUG_TOOLBAR = False

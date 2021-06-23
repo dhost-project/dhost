@@ -12,6 +12,8 @@ REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'].append(  # noqa
 
 # django-debug-toolbar
 # https://django-debug-toolbar.readthedocs.io/en/latest/
+ENABLE_DEBUG_TOOLBAR = True
+
 INSTALLED_APPS.append('debug_toolbar')  # noqa
 
 MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')  # noqa
