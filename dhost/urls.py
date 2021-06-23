@@ -56,22 +56,29 @@ if settings.DEBUG:  # pragma: no cover
     from rest_framework.schemas import get_schema_view
 
     urlpatterns += [
-        path('api-auth/',
-             include('rest_framework.urls', namespace='rest_framework')),
-        path('openapi',
-             get_schema_view(
-                 title="DHost",
-                 description="API",
-                 version="1.1.0",
-                 url="",
-                 permission_classes=[AllowAny],
-             ),
-             name='openapi-schema'),
-        path('redoc/',
-             TemplateView.as_view(
-                 template_name='redoc.html',
-                 extra_context={'schema_url': 'openapi-schema'}),
-             name='redoc'),
+        path(
+            'api-auth/',
+            include('rest_framework.urls', namespace='rest_framework'),
+        ),
+        path(
+            'openapi',
+            get_schema_view(
+                title="DHost",
+                description="API",
+                version="1.1.0",
+                url="",
+                permission_classes=[AllowAny],
+            ),
+            name='openapi-schema',
+        ),
+        path(
+            'redoc/',
+            TemplateView.as_view(
+                template_name='redoc.html',
+                extra_context={'schema_url': 'openapi-schema'},
+            ),
+            name='redoc',
+        ),
         path(
             "400/",
             default_views.bad_request,

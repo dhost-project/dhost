@@ -72,6 +72,7 @@ class SignupView(TitleMixin, auth_views.SuccessURLAllowedHostsMixin, FormView):
     """
     Display the registration form and handle the register action.
     """
+
     form_class = SignupForm
     authentication_form = None
     next_page = None
@@ -103,7 +104,8 @@ class SignupView(TitleMixin, auth_views.SuccessURLAllowedHostsMixin, FormView):
         """Return the user-originating redirect URL if it's safe."""
         redirect_to = self.request.POST.get(
             self.redirect_field_name,
-            self.request.GET.get(self.redirect_field_name, ''))
+            self.request.GET.get(self.redirect_field_name, ''),
+        )
         url_is_safe = url_has_allowed_host_and_scheme(
             url=redirect_to,
             allowed_hosts=self.get_success_url_allowed_hosts(),
@@ -135,7 +137,7 @@ class SignupView(TitleMixin, auth_views.SuccessURLAllowedHostsMixin, FormView):
             self.redirect_field_name: self.get_redirect_url(),
             'site': current_site,
             'site_name': current_site.name,
-            **(self.extra_context or {})
+            **(self.extra_context or {}),
         })
         return context
 

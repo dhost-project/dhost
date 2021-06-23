@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
             options={
                 'ordering': ['-action_time'],
                 'verbose_name': 'API log entry',
-                'verbose_name_plural': 'API log entries'
+                'verbose_name_plural': 'API log entries',
             },
         ),
     ]

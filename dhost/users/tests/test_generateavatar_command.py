@@ -12,9 +12,11 @@ from ..models import User
 class DelTestDirTest(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user(username='avataruser',
-                                             password='password',
-                                             email='testclient@example.com')
+        self.user = User.objects.create_user(
+            username='avataruser',
+            password='password',
+            email='testclient@example.com',
+        )
         self.avatar_path = os.path.join(settings.TEST_MEDIA_ROOT, 'avatars',
                                         'avataruser.png')
 

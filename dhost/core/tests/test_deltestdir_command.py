@@ -46,4 +46,6 @@ class DelTestDirTest(TestCase):
         call_command('deltestdir', stdout=out)
         self.assertIn(
             "This will IRREVERSIBLY DESTROY all data currently in the '{}' "
-            "folder.".format(settings.TEST_DIR), input.call_args.args[0])
+            "folder.".format(settings.TEST_DIR),
+            input.call_args.args[0],
+        )

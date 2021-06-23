@@ -63,6 +63,7 @@ class GithubOptionsViewSet(DappViewMixin, viewsets.ModelViewSet):
 
 class WebhookViewSet(viewsets.ViewSet):
     """View to receive and handle webhooks from Github."""
+
     queryset = Webhook.objects.all()
     payload_handler_class = PayloadHandler
     permission_classes = [AllowAny]
@@ -71,8 +72,10 @@ class WebhookViewSet(viewsets.ViewSet):
         return self.get_object()
 
     def get_payload_handler(self, payload):
-        return self.payload_handler_class(webhook=self.get_webhook(),
-                                          payload=payload)
+        return self.payload_handler_class(
+            webhook=self.get_webhook(),
+            payload=payload,
+        )
 
     @action(detail=True, methods=['post'])
     def payload(self, request, pk=None):

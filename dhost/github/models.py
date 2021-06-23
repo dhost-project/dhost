@@ -16,11 +16,12 @@ class Repository(models.Model):
     Model representing a Github repository, the instance is created and updated
     from the response of the Github API.
     """
+
     id = models.IntegerField(
         _('Github ID'),
         primary_key=True,
         unique=True,
-        help_text=_('Github repository unique ID.')
+        help_text=_('Github repository unique ID.'),
     )
     users = models.ManyToManyField(settings.AUTH_USER_MODEL)
     github_owner = models.CharField(max_length=256)
@@ -118,7 +119,7 @@ class Webhook(models.Model):
         _('Github ID'),
         primary_key=True,
         unique=True,
-        help_text=_('Github webhook unique ID.')
+        help_text=_('Github webhook unique ID.'),
     )
     repo = models.ForeignKey(
         Repository,
@@ -175,6 +176,7 @@ class GithubOptions(models.Model):
     should be re-deployed when a webhook linked to that repo is called.
     It also contains the branch to be used when downloading the repo.
     """
+
     dapp = models.OneToOneField(
         Dapp,
         on_delete=models.CASCADE,
@@ -187,8 +189,10 @@ class GithubOptions(models.Model):
     branch = models.ForeignKey(Branch, null=True, on_delete=models.SET_NULL)
     auto_deploy = models.BooleanField(
         default=False,
-        help_text=_('Automatically deploy the dapp when a push is made on the '
-                    'selected branch.'),
+        help_text=_(
+            'Automatically deploy the dapp when a push is made on the '
+            'selected branch.'
+        ),
     )
     # If auto_deploy is True and confirm_ci is True it will auto deploy but
     # only if the CI are successful

@@ -10,9 +10,11 @@ class TestDataMixin:
 
     @classmethod
     def setUpTestData(cls):
-        cls.u1 = User.objects.create_user(username='testclient',
-                                          password='password',
-                                          email='testclient@example.com')
+        cls.u1 = User.objects.create_user(
+            username='testclient',
+            password='password',
+            email='testclient@example.com',
+        )
         cls.u2 = User.objects.create_user(username='inactive',
                                           password='password',
                                           is_active=False)
@@ -37,7 +39,8 @@ class SignupFormTest(TestDataMixin, TestCase):
         self.assertFalse(form.is_valid())
         self.assertEqual(
             form["username"].errors,
-            [str(User._meta.get_field('username').error_messages['unique'])])
+            [str(User._meta.get_field('username').error_messages['unique'])],
+        )
 
     def test_invalid_data(self):
         data = {
@@ -60,8 +63,10 @@ class SignupFormTest(TestDataMixin, TestCase):
         }
         form = SignupForm(data)
         self.assertFalse(form.is_valid())
-        self.assertEqual(form["password2"].errors,
-                         [str(form.error_messages['password_mismatch'])])
+        self.assertEqual(
+            form["password2"].errors,
+            [str(form.error_messages['password_mismatch'])],
+        )
 
     @tag('core')
     def test_both_passwords(self):
@@ -123,8 +128,10 @@ class SignupFormTest(TestDataMixin, TestCase):
         }
         form = SignupForm(data)
         self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors['username'],
-                         ["A user with that username already exists."])
+        self.assertEqual(
+            form.errors['username'],
+            ["A user with that username already exists."],
+        )
 
     def test_validates_password(self):
         data = {
@@ -135,11 +142,15 @@ class SignupFormTest(TestDataMixin, TestCase):
         form = SignupForm(data)
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form['password2'].errors), 2)
-        self.assertIn('The password is too similar to the username.',
-                      form['password2'].errors)
+        self.assertIn(
+            'The password is too similar to the username.',
+            form['password2'].errors,
+        )
         self.assertIn(
             'This password is too short. It must contain at least 8 '
-            'characters.', form['password2'].errors)
+            'characters.',
+            form['password2'].errors,
+        )
 
     def test_password_whitespace_not_stripped(self):
         data = {
@@ -168,7 +179,8 @@ class SignupFormTest(TestDataMixin, TestCase):
             with self.subTest(field_name=field_name, autocomplete=autocomplete):
                 self.assertEqual(
                     form.fields[field_name].widget.attrs['autocomplete'],
-                    autocomplete)
+                    autocomplete,
+                )
 
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)

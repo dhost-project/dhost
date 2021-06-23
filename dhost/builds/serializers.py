@@ -18,8 +18,10 @@ class EnvVarSerializer(serializers.ModelSerializer):
         fields = ['variable', 'value']
         # read_only_fields = ['options']
         validators = [
-            UniqueTogetherValidator(queryset=EnvVar.objects.all(),
-                                    fields=['buildoptions', 'variable'])
+            UniqueTogetherValidator(
+                queryset=EnvVar.objects.all(),
+                fields=['buildoptions', 'variable'],
+            )
         ]
 
 

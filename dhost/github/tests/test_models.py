@@ -84,29 +84,35 @@ class RepositoryTestCase(TestCase):
         self.assertEqual(repo.extra_data, repo_json)
         self.assertTrue(repo.users.filter(id=self.u1.id).exists())
 
-    @mock.patch('dhost.github.github.DjangoGithubAPI.list_repos',
-                mock.MagicMock(return_value=[{
-                    "id": 1,
-                    "name": "repo_1",
-                    "owner": {
-                        "login": "dhost-project",
-                    },
-                    "size": 100,
-                }, {
-                    "id": 2,
-                    "name": "repo_2",
-                    "owner": {
-                        "login": "dhost-project",
-                    },
-                    "size": 100,
-                }, {
-                    "id": 3,
-                    "name": "repo_3",
-                    "owner": {
-                        "login": "dhost-project",
-                    },
-                    "size": 100,
-                }]))
+    @mock.patch(
+        'dhost.github.github.DjangoGithubAPI.list_repos',
+        mock.MagicMock(return_value=[
+            {
+                "id": 1,
+                "name": "repo_1",
+                "owner": {
+                    "login": "dhost-project",
+                },
+                "size": 100,
+            },
+            {
+                "id": 2,
+                "name": "repo_2",
+                "owner": {
+                    "login": "dhost-project",
+                },
+                "size": 100,
+            },
+            {
+                "id": 3,
+                "name": "repo_3",
+                "owner": {
+                    "login": "dhost-project",
+                },
+                "size": 100,
+            },
+        ]),
+    )
     def test_fetch_all(self):
         Repository.objects.fetch_all(self.u1)
         # 3 because 1 already exist, and 3 are added but one has the same ID
@@ -117,30 +123,34 @@ class RepositoryTestCase(TestCase):
         # test that the new repo was added
         self.assertEqual(Repository.objects.get(id=3).github_repo, "repo_3")
 
-    @mock.patch('dhost.github.github.DjangoGithubAPI.get_repo',
-                mock.MagicMock(
-                    return_value={
-                        "id": 1,
-                        "name": "dhost-front",
-                        "owner": {
-                            "login": "dhost-project",
-                        },
-                        "size": 100,
-                    }))
+    @mock.patch(
+        'dhost.github.github.DjangoGithubAPI.get_repo',
+        mock.MagicMock(
+            return_value={
+                "id": 1,
+                "name": "dhost-front",
+                "owner": {
+                    "login": "dhost-project",
+                },
+                "size": 100,
+            }),
+    )
     def test_fetch_repo(self):
         self.repo1.fetch_repo(user=self.u1)
         self.assertEqual(self.repo1.extra_data['size'], 100)
 
-    @mock.patch('dhost.github.github.DjangoGithubAPI.get_repo',
-                mock.MagicMock(
-                    return_value={
-                        "id": 222222,
-                        "name": "dhost-front",
-                        "owner": {
-                            "login": "dhost-project",
-                        },
-                        "size": 100,
-                    }))
+    @mock.patch(
+        'dhost.github.github.DjangoGithubAPI.get_repo',
+        mock.MagicMock(
+            return_value={
+                "id": 222222,
+                "name": "dhost-front",
+                "owner": {
+                    "login": "dhost-project",
+                },
+                "size": 100,
+            }),
+    )
     def test_fetch_repo_wrong_id(self):
         # If the Github ID doesn't match the local ID we shouldn't update the
         # object with the new data.
@@ -173,8 +183,10 @@ class RepositoryTestCase(TestCase):
             self.repo1.update_from_json(repo_json)
             self.assertNotEqual(self.repo1.extra_data['size'], 100)
 
-    @mock.patch('dhost.github.github.DjangoGithubAPI.download_repo',
-                mock.MagicMock(return_value='repo_example.tar'))
+    @mock.patch(
+        'dhost.github.github.DjangoGithubAPI.download_repo',
+        mock.MagicMock(return_value='repo_example.tar'),
+    )
     def test_download_repo(self):
         self.repo1.download(user=self.u1,
                             ref='master',
@@ -208,16 +220,16 @@ class BranchTestCase(TestCase):
             "name": "master",
             "commit": {
                 "sha": "c5b97d5ae6c19d5c5df71a34c7fbeeda2479ccbc",
-                "url": ""
+                "url": "",
             },
             "protected": True,
             "protection": {
                 "required_status_checks": {
                     "enforcement_level": "non_admins",
-                    "contexts": ["ci-test", "linter"]
+                    "contexts": ["ci-test", "linter"],
                 }
             },
-            "protection_url": ""
+            "protection_url": "",
         }
 
     def test_create_from_json(self):
@@ -277,7 +289,7 @@ class WebhookTestCase(TestCase):
             "config": {
                 "content_type": "json",
                 "insecure_ssl": "0",
-                "url": "https://example.com/webhook"
+                "url": "https://example.com/webhook",
             },
             "updated_at": "2019-06-03T00:57:16Z",
             "created_at": "2019-06-03T00:57:16Z",
@@ -288,7 +300,7 @@ class WebhookTestCase(TestCase):
                 "code": None,
                 "status": "unused",
                 "message": None,
-            }
+            },
         }
 
     def test_create_from_json(self):

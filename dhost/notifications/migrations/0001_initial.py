@@ -17,26 +17,45 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Notification',
             fields=[
-                ('id',
-                 models.BigAutoField(auto_created=True,
-                                     primary_key=True,
-                                     serialize=False,
-                                     verbose_name='ID')),
-                ('subject',
-                 models.CharField(max_length=200, verbose_name='subject')),
-                ('content',
-                 models.TextField(max_length=10000, verbose_name='content')),
-                ('read', models.BooleanField(default=False,
-                                             verbose_name='read')),
-                ('url',
-                 models.URLField(blank=True, null=True, verbose_name='URL')),
-                ('time',
-                 models.DateTimeField(auto_now_add=True, verbose_name='time')),
-                ('user',
-                 models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
-                                   related_name='notifications',
-                                   related_query_name='notifications',
-                                   to=settings.AUTH_USER_MODEL)),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name='ID',
+                    ),
+                ),
+                (
+                    'subject',
+                    models.CharField(max_length=200, verbose_name='subject'),
+                ),
+                (
+                    'content',
+                    models.TextField(max_length=10000, verbose_name='content'),
+                ),
+                (
+                    'read',
+                    models.BooleanField(default=False, verbose_name='read'),
+                ),
+                (
+                    'url',
+                    models.URLField(blank=True, null=True, verbose_name='URL'),
+                ),
+                (
+                    'time',
+                    models.DateTimeField(auto_now_add=True,
+                                         verbose_name='time'),
+                ),
+                (
+                    'user',
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name='notifications',
+                        related_query_name='notifications',
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
                 'verbose_name': 'notification',

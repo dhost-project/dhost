@@ -51,6 +51,7 @@ class DappViewMixin:
     Mixin to handle the nested router wich send an argument with the dapp slug
     used to filter the dapps.
     """
+
     dapp_model_class = Dapp
     dapp_reverse_name = 'dapp'  # name of the model field linked to the Dapp
     dapp_url_slug = 'dapp_slug'  # URL slug for the Dapp

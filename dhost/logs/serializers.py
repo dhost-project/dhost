@@ -9,5 +9,9 @@ class APILogSerializer(serializers.ModelSerializer):
         model = APILog
         fields = ['id', 'user', 'action_flag', 'change_message', 'action_time']
         read_only_fields = [
-            'id', 'user', 'action_flag', 'change_message', 'action_time'
+            'id',
+            'user',
+            'action_flag',
+            'change_message',
+            'action_time',
         ]

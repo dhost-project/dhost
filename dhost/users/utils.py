@@ -64,7 +64,7 @@ def avatar_generator(username: str):
                         MARGIN + col * block_width,  # x1
                         MARGIN + row * block_height,  # y1
                         MARGIN + (col + 1) * block_width - 1,  # x2
-                        MARGIN + (row + 1) * block_height - 1  # y2
+                        MARGIN + (row + 1) * block_height - 1,  # y2
                     ),
                     fill=fg_color,
                 )

@@ -43,6 +43,7 @@ class Dapp(models.Model):
             technical reason
           - ERROR: Error while trying to retrieve the state of the Dapp
         """
+
         STOPED = 'SO', _('Stoped')
         BUILDING = 'BI', _('Building')
         BUILT = 'BT', _('Builed')

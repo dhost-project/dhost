@@ -8,6 +8,7 @@ from .utils import get_token_from_github_account, get_user_github_account
 
 class GithubAPI:
     """A github REST API wrapper."""
+
     GITHUB_API_URL = 'https://api.github.com'
     GITHUB_TOKEN_TYPE = 'token'
     GITHUB_WEBHOOK_URL = 'https://localhost:8000/github/webhook/'
@@ -48,7 +49,8 @@ class GithubAPI:
                 url=url,
                 error_code=response.status_code,
                 expected_code=expected_code,
-                content=response.content))
+                content=response.content,
+            ))
 
     def get(self, url, headers=None, code=200, full_url=None, *args, **kwargs):
         url, headers = self._prepare_request(url, headers, full_url)
@@ -140,7 +142,7 @@ class GithubAPI:
             'config': {
                 'url': self.GITHUB_WEBHOOK_URL,
                 'insecure_ssl': False,
-            }
+            },
         }
         return self.post(f'/repos/{owner}/{repo}/hooks', data)
 
