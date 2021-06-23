@@ -148,12 +148,36 @@ class RepositoryTestCase(TestCase):
             self.repo1.fetch_repo(user=self.u1)
             self.assertNotEqual(self.repo1.extra_data['size'], 100)
 
-    def test_update_from_json(self):
-        pass
+    def test_update_from_json_same_id(self):
+        repo_json = {
+            "id": 1,
+            "name": "dhost-renamed",
+            "owner": {
+                "login": "dhost-project",
+            },
+            "size": 100,
+        }
+        self.repo1.update_from_json(repo_json)
+        self.assertEqual(self.repo1.github_repo, 'dhost-renamed')
 
-    # mock 'downlaod_repo' function
+    def test_update_from_json_wrong_id(self):
+        repo_json = {
+            "id": 191538244,
+            "name": "dhost-renamed",
+            "owner": {
+                "login": "dhost-project",
+            },
+            "size": 100,
+        }
+        with self.assertRaisesMessage(Exception, "The Github ID changed."):
+            self.repo1.update_from_json(repo_json)
+            self.assertNotEqual(self.repo1.extra_data['size'], 100)
+
+    @mock.patch('dhost.github.github.DjangoGithubAPI.download_repo',
+                mock.MagicMock(return_value='repo_example.tar'))
     def test_download_repo(self):
-        pass
+        self.repo1.download(user=self.u1, ref='master',
+                            path=settings.TEST_MEDIA_ROOT)
 
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
@@ -273,3 +297,23 @@ class WebhookTestCase(TestCase):
         self.assertEqual(2, Webhook.objects.count())
         self.assertEqual(webhook.id, 12345678)
         self.assertEqual(webhook.extra_data, webhook_json)
+
+
+@override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
+class GithubOptionsTestCase(TestCase):
+
+    def setUp(self):
+        self.u1 = User.objects.create(username='john', password='john')
+        self.s1 = UserSocialAuth.objects.create(
+            user=self.u1,
+            provider='github',
+            uid='1234',
+            extra_data={'access_token': 'token123'},
+        )
+        self.repo1 = Repository.objects.create(
+            id=1,
+            github_owner='dhost-project',
+            github_repo='dhost-front',
+            extra_data={'size': 52},
+        )
+        self.repo1.users.add(self.u1)

@@ -67,11 +67,16 @@ class Repository(models.Model):
         self.updated_at = timezone.now()
         self.save()
 
-    def download(self, path):
+    def download(self, user, ref, path):
         """Download repo from Github API."""
-        g = DjangoGithubAPI(social=self.owner)
-        tar_name = g.download_repo(self.github_full_name, path)
-        return tar_name
+        g = DjangoGithubAPI(user=user)
+        tar_path = g.download_repo(
+            owner=self.github_owner,
+            repo=self.github_repo,
+            ref=ref,
+            path=path,
+        )
+        return tar_path
 
     def fetch_branches(self, user):
         Branch.objects.fetch_repo_branches(self, user)
@@ -197,3 +202,13 @@ class GithubOptions(models.Model):
     class Meta:
         verbose_name = _('Dapp Github options')
         verbose_name_plural = _('Dapps Github options')
+
+    def download_repo(self):
+        # we make this call in the name of the owner, because it's automatic if
+        # for example the auto_deploy is True then the download_repo is not
+        # comming from an API call
+        user = self.dapp.owner
+        ref = self.branch.name
+        path = settings.MEDIA_ROOT
+        tar_path = self.repo.download(user=user, ref=ref, path=path)
+        return tar_path
