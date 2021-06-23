@@ -20,10 +20,7 @@ class IPFSDapp(Dapp):
         verbose_name_plural = _('IPFS Dapps')
 
     def create_deployment(self, bundle=None):
-        deployment = IPFSDeployment(
-            dapp=self,
-            bundle=bundle,
-        )
+        deployment = IPFSDeployment(dapp=self, bundle=bundle)
         return deployment
 
     def get_public_url(self):

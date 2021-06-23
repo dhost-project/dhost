@@ -10,11 +10,7 @@ DIMENSION = getattr(settings, 'AVATAR_DIMENSION', 256)
 # number of squares per rows and columns
 # over 15 the patern will start repeating itself
 SQUARE_NUMBER = getattr(settings, 'AVATAR_SQUARE_NUMBER', 12)
-BACKGROUND_COLOR = getattr(
-    settings,
-    'AVATAR_BACKGROUND_COLOR',
-    '#f2f2f2',
-)
+BACKGROUND_COLOR = getattr(settings, 'AVATAR_BACKGROUND_COLOR', '#f2f2f2')
 MARGIN = getattr(settings, 'AVATAR_MARGIN', 8)
 
 TOTAL_WIDTH = DIMENSION

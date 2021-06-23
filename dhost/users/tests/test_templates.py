@@ -37,13 +37,11 @@ class UsersTemplateTests(TestCase):
     def test_password_reset_confirm_view_invalid_token(self):
         # PasswordResetConfirmView invalid token
         client = PasswordResetConfirmClient()
-        url = reverse(
-            'password_reset_confirm',
-            kwargs={
-                'uidb64': 'Bad',
-                'token': 'Bad-Token'
-            },
-        )
+        url = reverse('password_reset_confirm',
+                      kwargs={
+                          'uidb64': 'Bad',
+                          'token': 'Bad-Token'
+                      })
         response = client.get(url)
         self.assertContains(response, 'Password reset unsuccessful')
 

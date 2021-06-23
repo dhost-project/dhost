@@ -6,13 +6,10 @@ class EmailTest(TestCase):
 
     def test_send_email(self):
         mail.outbox = []
-        mail.send_mail(
-            'Subject test',
-            'Here is the message.',
-            'from@example.com',
-            ['to@example.com'],
-            fail_silently=False,
-        )
+        mail.send_mail('Subject test',
+                       'Here is the message.',
+                       'from@example.com', ['to@example.com'],
+                       fail_silently=False)
 
         # Test that one message has been sent.
         self.assertEqual(len(mail.outbox), 1)

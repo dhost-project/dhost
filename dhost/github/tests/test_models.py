@@ -183,10 +183,8 @@ class RepositoryTestCase(TestCase):
             self.repo1.update_from_json(repo_json)
             self.assertNotEqual(self.repo1.extra_data['size'], 100)
 
-    @mock.patch(
-        'dhost.github.github.DjangoGithubAPI.download_repo',
-        mock.MagicMock(return_value='repo_example.tar'),
-    )
+    @mock.patch('dhost.github.github.DjangoGithubAPI.download_repo',
+                mock.MagicMock(return_value='repo_example.tar'))
     def test_download_repo(self):
         self.repo1.download(user=self.u1,
                             ref='master',
@@ -276,10 +274,7 @@ class WebhookTestCase(TestCase):
             extra_data={'size': 52},
         )
         self.repo1.users.add(self.u1)
-        self.webhook1 = Webhook.objects.create(
-            repo=self.repo1,
-            id=1,
-        )
+        self.webhook1 = Webhook.objects.create(repo=self.repo1, id=1)
         self.webhook_json = {
             "type": "Repository",
             "id": 12345678,

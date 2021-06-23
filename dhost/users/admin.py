@@ -18,8 +18,7 @@ class UserAdmin(auth_admin.UserAdmin):
                     'email',
                     'avatar',
                 )
-            },
-        ),
+            }),
         (
             _('Permissions'),
             {
@@ -30,7 +29,5 @@ class UserAdmin(auth_admin.UserAdmin):
                     'groups',
                     'user_permissions',
                 ),
-            },
-        ),
-        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-    )
+            }),
+        (_('Important dates'), {'fields': ('last_login', 'date_joined')}))

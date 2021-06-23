@@ -123,11 +123,9 @@ class SignupView(TitleMixin, auth_views.SuccessURLAllowedHostsMixin, FormView):
     def form_valid(self, form):
         """Security check complete. Log the user in."""
         form.save()
-        auth_login(
-            self.request,
-            form.get_user(),
-            backend='django.contrib.auth.backends.ModelBackend',
-        )
+        auth_login(self.request,
+                   form.get_user(),
+                   backend='django.contrib.auth.backends.ModelBackend')
         return HttpResponseRedirect(self.get_success_url())
 
     def get_context_data(self, **kwargs):
@@ -169,11 +167,8 @@ class AccountSettingsView(TitleMixin, FormView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        messages.add_message(
-            self.request,
-            messages.SUCCESS,
-            'An error occured, please try again later',
-        )
+        messages.add_message(self.request, messages.SUCCESS,
+                             'An error occured, please try again later')
         return super().form_invalid(form)
 
 
@@ -215,11 +210,8 @@ class AccountDeleteView(TitleMixin, TemplateView):
         """
         user = request.user
         user.delete()
-        messages.add_message(
-            request,
-            messages.SUCCESS,
-            'Account successfully deleted',
-        )
+        messages.add_message(request, messages.SUCCESS,
+                             'Account successfully deleted')
         return HttpResponseRedirect(str(self.success_url))
 
 
