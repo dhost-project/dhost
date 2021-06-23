@@ -16,8 +16,7 @@ def prepare_env():
 
     os.environ.setdefault(
         'DJANGO_SETTINGS_MODULE',
-        'dhost.settings.{DJANGO_ENV}'.format(DJANGO_ENV=DJANGO_ENV),
-    )
+        'dhost.settings.{DJANGO_ENV}'.format(DJANGO_ENV=DJANGO_ENV))
 
 
 def manage():
