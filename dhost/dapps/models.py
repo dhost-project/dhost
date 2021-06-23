@@ -6,6 +6,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from .utils import get_dapp_type
+
 
 def bundle_path():
     return os.path.join(settings.MEDIA_ROOT, 'bundle')
@@ -83,10 +85,7 @@ class Dapp(models.Model):
         raise NotImplementedError
 
     def get_dapp_type(self):
-        """Return the available dapp implementation."""
-        if hasattr(self, 'ipfsdapp'):
-            return 'ipfs'
-        return None
+        return get_dapp_type(self)
 
 
 class Bundle(models.Model):

@@ -40,55 +40,48 @@ class GithubAPI:
         headers = self.get_headers(additionnal_headers=headers)
         return url, headers
 
+    def _request_error(self, response, expected_code, url=None):
+        """Raise an exception if a status code was not expected."""
+        raise Exception(
+            'Error trying to access `{url}`, error code: {error_code} '
+            '(expected code: {expected_code}), message: {content}'.
+            format(url=url, error_code=response.status_code,
+                   expected_code=expected_code, content=response.content))
+
     def get(self, url, headers=None, code=200, full_url=None, *args, **kwargs):
         url, headers = self._prepare_request(url, headers, full_url)
         r = requests.get(url, headers=headers, *args, **kwargs)
         if r.status_code == code:
             return r.json()
-        else:
-            raise Exception(
-                'Error trying to access `{}`, error code: {}, message: {}'.
-                format(url, r.status_code, r.content))
+        self._request_error(response=r, expected_code=code, url=url)
 
     def post(self, url, data, headers=None, full_url=None, *args, **kwargs):
         url, headers = self._prepare_request(url, headers, full_url)
         r = requests.post(url, headers=headers, data=data, *args, **kwargs)
         if r.status_code == 201:
             return r.json()
-        else:
-            raise Exception(
-                'Error trying to access `{}`, error code: {}, message: {}'.
-                format(url, r.status_code, r.content))
+        self._request_error(response=r, expected_code=code, url=url)
 
     def patch(self, url, data, headers=None, full_url=None, *args, **kwargs):
         url, headers = self._prepare_request(url, headers, full_url)
         r = requests.patch(url, headers=headers, data=data, *args, **kwargs)
         if r.status_code == 200:
             return r.json()
-        else:
-            raise Exception(
-                'Error trying to access `{}`, error code: {}, message: {}'.
-                format(url, r.status_code, r.content))
+        self._request_error(response=r, expected_code=code, url=url)
 
     def head(self, url=None, headers=None, full_url=None, *args, **kwargs):
         url, headers = self._prepare_request(url, headers, full_url)
         r = requests.head(url, headers=headers, *args, **kwargs)
         if r.status_code == 200:
             return r.headers
-        else:
-            raise Exception(
-                'Error trying to access `{}`, error code: {}, message: {}'.
-                format(url, r.status_code, r.content))
+        self._request_error(response=r, expected_code=code, url=url)
 
     def delete(self, url, headers, full_url=None, *args, **kwargs):
         url, headers = self._prepare_request(url, headers, *args, **kwargs)
         r = requests.delete(url, headers=headers, *args, **kwargs)
         if r.status_code == 204:
             return r.json()
-        else:
-            raise Exception(
-                'Error trying to delete `{}`, error code: {}, message: {}'.
-                format(url, r.status_code, r.content))
+        self._request_error(response=r, expected_code=code, url=url)
 
     def request_private_repo_access(self):
         """Request access to public and private repositories hooks.
@@ -116,19 +109,18 @@ class GithubAPI:
     def list_branches(self, owner, repo):
         return self.get(f'/repos/{owner}/{repo}/branches')
 
-    def download_repo(self, owner, repo, ref):
-        """Download a repository."""
+    def download_repo(self, owner, repo, ref, path):
+        """Download a repository archive."""
         url, headers = self._prepare_request(
             f'/repos/{owner}/{repo}/tarball/{ref}')
         r = requests.get(url, headers=headers, allow_redirects=True)
         if r.status_code == 200:
-            with open(f'{owner}_{repo}.tar', 'wb') as source:
+            tar_path = f'{owner}_{repo}.tar'
+            with open(tar_path, 'wb') as source:
                 source.write(r.content)
                 source.close()
-        else:
-            raise Exception(
-                'Error trying to access `{}`, error code: {}, message: {}'.
-                format(url, r.status_code, r.content))
+            return tar_path
+        self._request_error(response=r, expected_code=200, url=url)
 
     def list_hooks(self, owner, repo):
         return self.get(f'/repos/{owner}/{repo}/hooks')
@@ -141,7 +133,6 @@ class GithubAPI:
 
     def create_hook(self, owner, repo, active=True, name='web'):
         """Create a Github repository webhook."""
-        active = active
         data = {
             'name': name,
             'config': {
