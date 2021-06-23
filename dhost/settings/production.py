@@ -1,3 +1,5 @@
+import os
+
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
@@ -5,7 +7,7 @@ from .defaults import *  # noqa
 
 DEBUG = False
 
-SECRET_KEY = env('DJANGO_SECRET_KEY')  # noqa
+SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 CORS_ALLOW_ALL_ORIGINS = False
 
