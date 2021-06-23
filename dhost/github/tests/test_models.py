@@ -176,7 +176,8 @@ class RepositoryTestCase(TestCase):
     @mock.patch('dhost.github.github.DjangoGithubAPI.download_repo',
                 mock.MagicMock(return_value='repo_example.tar'))
     def test_download_repo(self):
-        self.repo1.download(user=self.u1, ref='master',
+        self.repo1.download(user=self.u1,
+                            ref='master',
                             path=settings.TEST_MEDIA_ROOT)
 
 

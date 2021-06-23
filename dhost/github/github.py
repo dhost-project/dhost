@@ -44,9 +44,11 @@ class GithubAPI:
         """Raise an exception if a status code was not expected."""
         raise Exception(
             'Error trying to access `{url}`, error code: {error_code} '
-            '(expected code: {expected_code}), message: {content}'.
-            format(url=url, error_code=response.status_code,
-                   expected_code=expected_code, content=response.content))
+            '(expected code: {expected_code}), message: {content}'.format(
+                url=url,
+                error_code=response.status_code,
+                expected_code=expected_code,
+                content=response.content))
 
     def get(self, url, headers=None, code=200, full_url=None, *args, **kwargs):
         url, headers = self._prepare_request(url, headers, full_url)
