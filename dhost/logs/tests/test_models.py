@@ -5,7 +5,7 @@ from django.test import TestCase, override_settings
 
 from dhost.dapps.models import Dapp
 
-from ..models import DAPP_ADDITION, APILog
+from ..models import APILog, ActionFlags
 
 User = get_user_model()
 
@@ -23,7 +23,7 @@ class APILogTestCase(TestCase):
             dapp=self.dapp1,
             content_type=ContentType.objects.get_for_model(self.dapp1),
             object_id=self.dapp1.pk,
-            action_flag=DAPP_ADDITION,
+            action_flag=ActionFlags.DAPP_ADDITION,
             change_message='test',
         )
         self.assertTrue(isinstance(log, APILog))
