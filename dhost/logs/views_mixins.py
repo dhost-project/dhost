@@ -48,11 +48,7 @@ class APILogViewSetMixin:
         if self.log_on_create:
             obj = self.obj
             action_flag = self.get_create_action_flag(obj)
-            self.log_action(
-                request,
-                obj=obj,
-                action_flag=action_flag,
-            )
+            self.log_action(request, obj=obj, action_flag=action_flag)
         return response
 
     def get_update_action_flag(self):
@@ -73,11 +69,9 @@ class APILogViewSetMixin:
     def update(self, request, *args, **kwargs):
         response = super().update(request, *args, **kwargs)
         if self.log_on_update:
-            self.log_action(
-                request,
-                obj=self.get_object(),
-                action_flag=self.get_update_action_flag(),
-            )
+            self.log_action(request,
+                            obj=self.get_object(),
+                            action_flag=self.get_update_action_flag())
         return response
 
     def get_partial_update_action_flag(self):
@@ -92,11 +86,9 @@ class APILogViewSetMixin:
     def partial_update(self, request, *args, **kwargs):
         response = super().partial_update(request, *args, **kwargs)
         if self.log_on_partial_update:
-            self.log_action(
-                request,
-                obj=self.get_object(),
-                action_flag=self.get_partial_update_action_flag(),
-            )
+            self.log_action(request,
+                            obj=self.get_object(),
+                            action_flag=self.get_partial_update_action_flag())
         return response
 
     def get_destroy_action_flag(self):
@@ -114,11 +106,9 @@ class APILogViewSetMixin:
     def destroy(self, request, *args, **kwargs):
         response = super().destroy(request, *args, **kwargs)
         if self.log_on_destroy:
-            self.log_action(
-                request,
-                obj=self.get_object(),
-                action_flag=self.get_destroy_action_flag(),
-            )
+            self.log_action(request,
+                            obj=self.get_object(),
+                            action_flag=self.get_destroy_action_flag())
         return response
 
     @classmethod
@@ -142,10 +132,8 @@ class APILogViewSetMixin:
         return ContentType.objects.get_for_model(obj)
 
     def log_action(self, request, obj, action_flag, dapp=None):
-        return APILog.objects.create(
-            user=request.user,
-            content_type=self.get_obj_model(obj),
-            object_id=obj.pk,
-            action_flag=action_flag,
-            dapp=self.get_dapp_object(obj, dapp),
-        )
+        return APILog.objects.create(user=request.user,
+                                     content_type=self.get_obj_model(obj),
+                                     object_id=obj.pk,
+                                     action_flag=action_flag,
+                                     dapp=self.get_dapp_object(obj, dapp))
