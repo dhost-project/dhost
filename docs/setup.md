@@ -9,12 +9,14 @@ The `Dockerfile` file is a great way to start the site with Docker.
 The `Dockerfile_dev` can spin up a server with demo data.
 
 Build the image.
-```
+
+```shell
 docker build . -t 'api' -f Dockerfile_dev
 ```
 
 Run it.
-```
+
+```shell
 docker run -p 8000:8000 api
 ```
 
@@ -27,28 +29,33 @@ Login with username: `admin` and password: `admin` to make requests on the brows
 For development you can use a virtual environment.
 
 Create the environment.
-```
+
+```shell
 python3.9 -m venv venv
 ```
 
 Activate it (on linux).
-```
+
+```shell
 source ./venv/bin/activate
 ```
 
 Activate it (on windows cmd).
-```
+
+```cmd
 .\venv\Script\activate.bat
 ```
 
 Install the requirements.
-```
+
+```shell
 pip install -r requirements.txt
 pip install -r requirements_dev.txt
 ```
 
 You can now run the development server with:
-```
+
+```shell
 ./manage.py runserver
 ```
 
@@ -57,12 +64,14 @@ You can now run the development server with:
 Their is a fixture containing some data that can be loaded inside the database for and easy demo. The fixture is located at `dhost/demo/fixture.json`.
 
 To load the fixture inside the current database use:
-```
+
+```shell
 ./manage.py loaddata dhost/demo/fixture.json
 ```
 
 If you don't wan't to load the data in the database but still want to demo the app you can use the [testserver](https://docs.djangoproject.com/en/3.2/ref/django-admin/#testserver) command and load the fixture inside it.
-```
+
+```shell
 ./manage.py testserver dhost/demo/fixture.json
 ```
 
@@ -71,12 +80,14 @@ If you restart the test server all data will be earased and reloaded form the fi
 ### Pre-commit hooks
 
 You also the pre-commit git hook to run checks before every commits with:
-```
+
+```shell
 pre-commit install
 ```
 
 Run pre-commit hooks.
-```
+
+```shell
 pre-commit run --all-files
 ```
 
@@ -87,24 +98,28 @@ Now every time you commit the checks will run `yapf`, `flake8` and other usefull
 ### Tests
 
 You can and should test the code, you can do so with:
-```
+
+```shell
 ./manage.py test
 ```
 
 #### Coverage
 
 You should also check the `coverage` package wich generate a report about the tests coverage of the app, use it with:
-```
+
+```shell
 coverage run manage.py test
 ```
 
 To see the report use:
-```
+
+```shell
 coverage report -m
 ```
 
 To see the report in HTML format use:
-```
+
+```shell
 coverage html
 ```
 
@@ -146,17 +161,20 @@ You should check the `docs/environment_variables.md` file for more informations 
 You should check the [Django's deployement guide](https://docs.djangoproject.com/en/3.1/howto/deployment/).
 
 Create the environment.
-```
+
+```shell
 python3.9 -m venv venv
 ```
 
 Activate it (on linux).
-```
+
+```shell
 source ./venv/bin/activate
 ```
 
 Install the requirements.
-```
+
+```shell
 pip install -r requirements.txt
 ```
 
@@ -164,17 +182,14 @@ At this point you should check the `docs/environment_variables.md` file for more
 Mainly `DEBUG`, `SECRET_KEY` and `DATABASE_URL`.
 
 Migrate the database.
-```
+
+```shell
 ./manage.py migrate
 ```
 
-We will need to compile the translation `.po` files located in the `locale` folder with:
-```
-./manage.py compilemessages
-```
-
 Then you must collect static files with:
-```
+
+```shell
 ./manage.py collectstatic
 ```
 
@@ -183,7 +198,8 @@ This will create a folder containing all the static files raidy to be served by 
 To serve your static files you can setup a server, or use an AWS S3 bucket, set the permissions to public and collect them there.
 
 Then you will need to create a super user to access the admin page:
-```
+
+```shell
 ./manage.py createsuperuser
 ```
 
