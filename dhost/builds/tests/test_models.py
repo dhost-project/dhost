@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from ..models import BuildOptions
+from dhost.builds.models import BuildOptions
 
 
 class BuildModelTest(TestCase):

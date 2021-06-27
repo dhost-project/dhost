@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.management import CommandError, call_command
 from django.test import TestCase, override_settings, tag
 
-from ..models import User
+from dhost.users.models import User
 
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)

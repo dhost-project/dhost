@@ -2,8 +2,8 @@ from django.conf import settings
 from django.forms.fields import Field
 from django.test import TestCase, override_settings, tag
 
-from ..forms import AccountSettingsForm, SignupForm
-from ..models import User
+from dhost.users.forms import AccountSettingsForm, SignupForm
+from dhost.users.models import User
 
 
 class TestDataMixin:

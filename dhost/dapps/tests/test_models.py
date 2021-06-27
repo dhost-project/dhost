@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings, tag
 
-from ..models import Dapp
+from dhost.dapps.models import Dapp
 
 User = get_user_model()
 

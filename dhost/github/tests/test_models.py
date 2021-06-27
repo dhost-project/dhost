@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings
 from social_django.models import UserSocialAuth
 
-from ..models import Branch, Repository, Webhook
+from dhost.github.models import Branch, Repository, Webhook
 
 User = get_user_model()
 
