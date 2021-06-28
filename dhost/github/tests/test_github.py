@@ -31,9 +31,6 @@ class GithubAPITestCase(TestCase):
         self.assertIsNotNone(headers['Authorization'])
         self.assertEqual(url, 'https://api.github.com/test_url')
 
-    def test__request_error(self):
-        pass
-
     @mock.patch('requests.get')
     def test_get(self, mock_get):
         mock_get.return_value = mock.Mock(status_code=200, json=lambda: {})
@@ -165,6 +162,7 @@ class GithubAPITestCase(TestCase):
         mock.assert_called_once_with('/repos/octocat/Hello-World/branches')
 
     def test_download_repo(self):
+        # TODO
         pass
 
     @mock.patch('dhost.github.github.GithubAPI.get')
