@@ -34,23 +34,115 @@ class GithubAPITestCase(TestCase):
     def test__request_error(self):
         pass
 
-    def test_get(self):
-        pass
+    @mock.patch('requests.get')
+    def test_get(self, mock_get):
+        mock_get.return_value = mock.Mock(status_code=200, json=lambda: {})
+        self.g.get('/test')
+        mock_get.assert_called_once_with(
+            'https://api.github.com/test',
+            headers={
+                'Accept': 'application/vnd.github.v3+json',
+                'Authorization': 'token github_token'
+            })
 
-    def test_post(self):
-        pass
+    @mock.patch('requests.get')
+    def test_get_404_status(self, mock_get):
+        mock_get.return_value = mock.Mock(status_code=404)
+        with self.assertRaises(Exception) as context:
+            self.g.get('/test')
+        self.assertIn('Error trying to access `https://api.github.com/test`',
+                      str(context.exception))
 
-    def test_patch(self):
-        pass
+    @mock.patch('requests.get')
+    def test_get_no_json(self, mock_get):
+        mock_get.return_value = mock.Mock(status_code=200)
+        self.g.get('/test', json=False)
+        mock_get.assert_called_once_with(
+            'https://api.github.com/test',
+            headers={
+                'Accept': 'application/vnd.github.v3+json',
+                'Authorization': 'token github_token'
+            })
 
-    def test_head(self):
-        pass
+    @mock.patch('requests.post')
+    def test_post(self, mock_post):
+        mock_post.return_value = mock.Mock(status_code=201, json=lambda: {})
+        self.g.post('/test', data={'test_data': 'test'})
+        mock_post.assert_called_once_with(
+            'https://api.github.com/test',
+            headers={
+                'Accept': 'application/vnd.github.v3+json',
+                'Authorization': 'token github_token'
+            },
+            data={'test_data': 'test'})
 
-    def test_delete(self):
-        pass
+    @mock.patch('requests.post')
+    def test_post_404_status(self, mock_post):
+        mock_post.return_value = mock.Mock(status_code=404)
+        with self.assertRaises(Exception) as context:
+            self.g.post('/test', data={'test_data': 'test'})
+        self.assertIn('Error trying to access `https://api.github.com/test`',
+                      str(context.exception))
 
+    @mock.patch('requests.patch')
+    def test_patch(self, mock_patch):
+        mock_patch.return_value = mock.Mock(status_code=200, json=lambda: {})
+        self.g.patch('/test', data={'test_data': 'test'})
+        mock_patch.assert_called_once_with(
+            'https://api.github.com/test',
+            headers={
+                'Accept': 'application/vnd.github.v3+json',
+                'Authorization': 'token github_token'
+            },
+            data={'test_data': 'test'})
+
+    @mock.patch('requests.patch')
+    def test_patch_404_status(self, mock_patch):
+        mock_patch.return_value = mock.Mock(status_code=404)
+        with self.assertRaises(Exception) as context:
+            self.g.patch('/test', data={'test_data': 'test'})
+        self.assertIn('Error trying to access `https://api.github.com/test`',
+                      str(context.exception))
+
+    @mock.patch('requests.get')
+    def test_head(self, mock_get):
+        mock_get.return_value = mock.Mock(status_code=200,
+                                          headers={'test_head': 'test'})
+        self.g.head('/test')
+        mock_get.assert_called_once_with(
+            'https://api.github.com/test',
+            headers={
+                'Accept': 'application/vnd.github.v3+json',
+                'Authorization': 'token github_token'
+            },
+        )
+
+    @mock.patch('requests.delete')
+    def test_delete(self, mock_delete):
+        mock_delete.return_value = mock.Mock(status_code=204, json=lambda: {})
+        self.g.delete('/test')
+        mock_delete.assert_called_once_with(
+            'https://api.github.com/test',
+            headers={
+                'Accept': 'application/vnd.github.v3+json',
+                'Authorization': 'token github_token'
+            },
+        )
+
+    @mock.patch('requests.delete')
+    def test_delete_404_status(self, mock_delete):
+        mock_delete.return_value = mock.Mock(status_code=404)
+        with self.assertRaises(Exception) as context:
+            self.g.delete('/test')
+        self.assertIn('Error trying to access `https://api.github.com/test`',
+                      str(context.exception))
+
+    @mock.patch(
+        'dhost.github.github.GithubAPI.head',
+        mock.MagicMock(return_value={'X-OAuth-Scopes': 'oauth_test_scope'}))
     def test_get_scopes(self):
-        pass
+        oauth_scopes = self.g.get_scopes('octocat')
+        self.assertEqual(oauth_scopes, 'oauth_test_scope')
 
     @mock.patch('dhost.github.github.GithubAPI.get')
     def test_get_user(self, mock):

@@ -10,6 +10,7 @@ User = get_user_model()
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
 class DjangoGithubAPITestCase(TestCase):
+
     def setUp(self):
         self.u = User.objects.create(username='john', password='john')
         self.s = UserSocialAuth.objects.create(
