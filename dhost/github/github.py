@@ -27,17 +27,15 @@ class GithubAPI:
         token_type = self.GITHUB_TOKEN_TYPE
         return {'Authorization': '{} {}'.format(token_type, token)}
 
-    def _get_headers(self, additionnal_headers=None):
+    def get_headers(self, additionnal_headers=None):
         headers = {'Accept': 'application/vnd.github.v3+json'}
         headers.update(self._get_authorization_header())
-        headers.update(additionnal_headers)
+        if additionnal_headers:
+            headers.update(additionnal_headers)
         return headers
 
-    def get_headers(self, additionnal_headers=None):
-        return self._get_headers(additionnal_headers)
-
-    def _prepare_request(self, url=None, headers=None, full_url=None):
-        url = full_url if full_url else self.GITHUB_API_URL + url
+    def _prepare_request(self, url, headers=None):
+        url = self.GITHUB_API_URL + url
         headers = self.get_headers(additionnal_headers=headers)
         return url, headers
 
@@ -52,46 +50,40 @@ class GithubAPI:
                 content=response.content,
             ))
 
-    def get(self, url, headers=None, code=200, full_url=None, *args, **kwargs):
-        url, headers = self._prepare_request(url, headers, full_url)
+    def get(self, url, headers=None, code=200, json=True, *args, **kwargs):
+        url, headers = self._prepare_request(url, headers)
         r = requests.get(url, headers=headers, *args, **kwargs)
         if r.status_code == code:
-            return r.json()
+            if json:
+                return r.json()
+            else:
+                return r
         self._request_error(response=r, expected_code=code, url=url)
 
-    def post(self, url, data, headers=None, full_url=None, *args, **kwargs):
-        url, headers = self._prepare_request(url, headers, full_url)
+    def post(self, url, data, headers=None, *args, **kwargs):
+        url, headers = self._prepare_request(url, headers)
         r = requests.post(url, headers=headers, data=data, *args, **kwargs)
         if r.status_code == 201:
             return r.json()
         self._request_error(response=r, expected_code=201, url=url)
 
-    def patch(self, url, data, headers=None, full_url=None, *args, **kwargs):
-        url, headers = self._prepare_request(url, headers, full_url)
+    def patch(self, url, data, headers=None, *args, **kwargs):
+        url, headers = self._prepare_request(url, headers)
         r = requests.patch(url, headers=headers, data=data, *args, **kwargs)
         if r.status_code == 200:
             return r.json()
         self._request_error(response=r, expected_code=200, url=url)
 
-    def head(self, url=None, headers=None, full_url=None, *args, **kwargs):
-        url, headers = self._prepare_request(url, headers, full_url)
-        r = requests.head(url, headers=headers, *args, **kwargs)
-        if r.status_code == 200:
-            return r.headers
-        self._request_error(response=r, expected_code=200, url=url)
+    def head(self, url, headers=None, *args, **kwargs):
+        r = self.get(url=url, headers=headers, json=False, *args, **kwargs)
+        return r.headers
 
-    def delete(self, url, headers, full_url=None, *args, **kwargs):
-        url, headers = self._prepare_request(url, headers, *args, **kwargs)
+    def delete(self, url, headers=None, *args, **kwargs):
+        url, headers = self._prepare_request(url, headers)
         r = requests.delete(url, headers=headers, *args, **kwargs)
         if r.status_code == 204:
             return r.json()
         self._request_error(response=r, expected_code=204, url=url)
-
-    def request_private_repo_access(self):
-        """Request access to public and private repositories hooks.
-        with the scope: `read:repo_hook`.
-        """
-        pass
 
     def get_scopes(self, username):
         """Return oauth scopes."""
@@ -135,12 +127,12 @@ class GithubAPI:
     def get_hook_config(self, owner, repo, hook_id):
         return self.get(f'/repos/{owner}/{repo}/hooks/{hook_id}/config')
 
-    def create_hook(self, owner, repo, active=True, name='web'):
+    def create_hook(self, owner, repo, webhook_url, active=True, name='web'):
         """Create a Github repository webhook."""
         data = {
             'name': name,
             'config': {
-                'url': self.GITHUB_WEBHOOK_URL,
+                'url': webhook_url,
                 'insecure_ssl': False,
             },
         }
