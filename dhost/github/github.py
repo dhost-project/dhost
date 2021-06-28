@@ -50,11 +50,14 @@ class GithubAPI:
                 content=response.content,
             ))
 
-    def get(self, url, headers=None, code=200, *args, **kwargs):
+    def get(self, url, headers=None, code=200, json=True, *args, **kwargs):
         url, headers = self._prepare_request(url, headers)
         r = requests.get(url, headers=headers, *args, **kwargs)
         if r.status_code == code:
-            return r.json()
+            if json:
+                return r.json()
+            else:
+                return r
         self._request_error(response=r, expected_code=code, url=url)
 
     def post(self, url, data, headers=None, *args, **kwargs):
@@ -71,25 +74,16 @@ class GithubAPI:
             return r.json()
         self._request_error(response=r, expected_code=200, url=url)
 
-    def head(self, url=None, headers=None, *args, **kwargs):
-        url, headers = self._prepare_request(url, headers)
-        r = requests.head(url, headers=headers, *args, **kwargs)
-        if r.status_code == 200:
-            return r.headers
-        self._request_error(response=r, expected_code=200, url=url)
+    def head(self, url, headers=None, *args, **kwargs):
+        r = self.get(url=url, headers=headers, json=False, *args, **kwargs)
+        return r.headers
 
-    def delete(self, url, headers, *args, **kwargs):
-        url, headers = self._prepare_request(url, headers, *args, **kwargs)
+    def delete(self, url, headers=None, *args, **kwargs):
+        url, headers = self._prepare_request(url, headers)
         r = requests.delete(url, headers=headers, *args, **kwargs)
         if r.status_code == 204:
             return r.json()
         self._request_error(response=r, expected_code=204, url=url)
-
-    def request_private_repo_access(self):
-        """Request access to public and private repositories hooks.
-        with the scope: `read:repo_hook`.
-        """
-        pass
 
     def get_scopes(self, username):
         """Return oauth scopes."""
