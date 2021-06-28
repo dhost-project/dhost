@@ -190,6 +190,18 @@ class RepositoryTestCase(TestCase):
                             ref='master',
                             path=settings.TEST_MEDIA_ROOT)
 
+    @mock.patch('dhost.github.managers.BranchManager.fetch_repo_branches')
+    def test_fetch_branches(self, mock):
+        self.repo1.fetch_branches(self.u1)
+        mock.assert_called_once_with(self.repo1, self.u1)
+
+    @mock.patch('dhost.github.managers.WebhookManager.create_webhook')
+    def test_create_webhook(self, mock):
+        mock.return_value = 'webhook1'
+        webhook = self.repo1.create_webhook(name='test_name')
+        mock.assert_called_once_with(name='test_name', repo=self.repo1.id)
+        self.assertEqual(webhook, 'webhook1')
+
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
 class BranchTestCase(TestCase):
@@ -304,6 +316,23 @@ class WebhookTestCase(TestCase):
                                                    webhook_json=webhook_json)
         self.assertEqual(2, Webhook.objects.count())
         self.assertEqual(webhook.id, 12345678)
+        self.assertEqual(webhook.extra_data, webhook_json)
+
+    def test_update_or_create_from_json_doesnt_exist(self):
+        webhook_json = self.webhook_json
+        webhook = Webhook.objects.update_or_create_from_json(
+            webhook_json=webhook_json, repo=self.repo1)
+        self.assertEqual(2, Webhook.objects.count())
+        self.assertEqual(webhook.id, webhook_json['id'])
+        self.assertEqual(webhook.extra_data, webhook_json)
+
+    def test_update_or_create_from_json_exist(self):
+        webhook_json = self.webhook_json
+        webhook_json.update({'id': 1})
+        webhook = Webhook.objects.update_or_create_from_json(
+            webhook_json=webhook_json, repo=self.repo1)
+        self.assertEqual(1, Webhook.objects.count())
+        self.assertEqual(webhook.id, webhook_json['id'])
         self.assertEqual(webhook.extra_data, webhook_json)
 
 

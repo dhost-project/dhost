@@ -130,8 +130,8 @@ class BranchManager(models.Manager):
 
 class WebhookManager(models.Manager):
 
-    def create_github_webhook(self, repo, owner, name='web'):
-        g = DjangoGithubAPI()
+    def create_webhook(self, repo, owner, user, name='web'):
+        g = DjangoGithubAPI(user=user)
         webhook_json = g.create_webhook(owner=owner, repo=repo, name=name)
         return self.create_from_json(repo=repo, webhook_json=webhook_json)
 

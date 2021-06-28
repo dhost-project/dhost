@@ -85,7 +85,7 @@ class Repository(models.Model):
     def create_webhook(self, **kwargs):
         """Create a webhook object linked to this Github repo."""
         kwargs.update({'repo': self.id})
-        Webhook.objects.create_github_webhook(**kwargs)
+        return Webhook.objects.create_webhook(**kwargs)
 
 
 class Branch(models.Model):
