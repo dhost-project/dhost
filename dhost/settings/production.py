@@ -3,6 +3,8 @@ import os
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
+from dhost import __version__
+
 from .defaults import *  # noqa
 
 DEBUG = False
@@ -71,6 +73,7 @@ if AWS_MEDIA_BUCKET_NAME:
     DEFAULT_FILE_STORAGE = 'dhost.core.storages.S3MediaStorage'
 
 # Sentry
+# https://docs.sentry.io/platforms/python/guides/django/
 SENTRY_DSN = env('SENTRY_DSN')  # noqa
 
 if SENTRY_DSN:
@@ -79,4 +82,5 @@ if SENTRY_DSN:
         integrations=[DjangoIntegration()],
         traces_sample_rate=1.0,
         send_default_pii=True,
+        release=__version__,
     )
