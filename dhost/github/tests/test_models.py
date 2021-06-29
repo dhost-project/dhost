@@ -327,6 +327,7 @@ class WebhookTestCase(TestCase):
         self.assertEqual(webhook.extra_data, webhook_json)
 
     def test_update_or_create_from_json_exist(self):
+        # test `update_or_create_from_json` with an `id` already present
         webhook_json = self.webhook_json
         webhook_json.update({'id': 1})
         webhook = Webhook.objects.update_or_create_from_json(

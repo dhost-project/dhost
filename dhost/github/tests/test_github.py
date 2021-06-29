@@ -21,7 +21,7 @@ class GithubAPITestCase(TestCase):
         self.assertIsNotNone(headers['Accept'])
         self.assertIsNotNone(headers['Authorization'])
 
-    def test_get_headers_additionnal_headers(self):
+    def test_get_headers_with_additionnal_headers(self):
         headers = self.g.get_headers({'Add': 'additionnal_headers'})
         self.assertIsNotNone(headers['Add'])
 
