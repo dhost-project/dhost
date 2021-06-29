@@ -123,6 +123,12 @@ class RepositoryTestCase(TestCase):
         # test that the new repo was added
         self.assertEqual(Repository.objects.get(id=3).github_repo, "repo_3")
 
+    def test_remove_unavailable_list_empty(self):
+        Repository.objects.remove_unavailable_list([], self.u1)
+        # if the list is empty, meaning that he doesn't have access to any
+        # Github repos, then he should not be in any repo's `users`
+        self.assertEqual(0, Repository.objects.filter(users=self.u1).count())
+
     @mock.patch(
         'dhost.github.github.DjangoGithubAPI.get_repo',
         mock.MagicMock(
@@ -266,6 +272,18 @@ class BranchTestCase(TestCase):
         self.assertEqual(2, Branch.objects.count())
         self.assertEqual(branch.name, 'dev')
         self.assertEqual(branch.extra_data, branch_json)
+
+    def test_remove_unavailable_list_present(self):
+        branch_list = [{'name': 'master'}]
+        Branch.objects.remove_unavailable_list(branch_list, self.repo1)
+        self.assertEqual(1, Branch.objects.all().count())
+
+    def test_remove_unavailable_list_not_present(self):
+        branch_list = [{'name': 'dev'}]
+        Branch.objects.remove_unavailable_list(branch_list, self.repo1)
+        self.assertEqual(0, self.repo1.branches.all().count())
+        # not only remove the link bu also delete the object
+        self.assertEqual(0, Branch.objects.all().count())
 
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)

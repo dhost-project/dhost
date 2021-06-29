@@ -33,6 +33,11 @@ def serialize_webhook(webhook_json):
 class RepositoryManager(models.Manager):
 
     def fetch_all(self, user):
+        """
+        Update every user's repositories, create if they don't exist, update
+        them if they do, and remove the user form the repo if it's not
+        available anymore.
+        """
         g = DjangoGithubAPI(user=user)
         repo_list = g.list_repos()
         for repo in repo_list:
@@ -56,7 +61,10 @@ class RepositoryManager(models.Manager):
             # available anymore and thus the user should not be linked to that
             # repo anymore.
             if repo_obj.id not in repo_id_list:
-                repo_obj.remove_user(user)
+                self.remove_unavailable(repo=repo_obj, user=user)
+
+    def remove_unavailable(self, repo, user):
+        repo.remove_user(user)
 
     def create_from_json(self, repo_json, user):
         """Create a `Repository` from a Github API response."""
@@ -86,28 +94,32 @@ class RepositoryManager(models.Manager):
 class BranchManager(models.Manager):
 
     def fetch_repo_branches(self, repo, user):
-        # TODO remove branches that are not present in the response because
-        # they are either deleted or inavailable
         g = DjangoGithubAPI(user=user)
         branch_list = g.list_branches(owner=repo.github_owner,
                                       repo=repo.github_repo)
         for branch in branch_list:
             self.update_or_create_from_json(repo, branch)
         self.remove_unavailable_list(branch_list, repo)
-        return branch_list
 
     def remove_unavailable_list(self, branch_list, repo):
         """
         Check and remove branch from repo if it exist in the DB and not in the
         list.
         """
-        # TODO
-        pass
+        # Create a list of branches name gathered during the Github API call
+        branch_name_list = [r['name'] for r in branch_list]
 
-    def remove_unavailable(self, branch, repo):
-        """Remove branch from repo."""
-        # TODO
-        pass
+        # Get all the repo's branches
+        branch_obj_list = repo.branches.all()
+
+        for branch_obj in branch_obj_list:
+            # If the branch object is not present in the `branch_name_list`
+            # it's not available anymore and thus the user should be deleted
+            if branch_obj.name not in branch_name_list:
+                self.remove_unavailable(branch_obj)
+
+    def remove_unavailable(self, branch):
+        return branch.delete()
 
     def create_from_json(self, repo, branch_json):
         data = self.serialize(branch_json)
