@@ -285,6 +285,34 @@ class BranchTestCase(TestCase):
         # not only remove the link bu also delete the object
         self.assertEqual(0, Branch.objects.all().count())
 
+    @mock.patch(
+        'dhost.github.github.DjangoGithubAPI.list_branches',
+        mock.MagicMock(return_value=[
+            {
+                "name": "master",
+                "extra": "test",
+            },
+            {
+                "name": "dev",
+                "extra": "test_dev",
+            },
+        ]),
+    )
+    def test_fetch_repo_branches(self):
+        Branch.objects.fetch_repo_branches(self.repo1, self.u1)
+        # 2 because 1 already exist, and 3 is added but one has the same name
+        # as an already existing repo so it will be updated instead.
+        self.assertEqual(2, self.repo1.branches.all().count())
+        # test that the branch wich already existed was updated
+        self.assertEqual(
+            Branch.objects.get(name='master', repo=self.repo1).extra_data, {
+                "name": "master",
+                "extra": "test"
+            })
+        # test that the new branch was added
+        self.assertEqual(
+            Branch.objects.get(name='dev', repo=self.repo1).name, 'dev')
+
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
 class WebhookTestCase(TestCase):
@@ -353,6 +381,19 @@ class WebhookTestCase(TestCase):
         self.assertEqual(1, Webhook.objects.count())
         self.assertEqual(webhook.id, webhook_json['id'])
         self.assertEqual(webhook.extra_data, webhook_json)
+
+    @mock.patch(
+        'dhost.github.github.DjangoGithubAPI.create_hook',
+        mock.MagicMock(return_value={
+            'id': 2,
+            'name': 'test_name',
+            'active': True,
+        }),
+    )
+    def test_create_webhook(self):
+        webhook = Webhook.objects.create_webhook(repo=self.repo1, user=self.u1,
+                                                 name='test_name')
+        self.assertEqual(webhook.name, 'test_name')
 
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)

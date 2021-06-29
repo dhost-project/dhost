@@ -114,7 +114,7 @@ class BranchManager(models.Manager):
 
         for branch_obj in branch_obj_list:
             # If the branch object is not present in the `branch_name_list`
-            # it's not available anymore and thus the user should be deleted
+            # it's not available anymore and thus the branch should be deleted
             if branch_obj.name not in branch_name_list:
                 self.remove_unavailable(branch_obj)
 
@@ -142,9 +142,10 @@ class BranchManager(models.Manager):
 
 class WebhookManager(models.Manager):
 
-    def create_webhook(self, repo, owner, user, name='web'):
+    def create_webhook(self, repo, user, name='web'):
         g = DjangoGithubAPI(user=user)
-        webhook_json = g.create_webhook(owner=owner, repo=repo, name=name)
+        webhook_json = g.create_hook(owner=repo.github_owner,
+                                        repo=repo.github_repo, name=name)
         return self.create_from_json(repo=repo, webhook_json=webhook_json)
 
     def create_from_json(self, webhook_json, repo):
