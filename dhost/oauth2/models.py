@@ -1,7 +1,7 @@
 from django.db import models
 from oauth2_provider.models import AbstractApplication
 
-from dhost.users.utils import avatar_generator
+from dhost.utils.avatar import avatar_generator
 
 
 class Application(AbstractApplication):

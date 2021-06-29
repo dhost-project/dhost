@@ -19,15 +19,15 @@ ROWS = SQUARE_NUMBER
 COLS = SQUARE_NUMBER
 
 
-def avatar_generator(username: str):
+def avatar_generator(input_string: str):
     """
-    This will generate an image based on the hash of the username
+    This will generate an image based on the hash of the input_string
     """
 
     canvas = Image.new('RGB', (TOTAL_WIDTH, TOTAL_HEIGHT), BACKGROUND_COLOR)
     draw = ImageDraw.Draw(canvas)
 
-    h = hashlib.md5(username.encode('utf-8')).hexdigest()
+    h = hashlib.md5(input_string.encode('utf-8')).hexdigest()
     bin_hash = bin(int(h, 16))[2:].zfill(8)
 
     # create matrix
@@ -69,7 +69,7 @@ def avatar_generator(username: str):
     stream = BytesIO()
     canvas.save(stream, EXTENSION)
 
-    avatar_name = '{}.{}'.format(username, EXTENSION)
+    avatar_name = '{}.{}'.format(input_string, EXTENSION)
     avatar = File(stream, name=avatar_name)
 
     return avatar
