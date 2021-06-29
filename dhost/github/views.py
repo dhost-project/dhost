@@ -19,9 +19,8 @@ class RepositoryViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         """
-        Overwriting `get_queryset` allow us to return 404 instead of return 403
-        when the repo exist but the user doesn't have access (because it's not
-        his for example).
+        Return 404 instead of 403 when the repo exist but the user doesn't have
+        access.
         """
         queryset = super().get_queryset()
         return queryset.filter(users=self.request.user)
