@@ -1,6 +1,8 @@
 """
 A wrapper for the Github REST API with OAuth
 """
+import os
+
 import requests
 
 from .utils import get_token_from_github_account, get_user_github_account
@@ -105,18 +107,27 @@ class GithubAPI:
     def list_branches(self, owner, repo):
         return self.get(f'/repos/{owner}/{repo}/branches')
 
-    def download_repo(self, owner, repo, ref, path):
+    def download_repo(self, owner, repo, ref, path, archive_name=None):
         """Download a repository archive."""
-        url, headers = self._prepare_request(
-            f'/repos/{owner}/{repo}/tarball/{ref}')
-        r = requests.get(url, headers=headers, allow_redirects=True)
-        if r.status_code == 200:
-            tar_path = f'{owner}_{repo}.tar'
-            with open(tar_path, 'wb') as source:
-                source.write(r.content)
-                source.close()
-            return tar_path
-        self._request_error(response=r, expected_code=200, url=url)
+        r = self.get(f'/repos/{owner}/{repo}/tarball/{ref}',
+                     json=False,
+                     allow_redirects=True)
+
+        archive_name = repo if archive_name is None else archive_name
+
+        # The archive path is: /<path>/<repo>.tar
+        tar_path = os.path.join(path, archive_name + '.tar')
+
+        # Create the folder if it doesn't exists already
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+        # write to the archive file
+        with open(tar_path, 'wb') as source:
+            source.write(r.content)
+            source.close()
+
+        return tar_path
 
     def list_hooks(self, owner, repo):
         return self.get(f'/repos/{owner}/{repo}/hooks')

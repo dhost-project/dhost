@@ -1,3 +1,5 @@
+import os
+
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
@@ -68,14 +70,14 @@ class Repository(models.Model):
         self.updated_at = timezone.now()
         self.save()
 
-    def download(self, user, ref, path):
+    def download(self, user, ref, base_path):
         """Download repo from Github API."""
         g = DjangoGithubAPI(user=user)
         tar_path = g.download_repo(
             owner=self.github_owner,
             repo=self.github_repo,
             ref=ref,
-            path=path,
+            path=os.path.join(base_path, self.github_repo),
         )
         return tar_path
 
@@ -182,10 +184,7 @@ class GithubOptions(models.Model):
         on_delete=models.CASCADE,
         primary_key=True,
     )
-    repo = models.ForeignKey(
-        Repository,
-        on_delete=models.CASCADE,
-    )
+    repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
     branch = models.ForeignKey(Branch, null=True, on_delete=models.SET_NULL)
     auto_deploy = models.BooleanField(
         default=False,
@@ -213,6 +212,7 @@ class GithubOptions(models.Model):
         # comming from an API call
         user = self.dapp.owner
         ref = self.branch.name
-        path = settings.MEDIA_ROOT
-        tar_path = self.repo.download(user=user, ref=ref, path=path)
+        # TODO replace with another storage (something like `ARCHIVE_ROOT`)
+        base_path = settings.MEDIA_ROOT
+        tar_path = self.repo.download(user=user, ref=ref, base_path=base_path)
         return tar_path
