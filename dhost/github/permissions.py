@@ -11,6 +11,3 @@ class HasGithubLinked(permissions.BasePermission):
             if user_has_github_account(request.user):
                 return True
         return False
-
-    def has_object_permission(self, request, view, obj):
-        return obj.users.filter(id=request.user.id).exists()

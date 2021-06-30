@@ -19,7 +19,7 @@ class BuildOptionsViewSet(DappViewMixin, viewsets.ModelViewSet):
         serializer.save(dapp=self.get_dapp())
 
     @action(detail=True, methods=['get'])
-    def build(self, request, pk=None):
+    def build(self, request, pk=None, dapp_slug=None):
         build_options = self.get_object()
         is_success, _ = build_options.build()
         if is_success:
