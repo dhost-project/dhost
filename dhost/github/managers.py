@@ -145,7 +145,8 @@ class WebhookManager(models.Manager):
     def create_webhook(self, repo, user, name='web'):
         g = DjangoGithubAPI(user=user)
         webhook_json = g.create_hook(owner=repo.github_owner,
-                                        repo=repo.github_repo, name=name)
+                                     repo=repo.github_repo,
+                                     name=name)
         return self.create_from_json(repo=repo, webhook_json=webhook_json)
 
     def create_from_json(self, webhook_json, repo):

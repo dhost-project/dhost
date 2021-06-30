@@ -182,10 +182,7 @@ class GithubOptions(models.Model):
         on_delete=models.CASCADE,
         primary_key=True,
     )
-    repo = models.ForeignKey(
-        Repository,
-        on_delete=models.CASCADE,
-    )
+    repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
     branch = models.ForeignKey(Branch, null=True, on_delete=models.SET_NULL)
     auto_deploy = models.BooleanField(
         default=False,

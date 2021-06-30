@@ -391,7 +391,8 @@ class WebhookTestCase(TestCase):
         }),
     )
     def test_create_webhook(self):
-        webhook = Webhook.objects.create_webhook(repo=self.repo1, user=self.u1,
+        webhook = Webhook.objects.create_webhook(repo=self.repo1,
+                                                 user=self.u1,
                                                  name='test_name')
         self.assertEqual(webhook.name, 'test_name')
 

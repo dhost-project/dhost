@@ -1,6 +1,11 @@
+import os
 from unittest import TestCase, mock
 
+from django.conf import settings
+
 from dhost.github.github import GithubAPI
+
+TMP_PATH = settings.TEST_DIR
 
 
 class GithubAPITestCase(TestCase):
@@ -161,9 +166,28 @@ class GithubAPITestCase(TestCase):
         self.g.list_branches(owner='octocat', repo='Hello-World')
         mock.assert_called_once_with('/repos/octocat/Hello-World/branches')
 
-    def test_download_repo(self):
-        # TODO
-        pass
+    @mock.patch('dhost.github.github.GithubAPI.get')
+    def test_download_repo(self, mock_get):
+        mock_get.return_value = mock.Mock(content=b'data_test')
+        self.g.download_repo(owner='octocat',
+                             repo='Hello-World',
+                             ref='master',
+                             path=os.path.join(TMP_PATH, 'repos'))
+        self.assertTrue(os.path.exists(TMP_PATH + '/repos/Hello-World.tar'))
+        mock_get.assert_called_once_with(
+            '/repos/octocat/Hello-World/tarball/master',
+            json=False,
+            allow_redirects=True)
+
+    @mock.patch('dhost.github.github.GithubAPI.get')
+    def test_download_repo_with_archive_name(self, mock_get):
+        mock_get.return_value = mock.Mock(content=b'data_test')
+        self.g.download_repo(owner='octocat',
+                             repo='Hello-World',
+                             ref='master',
+                             path=os.path.join(TMP_PATH, 'repos'),
+                             archive_name='foo_bar')
+        self.assertTrue(os.path.exists(TMP_PATH + '/repos/foo_bar.tar'))
 
     @mock.patch('dhost.github.github.GithubAPI.get')
     def test_list_hooks(self, mock):
