@@ -2,7 +2,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from .models import APILog, ActionFlags
 
-# The list of name of inherited `Dapp` models
+# the list of name of inherited `Dapp` models
 DAPP_MODELS_LIST = ['ipfsdapp']
 ENV_VAR_MODEL_LIST = ['envvar']
 BUNDLE_MODELS_LIST = ['bundle']

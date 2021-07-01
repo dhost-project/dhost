@@ -5,7 +5,7 @@ from django.test import TestCase, override_settings
 
 from dhost.dapps.models import Dapp
 
-from ..models import APILog, ActionFlags
+from dhost.logs.models import APILog, ActionFlags
 
 User = get_user_model()
 
