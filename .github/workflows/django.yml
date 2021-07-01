@@ -26,7 +26,7 @@ jobs:
       DJANGO_ENV: "production"
       ENABLE_SSL: "False"
       DATABASE_URL: "postgres://dhost:dhost@127.0.0.1:5432/dhost"
-      SECRET_KEY: verysecretkey
+      DJANGO_SECRET_KEY: verysecretkey
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
