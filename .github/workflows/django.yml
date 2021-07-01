@@ -42,4 +42,4 @@ jobs:
         python manage.py collectstatic
     - name: Run Tests
       run: |
-        python manage.py test --parallel
+        python manage.py test --settings dhost.settings.tests --parallel
