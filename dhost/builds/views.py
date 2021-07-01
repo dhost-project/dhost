@@ -29,8 +29,7 @@ class BuildOptionsViewSet(DappViewMixin, viewsets.ModelViewSet):
 
 
 class BuildViewMixin(DappViewMixin):
-    """
-    Extend the DappViewMixin to add the ability to filter the queryset using
+    """Extend the DappViewMixin to add the ability to filter the queryset using
     from the URL, also check for permissions.
     """
 

@@ -51,10 +51,9 @@ class BuildOptions(models.Model):
         return '{} ({})'.format(self.docker, self.command)
 
     def build(self):
-        """
-        Create a `Build` object and start the building process from the source
-        in the Docker container specified in `docker_container` and with the
-        command.
+        """Create a `Build` object and start the building process from the
+        source in the Docker container specified in `docker_container` and
+        with the command.
         """
         build = Build(options=self, source_path=self.source)
         build.save()
@@ -63,9 +62,7 @@ class BuildOptions(models.Model):
 
 
 class Build(models.Model):
-    """
-    A single build instance.
-    """
+    """A single build instance."""
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     buildoptions = models.ForeignKey(
@@ -120,14 +117,13 @@ class Build(models.Model):
         return 'build:{}'.format(self.id.hex[:7])
 
     def build(self):
-        """
-        return:
-          - BOOL: success status, True if succeed
-          - BUNDLE (object): if succeed then the Bundle object is created
-
-        Start the build process, when it's done and if the build succeed
+        """Start the build process, when it's done and if the build succeed
         create a `Bundle` object containing the static files generated during
-        the build process
+        the build process.
+
+        Returns:
+            bool: success status, True if succeed
+            Bundle: if succeed then the Bundle object is created
         """
         bundle_path_var = self.start_build()
         if self.is_success:
@@ -167,9 +163,7 @@ class Build(models.Model):
 
 
 class EnvVar(models.Model):
-    """
-    Environment variables used during the build process.
-    """
+    """Environment variables used during the build process."""
 
     buildoptions = models.ForeignKey(
         BuildOptions,

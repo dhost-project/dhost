@@ -20,8 +20,14 @@ COLS = SQUARE_NUMBER
 
 
 def avatar_generator(input_string: str):
-    """
-    This will generate an image based on the hash of the input_string
+    """This will generate an image based on the hash of the input_string.
+
+    Args:
+        input_string (str): input_string that will be hashed to generate the
+        image
+
+    Returns:
+        File: image file io stream
     """
 
     canvas = Image.new('RGB', (TOTAL_WIDTH, TOTAL_HEIGHT), BACKGROUND_COLOR)

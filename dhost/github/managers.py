@@ -33,8 +33,7 @@ def serialize_webhook(webhook_json):
 class RepositoryManager(models.Manager):
 
     def fetch_all(self, user):
-        """
-        Update every user's repositories, create if they don't exist, update
+        """Update every user's repositories, create if they don't exist, update
         them if they do, and remove the user form the repo if it's not
         available anymore.
         """
@@ -45,9 +44,8 @@ class RepositoryManager(models.Manager):
         self.remove_unavailable_list(repo_list=repo_list, user=user)
 
     def remove_unavailable_list(self, repo_list, user):
-        """
-        Remove user from available repos if they are not present in the Github
-        API `list_repos` response.
+        """Remove user from available repos if they are not present in the
+        Github API `list_repos` response.
         """
         # Create a list of ID gathered during the Github API call
         repo_id_list = [r['id'] for r in repo_list]
@@ -75,9 +73,8 @@ class RepositoryManager(models.Manager):
         return repo
 
     def update_or_create_from_json(self, repo_json, user):
-        """
-        Like get_or_create but from Github API response and update instead of
-        just getting the object when it exist.
+        """Like get_or_create but from Github API response and update instead
+        of just getting the object when it exist.
         """
         Repository = apps.get_model('github.Repository')
         try:
@@ -102,9 +99,8 @@ class BranchManager(models.Manager):
         self.remove_unavailable_list(branch_list, repo)
 
     def remove_unavailable_list(self, branch_list, repo):
-        """
-        Check and remove branch from repo if it exist in the DB and not in the
-        list.
+        """Check and remove branch from repo if it exist in the DB and not in
+        the list.
         """
         # Create a list of branches name gathered during the Github API call
         branch_name_list = [r['name'] for r in branch_list]

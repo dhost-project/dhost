@@ -19,7 +19,7 @@ class BuildService:
         print('Initialized Build')
 
     def build(self):
-        """Main build function to start the process"""
+        """Main build function to start the process."""
         print('Building source: {}, in container: {}, with command:`{}`'.format(
             str(self.source_path), str(self.container), str(self.command)))
         if self.envvars:

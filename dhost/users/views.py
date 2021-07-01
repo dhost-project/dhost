@@ -69,9 +69,7 @@ class PasswordChangeDoneView(auth_views.PasswordChangeDoneView):
 
 
 class SignupView(TitleMixin, auth_views.SuccessURLAllowedHostsMixin, FormView):
-    """
-    Display the registration form and handle the register action.
-    """
+    """Display the registration form and handle the register action."""
 
     form_class = SignupForm
     authentication_form = None
@@ -205,9 +203,7 @@ class AccountDeleteView(TitleMixin, TemplateView):
         return super().dispatch(*args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        """
-        Delete the user's account on a POST
-        """
+        """Delete the user's account on a POST."""
         user = request.user
         user.delete()
         messages.add_message(request, messages.SUCCESS,

@@ -18,10 +18,8 @@ class RepositoryViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [HasGithubLinked]
 
     def get_queryset(self):
-        """
-        Return 404 instead of 403 when the repo exist but the user doesn't have
-        access.
-        """
+        # Return 404 instead of 403 when the repo exist but the user doesn't
+        # have access.
         queryset = super().get_queryset()
         return queryset.filter(users=self.request.user)
 
@@ -43,7 +41,7 @@ class RepositoryViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(detail=True, methods=['get'])
     def fetch_branches(self, request, pk=None):
-        """Update repo's branches from the Github API."""
+        """Update a single repo branches from the Github API."""
         repo = self.get_object()
         repo.fetch_branches(user=request.user)
         serializer = self.get_serializer(repo)
@@ -78,7 +76,17 @@ class WebhookViewSet(viewsets.ViewSet):
 
     @action(detail=True, methods=['post'])
     def payload(self, request, pk=None):
-        """Receive a webhook payload from Github."""
+        """Receive a webhook payload from Github.
+
+        This view will receive a webhook from Github and process it. It needs
+        to send back a valid response or Github will disconnect it. We also
+        need to send back a body containing a message, this will come from the
+        payload handler class.
+
+        Github docs: https://docs.github.com/en/github-ae@latest/developers/\
+            webhooks-and-events/webhooks/webhook-events-and-payloads#push
+        """
         payload = request.json()
-        response = self.get_payload_handler(payload)
+        payload_handler = self.get_payload_handler(payload)
+        response = payload_handler.handle()
         return Response(response)

@@ -20,9 +20,7 @@ class DappModelTest(TestCase):
 
     @tag('fast')
     def test_str(self):
-        """
-        Test Dapp's `__str__` function
-        """
+        # test Dapp's `__str__` function
         user = User.objects.create(
             username='johnny',
             password='john',

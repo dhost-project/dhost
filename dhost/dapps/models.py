@@ -71,7 +71,7 @@ class Dapp(models.Model):
 
     def deploy(self, bundle=None):
         """Create an `IPFSDeployment` object and start the deployment process
-        from the bundled files
+        from the bundled files.
         """
         if bundle is None and len(self.bundles.all()) > 0:
             bundle = self.bundles.all()[0]
@@ -90,7 +90,7 @@ class Dapp(models.Model):
 
 
 class Bundle(models.Model):
-    """Bundled web app raidy for deployment"""
+    """Bundled web app raidy for deployment."""
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     dapp = models.ForeignKey(
@@ -124,7 +124,7 @@ class Bundle(models.Model):
 
 
 class Deployment(models.Model):
-    """Model representing a single deployment process"""
+    """Model representing a single deployment process."""
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     dapp = models.ForeignKey(

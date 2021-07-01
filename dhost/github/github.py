@@ -1,6 +1,4 @@
-"""
-A wrapper for the Github REST API with OAuth
-"""
+"""A wrapper for the Github REST API with OAuth."""
 import os
 
 import requests

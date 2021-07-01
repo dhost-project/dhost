@@ -25,5 +25,5 @@ class DjangoGithubAPITestCase(TestCase):
         self.dg = DjangoGithubAPI(user=self.u)
 
     def test_get_token(self):
-        # Test that the token come from the user's social account
+        # test that the token come from the user's social account
         self.assertEqual(self.dg.get_token(), 'token123')

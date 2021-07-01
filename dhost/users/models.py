@@ -12,8 +12,7 @@ from dhost.utils.avatar import avatar_generator
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    """
-    User class implementing a fully featured User model with admin-compliant
+    """User class implementing a fully featured User model with admin-compliant
     permissions.
 
     Username and password are required. Other fields are optional.

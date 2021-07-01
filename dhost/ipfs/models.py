@@ -5,7 +5,7 @@ from dhost.dapps.models import Dapp, Deployment
 
 
 class IPFSDapp(Dapp):
-    """Dapp raidy to be deployed to the IPFS network"""
+    """Dapp raidy to be deployed to the IPFS network."""
 
     ipfs_hash = models.CharField(_('IPFS hash'), max_length=128, blank=True)
     ipfs_gateway = models.URLField(

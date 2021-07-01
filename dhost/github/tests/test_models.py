@@ -44,7 +44,7 @@ class RepositoryTestCase(TestCase):
         }
 
     def test_str(self):
-        # Test Github's `__str__` function
+        # test Github's `__str__` function
         github_str = str(self.repo1)
         self.assertEqual(str, type(github_str))
 
@@ -71,7 +71,7 @@ class RepositoryTestCase(TestCase):
         self.assertEqual(1, Repository.objects.count())
         self.assertEqual(repo.id, repo_json['id'])
         self.assertEqual(repo.extra_data, repo_json)
-        # The Github repo exist but the user wasn't in it, we are testing that
+        # the Github repo exist but the user wasn't in it, we are testing that
         # they are added has well
         self.assertTrue(repo.users.filter(id=self.u2.id).exists())
 
@@ -158,7 +158,7 @@ class RepositoryTestCase(TestCase):
             }),
     )
     def test_fetch_repo_wrong_id(self):
-        # If the Github ID doesn't match the local ID we shouldn't update the
+        # if the Github ID doesn't match the local ID we shouldn't update the
         # object with the new data.
         with self.assertRaisesMessage(Exception, "The Github ID changed."):
             self.repo1.fetch_repo(user=self.u1)

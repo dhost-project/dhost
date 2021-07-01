@@ -31,9 +31,7 @@ class DappViewSet(viewsets.ModelViewSet):
 
 
 class DappReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    A list of every dapps, regardless of wich type they are.
-    """
+    """A list of every dapps, regardless of wich type they are."""
 
     queryset = Dapp.objects.all()
     serializer_class = DappReadOnlySerializer
@@ -47,9 +45,8 @@ class DappReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class DappViewMixin:
-    """
-    Mixin to handle the nested router wich send an argument with the dapp slug
-    used to filter the dapps.
+    """Mixin to handle the nested router wich send an argument with the dapp
+    slug used to filter the dapps.
     """
 
     dapp_model_class = Dapp

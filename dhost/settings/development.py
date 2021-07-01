@@ -19,7 +19,7 @@ INSTALLED_APPS.append('debug_toolbar')  # noqa
 MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')  # noqa
 
 
-# To work with Docker
+# to work with Docker
 # https://stackoverflow.com/questions/26898597/django-debug-toolbar-and-docker
 def show_toolbar(request):
     return True  # pragma: no cover
