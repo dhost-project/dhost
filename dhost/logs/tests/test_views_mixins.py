@@ -12,6 +12,7 @@ User = get_user_model()
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
 class APILogViewSetMixinTestCase(TestCase):
 
-    def setUp(self):
-        self.u1 = User.objects.create(username='john', password='john')
-        self.dapp1 = Dapp.objects.create(slug='test', owner=self.u1)
+    @classmethod
+    def setUpTestData(cls):
+        cls.u1 = User.objects.create(username='john', password='john')
+        cls.dapp1 = Dapp.objects.create(slug='test', owner=cls.u1)
