@@ -13,8 +13,11 @@ class ActionFlags(models.TextChoices):
     OTHER = 'other', _('Other')
     DAPP_ADDITION = 'dapp_add', _('Dapp created')
     DAPP_CHANGE = 'dapp_change', _('Dapp updated')
+<<<<<<< HEAD
     BUNDLE_ADDITION = 'bundle_add', _('Bundle added')
     BUNDLE_DELETION = 'bundle_del', _('Bundle removed')
+=======
+>>>>>>> c844177... action flags in a TextChoices, remake migrations
     AUTO_DEPLOY_START = 'auto_deploy_start', _('Auto deployment started')
     DEPLOY_START = 'deploy_start', _('Deployment started')
     DEPLOY_SUCCESS = 'deploy_success', _('Deployment successful')
