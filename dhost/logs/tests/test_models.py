@@ -4,8 +4,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.test import TestCase, override_settings
 
 from dhost.dapps.models import Dapp
-
-from ..models import APILog, ActionFlags
+from dhost.logs.models import ActionFlags, APILog
 
 User = get_user_model()
 
