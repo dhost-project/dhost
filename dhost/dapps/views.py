@@ -3,13 +3,15 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from dhost.logs.views_mixins import APILogViewSetMixin
+
 from .models import Bundle, Dapp, Deployment
 from .permissions import DappPermission
 from .serializers import (BundleSerializer, DappReadOnlySerializer,
                           DappSerializer, DeploymentSerializer)
 
 
-class DappViewSet(viewsets.ModelViewSet):
+class DappViewSet(APILogViewSetMixin, viewsets.ModelViewSet):
     queryset = Dapp.objects.all()
     serializer_class = DappSerializer
     permission_classes = [DappPermission]

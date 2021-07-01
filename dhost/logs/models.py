@@ -8,27 +8,28 @@ from django.utils.translation import gettext_lazy as _
 
 from dhost.dapps.models import Dapp
 
-ENV_VAR_ADDITION = 1
-ENV_VAR_CHANGE = 2
-ENV_VAR_DELETION = 3
-START_BUILD = 4
-BUILD_SUCCESS = 5
-BUILD_FAIL = 6
-START_DEPLOY = 7
-DEPLOY_SUCCESS = 8
-DEPLOY_FAIL = 9
 
-ACTION_FLAG_CHOICES = (
-    (ENV_VAR_ADDITION, _('New environment variable')),
-    (ENV_VAR_CHANGE, _('Environment variable updated')),
-    (ENV_VAR_DELETION, _('Environment variable removed')),
-    (START_BUILD, _('Start build')),
-    (BUILD_SUCCESS, _('Build successful')),
-    (BUILD_FAIL, _('Build failed')),
-    (START_DEPLOY, _('Start deployment')),
-    (DEPLOY_SUCCESS, _('Deployment successful')),
-    (DEPLOY_FAIL, _('Deployment failed')),
-)
+class ActionFlags(models.TextChoices):
+    OTHER = 'other', _('Other')
+    DAPP_ADDITION = 'dapp_add', _('Dapp created')
+    DAPP_CHANGE = 'dapp_change', _('Dapp updated')
+    AUTO_DEPLOY_START = 'auto_deploy_start', _('Auto deployment started')
+    DEPLOY_START = 'deploy_start', _('Deployment started')
+    DEPLOY_SUCCESS = 'deploy_success', _('Deployment successful')
+    DEPLOY_FAIL = 'deploy_fail', _('Deployment failed')
+    BUILD_OPTIONS_ADDITION = 'build_opt_add', _('Build options created')
+    BUILD_OPTIONS_CHANGE = 'build_opt_change', _('Build options updated')
+    BUILD_OPTIONS_DELETION = 'build_opt_del', _('Build options removed')
+    AUTO_BUILD_START = 'auto_build_start', _('Auto build started')
+    BUILD_START = 'build_start', _('Build started')
+    BUILD_SUCCESS = 'build_success', _('Build successful')
+    BUILD_FAIL = 'build_fail', _('Build failed')
+    ENV_VAR_ADDITION = 'env_var_add', _('New environment variable')
+    ENV_VAR_CHANGE = 'env_var_change', _('Environment variable updated')
+    ENV_VAR_DELETION = 'env_var_del', _('Environment variable removed')
+    GITHUB_OPTIONS_ADDITION = 'github_opt_add', _('Github options created')
+    GITHUB_OPTIONS_CHANGE = 'github_opt_change', _('Github options changed')
+    GITHUB_OPTIONS_DELETION = 'github_opt_del', _('Github options removed')
 
 
 class APILog(models.Model):
@@ -51,10 +52,10 @@ class APILog(models.Model):
         blank=True,
     )
     object_id = models.TextField(null=True, blank=True)
-    action_flag = models.PositiveSmallIntegerField(
-        choices=ACTION_FLAG_CHOICES,
-        null=True,
-        blank=True,
+    action_flag = models.CharField(
+        max_length=20,
+        choices=ActionFlags.choices,
+        default=ActionFlags.OTHER,
     )
     change_message = models.TextField(blank=True)
     action_time = models.DateTimeField(default=timezone.now, editable=False)
