@@ -13,7 +13,7 @@ class ApplicationTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create_user("test_user", "test@example.com",
-                                             "123456")
+                                            "123456")
         cls.application = Application.objects.create(
             name="Test Application",
             redirect_uris="",
