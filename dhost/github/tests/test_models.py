@@ -7,7 +7,7 @@ from django.test import TestCase, override_settings
 from social_django.models import UserSocialAuth
 
 from dhost.dapps.models import Dapp
-from dhost.github.models import Branch, Repository, Webhook, GithubOptions
+from dhost.github.models import Branch, GithubOptions, Repository, Webhook
 
 User = get_user_model()
 
