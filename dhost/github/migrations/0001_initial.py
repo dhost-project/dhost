@@ -145,16 +145,16 @@ class Migration(migrations.Migration):
                     'auto_deploy',
                     models.BooleanField(
                         default=False,
-                        help_text=
-                        'Automatically deploy the dapp when a push is made on the selected branch.',
+                        help_text='Automatically deploy the dapp when a push '
+                        'is made on the selected branch.',
                     ),
                 ),
                 (
                     'confirm_ci',
                     models.BooleanField(
                         default=False,
-                        help_text=
-                        'Wait for CI to pass before automatically deploying the dapp.',
+                        help_text='Wait for CI to pass before automatically '
+                        'deploying the dapp.',
                     ),
                 ),
                 (
