@@ -35,7 +35,7 @@ If the user decide to Authorize the app he will be redirected to the URI with a 
 
 You need to grab this code and send a request from the BACKEND of your app because we'll send a secret:
 
-```shell
+```sh
 curl -X POST -H "Cache-Control: no-cache" -H "Content-Type: application/x-www-form-urlencoded" "http://localhost:8000/oauth2/token/" -d "client_id=<client_id>" -d "client_secret=<client_secret>" -d "code=<code>" -d "redirect_uri=<front_end_app_uri>" -d "grant_type=authorization_code"
 ```
 
@@ -59,7 +59,7 @@ To use the token place it in the headers
 
 Grab the `access_token` and use it in requests's headers like so:
 
-```shell
+```sh
 curl -H "Authorization: Bearer <access_token>" http://localhost:8000/<api_route>
 ```
 
@@ -67,7 +67,7 @@ When the token is close to expiration the backend server can refresh it by makin
 
 To refresh the `access_token` use the following request:
 
-```shell
+```sh
 curl -X POST -d "grant_type=refresh_token&refresh_token=<refresh_token>&client_id=<client_id>&client_secret=<your_client_secret>" http://localhost:8000/oauth2/token/
 ```
 
@@ -87,6 +87,6 @@ The OAuth2 flow used for the CLI app.
 
 With the user credentials the CLI will be able to call:
 
-```shell
+```sh
 curl -X POST -H "Cache-Control: no-cache" -H "Content-Type: application/x-www-form-urlencoded" "http://localhost:8000/oauth2/token/" -d "client_id=test" -d "username=admin" -d "password=admin" -d "grant_type=password"
 ```

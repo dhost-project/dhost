@@ -13,13 +13,14 @@ User = get_user_model()
 
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
-class RepositoryTestCase(TestCase):
+class TestDataMixin(TestCase):
 
-    def setUp(self):
-        self.u1 = User.objects.create(username='john', password='john')
-        self.u2 = User.objects.create(username='tom', password='tom')
-        self.s1 = UserSocialAuth.objects.create(
-            user=self.u1,
+    @classmethod
+    def setUpTestData(cls):
+        cls.u1 = User.objects.create(username='john', password='john')
+        cls.u2 = User.objects.create(username='tom', password='tom')
+        cls.s1 = UserSocialAuth.objects.create(
+            user=cls.u1,
             provider='github',
             uid='1234',
             extra_data={
@@ -27,14 +28,14 @@ class RepositoryTestCase(TestCase):
                 'login': 'octocat'
             },
         )
-        self.repo1 = Repository.objects.create(
+        cls.repo1 = Repository.objects.create(
             id=1,
             github_owner='octocat',
             github_repo='Hello-World',
             extra_data={'size': 52},
         )
-        self.repo1.users.add(self.u1)
-        self.repo_json = {
+        cls.repo1.users.add(cls.u1)
+        cls.repo1_json = {
             "id": 42424242,
             "name": "Hello-World",
             "owner": {
@@ -42,6 +43,58 @@ class RepositoryTestCase(TestCase):
             },
             "size": 42,
         }
+        cls.dapp1 = Dapp.objects.create(owner=cls.u1, slug='dapp_test')
+        cls.branch1 = Branch.objects.create(
+            repo=cls.repo1,
+            name='master',
+            extra_data={'name': 'master'},
+        )
+        cls.branch1_json = {
+            "name": "master",
+            "commit": {
+                "sha": "c5b97d5ae6c19d5c5df71a34c7fbeeda2479ccbc",
+                "url": "",
+            },
+            "protected": True,
+            "protection": {
+                "required_status_checks": {
+                    "enforcement_level": "non_admins",
+                    "contexts": ["ci-test", "linter"],
+                }
+            },
+            "protection_url": "",
+        }
+        cls.webhook1 = Webhook.objects.create(repo=cls.repo1, id=1)
+        cls.webhook1_json = {
+            "type": "Repository",
+            "id": 12345678,
+            "name": "web",
+            "active": True,
+            "events": ["push", "pull_request"],
+            "config": {
+                "content_type": "json",
+                "insecure_ssl": "0",
+                "url": "https://example.com/webhook",
+            },
+            "updated_at": "2019-06-03T00:57:16Z",
+            "created_at": "2019-06-03T00:57:16Z",
+            "url": "",
+            "test_url": "",
+            "ping_url": "",
+            "last_response": {
+                "code": None,
+                "status": "unused",
+                "message": None,
+            },
+        }
+        cls.go1 = GithubOptions.objects.create(
+            dapp=cls.dapp1,
+            repo=cls.repo1,
+            branch=cls.branch1,
+        )
+
+
+class RepositoryTestCase(TestDataMixin, TestCase):
 
     def test_str(self):
         # test Github's `__str__` function
@@ -53,7 +106,7 @@ class RepositoryTestCase(TestCase):
         self.assertFalse(self.repo1.users.filter(id=self.u1.id))
 
     def test_create_from_json(self):
-        repo_json = self.repo_json
+        repo_json = self.repo1_json
         repo = Repository.objects.create_from_json(repo_json=repo_json,
                                                    user=self.u1)
         self.assertEqual(2, Repository.objects.count())
@@ -64,7 +117,7 @@ class RepositoryTestCase(TestCase):
 
     def test_update_or_create_from_json_exist(self):
         # if the repo already exist (same id)
-        repo_json = self.repo_json
+        repo_json = self.repo1_json
         repo_json.update({'id': 1})
         repo = Repository.objects.update_or_create_from_json(
             repo_json=repo_json, user=self.u2)
@@ -76,7 +129,7 @@ class RepositoryTestCase(TestCase):
         self.assertTrue(repo.users.filter(id=self.u2.id).exists())
 
     def test_update_or_create_from_json_doesnt_exist(self):
-        repo_json = self.repo_json
+        repo_json = self.repo1_json
         repo = Repository.objects.update_or_create_from_json(
             repo_json=repo_json, user=self.u1)
         self.assertEqual(2, Repository.objects.count())
@@ -214,47 +267,10 @@ class RepositoryTestCase(TestCase):
         self.assertEqual(webhook, 'webhook1')
 
 
-@override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
-class BranchTestCase(TestCase):
-
-    def setUp(self):
-        self.u1 = User.objects.create(username='john', password='john')
-        self.s1 = UserSocialAuth.objects.create(
-            user=self.u1,
-            provider='github',
-            uid='1234',
-            extra_data={'access_token': 'token123'},
-        )
-        self.repo1 = Repository.objects.create(
-            id=1,
-            github_owner='dhost-project',
-            github_repo='dhost-front',
-            extra_data={'size': 52},
-        )
-        self.repo1.users.add(self.u1)
-        self.branch1 = Branch.objects.create(
-            repo=self.repo1,
-            name='master',
-            extra_data={'name': 'master'},
-        )
-        self.branch_json = {
-            "name": "master",
-            "commit": {
-                "sha": "c5b97d5ae6c19d5c5df71a34c7fbeeda2479ccbc",
-                "url": "",
-            },
-            "protected": True,
-            "protection": {
-                "required_status_checks": {
-                    "enforcement_level": "non_admins",
-                    "contexts": ["ci-test", "linter"],
-                }
-            },
-            "protection_url": "",
-        }
+class BranchTestCase(TestDataMixin, TestCase):
 
     def test_create_from_json(self):
-        branch_json = self.branch_json
+        branch_json = self.branch1_json
         branch = Branch.objects.create_from_json(repo=self.repo1,
                                                  branch_json=branch_json)
         self.assertEqual(2, Branch.objects.count())
@@ -262,7 +278,7 @@ class BranchTestCase(TestCase):
         self.assertEqual(branch.extra_data, branch_json)
 
     def test_update_or_create_from_json_exist(self):
-        branch_json = self.branch_json
+        branch_json = self.branch1_json
         branch = Branch.objects.update_or_create_from_json(
             repo=self.repo1, branch_json=branch_json)
         self.assertEqual(1, Branch.objects.count())
@@ -270,7 +286,7 @@ class BranchTestCase(TestCase):
         self.assertEqual(branch.extra_data, branch_json)
 
     def test_update_or_create_from_json_doesnt_exist(self):
-        branch_json = self.branch_json
+        branch_json = self.branch1_json
         branch_json.update({'name': 'dev'})
         branch = Branch.objects.update_or_create_from_json(
             repo=self.repo1, branch_json=branch_json)
@@ -319,50 +335,10 @@ class BranchTestCase(TestCase):
             Branch.objects.get(name='dev', repo=self.repo1).name, 'dev')
 
 
-@override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
-class WebhookTestCase(TestCase):
-
-    def setUp(self):
-        self.u1 = User.objects.create(username='john', password='john')
-        self.s1 = UserSocialAuth.objects.create(
-            user=self.u1,
-            provider='github',
-            uid='1234',
-            extra_data={'access_token': 'token123'},
-        )
-        self.repo1 = Repository.objects.create(
-            id=1,
-            github_owner='dhost-project',
-            github_repo='dhost-front',
-            extra_data={'size': 52},
-        )
-        self.repo1.users.add(self.u1)
-        self.webhook1 = Webhook.objects.create(repo=self.repo1, id=1)
-        self.webhook_json = {
-            "type": "Repository",
-            "id": 12345678,
-            "name": "web",
-            "active": True,
-            "events": ["push", "pull_request"],
-            "config": {
-                "content_type": "json",
-                "insecure_ssl": "0",
-                "url": "https://example.com/webhook",
-            },
-            "updated_at": "2019-06-03T00:57:16Z",
-            "created_at": "2019-06-03T00:57:16Z",
-            "url": "",
-            "test_url": "",
-            "ping_url": "",
-            "last_response": {
-                "code": None,
-                "status": "unused",
-                "message": None,
-            },
-        }
+class WebhookTestCase(TestDataMixin, TestCase):
 
     def test_create_from_json(self):
-        webhook_json = self.webhook_json
+        webhook_json = self.webhook1_json
         webhook = Webhook.objects.create_from_json(repo=self.repo1,
                                                    webhook_json=webhook_json)
         self.assertEqual(2, Webhook.objects.count())
@@ -370,7 +346,7 @@ class WebhookTestCase(TestCase):
         self.assertEqual(webhook.extra_data, webhook_json)
 
     def test_update_or_create_from_json_doesnt_exist(self):
-        webhook_json = self.webhook_json
+        webhook_json = self.webhook1_json
         webhook = Webhook.objects.update_or_create_from_json(
             webhook_json=webhook_json, repo=self.repo1)
         self.assertEqual(2, Webhook.objects.count())
@@ -379,7 +355,7 @@ class WebhookTestCase(TestCase):
 
     def test_update_or_create_from_json_exist(self):
         # test `update_or_create_from_json` with an `id` already present
-        webhook_json = self.webhook_json
+        webhook_json = self.webhook1_json
         webhook_json.update({'id': 1})
         webhook = Webhook.objects.update_or_create_from_json(
             webhook_json=webhook_json, repo=self.repo1)
@@ -402,38 +378,14 @@ class WebhookTestCase(TestCase):
         self.assertEqual(webhook.name, 'test_name')
 
 
-@override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
-class GithubOptionsTestCase(TestCase):
-
-    def setUp(self):
-        self.u1 = User.objects.create(username='john', password='john')
-        self.s1 = UserSocialAuth.objects.create(
-            user=self.u1,
-            provider='github',
-            uid='1234',
-            extra_data={'access_token': 'token123'},
-        )
-        self.repo1 = Repository.objects.create(
-            id=1,
-            github_owner='dhost-project',
-            github_repo='dhost-front',
-            extra_data={'size': 52},
-        )
-        self.repo1.users.add(self.u1)
-        self.branch1 = Branch.objects.create(repo=self.repo1, name='main')
-        self.dapp1 = Dapp.objects.create(owner=self.u1, slug='dapp_test')
-        self.go1 = GithubOptions.objects.create(
-            dapp=self.dapp1,
-            repo=self.repo1,
-            branch=self.branch1,
-        )
+class GithubOptionsTestCase(TestDataMixin, TestCase):
 
     @mock.patch('dhost.github.models.Repository.download')
     def test_download_repo(self, download_repo_mock):
         self.go1.download_repo()
         download_repo_mock.assert_called_once_with(
             user=self.u1,
-            ref='main',
+            ref='master',
             # TODO change MEDIA_ROOT to something else
             base_path=settings.MEDIA_ROOT,
         )

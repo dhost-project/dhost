@@ -11,19 +11,19 @@ Documentations:
 
 If you change a model you must create a migrations with [makemigrations](https://docs.djangoproject.com/en/3.2/ref/django-admin/#migrate).
 
-```shell
+```sh
 ./manage.py makemigrations
 ```
 
 And then migrate it you your DB with [migrate](https://docs.djangoproject.com/en/3.2/ref/django-admin/#migrate).
 
-```shell
+```sh
 ./manage.py migrate
 ```
 
 If you did multiple migrations and you want to squash them you can use:
 
-```shell
+```sh
 python manage.py squashmigrations
 ```
 
@@ -35,25 +35,25 @@ The `requirements.txt` and `requirements_dev.txt` contains the list of packages 
 
 To install dependencies use `pip`.
 
-```shell
+```sh
 pip install -r requirements.txt
 ```
 
 If you add a package run `sort-requirements` to order the list.
 
-```shell
+```sh
 sort-requirements requirements.txt
 ```
 
 You can also run `pre-commit` to re-order the requirements.
 
-```shell
+```sh
 pre-commit run --all-file
 ```
 
 You can upgrade packages with `pip-upgrader`.
 
-```shell
+```sh
 pip-upgrade
 ```
 

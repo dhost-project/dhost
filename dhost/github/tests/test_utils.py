@@ -13,12 +13,13 @@ User = get_user_model()
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
 class UtilsTestCase(TestCase):
 
-    def setUp(self):
-        self.u1 = User.objects.create(username='john', password='john')
-        self.u2 = User.objects.create(username='tom', password='tom')
-        self.u3 = User.objects.create(username='tim', password='tim')
-        self.s1 = UserSocialAuth.objects.create(
-            user=self.u1,
+    @classmethod
+    def setUpTestData(cls):
+        cls.u1 = User.objects.create(username='john', password='john')
+        cls.u2 = User.objects.create(username='tom', password='tom')
+        cls.u3 = User.objects.create(username='tim', password='tim')
+        cls.s1 = UserSocialAuth.objects.create(
+            user=cls.u1,
             provider='github',
             uid='1234',
             extra_data={
@@ -26,8 +27,8 @@ class UtilsTestCase(TestCase):
                 'login': 'john'
             },
         )
-        self.s2 = UserSocialAuth.objects.create(
-            user=self.u3,
+        cls.s2 = UserSocialAuth.objects.create(
+            user=cls.u3,
             provider='github',
             uid='2345',
             extra_data={'login': 'john'},

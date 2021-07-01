@@ -12,6 +12,6 @@ You are seeing only the available routes, when you are not connected you don't h
 
 To update the schema you can use the `generateschema` command from Django REST framework.
 
-```shell
+```sh
 ./manage.py generateschema --file docs/openapi-schema.yml
 ```

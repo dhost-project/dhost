@@ -10,13 +10,13 @@ The `Dockerfile_dev` can spin up a server with demo data.
 
 Build the image.
 
-```shell
+```sh
 docker build . -t 'api' -f Dockerfile_dev
 ```
 
 Run it.
 
-```shell
+```sh
 docker run -p 8000:8000 api
 ```
 
@@ -30,13 +30,13 @@ For development you can use a virtual environment.
 
 Create the environment.
 
-```shell
+```sh
 python3.9 -m venv venv
 ```
 
 Activate it (on linux).
 
-```shell
+```sh
 source ./venv/bin/activate
 ```
 
@@ -48,14 +48,14 @@ Activate it (on windows cmd).
 
 Install the requirements.
 
-```shell
+```sh
 pip install -r requirements.txt
 pip install -r requirements_dev.txt
 ```
 
 You can now run the development server with:
 
-```shell
+```sh
 ./manage.py runserver
 ```
 
@@ -65,13 +65,13 @@ Their is a fixture containing some data that can be loaded inside the database f
 
 To load the fixture inside the current database use:
 
-```shell
+```sh
 ./manage.py loaddata dhost/demo/fixture.json
 ```
 
 If you don't wan't to load the data in the database but still want to demo the app you can use the [testserver](https://docs.djangoproject.com/en/3.2/ref/django-admin/#testserver) command and load the fixture inside it.
 
-```shell
+```sh
 ./manage.py testserver dhost/demo/fixture.json
 ```
 
@@ -81,13 +81,13 @@ If you restart the test server all data will be earased and reloaded form the fi
 
 You also the pre-commit git hook to run checks before every commits with:
 
-```shell
+```sh
 pre-commit install
 ```
 
 Run pre-commit hooks.
 
-```shell
+```sh
 pre-commit run --all-files
 ```
 
@@ -99,7 +99,7 @@ Now every time you commit the checks will run `yapf`, `flake8` and other usefull
 
 You can and should test the code, you can do so with:
 
-```shell
+```sh
 ./manage.py test
 ```
 
@@ -107,19 +107,19 @@ You can and should test the code, you can do so with:
 
 You should also check the `coverage` package wich generate a report about the tests coverage of the app, use it with:
 
-```shell
+```sh
 coverage run manage.py test
 ```
 
 To see the report use:
 
-```shell
+```sh
 coverage report -m
 ```
 
 To see the report in HTML format use:
 
-```shell
+```sh
 coverage html
 ```
 
@@ -162,19 +162,19 @@ You should check the [Django's deployement guide](https://docs.djangoproject.com
 
 Create the environment.
 
-```shell
+```sh
 python3.9 -m venv venv
 ```
 
 Activate it (on linux).
 
-```shell
+```sh
 source ./venv/bin/activate
 ```
 
 Install the requirements.
 
-```shell
+```sh
 pip install -r requirements.txt
 ```
 
@@ -183,13 +183,13 @@ Mainly `DEBUG`, `SECRET_KEY` and `DATABASE_URL`.
 
 Migrate the database.
 
-```shell
+```sh
 ./manage.py migrate
 ```
 
 Then you must collect static files with:
 
-```shell
+```sh
 ./manage.py collectstatic
 ```
 
@@ -199,7 +199,7 @@ To serve your static files you can setup a server, or use an AWS S3 bucket, set 
 
 Then you will need to create a super user to access the admin page:
 
-```shell
+```sh
 ./manage.py createsuperuser
 ```
 

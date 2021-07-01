@@ -13,14 +13,12 @@ class TestDataMixin:
     def setUpTestData(cls):
         cls.user1 = User.objects.create_user('ifps_user1', 'iuser1@example.com',
                                              'password')
-
         cls.ipfs1 = IPFSDapp.objects.create(
             slug='dhost',
             owner=cls.user1,
             ipfs_hash='bafybeifx7yeb55armcsxwwitkymga5xf53dxiarykms3ygqic223w5s'
             'k3m',
         )
-
         cls.deploy1 = IPFSDeployment.objects.create(
             dapp=cls.ipfs1,
             ipfs_hash=cls.ipfs1.ipfs_hash,

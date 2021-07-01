@@ -11,10 +11,11 @@ User = get_user_model()
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
 class DjangoGithubAPITestCase(TestCase):
 
-    def setUp(self):
-        self.u = User.objects.create(username='john', password='john')
-        self.s = UserSocialAuth.objects.create(
-            user=self.u,
+    @classmethod
+    def setUpTestData(cls):
+        cls.u = User.objects.create(username='john', password='john')
+        cls.s = UserSocialAuth.objects.create(
+            user=cls.u,
             provider='github',
             uid='1234',
             extra_data={
@@ -22,7 +23,7 @@ class DjangoGithubAPITestCase(TestCase):
                 'login': 'john'
             },
         )
-        self.dg = DjangoGithubAPI(user=self.u)
+        cls.dg = DjangoGithubAPI(user=cls.u)
 
     def test_get_token(self):
         # test that the token come from the user's social account

@@ -8,7 +8,7 @@ The demo fixture is in `dhost/demo/fixture.json`.
 
 Note that `loaddata` will modify your database, make sure you don't user this in production.
 
-```shell
+```sh
 ./manage.py loaddata dhost/demo/fixture.json
 ```
 
@@ -49,7 +49,7 @@ To update the fixture you should first load it (or not if you want to completly 
 
 And then dump it back into the folder.
 
-```shell
+```sh
 ./manage.py dumpdata > dhost/demo/fixture.json
 ```
 
