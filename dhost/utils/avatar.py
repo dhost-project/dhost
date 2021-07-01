@@ -10,11 +10,7 @@ DIMENSION = getattr(settings, 'AVATAR_DIMENSION', 256)
 # number of squares per rows and columns
 # over 15 the patern will start repeating itself
 SQUARE_NUMBER = getattr(settings, 'AVATAR_SQUARE_NUMBER', 12)
-BACKGROUND_COLOR = getattr(
-    settings,
-    'AVATAR_BACKGROUND_COLOR',
-    '#f2f2f2',
-)
+BACKGROUND_COLOR = getattr(settings, 'AVATAR_BACKGROUND_COLOR', '#f2f2f2')
 MARGIN = getattr(settings, 'AVATAR_MARGIN', 8)
 
 TOTAL_WIDTH = DIMENSION
@@ -23,15 +19,21 @@ ROWS = SQUARE_NUMBER
 COLS = SQUARE_NUMBER
 
 
-def avatar_generator(username: str):
-    """
-    This will generate an image based on the hash of the username
+def avatar_generator(input_string: str):
+    """This will generate an image based on the hash of the input_string.
+
+    Args:
+        input_string (str): input_string that will be hashed to generate the
+        image
+
+    Returns:
+        File: image file io stream
     """
 
     canvas = Image.new('RGB', (TOTAL_WIDTH, TOTAL_HEIGHT), BACKGROUND_COLOR)
     draw = ImageDraw.Draw(canvas)
 
-    h = hashlib.md5(username.encode('utf-8')).hexdigest()
+    h = hashlib.md5(input_string.encode('utf-8')).hexdigest()
     bin_hash = bin(int(h, 16))[2:].zfill(8)
 
     # create matrix
@@ -64,7 +66,7 @@ def avatar_generator(username: str):
                         MARGIN + col * block_width,  # x1
                         MARGIN + row * block_height,  # y1
                         MARGIN + (col + 1) * block_width - 1,  # x2
-                        MARGIN + (row + 1) * block_height - 1  # y2
+                        MARGIN + (row + 1) * block_height - 1,  # y2
                     ),
                     fill=fg_color,
                 )
@@ -73,7 +75,7 @@ def avatar_generator(username: str):
     stream = BytesIO()
     canvas.save(stream, EXTENSION)
 
-    avatar_name = '{}.{}'.format(username, EXTENSION)
+    avatar_name = '{}.{}'.format(input_string, EXTENSION)
     avatar = File(stream, name=avatar_name)
 
     return avatar

@@ -1,3 +1,5 @@
+_/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -52,7 +54,6 @@ coverage.xml
 .pytest_cache/
 
 # Translations
-*.mo
 *.pot
 
 # Django stuff:
@@ -127,6 +128,6 @@ dmypy.json
 /.vscode
 
 /static/
-/staticfiles/
+dhost/staticfiles/
 db.sqlite3
-/media/
+dhost/media/

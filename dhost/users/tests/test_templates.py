@@ -5,11 +5,13 @@ from django.test import RequestFactory, TestCase, override_settings, tag
 from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode
 
-from ..models import User
-from ..views import (AccountDeleteDoneView, AccountDeleteView, LoginView,
-                     PasswordChangeDoneView, PasswordChangeView,
-                     PasswordResetCompleteView, PasswordResetDoneView,
-                     PasswordResetView, SignupView)
+from dhost.users.models import User
+from dhost.users.views import (AccountDeleteDoneView, AccountDeleteView,
+                               LoginView, PasswordChangeDoneView,
+                               PasswordChangeView, PasswordResetCompleteView,
+                               PasswordResetDoneView, PasswordResetView,
+                               SignupView)
+
 from .client import PasswordResetConfirmClient
 
 

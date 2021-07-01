@@ -69,9 +69,8 @@ class PasswordChangeDoneView(auth_views.PasswordChangeDoneView):
 
 
 class SignupView(TitleMixin, auth_views.SuccessURLAllowedHostsMixin, FormView):
-    """
-    Display the registration form and handle the register action.
-    """
+    """Display the registration form and handle the register action."""
+
     form_class = SignupForm
     authentication_form = None
     next_page = None
@@ -103,7 +102,8 @@ class SignupView(TitleMixin, auth_views.SuccessURLAllowedHostsMixin, FormView):
         """Return the user-originating redirect URL if it's safe."""
         redirect_to = self.request.POST.get(
             self.redirect_field_name,
-            self.request.GET.get(self.redirect_field_name, ''))
+            self.request.GET.get(self.redirect_field_name, ''),
+        )
         url_is_safe = url_has_allowed_host_and_scheme(
             url=redirect_to,
             allowed_hosts=self.get_success_url_allowed_hosts(),
@@ -121,11 +121,9 @@ class SignupView(TitleMixin, auth_views.SuccessURLAllowedHostsMixin, FormView):
     def form_valid(self, form):
         """Security check complete. Log the user in."""
         form.save()
-        auth_login(
-            self.request,
-            form.get_user(),
-            backend='django.contrib.auth.backends.ModelBackend',
-        )
+        auth_login(self.request,
+                   form.get_user(),
+                   backend='django.contrib.auth.backends.ModelBackend')
         return HttpResponseRedirect(self.get_success_url())
 
     def get_context_data(self, **kwargs):
@@ -135,7 +133,7 @@ class SignupView(TitleMixin, auth_views.SuccessURLAllowedHostsMixin, FormView):
             self.redirect_field_name: self.get_redirect_url(),
             'site': current_site,
             'site_name': current_site.name,
-            **(self.extra_context or {})
+            **(self.extra_context or {}),
         })
         return context
 
@@ -167,11 +165,8 @@ class AccountSettingsView(TitleMixin, FormView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        messages.add_message(
-            self.request,
-            messages.SUCCESS,
-            'An error occured, please try again later',
-        )
+        messages.add_message(self.request, messages.SUCCESS,
+                             'An error occured, please try again later')
         return super().form_invalid(form)
 
 
@@ -208,16 +203,11 @@ class AccountDeleteView(TitleMixin, TemplateView):
         return super().dispatch(*args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        """
-        Delete the user's account on a POST
-        """
+        """Delete the user's account on a POST."""
         user = request.user
         user.delete()
-        messages.add_message(
-            request,
-            messages.SUCCESS,
-            'Account successfully deleted',
-        )
+        messages.add_message(request, messages.SUCCESS,
+                             'Account successfully deleted')
         return HttpResponseRedirect(str(self.success_url))
 
 

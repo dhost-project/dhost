@@ -23,7 +23,7 @@ jobs:
         ports:
           - 5432:5432
     env:
-      DEBUG: "False"
+      DJANGO_ENV: "production"
       ENABLE_SSL: "False"
       DATABASE_URL: "postgres://dhost:dhost@127.0.0.1:5432/dhost"
       SECRET_KEY: verysecretkey
@@ -42,4 +42,4 @@ jobs:
         python manage.py collectstatic
     - name: Run Tests
       run: |
-        python manage.py test --parallel
+        python manage.py test --settings dhost.settings.tests --parallel

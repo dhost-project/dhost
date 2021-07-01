@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Build, BuildOptions, Bundle, EnvVar
+from .models import Build, BuildOptions, EnvVar
 
 
 @admin.register(BuildOptions)
@@ -10,11 +10,6 @@ class BuildOptionsAdmin(admin.ModelAdmin):
 
 @admin.register(Build)
 class BuildAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Bundle)
-class BundleAdmin(admin.ModelAdmin):
     pass
 
 

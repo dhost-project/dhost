@@ -5,7 +5,7 @@ from dhost.dapps.models import Dapp, Deployment
 
 
 class IPFSDapp(Dapp):
-    """Dapp raidy to be deployed to the IPFS network"""
+    """Dapp raidy to be deployed to the IPFS network."""
 
     ipfs_hash = models.CharField(_('IPFS hash'), max_length=128, blank=True)
     ipfs_gateway = models.URLField(
@@ -15,15 +15,12 @@ class IPFSDapp(Dapp):
         blank=True,
     )
 
-    class Meta(Dapp.Meta):
+    class Meta:
         verbose_name = _('IPFS Dapp')
         verbose_name_plural = _('IPFS Dapps')
 
     def create_deployment(self, bundle=None):
-        deployment = IPFSDeployment(
-            dapp=self,
-            bundle=bundle,
-        )
+        deployment = IPFSDeployment(dapp=self, bundle=bundle)
         return deployment
 
     def get_public_url(self):
@@ -34,7 +31,7 @@ class IPFSDapp(Dapp):
 class IPFSDeployment(Deployment):
     ipfs_hash = models.CharField(_('IPFS hash'), max_length=128, blank=True)
 
-    class Meta(Deployment.Meta):
+    class Meta:
         verbose_name = _('IPFS Deployment')
         verbose_name_plural = _('IPFS Deployments')
 

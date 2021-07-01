@@ -2,30 +2,22 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings
 
-from ..models import Application
+from dhost.oauth2.models import Application
 
 User = get_user_model()
 
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
-class BaseTestModels(TestCase):
+class ApplicationTestCase(TestCase):
 
-    def setUp(self):
-        self.user = User.objects.create_user("test_user", "test@example.com",
-                                             "123456")
-
-    def tearDown(self):
-        self.user.delete()
-
-
-class ApplicationTestCase(BaseTestModels):
-
-    def setUp(self):
-        super().setUp()
-        self.application = Application.objects.create(
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create_user("test_user", "test@example.com",
+                                            "123456")
+        cls.application = Application.objects.create(
             name="Test Application",
             redirect_uris="",
-            user=self.user,
+            user=cls.user,
             client_type=Application.CLIENT_CONFIDENTIAL,
             authorization_grant_type=Application.GRANT_AUTHORIZATION_CODE,
         )

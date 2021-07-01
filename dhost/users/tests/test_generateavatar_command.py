@@ -5,20 +5,22 @@ from django.conf import settings
 from django.core.management import CommandError, call_command
 from django.test import TestCase, override_settings, tag
 
-from ..models import User
+from dhost.users.models import User
 
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
 class DelTestDirTest(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user(username='avataruser',
-                                             password='password',
-                                             email='testclient@example.com')
+        self.user = User.objects.create_user(
+            username='avataruser',
+            password='password',
+            email='testclient@example.com',
+        )
         self.avatar_path = os.path.join(settings.TEST_MEDIA_ROOT, 'avatars',
                                         'avataruser.png')
 
-        # Avatar is automaticaly generated when a user is created, we are
+        # Avatar is automatically generated when a user is created, we are
         # testing if it's created with this command so we delete it
         if os.path.exists(self.avatar_path):
             os.remove(self.avatar_path)

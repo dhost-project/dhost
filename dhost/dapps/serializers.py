@@ -1,12 +1,13 @@
 from rest_framework import serializers
-from rest_framework.validators import UniqueTogetherValidator
 
-from dhost.builds.serializers import (BuildSerializer, BundleSerializer,
-                                      EnvVarSerializer)
-from dhost.github.serializers import BranchSerializer, RepositorySerializer
-from dhost.logs.serializers import APILogSerializer
+from .models import Bundle, Dapp, Deployment
 
-from .models import Dapp, DappGithubRepo, Deployment
+
+class BundleSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Bundle
+        fields = ['id', 'created_at']
 
 
 class DeploymentSerializer(serializers.ModelSerializer):
@@ -20,40 +21,17 @@ class DeploymentSerializer(serializers.ModelSerializer):
 class DappSerializer(serializers.ModelSerializer):
 
     owner = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    builds = BuildSerializer(many=True, read_only=True)
-    bundles = BundleSerializer(many=True, read_only=True)
-    envvars = EnvVarSerializer(many=True, read_only=True)
-    deployments = DeploymentSerializer(many=True, read_only=True)
-    logs = APILogSerializer(many=True, read_only=True)
 
     class Meta:
         model = Dapp
-        fields = [
-            'id', 'slug', 'url', 'owner', 'status', 'deployments', 'logs',
-            'created_at', 'command', 'docker', 'builds', 'bundles', 'envvars'
-        ]
-        read_only_fields = [
-            'url', 'status', 'deployments', 'logs', 'created_at'
-        ]
-        validators = [
-            UniqueTogetherValidator(queryset=Dapp.objects.all(),
-                                    fields=['owner', 'slug'])
-        ]
+        fields = ['slug', 'url', 'owner', 'status', 'created_at']
+        read_only_fields = ['url', 'status', 'created_at']
 
 
 class DappReadOnlySerializer(serializers.ModelSerializer):
+
     dapp_type = serializers.CharField(source='get_dapp_type', read_only=True)
 
     class Meta:
         model = Dapp
-        fields = ['id', 'dapp_type', 'slug', 'url', 'owner', 'status']
-
-
-class DappGithubRepoSerializer(serializers.ModelSerializer):
-
-    repo = RepositorySerializer(read_only=True)
-    branch = BranchSerializer()
-
-    class Meta:
-        model = DappGithubRepo
-        fields = ['repo', 'branch', 'auto_deploy', 'confirm_ci']
+        fields = ['slug', 'dapp_type', 'url', 'owner', 'status']

@@ -25,3 +25,12 @@ repos:
     rev: 3.8.4
     hooks:
       - id: flake8
+
+  - repo: local
+    hooks:
+      - id: pre-commit-django-migrations
+        name: Check django migrations
+        entry: ./manage.py makemigrations --check --dry-run
+        language: system
+        types: [python]
+        pass_filenames: false
