@@ -1,6 +1,6 @@
 from django.contrib.contenttypes.models import ContentType
 
-from .models import APILog, ActionFlags
+from .models import ActionFlags, APILog
 
 # the list of name of inherited `Dapp` models
 DAPP_MODELS_LIST = ['ipfsdapp']
@@ -8,11 +8,6 @@ ENV_VAR_MODEL_LIST = ['envvar']
 BUNDLE_MODELS_LIST = ['bundle']
 BUILD_OPTIONS_MODEL_LIST = ['buildoptions']
 GITHUB_OPTIONS_MODEL_LIST = ['githuboptions']
-
-# The list of name of inherited `Dapp` models
-DAPP_MODELS_LIST = ['ipfsdapp']
-ENV_VAR_MODEL_LIST = ['envvar']
-BUILD_OPTIONS_MODEL_LIST = ['buildoptions']
 
 
 class APILogViewSetMixin:
