@@ -4,7 +4,7 @@ This document detail the env variables that you can/must set for the DHost app.
 
 ## DJANGO_ENV
 
-The variable `DJANGO_ENV` define wich environment to use. By default it's `development`, and can be set to `production`.
+The variable `DJANGO_ENV` define wich environment to use. By default it's `development`, and can be set to `production` or `tests`.
 
 ## Legend
 

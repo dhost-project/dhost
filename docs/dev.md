@@ -1,60 +1,111 @@
 # Development
 
-To setup you development environment check the `Development` section in the `docs/setup.md` file.
+## Local environment
 
-Documentations:
-
-* [Django](https://docs.djangoproject.com/en/3.2/)
-* [Django REST](https://www.django-rest-framework.org/)
-
-## Django models
-
-If you change a model you must create a migrations with [makemigrations](https://docs.djangoproject.com/en/3.2/ref/django-admin/#migrate).
+Create a Python virtual environment.
 
 ```sh
-./manage.py makemigrations
+python3.9 -m venv venv
 ```
 
-And then migrate it you your DB with [migrate](https://docs.djangoproject.com/en/3.2/ref/django-admin/#migrate).
+Activate it (on linux).
+
+```sh
+source ./venv/bin/activate
+```
+
+Install the requirements.
+
+```sh
+pip install -r requirements.txt
+pip install -r requirements_dev.txt
+```
+
+Collect static files.
+
+```sh
+./manage.py collectstatic
+```
+
+Migrate the database.
 
 ```sh
 ./manage.py migrate
 ```
 
-If you did multiple migrations and you want to squash them you can use:
+You can now run the development server. Next time you wan't to start the server, this is the only command you will need (after activating your virtual environment).
 
 ```sh
-python manage.py squashmigrations
+./manage.py runserver
 ```
 
-More infos [here](https://docs.djangoproject.com/en/3.2/ref/django-admin/#squashmigrations)
-
-## Dependencies
-
-The `requirements.txt` and `requirements_dev.txt` contains the list of packages used for this project.
-
-To install dependencies use `pip`.
+Additionnaly you can [load a fixture](https://docs.djangoproject.com/en/dev/ref/django-admin/#loaddata) located in [dhost/demo/fixture.json](dhost/demo/fixture.json). More informations in [dhost/demo/README.md](../dhost/demo/README.md).
 
 ```sh
-pip install -r requirements.txt
+./manage.py loaddata dhost/demo/fixture.json
 ```
 
-If you add a package run `sort-requirements` to order the list.
+If you don't wan't to load the data in the database but still want to use the fixture, you can use the [testserver](https://docs.djangoproject.com/en/dev/ref/django-admin/#testserver).
 
 ```sh
-sort-requirements requirements.txt
+./manage.py testserver dhost/demo/fixture.json
 ```
 
-You can also run `pre-commit` to re-order the requirements.
+## Tests
+
+There is specific test settings available, this greatly improve speed, to use them simply specify the file when starting them.
 
 ```sh
-pre-commit run --all-file
+./manage.py test --settings dhost.settings.tests
 ```
 
-You can upgrade packages with `pip-upgrader`.
+Note that the `test` command is modified for this project, the new command can be found in [dhost/core/management/commands/test.py](../dhost/core/management/commands/test.py) it's a minor modification witch delete the `TEST_DIR` located in the `.cache` folder (by default at the root of the project).
+
+The `TEST_DIR` folder contain test datas and can be deleted safely after running a test. You can also delete it manually using the `deltestdir` command.
 
 ```sh
-pip-upgrade
+./manage.py deltestdir
 ```
 
-Make sure tests are still passing.
+The flag `--noinput` is available for the `deltestdir` command, it will tell Django to not prompt the user for any input, in this case the input is the delete confirmation.
+
+Note that you can also choose to keep the test datas with the `--keepdata` flag when running tests:
+
+```sh
+./manage.py test --keepdata
+```
+
+The `test` command is modified to allow the testing of user models wich generate an avatar that is stored in the `MEDIA_ROOT` wich should be modified. The `TEST_DIR` can be modified in the settings or in env variables of the same name.
+
+To use the custom `MEDIA_ROOT` in your test use the `override_settings`:
+
+```python
+from django.conf import settings
+from django.test import TestCase, override_settings
+
+@override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
+class ExampleTestCase(TestCase):
+   [...]
+```
+
+### Coverage
+
+To use coverage with django use:
+
+```sh
+coverage run manage.py test
+```
+
+To see the report use:
+
+```sh
+coverage report -m
+```
+
+To see the report in HTML format use:
+
+```sh
+coverage html
+```
+
+More infos [here](https://coverage.readthedocs.io/en/coverage-5.5/#quick-start).
