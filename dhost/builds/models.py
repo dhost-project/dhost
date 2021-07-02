@@ -51,9 +51,10 @@ class BuildOptions(models.Model):
         return '{} ({})'.format(self.docker, self.command)
 
     def build(self):
-        """Create a `Build` object and start the building process from the
-        source in the Docker container specified in `docker_container` and
-        with the command.
+        """Create a `Build` object and start the building process.
+
+        From the source in the Docker container specified in `docker_container`
+        and with the command.
         """
         build = Build(options=self, source_path=self.source)
         build.save()
@@ -117,9 +118,10 @@ class Build(models.Model):
         return 'build:{}'.format(self.id.hex[:7])
 
     def build(self):
-        """Start the build process, when it's done and if the build succeed
-        create a `Bundle` object containing the static files generated during
-        the build process.
+        """Start the build process.
+
+        When it's done and if the build succeed, create a `Bundle` object
+        containing the static files generated during the build process.
 
         Returns:
             bool: success status, True if succeed

@@ -4,6 +4,7 @@ flake8
 isort
 pip-upgrader
 pre-commit
+pydocstyle
 pyyaml
 tox
 uritemplate
