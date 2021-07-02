@@ -29,19 +29,20 @@ class Dapp(models.Model):
     url = models.CharField(_('URL'), max_length=2048, blank=True)
 
     class Statuses(models.TextChoices):
-        """
-        All the different statuses a Dapp can be in:
-          - STOPED: When the Dapp is neither UP nor UNAVAILABLE nor doing any
+        """All the different statuses a Dapp can be in.
+
+        Choices:
+          * STOPED: When the Dapp is neither UP nor UNAVAILABLE nor doing any
             other change in state
-          - BUILDING: In the process of building the bundle
-          - BUILT: When the source is bundled
-          - DEPLOYING: In the process of deploying
-          - STARTING: When the site is deployed but not yet reachable from the
+          * BUILDING: In the process of building the bundle
+          * BUILT: When the source is bundled
+          * DEPLOYING: In the process of deploying
+          * STARTING: When the site is deployed but not yet reachable from the
             web (404)
-          - UP: When the site is deployed and reachable from the web (200)
-          - UNAVAILABLE: When the site should be reachable but is not for a
+          * UP: When the site is deployed and reachable from the web (200)
+          * UNAVAILABLE: When the site should be reachable but is not for a
             technical reason
-          - ERROR: Error while trying to retrieve the state of the Dapp
+          * ERROR: Error while trying to retrieve the state of the Dapp
         """
 
         STOPED = 'SO', _('Stoped')
@@ -70,7 +71,9 @@ class Dapp(models.Model):
         return self.slug
 
     def deploy(self, bundle=None):
-        """Create an `IPFSDeployment` object and start the deployment process
+        """Deploy the dapp.
+
+        Create an `IPFSDeployment` object and start the deployment process
         from the bundled files.
         """
         if bundle is None and len(self.bundles.all()) > 0:
@@ -82,7 +85,7 @@ class Dapp(models.Model):
         return is_success
 
     def create_deployment(self, bundle=None):
-        """Return a specific application deployment instance"""
+        """Return a specific application deployment instance."""
         raise NotImplementedError
 
     def get_dapp_type(self):

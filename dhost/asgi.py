@@ -1,5 +1,4 @@
-"""
-ASGI config for dhost project.
+"""ASGI config for dhost project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

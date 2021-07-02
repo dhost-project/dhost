@@ -181,9 +181,7 @@ class ExportDataView(TitleMixin, TemplateView):
         return super().dispatch(*args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        """
-        Download the user's data has a JSON file
-        """
+        """Download the user's data has a JSON file."""
         user = request.user
         data = serializers.serialize('json', [user])
         response = HttpResponse(data, content_type='application/json')
