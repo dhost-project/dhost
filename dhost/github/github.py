@@ -14,9 +14,7 @@ class GithubAPI:
     GITHUB_WEBHOOK_URL = 'https://localhost:8000/github/webhook/'
 
     def __init__(self, token: str):
-        """
-        The Github API token used to make requests.
-        """
+        # Github API token used to make requests
         self.token = token
 
     def get_token(self):

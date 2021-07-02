@@ -8,7 +8,7 @@ def env(var, default=None):
 
 
 def env_list(var, default=None, separator=','):
-    """Return a python list of value from env vars"""
+    """Return a python list of value from env vars."""
     text_list = env(var, default)
     return [item.strip() for item in text_list.split(separator)]
 

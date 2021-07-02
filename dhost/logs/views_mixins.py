@@ -11,8 +11,10 @@ GITHUB_OPTIONS_MODEL_LIST = ['githuboptions']
 
 
 class APILogViewSetMixin:
-    """Add the ability to log actions, logged actions are on state changing
-    calls from viewsets (create, update, partial_update, destroy).
+    """Add the ability to log actions.
+
+    Logged actions are on state changing calls from viewsets (create, update,
+    partial_update, destroy).
     """
 
     # log_on_<action> define if we should log the specific action, this allow

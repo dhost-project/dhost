@@ -20,7 +20,7 @@ COLS = SQUARE_NUMBER
 
 
 def avatar_generator(input_string: str):
-    """This will generate an image based on the hash of the input_string.
+    """Will generate an image based on the hash of the input_string.
 
     Args:
         input_string (str): input_string that will be hashed to generate the

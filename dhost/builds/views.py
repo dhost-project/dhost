@@ -31,9 +31,7 @@ class BuildOptionsViewSet(APILogViewSetMixin, DappViewMixin,
 
 
 class BuildViewMixin(DappViewMixin):
-    """Extend the DappViewMixin to add the ability to filter the queryset using
-    from the URL, also check for permissions.
-    """
+    """Add the ability to filter the queryset, also check for permissions."""
 
     buildoptions_model_class = BuildOptions
     buildoptions_reverse_name = 'buildoptions'

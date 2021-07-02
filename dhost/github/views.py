@@ -83,8 +83,8 @@ class WebhookViewSet(viewsets.ViewSet):
         need to send back a body containing a message, this will come from the
         payload handler class.
 
-        Github docs: https://docs.github.com/en/github-ae@latest/developers/\
-            webhooks-and-events/webhooks/webhook-events-and-payloads#push
+        Github docs:
+            https://docs.github.com/en/github-ae@latest/developers/
         """
         payload = request.json()
         payload_handler = self.get_payload_handler(payload)
