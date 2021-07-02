@@ -1,8 +1,8 @@
-# Demo
+# Fixture
 
-For demo purposes a fixture is available, it will load data intot the database so use it for demo on local env only.
+For demo or dev purposes a fixture is available, it will load data into the database.
 
-The demo fixture is in `dhost/demo/fixture.json`.
+The demo fixture is located in [dhost/demo/fixture.json](fixture.json).
 
 ## Load fixture
 
@@ -11,8 +11,6 @@ Note that `loaddata` will modify your database, make sure you don't user this in
 ```sh
 ./manage.py loaddata dhost/demo/fixture.json
 ```
-
-For more infos check out the `Demo` in the `docs/setup.md` file.
 
 ## Fixture content
 

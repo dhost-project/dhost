@@ -5,7 +5,6 @@ isort
 pip-upgrader
 pre-commit
 pyyaml
-sort-requirements
 tox
 uritemplate
 yapf
