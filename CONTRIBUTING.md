@@ -58,6 +58,16 @@ To test it use:
 pre-commit run --all-file
 ```
 
+### Tox
+
+[tox](https://pypi.org/project/tox/) is a command line driven CI frontend and development task automation tool. It will launch multiple commands, format and lint the code and also run tests.
+
+Run it with:
+
+```sh
+tox
+```
+
 ## Translations
 
 Create / update `.po` files.
@@ -73,3 +83,7 @@ Then compile `.po` to `.mo`.
 ```sh
 django-admin compilemessages -i=venv
 ```
+
+## Tests
+
+If you add code don't forget to also write tests for it.
