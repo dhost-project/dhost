@@ -39,7 +39,7 @@ You can now run the development server. Next time you wan't to start the server,
 ./manage.py runserver
 ```
 
-Additionnaly you can [load a fixture](https://docs.djangoproject.com/en/dev/ref/django-admin/#loaddata) located in [dhost/demo/fixture.json](dhost/demo/fixture.json). More informations in [dhost/demo/README.md](../dhost/demo/README.md).
+Additionnaly you can [load a fixture](https://docs.djangoproject.com/en/dev/ref/django-admin/#loaddata) located in [dhost/demo/fixture.json](../dhost/demo/fixture.json). More informations in [dhost/demo/README.md](../dhost/demo/README.md).
 
 ```sh
 ./manage.py loaddata dhost/demo/fixture.json
@@ -90,7 +90,7 @@ class ExampleTestCase(TestCase):
 
 ### Coverage
 
-To use coverage with django use:
+To use [coverage](https://coverage.readthedocs.io/en/coverage-5.5/#quick-start) with django use:
 
 ```sh
 coverage run manage.py test
@@ -108,4 +108,7 @@ To see the report in HTML format use:
 coverage html
 ```
 
-More infos [here](https://coverage.readthedocs.io/en/coverage-5.5/#quick-start).
+## Links
+
+* [Django doc](https://docs.djangoproject.com/en/3.2/)
+* [Django REST doc](https://www.django-rest-framework.org/)

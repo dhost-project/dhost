@@ -8,22 +8,6 @@ To setup your dev env check the [docs/dev.md](docs/dev.md).
 
 Some of the following tools are configured inside [setup.cfg](setup.cfg).
 
-### Pre-commit
-
-[pre-commit](https://pre-commit.com/) is a git hook that will run before every commits. The pre-commit config can be found in [.pre-commit-config.yaml](.pre-commit-config.yaml).
-
-To install the pre-commit use:
-
-```sh
-pre-commit install
-```
-
-To test it use:
-
-```sh
-pre-commit run --all-file
-```
-
 ### Editorconfig
 
 There is also an [editorconfig]((https://editorconfig.org/)) file [.editorconfig](.editorconfig) that can be used with your IDE or text editor.
@@ -56,6 +40,24 @@ flake8 dhost
 isort .
 ```
 
+## Tools
+
+### Pre-commit
+
+[pre-commit](https://pre-commit.com/) is a git hook that will run before every commits. The pre-commit config can be found in [.pre-commit-config.yaml](.pre-commit-config.yaml).
+
+To install the pre-commit use:
+
+```sh
+pre-commit install
+```
+
+To test it use:
+
+```sh
+pre-commit run --all-file
+```
+
 ## Translations
 
 Create / update `.po` files.
@@ -71,8 +73,3 @@ Then compile `.po` to `.mo`.
 ```sh
 django-admin compilemessages -i=venv
 ```
-
-## Links
-
-* [Django doc](https://docs.djangoproject.com/en/3.2/)
-* [Django REST doc](https://www.django-rest-framework.org/)
