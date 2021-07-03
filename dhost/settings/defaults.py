@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 SITE_ID = env('SITE_ID', 1)
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = env_list('ALLOWED_HOSTS', 'localhost,127.0.0.1')
 
@@ -218,5 +218,3 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 TEST_DIR = os.path.join(env('TEST_DIR', '.cache'), '.test_dir')
 
 TEST_MEDIA_ROOT = env('TEST_MEDIA_ROOT', os.path.join(TEST_DIR, 'media'))
-
-ENABLE_DEBUG_TOOLBAR = False
