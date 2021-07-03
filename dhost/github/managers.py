@@ -1,7 +1,7 @@
 from django.apps import apps
 from django.db import models
 
-from .github import DjangoGithubAPI
+from .github_api import DjangoGithubAPI
 
 
 def serialize_repository(repo_json):

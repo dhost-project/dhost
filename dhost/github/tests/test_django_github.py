@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings
 from social_django.models import UserSocialAuth
 
-from dhost.github.github import DjangoGithubAPI
+from dhost.github.github_api import DjangoGithubAPI
 
 User = get_user_model()
 

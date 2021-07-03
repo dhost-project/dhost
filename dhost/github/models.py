@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 from dhost.dapps.models import Dapp
 
-from .github import DjangoGithubAPI
+from .github_api import DjangoGithubAPI
 from .managers import (BranchManager, RepositoryManager, WebhookManager,
                        serialize_branch, serialize_repository,
                        serialize_webhook)
