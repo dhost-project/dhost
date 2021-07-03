@@ -21,8 +21,6 @@ ROOT_DIR = os.path.dirname(BASE_DIR)
 
 SITE_ID = env('SITE_ID', 1)
 
-DEBUG = False
-
 ALLOWED_HOSTS = env_list('ALLOWED_HOSTS', 'localhost,127.0.0.1')
 
 INTERNAL_IPS = env_list('INTERNAL_IPS', '127.0.0.1')
@@ -222,3 +220,65 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 TEST_DIR = os.path.join(env('TEST_DIR', '.cache'), '.test_dir')
 
 TEST_MEDIA_ROOT = env('TEST_MEDIA_ROOT', os.path.join(TEST_DIR, 'media'))
+
+LOG_ROOT = env('LOG_ROOT', ROOT_DIR)
+
+# https://docs.djangoproject.com/en/dev/topics/logging/#configuring-logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'formatters': {
+        'django.server': {
+            '()': 'django.utils.log.ServerFormatter',
+            'format': '[{server_time}] {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+        },
+        'django.server': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'django.server',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOG_ROOT, 'debug.log'),
+            'formatter': 'django.server',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'console', 'mail_admins'],
+            'level': 'INFO',
+        },
+        'django.server': {
+            'handlers': ['django.server'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'dhost.github': {
+            'handlers': ['console', 'django.server', 'file'],
+            'level': 'WARNING',
+            'propagate': False
+        },
+    }
+}
