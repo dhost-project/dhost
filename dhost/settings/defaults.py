@@ -13,7 +13,11 @@ def env_list(var, default=None, separator=','):
     return [item.strip() for item in text_list.split(separator)]
 
 
+# dhost folder (apps dir)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+# git root
+ROOT_DIR = os.path.dirname(BASE_DIR)
 
 SITE_ID = env('SITE_ID', 1)
 
@@ -129,7 +133,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
+LOCALE_PATHS = (os.path.join(os.path.dirname(ROOT_DIR), 'locale'),)
 
 LANGUAGES = [
     ('en', 'English'),
@@ -138,7 +142,7 @@ LANGUAGES = [
 
 STATIC_URL = env('STATIC_URL', '/static/')
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(ROOT_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
@@ -146,7 +150,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = env('MEDIA_URL', '/media/')
 
-MEDIA_ROOT = env('MEDIA_ROOT', os.path.join(BASE_DIR, 'media'))
+MEDIA_ROOT = env('MEDIA_ROOT', os.path.join(ROOT_DIR, 'media'))
 
 EMAIL_HOST = env('EMAIL_HOST', 'localhost')
 

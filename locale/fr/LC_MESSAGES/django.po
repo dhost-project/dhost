@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-21 08:54+0000\n"
+"POT-Creation-Date: 2021-07-03 14:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: dhost/builds/models.py:32 dhost/builds/models.py:94
+#: dhost/builds/models.py:32 dhost/builds/models.py:92
 msgid "Source folder"
 msgstr "Dossier source"
 
@@ -43,180 +43,180 @@ msgstr "options de build"
 msgid "builds options"
 msgstr "options des builds"
 
-#: dhost/builds/models.py:80
+#: dhost/builds/models.py:78
 msgid "Based on the build return code"
 msgstr "Basé sur le code de retour du build"
 
-#: dhost/builds/models.py:84
+#: dhost/builds/models.py:82
 msgid "Raw logs output of the build process"
 msgstr "Logs brut du processus de build"
 
-#: dhost/builds/models.py:103 dhost/dapps/models.py:115
+#: dhost/builds/models.py:101 dhost/dapps/models.py:118
 msgid "bundle"
 msgstr "bundle"
 
-#: dhost/builds/models.py:110
+#: dhost/builds/models.py:108
 msgid "build"
 msgstr "build"
 
-#: dhost/builds/models.py:111
+#: dhost/builds/models.py:109
 msgid "builds"
 msgstr "builds"
 
-#: dhost/builds/models.py:184
+#: dhost/builds/models.py:180
 msgid "environment variable"
 msgstr "variable d'environnement"
 
-#: dhost/builds/models.py:185
+#: dhost/builds/models.py:181
 msgid "environment variables"
 msgstr "variables d'environnement"
 
-#: dhost/dapps/models.py:16
+#: dhost/dapps/models.py:18
 msgid "dapp name"
 msgstr "nom de la dapp"
 
-#: dhost/dapps/models.py:22
+#: dhost/dapps/models.py:24
 msgid "owner"
 msgstr "propriétaire"
 
-#: dhost/dapps/models.py:27 dhost/notifications/models.py:16
+#: dhost/dapps/models.py:29 dhost/notifications/models.py:16
 msgid "URL"
 msgstr "URL"
 
-#: dhost/dapps/models.py:44 dhost/dapps/models.py:146
+#: dhost/dapps/models.py:48 dhost/dapps/models.py:149
 msgid "Stoped"
 msgstr "Arrêté"
 
-#: dhost/dapps/models.py:45
+#: dhost/dapps/models.py:49
 msgid "Building"
 msgstr "En construction"
 
-#: dhost/dapps/models.py:46
+#: dhost/dapps/models.py:50
 msgid "Builed"
 msgstr "Construit"
 
-#: dhost/dapps/models.py:47 dhost/dapps/models.py:147
+#: dhost/dapps/models.py:51 dhost/dapps/models.py:150
 msgid "Deploying"
 msgstr "En cours de déploiement"
 
-#: dhost/dapps/models.py:48 dhost/dapps/models.py:148
+#: dhost/dapps/models.py:52 dhost/dapps/models.py:151
 msgid "Starting"
 msgstr "En cours de démarrage"
 
-#: dhost/dapps/models.py:49 dhost/dapps/models.py:149
+#: dhost/dapps/models.py:53 dhost/dapps/models.py:152
 msgid "Running"
 msgstr "En route"
 
-#: dhost/dapps/models.py:50 dhost/dapps/models.py:150
+#: dhost/dapps/models.py:54 dhost/dapps/models.py:153
 msgid "Unavailable"
 msgstr "Indisponible"
 
-#: dhost/dapps/models.py:51
+#: dhost/dapps/models.py:55
 msgid "Error"
 msgstr "Erreur"
 
-#: dhost/dapps/models.py:54
+#: dhost/dapps/models.py:58
 msgid "status"
 msgstr "status"
 
-#: dhost/dapps/models.py:60
+#: dhost/dapps/models.py:64
 msgid "created at"
 msgstr "date de création"
 
-#: dhost/dapps/models.py:63
+#: dhost/dapps/models.py:67
 msgid "dapp"
 msgstr "dapp"
 
-#: dhost/dapps/models.py:64
+#: dhost/dapps/models.py:68
 msgid "dapps"
 msgstr "dapps"
 
-#: dhost/dapps/models.py:105
+#: dhost/dapps/models.py:108
 msgid "folder"
 msgstr "dossier"
 
-#: dhost/dapps/models.py:116
+#: dhost/dapps/models.py:119
 msgid "bundles"
 msgstr "bundles"
 
-#: dhost/dapps/models.py:162
+#: dhost/dapps/models.py:165
 msgid "deployment"
 msgstr "déploiement"
 
-#: dhost/dapps/models.py:163
+#: dhost/dapps/models.py:166
 msgid "deployments"
 msgstr "déploiements"
 
-#: dhost/github/models.py:21 dhost/github/models.py:102
+#: dhost/github/models.py:23 dhost/github/models.py:121
 msgid "Github ID"
 msgstr "ID Github"
 
-#: dhost/github/models.py:24
+#: dhost/github/models.py:26
 msgid "Github repository unique ID."
 msgstr "ID unique du répertoire Github."
 
-#: dhost/github/models.py:31 dhost/github/models.py:116
+#: dhost/github/models.py:33 dhost/github/models.py:135
 msgid "Added at."
 msgstr "Ajouté le."
 
-#: dhost/github/models.py:34 dhost/github/models.py:85
-#: dhost/github/models.py:119
+#: dhost/github/models.py:36 dhost/github/models.py:104
+#: dhost/github/models.py:138
 msgid "Last updated from the Github API."
 msgstr "Dernière mise à jour depuis l'API Github."
 
-#: dhost/github/models.py:39
+#: dhost/github/models.py:41
 msgid "Github repository"
 msgstr "répertoire Github"
 
-#: dhost/github/models.py:40
+#: dhost/github/models.py:42
 msgid "Github repositories"
 msgstr "répertoires Github"
 
-#: dhost/github/models.py:90
+#: dhost/github/models.py:109
 msgid "Branch"
 msgstr "Branche"
 
-#: dhost/github/models.py:91
+#: dhost/github/models.py:110
 msgid "Branches"
 msgstr "Branches"
 
-#: dhost/github/models.py:105
+#: dhost/github/models.py:124
 msgid "Github webhook unique ID."
 msgstr "ID unique du webhook Github."
 
-#: dhost/github/models.py:124
+#: dhost/github/models.py:143
 msgid "Last called by Github."
 msgstr "Dernier appel par Github."
 
-#: dhost/github/models.py:129
+#: dhost/github/models.py:148
 msgid "Github webhook"
 msgstr "Webhook Github"
 
-#: dhost/github/models.py:130
+#: dhost/github/models.py:149
 msgid "Github webhooks"
 msgstr "Webhooks Github"
 
-#: dhost/github/models.py:174
+#: dhost/github/models.py:193
 msgid ""
 "Automatically deploy the dapp when a push is made on the selected branch."
 msgstr ""
 "Deployer automatiquement la dapp quand un push est fait sur la branche "
 "sélectionnée."
 
-#: dhost/github/models.py:182
+#: dhost/github/models.py:202
 msgid "Wait for CI to pass before automatically deploying the dapp."
 msgstr ""
 "Attendre que les CI passent avant de lancer le deploiement automatique."
 
-#: dhost/github/models.py:187
+#: dhost/github/models.py:207
 msgid "Dapp Github options"
 msgstr "Option Github de la Dapp"
 
-#: dhost/github/models.py:188
+#: dhost/github/models.py:208
 msgid "Dapps Github options"
 msgstr "Options Github des Dapps"
 
-#: dhost/ipfs/models.py:10 dhost/ipfs/models.py:35
+#: dhost/ipfs/models.py:10 dhost/ipfs/models.py:32
 msgid "IPFS hash"
 msgstr "Hash IPFS"
 
@@ -232,11 +232,11 @@ msgstr "Dapp IPFS"
 msgid "IPFS Dapps"
 msgstr "Dapps IPFS"
 
-#: dhost/ipfs/models.py:38
+#: dhost/ipfs/models.py:35
 msgid "IPFS Deployment"
 msgstr "Déploiement IPFS"
 
-#: dhost/ipfs/models.py:39
+#: dhost/ipfs/models.py:36
 msgid "IPFS Deployments"
 msgstr "Déploiements IPFS"
 
@@ -244,41 +244,93 @@ msgstr "Déploiements IPFS"
 msgid "API logs"
 msgstr "Logs de l'API"
 
-#: dhost/logs/models.py:22
-msgid "New environment variable"
-msgstr "Nouvelle variable d'environnement"
+#: dhost/logs/models.py:13
+msgid "Other"
+msgstr ""
 
-#: dhost/logs/models.py:23
-msgid "Environment variable updated"
-msgstr "Variable d'environnement mise à jour"
+#: dhost/logs/models.py:14
+msgid "Dapp created"
+msgstr ""
 
-#: dhost/logs/models.py:24
-msgid "Environment variable removed"
-msgstr "Variable d'environnement suprimée"
+#: dhost/logs/models.py:15
+msgid "Dapp updated"
+msgstr ""
 
-#: dhost/logs/models.py:25
-msgid "Start build"
-msgstr "Démarrer la construction"
+#: dhost/logs/models.py:16
+msgid "Bundle added"
+msgstr ""
 
-#: dhost/logs/models.py:26
-msgid "Build successful"
-msgstr "Succès de la construction"
+#: dhost/logs/models.py:17
+msgid "Bundle removed"
+msgstr ""
 
-#: dhost/logs/models.py:27
-msgid "Build failed"
-msgstr "Echec de la construction"
+#: dhost/logs/models.py:18
+msgid "Auto deployment started"
+msgstr "Déploiement automatique demarre"
 
-#: dhost/logs/models.py:28
-msgid "Start deployment"
-msgstr "Démarrage du déploiement"
+#: dhost/logs/models.py:19
+msgid "Deployment started"
+msgstr "Echec du déploiement"
 
-#: dhost/logs/models.py:29
+#: dhost/logs/models.py:20
 msgid "Deployment successful"
 msgstr "Votre compte a bien été suprimé"
 
-#: dhost/logs/models.py:30
+#: dhost/logs/models.py:21
 msgid "Deployment failed"
 msgstr "Echec du déploiement"
+
+#: dhost/logs/models.py:22
+msgid "Build options created"
+msgstr "options de build cree"
+
+#: dhost/logs/models.py:23
+msgid "Build options updated"
+msgstr ""
+
+#: dhost/logs/models.py:24
+msgid "Build options removed"
+msgstr ""
+
+#: dhost/logs/models.py:25
+msgid "Auto build started"
+msgstr ""
+
+#: dhost/logs/models.py:26
+msgid "Build started"
+msgstr "Echec de la construction"
+
+#: dhost/logs/models.py:27
+msgid "Build successful"
+msgstr "Succès de la construction"
+
+#: dhost/logs/models.py:28
+msgid "Build failed"
+msgstr "Echec de la construction"
+
+#: dhost/logs/models.py:29
+msgid "New environment variable"
+msgstr "Nouvelle variable d'environnement"
+
+#: dhost/logs/models.py:30
+msgid "Environment variable updated"
+msgstr "Variable d'environnement mise à jour"
+
+#: dhost/logs/models.py:31
+msgid "Environment variable removed"
+msgstr "Variable d'environnement suprimée"
+
+#: dhost/logs/models.py:32
+msgid "Github options created"
+msgstr ""
+
+#: dhost/logs/models.py:33
+msgid "Github options changed"
+msgstr ""
+
+#: dhost/logs/models.py:34
+msgid "Github options removed"
+msgstr ""
 
 #: dhost/logs/models.py:62
 msgid "API log entry"
@@ -360,73 +412,73 @@ msgstr ""
 "Il y a eu une erreur. Les administrateurs du site ont été notifiés par email "
 "et devraient résoudre le problème rapidement. Merci de votre patience."
 
-#: dhost/users/admin.py:12
+#: dhost/users/admin.py:13
 msgid "Personal info"
 msgstr "Info personnelles"
 
-#: dhost/users/admin.py:15
+#: dhost/users/admin.py:23
 msgid "Permissions"
 msgstr "Permissions"
 
-#: dhost/users/admin.py:24
+#: dhost/users/admin.py:33
 msgid "Important dates"
 msgstr "Dates importantes"
 
-#: dhost/users/models.py:26
+#: dhost/users/models.py:25
 msgid "username"
 msgstr "nom d'utilisateur"
 
-#: dhost/users/models.py:31
+#: dhost/users/models.py:30
 msgid "A user with that username already exists."
 msgstr "Un utilisateur avec ce nom existe déjà."
 
-#: dhost/users/models.py:34
+#: dhost/users/models.py:33
 msgid "first name"
 msgstr "prénom"
 
-#: dhost/users/models.py:35
+#: dhost/users/models.py:34
 msgid "last name"
 msgstr "nom"
 
-#: dhost/users/models.py:36
+#: dhost/users/models.py:35
 msgid "email address"
 msgstr "adresse e-mail"
 
-#: dhost/users/models.py:38
+#: dhost/users/models.py:37
 msgid "avatar"
 msgstr "avatar"
 
-#: dhost/users/models.py:44
+#: dhost/users/models.py:43
 msgid "staff status"
 msgstr "status staff"
 
-#: dhost/users/models.py:47
+#: dhost/users/models.py:46
 msgid "Designates whether the user can log into this admin site."
 msgstr "Désigne si l'utilisateur peut se connecter au site admin."
 
-#: dhost/users/models.py:51
+#: dhost/users/models.py:50
 msgid "active"
 msgstr "actif"
 
-#: dhost/users/models.py:53
+#: dhost/users/models.py:52
 msgid "Unselect this instead of deleting accounts."
 msgstr "Désélectionnez ceci au lieu de supprimer le compte."
 
-#: dhost/users/models.py:55
+#: dhost/users/models.py:54
 msgid "date joined"
 msgstr "date d'inscription"
 
-#: dhost/users/models.py:64
+#: dhost/users/models.py:63
 msgid "user"
 msgstr "utilisateur"
 
-#: dhost/users/models.py:65
+#: dhost/users/models.py:64
 msgid "users"
 msgstr "utilisateurs"
 
 #: dhost/users/templates/users/account_delete.html:8
 #: dhost/users/templates/users/account_settings.html:14
-#: dhost/users/views.py:203
+#: dhost/users/views.py:196
 msgid "Delete account"
 msgstr "Supprimer le compte"
 
@@ -583,18 +635,18 @@ msgstr "Réinitialiser mon mot de passe"
 msgid "Sign Up"
 msgstr "Inscription"
 
-#: dhost/users/views.py:82
+#: dhost/users/views.py:81
 msgid "Sign up"
 msgstr "Inscription"
 
-#: dhost/users/views.py:147
+#: dhost/users/views.py:145
 msgid "Account settings"
 msgstr "Paramètres de compte"
 
-#: dhost/users/views.py:181
+#: dhost/users/views.py:176
 msgid "Export data"
 msgstr "Exporter les données"
 
-#: dhost/users/views.py:226
+#: dhost/users/views.py:214
 msgid "Delete account successful"
 msgstr "Votre compte a bien été suprimé"
