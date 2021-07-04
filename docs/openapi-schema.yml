@@ -57,7 +57,7 @@ paths:
       - api
     post:
       operationId: createIPFSDapp
-      description: ''
+      description: Log the action on a create call.
       parameters: []
       requestBody:
         content:
@@ -101,7 +101,7 @@ paths:
       - api
     put:
       operationId: updateIPFSDapp
-      description: ''
+      description: Log the action on an update call.
       parameters:
       - name: slug
         in: path
@@ -131,7 +131,7 @@ paths:
       - api
     patch:
       operationId: partialUpdateIPFSDapp
-      description: ''
+      description: Log the action on an partial update call.
       parameters:
       - name: slug
         in: path
@@ -161,7 +161,7 @@ paths:
       - api
     delete:
       operationId: destroyIPFSDapp
-      description: ''
+      description: Log the action on a delete call.
       parameters:
       - name: slug
         in: path
@@ -267,7 +267,7 @@ paths:
   /api/v1/github/repositories/{id}/fetch_branches/:
     get:
       operationId: fetchBranchesRepository
-      description: Update repo's branches from the Github API.
+      description: Update a single repo branches from the Github API.
       parameters:
       - name: id
         in: path
@@ -322,7 +322,7 @@ paths:
       - api
     post:
       operationId: createBuildOptions
-      description: ''
+      description: Log the action on a create call.
       parameters:
       - name: dapp_slug
         in: path
@@ -378,7 +378,7 @@ paths:
       - api
     put:
       operationId: updateBuildOptions
-      description: ''
+      description: Log the action on an update call.
       parameters:
       - name: dapp_slug
         in: path
@@ -414,7 +414,7 @@ paths:
       - api
     patch:
       operationId: partialUpdateBuildOptions
-      description: ''
+      description: Log the action on an partial update call.
       parameters:
       - name: dapp_slug
         in: path
@@ -450,7 +450,7 @@ paths:
       - api
     delete:
       operationId: destroyBuildOptions
-      description: ''
+      description: Log the action on a delete call.
       parameters:
       - name: dapp_slug
         in: path
@@ -900,7 +900,7 @@ paths:
       - api
     post:
       operationId: createEnvVar
-      description: ''
+      description: Log the action on a create call.
       parameters:
       - name: dapp_slug
         in: path
@@ -968,7 +968,7 @@ paths:
       - api
     put:
       operationId: updateEnvVar
-      description: ''
+      description: Log the action on an update call.
       parameters:
       - name: dapp_slug
         in: path
@@ -1010,7 +1010,7 @@ paths:
       - api
     patch:
       operationId: partialUpdateEnvVar
-      description: ''
+      description: Log the action on an partial update call.
       parameters:
       - name: dapp_slug
         in: path
@@ -1052,7 +1052,7 @@ paths:
       - api
     delete:
       operationId: destroyEnvVar
-      description: ''
+      description: Log the action on a delete call.
       parameters:
       - name: dapp_slug
         in: path
@@ -1080,7 +1080,11 @@ paths:
   /api/v1/github/webhook/{id}/payload/:
     post:
       operationId: payloadWebhook
-      description: Receive a webhook payload from Github.
+      description: "Receive a webhook payload from Github.\n\nThis view will receive\
+        \ a webhook from Github and process it. It needs\nto send back a valid response\
+        \ or Github will disconnect it. We also\nneed to send back a body containing\
+        \ a message, this will come from the\npayload handler class.\n\nGithub docs:\n\
+        \    https://docs.github.com/en/github-ae@latest/developers/"
       parameters:
       - name: id
         in: path
@@ -1297,16 +1301,29 @@ components:
           readOnly: true
         action_flag:
           enum:
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
-          - 6
-          - 7
-          - 8
-          - 9
-          type: integer
+          - other
+          - dapp_add
+          - dapp_change
+          - bundle_add
+          - bundle_del
+          - auto_deploy_start
+          - deploy_start
+          - deploy_success
+          - deploy_fail
+          - build_opt_add
+          - build_opt_change
+          - build_opt_del
+          - auto_build_start
+          - build_start
+          - build_success
+          - build_fail
+          - env_var_add
+          - env_var_change
+          - env_var_del
+          - github_opt_add
+          - github_opt_change
+          - github_opt_del
+          type: string
           readOnly: true
         change_message:
           type: string

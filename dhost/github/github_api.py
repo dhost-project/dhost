@@ -1,6 +1,6 @@
 """A wrapper for the Github REST API with OAuth."""
-import os
 import logging
+import os
 
 import requests
 
@@ -52,7 +52,7 @@ class GithubAPI:
             response_json = response.json()
             if 'message' in response_json:
                 content = response_json['message']
-        except:
+        except AttributeError:
             content = response.content
         raise GithubAPIError(f'{url} ({response.status_code}) {content}')
 

@@ -49,8 +49,8 @@ class GithubAPITestCase(TestCase):
 
     @mock.patch('requests.get')
     def test_get_404_status(self, mock_get):
-        mock_get.return_value = mock.Mock(status_code=404, json=lambda:
-                                          {'message': 'Not Found'})
+        mock_get.return_value = mock.Mock(status_code=404,
+                                          json=lambda: {'message': 'Not Found'})
         with self.assertRaises(GithubAPIError) as context:
             self.g.get('/test')
         self.assertIn('https://api.github.com/test (404) Not Found',
