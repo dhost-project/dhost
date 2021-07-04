@@ -248,12 +248,6 @@ LOGGING = {
             'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
         },
-        'django': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(LOG_ROOT, 'django.log'),
-            'formatter': 'django.server',
-        },
         'django.server': {
             'level': 'INFO',
             'class': 'logging.StreamHandler',
@@ -273,7 +267,7 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['django', 'console', 'mail_admins'],
+            'handlers': ['console', 'mail_admins'],
             'level': 'INFO',
         },
         'django.server': {
