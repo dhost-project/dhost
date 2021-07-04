@@ -49,10 +49,10 @@ class GithubAPITestCase(TestCase):
 
     @mock.patch('requests.get')
     def test_get_404_status(self, mock_get):
-        mock_get.return_value = mock.Mock(status_code=404)
+        mock_get.return_value = mock.Mock(status_code=404, content='test')
         with self.assertRaises(Exception) as context:
             self.g.get('/test')
-        self.assertIn('Error trying to access `https://api.github.com/test`',
+        self.assertIn('https://api.github.com/test (404)',
                       str(context.exception))
 
     @mock.patch('requests.get')
@@ -80,10 +80,10 @@ class GithubAPITestCase(TestCase):
 
     @mock.patch('requests.post')
     def test_post_404_status(self, mock_post):
-        mock_post.return_value = mock.Mock(status_code=404)
+        mock_post.return_value = mock.Mock(status_code=404, content='test')
         with self.assertRaises(Exception) as context:
             self.g.post('/test', data={'test_data': 'test'})
-        self.assertIn('Error trying to access `https://api.github.com/test`',
+        self.assertIn('https://api.github.com/test (404)',
                       str(context.exception))
 
     @mock.patch('requests.patch')
@@ -100,10 +100,10 @@ class GithubAPITestCase(TestCase):
 
     @mock.patch('requests.patch')
     def test_patch_404_status(self, mock_patch):
-        mock_patch.return_value = mock.Mock(status_code=404)
+        mock_patch.return_value = mock.Mock(status_code=404, content='test')
         with self.assertRaises(Exception) as context:
             self.g.patch('/test', data={'test_data': 'test'})
-        self.assertIn('Error trying to access `https://api.github.com/test`',
+        self.assertIn('https://api.github.com/test (404)',
                       str(context.exception))
 
     @mock.patch('requests.get')
@@ -133,10 +133,10 @@ class GithubAPITestCase(TestCase):
 
     @mock.patch('requests.delete')
     def test_delete_404_status(self, mock_delete):
-        mock_delete.return_value = mock.Mock(status_code=404)
+        mock_delete.return_value = mock.Mock(status_code=404, content='test')
         with self.assertRaises(Exception) as context:
             self.g.delete('/test')
-        self.assertIn('Error trying to access `https://api.github.com/test`',
+        self.assertIn('https://api.github.com/test (404)',
                       str(context.exception))
 
     @mock.patch(
