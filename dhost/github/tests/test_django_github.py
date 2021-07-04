@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings
 from social_django.models import UserSocialAuth
 
-from dhost.github.github_api import DjangoGithubAPI
+from dhost.github.github_api import DjangoGithubAPI, GithubAPIError
 
 User = get_user_model()
 
@@ -34,7 +34,7 @@ class DjangoGithubAPITestCase(TestCase):
     @mock.patch('dhost.github.github_api.logger')
     def test_exception_logger(self, mock_logger):
         with mock.patch('requests.get') as mock_get, self.assertRaises(
-                Exception) as context:
+                GithubAPIError) as context:
             mock_get.return_value = mock.Mock(status_code=404, content='Not Found')
             self.dg.get('/test')
         mock_logger.warning.assert_called_once_with(

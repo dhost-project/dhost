@@ -9,6 +9,11 @@ from .utils import get_token_from_github_account, get_user_github_account
 logger = logging.getLogger(__name__)
 
 
+class GithubAPIError(Exception):
+    """Raised if a status code was not expected."""
+    pass
+
+
 class GithubAPI:
     """A github REST API wrapper."""
 
@@ -49,7 +54,7 @@ class GithubAPI:
                 content = response_json['message']
         except:
             content = response.content
-        raise Exception(f'{url} ({response.status_code}) {content}')
+        raise GithubAPIError(f'{url} ({response.status_code}) {content}')
 
     def get(self, url, headers=None, code=200, json=True, *args, **kwargs):
         url, headers = self._prepare_request(url, headers)
@@ -183,7 +188,7 @@ class DjangoGithubAPI(GithubAPI):
         """Log exceptions."""
         try:
             super()._request_error(*args, **kwargs)
-        except Exception as e:
+        except GithubAPIError as e:
             message = '{}, user: {}'.format(str(e), self.user)
             logger.warning(message)
             raise e

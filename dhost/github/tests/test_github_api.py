@@ -3,7 +3,7 @@ from unittest import TestCase, mock
 
 from django.conf import settings
 
-from dhost.github.github_api import GithubAPI
+from dhost.github.github_api import GithubAPI, GithubAPIError
 
 TMP_PATH = settings.TEST_DIR
 
@@ -49,10 +49,11 @@ class GithubAPITestCase(TestCase):
 
     @mock.patch('requests.get')
     def test_get_404_status(self, mock_get):
-        mock_get.return_value = mock.Mock(status_code=404, content='test')
-        with self.assertRaises(Exception) as context:
+        mock_get.return_value = mock.Mock(status_code=404, json=lambda:
+                                          {'message': 'Not Found'})
+        with self.assertRaises(GithubAPIError) as context:
             self.g.get('/test')
-        self.assertIn('https://api.github.com/test (404)',
+        self.assertIn('https://api.github.com/test (404) Not Found',
                       str(context.exception))
 
     @mock.patch('requests.get')
@@ -81,7 +82,7 @@ class GithubAPITestCase(TestCase):
     @mock.patch('requests.post')
     def test_post_404_status(self, mock_post):
         mock_post.return_value = mock.Mock(status_code=404, content='test')
-        with self.assertRaises(Exception) as context:
+        with self.assertRaises(GithubAPIError) as context:
             self.g.post('/test', data={'test_data': 'test'})
         self.assertIn('https://api.github.com/test (404)',
                       str(context.exception))
@@ -101,7 +102,7 @@ class GithubAPITestCase(TestCase):
     @mock.patch('requests.patch')
     def test_patch_404_status(self, mock_patch):
         mock_patch.return_value = mock.Mock(status_code=404, content='test')
-        with self.assertRaises(Exception) as context:
+        with self.assertRaises(GithubAPIError) as context:
             self.g.patch('/test', data={'test_data': 'test'})
         self.assertIn('https://api.github.com/test (404)',
                       str(context.exception))
@@ -134,7 +135,7 @@ class GithubAPITestCase(TestCase):
     @mock.patch('requests.delete')
     def test_delete_404_status(self, mock_delete):
         mock_delete.return_value = mock.Mock(status_code=404, content='test')
-        with self.assertRaises(Exception) as context:
+        with self.assertRaises(GithubAPIError) as context:
             self.g.delete('/test')
         self.assertIn('https://api.github.com/test (404)',
                       str(context.exception))
