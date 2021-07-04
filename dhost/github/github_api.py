@@ -42,7 +42,14 @@ class GithubAPI:
 
     def _request_error(self, response, url):
         """Raise an exception if a status code was not expected."""
-        raise Exception(f'{url} ({response.status_code}) {response.content}')
+        try:
+            # try to get a message from the response if it exist
+            response_json = response.json()
+            if 'message' in response_json:
+                content = response_json['message']
+        except:
+            content = response.content
+        raise Exception(f'{url} ({response.status_code}) {content}')
 
     def get(self, url, headers=None, code=200, json=True, *args, **kwargs):
         url, headers = self._prepare_request(url, headers)
