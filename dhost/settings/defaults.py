@@ -258,16 +258,16 @@ LOGGING = {
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         },
-        'file': {
+        'github_api': {
             'level': 'WARNING',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(LOG_ROOT, 'debug.log'),
+            'filename': os.path.join(LOG_ROOT, 'github_api.log'),
             'formatter': 'django.server',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['file', 'console', 'mail_admins'],
+            'handlers': ['console', 'mail_admins'],
             'level': 'INFO',
         },
         'django.server': {
@@ -275,8 +275,8 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
-        'dhost.github': {
-            'handlers': ['console', 'django.server', 'file'],
+        'dhost.github.github_api': {
+            'handlers': ['console', 'github_api'],
             'level': 'WARNING',
             'propagate': False
         },

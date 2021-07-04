@@ -1,9 +1,17 @@
 """A wrapper for the Github REST API with OAuth."""
 import os
+import logging
 
 import requests
 
 from .utils import get_token_from_github_account, get_user_github_account
+
+logger = logging.getLogger(__name__)
+
+
+class GithubAPIError(Exception):
+    """Raised if a status code was not expected."""
+    pass
 
 
 class GithubAPI:
@@ -37,16 +45,16 @@ class GithubAPI:
         headers = self.get_headers(additionnal_headers=headers)
         return url, headers
 
-    def _request_error(self, response, expected_code, url=None):
+    def _request_error(self, response, url):
         """Raise an exception if a status code was not expected."""
-        raise Exception(
-            'Error trying to access `{url}`, error code: {error_code} '
-            '(expected code: {expected_code}), message: {content}'.format(
-                url=url,
-                error_code=response.status_code,
-                expected_code=expected_code,
-                content=response.content,
-            ))
+        try:
+            # try to get a message from the response if it exist
+            response_json = response.json()
+            if 'message' in response_json:
+                content = response_json['message']
+        except:
+            content = response.content
+        raise GithubAPIError(f'{url} ({response.status_code}) {content}')
 
     def get(self, url, headers=None, code=200, json=True, *args, **kwargs):
         url, headers = self._prepare_request(url, headers)
@@ -56,21 +64,21 @@ class GithubAPI:
                 return r.json()
             else:
                 return r
-        self._request_error(response=r, expected_code=code, url=url)
+        self._request_error(response=r, url=url)
 
     def post(self, url, data, headers=None, *args, **kwargs):
         url, headers = self._prepare_request(url, headers)
         r = requests.post(url, headers=headers, data=data, *args, **kwargs)
         if r.status_code == 201:
             return r.json()
-        self._request_error(response=r, expected_code=201, url=url)
+        self._request_error(response=r, url=url)
 
     def patch(self, url, data, headers=None, *args, **kwargs):
         url, headers = self._prepare_request(url, headers)
         r = requests.patch(url, headers=headers, data=data, *args, **kwargs)
         if r.status_code == 200:
             return r.json()
-        self._request_error(response=r, expected_code=200, url=url)
+        self._request_error(response=r, url=url)
 
     def head(self, url, headers=None, *args, **kwargs):
         r = self.get(url=url, headers=headers, json=False, *args, **kwargs)
@@ -81,7 +89,7 @@ class GithubAPI:
         r = requests.delete(url, headers=headers, *args, **kwargs)
         if r.status_code == 204:
             return r.json()
-        self._request_error(response=r, expected_code=204, url=url)
+        self._request_error(response=r, url=url)
 
     def get_scopes(self, username):
         """Return oauth scopes."""
@@ -175,3 +183,12 @@ class DjangoGithubAPI(GithubAPI):
         token = get_token_from_github_account(self.github_account)
 
         super().__init__(token=token)
+
+    def _request_error(self, *args, **kwargs):
+        """Log exceptions."""
+        try:
+            super()._request_error(*args, **kwargs)
+        except GithubAPIError as e:
+            message = '{}, user: {}'.format(str(e), self.user)
+            logger.warning(message)
+            raise e

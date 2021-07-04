@@ -1,7 +1,8 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from django.utils.translation import gettext_lazy as _
 
 from dhost.dapps.views import DappViewMixin
 
@@ -9,6 +10,7 @@ from .models import GithubOptions, Repository, Webhook
 from .permissions import HasGithubLinked
 from .serializers import GithubOptionsSerializer, RepositorySerializer
 from .webhook import PayloadHandler
+from .github_api import GithubAPIError
 
 
 class RepositoryViewSet(viewsets.ReadOnlyModelViewSet):
@@ -26,7 +28,14 @@ class RepositoryViewSet(viewsets.ReadOnlyModelViewSet):
     @action(detail=False, methods=['get'])
     def fetch_all(self, request):
         """Update every Github repos for user from the Github API."""
-        Repository.objects.fetch_all(user=request.user)
+        try:
+            Repository.objects.fetch_all(user=request.user)
+        except GithubAPIError:
+            content = {'detail': _('Error trying to fetch all repositories.')}
+            return Response(
+                content,
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
         repos = self.get_queryset()
         serializer = self.get_serializer(repos, many=True)
         return Response(serializer.data)
@@ -35,7 +44,14 @@ class RepositoryViewSet(viewsets.ReadOnlyModelViewSet):
     def fetch(self, request, pk=None):
         """Update a single repo from Github API."""
         repo = self.get_object()
-        repo.fetch_repo(user=request.user)
+        try:
+            repo.fetch_repo(user=request.user)
+        except GithubAPIError:
+            content = {'detail': _('Error trying to fetch repository.')}
+            return Response(
+                content,
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
         serializer = self.get_serializer(repo)
         return Response(serializer.data)
 
@@ -43,7 +59,14 @@ class RepositoryViewSet(viewsets.ReadOnlyModelViewSet):
     def fetch_branches(self, request, pk=None):
         """Update a single repo branches from the Github API."""
         repo = self.get_object()
-        repo.fetch_branches(user=request.user)
+        try:
+            repo.fetch_branches(user=request.user)
+        except GithubAPIError:
+            content = {'detail': _('Error trying to fetch branches.')}
+            return Response(
+                content,
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
         serializer = self.get_serializer(repo)
         return Response(serializer.data)
 

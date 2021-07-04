@@ -3,7 +3,7 @@ from unittest import TestCase, mock
 
 from django.conf import settings
 
-from dhost.github.github import GithubAPI
+from dhost.github.github_api import GithubAPI, GithubAPIError
 
 TMP_PATH = settings.TEST_DIR
 
@@ -49,10 +49,11 @@ class GithubAPITestCase(TestCase):
 
     @mock.patch('requests.get')
     def test_get_404_status(self, mock_get):
-        mock_get.return_value = mock.Mock(status_code=404)
-        with self.assertRaises(Exception) as context:
+        mock_get.return_value = mock.Mock(status_code=404, json=lambda:
+                                          {'message': 'Not Found'})
+        with self.assertRaises(GithubAPIError) as context:
             self.g.get('/test')
-        self.assertIn('Error trying to access `https://api.github.com/test`',
+        self.assertIn('https://api.github.com/test (404) Not Found',
                       str(context.exception))
 
     @mock.patch('requests.get')
@@ -80,10 +81,10 @@ class GithubAPITestCase(TestCase):
 
     @mock.patch('requests.post')
     def test_post_404_status(self, mock_post):
-        mock_post.return_value = mock.Mock(status_code=404)
-        with self.assertRaises(Exception) as context:
+        mock_post.return_value = mock.Mock(status_code=404, content='test')
+        with self.assertRaises(GithubAPIError) as context:
             self.g.post('/test', data={'test_data': 'test'})
-        self.assertIn('Error trying to access `https://api.github.com/test`',
+        self.assertIn('https://api.github.com/test (404)',
                       str(context.exception))
 
     @mock.patch('requests.patch')
@@ -100,10 +101,10 @@ class GithubAPITestCase(TestCase):
 
     @mock.patch('requests.patch')
     def test_patch_404_status(self, mock_patch):
-        mock_patch.return_value = mock.Mock(status_code=404)
-        with self.assertRaises(Exception) as context:
+        mock_patch.return_value = mock.Mock(status_code=404, content='test')
+        with self.assertRaises(GithubAPIError) as context:
             self.g.patch('/test', data={'test_data': 'test'})
-        self.assertIn('Error trying to access `https://api.github.com/test`',
+        self.assertIn('https://api.github.com/test (404)',
                       str(context.exception))
 
     @mock.patch('requests.get')
@@ -133,40 +134,40 @@ class GithubAPITestCase(TestCase):
 
     @mock.patch('requests.delete')
     def test_delete_404_status(self, mock_delete):
-        mock_delete.return_value = mock.Mock(status_code=404)
-        with self.assertRaises(Exception) as context:
+        mock_delete.return_value = mock.Mock(status_code=404, content='test')
+        with self.assertRaises(GithubAPIError) as context:
             self.g.delete('/test')
-        self.assertIn('Error trying to access `https://api.github.com/test`',
+        self.assertIn('https://api.github.com/test (404)',
                       str(context.exception))
 
     @mock.patch(
-        'dhost.github.github.GithubAPI.head',
+        'dhost.github.github_api.GithubAPI.head',
         mock.MagicMock(return_value={'X-OAuth-Scopes': 'oauth_test_scope'}))
     def test_get_scopes(self):
         oauth_scopes = self.g.get_scopes('octocat')
         self.assertEqual(oauth_scopes, 'oauth_test_scope')
 
-    @mock.patch('dhost.github.github.GithubAPI.get')
+    @mock.patch('dhost.github.github_api.GithubAPI.get')
     def test_get_user(self, mock):
         self.g.get_user(username='octocat')
         mock.assert_called_once_with('/users/octocat')
 
-    @mock.patch('dhost.github.github.GithubAPI.get')
+    @mock.patch('dhost.github.github_api.GithubAPI.get')
     def test_list_repos(self, mock):
         self.g.list_repos()
         mock.assert_called_once_with('/user/repos')
 
-    @mock.patch('dhost.github.github.GithubAPI.get')
+    @mock.patch('dhost.github.github_api.GithubAPI.get')
     def test_get_repo(self, mock):
         self.g.get_repo(owner='octocat', repo='Hello-World')
         mock.assert_called_once_with('/repos/octocat/Hello-World')
 
-    @mock.patch('dhost.github.github.GithubAPI.get')
+    @mock.patch('dhost.github.github_api.GithubAPI.get')
     def test_list_branches(self, mock):
         self.g.list_branches(owner='octocat', repo='Hello-World')
         mock.assert_called_once_with('/repos/octocat/Hello-World/branches')
 
-    @mock.patch('dhost.github.github.GithubAPI.get')
+    @mock.patch('dhost.github.github_api.GithubAPI.get')
     def test_download_repo(self, mock_get):
         mock_get.return_value = mock.Mock(content=b'data_test')
         self.g.download_repo(owner='octocat',
@@ -179,7 +180,7 @@ class GithubAPITestCase(TestCase):
             json=False,
             allow_redirects=True)
 
-    @mock.patch('dhost.github.github.GithubAPI.get')
+    @mock.patch('dhost.github.github_api.GithubAPI.get')
     def test_download_repo_with_archive_name(self, mock_get):
         mock_get.return_value = mock.Mock(content=b'data_test')
         self.g.download_repo(owner='octocat',
@@ -189,23 +190,23 @@ class GithubAPITestCase(TestCase):
                              archive_name='foo_bar')
         self.assertTrue(os.path.exists(TMP_PATH + '/repos/foo_bar.tar'))
 
-    @mock.patch('dhost.github.github.GithubAPI.get')
+    @mock.patch('dhost.github.github_api.GithubAPI.get')
     def test_list_hooks(self, mock):
         self.g.list_hooks(owner='octocat', repo='Hello-World')
         mock.assert_called_once_with('/repos/octocat/Hello-World/hooks')
 
-    @mock.patch('dhost.github.github.GithubAPI.get')
+    @mock.patch('dhost.github.github_api.GithubAPI.get')
     def test_get_hook(self, mock):
         self.g.get_hook(owner='octocat', repo='Hello-World', hook_id=1)
         mock.assert_called_once_with('/repos/octocat/Hello-World/hooks/1')
 
-    @mock.patch('dhost.github.github.GithubAPI.get')
+    @mock.patch('dhost.github.github_api.GithubAPI.get')
     def test_get_hook_config(self, mock):
         self.g.get_hook_config(owner='octocat', repo='Hello-World', hook_id=1)
         mock.assert_called_once_with(
             '/repos/octocat/Hello-World/hooks/1/config')
 
-    @mock.patch('dhost.github.github.GithubAPI.post')
+    @mock.patch('dhost.github.github_api.GithubAPI.post')
     def test_create_hook(self, mock):
         self.g.create_hook(owner='octocat',
                            repo='Hello-World',
@@ -219,7 +220,7 @@ class GithubAPITestCase(TestCase):
                 },
             })
 
-    @mock.patch('dhost.github.github.GithubAPI.patch')
+    @mock.patch('dhost.github.github_api.GithubAPI.patch')
     def test_update_hook(self, mock):
         self.g.update_hook(owner='octocat',
                            repo='Hello-World',
@@ -228,7 +229,7 @@ class GithubAPITestCase(TestCase):
         mock.assert_called_once_with('/repos/octocat/Hello-World/hooks/1',
                                      'test_data')
 
-    @mock.patch('dhost.github.github.GithubAPI.patch')
+    @mock.patch('dhost.github.github_api.GithubAPI.patch')
     def test_update_hook_config(self, mock):
         self.g.update_hook_config(owner='octocat',
                                   repo='Hello-World',
@@ -237,12 +238,12 @@ class GithubAPITestCase(TestCase):
         mock.assert_called_once_with(
             '/repos/octocat/Hello-World/hooks/1/config', 'test_data')
 
-    @mock.patch('dhost.github.github.GithubAPI.delete')
+    @mock.patch('dhost.github.github_api.GithubAPI.delete')
     def test_delete_hook(self, mock):
         self.g.delete_hook(owner='octocat', repo='Hello-World', hook_id=1)
         mock.assert_called_once_with('/repos/octocat/Hello-World/hooks/1')
 
-    @mock.patch('dhost.github.github.GithubAPI.get')
+    @mock.patch('dhost.github.github_api.GithubAPI.get')
     def test_ping_hook(self, mock):
         self.g.ping_hook(owner='octocat', repo='Hello-World', hook_id=1)
         mock.assert_called_once_with('/repos/octocat/Hello-World/hooks/1/pings',
