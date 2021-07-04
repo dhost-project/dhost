@@ -1,38 +1,16 @@
 from django.conf import settings
 from django.urls import include, path
-from rest_framework_nested import routers
 
-from dhost.dapps import views as dapps_views
-from dhost.github import views as github_views
-from dhost.ipfs import views as ipfs_views
-from dhost.users.api import views as users_views
-
-router = routers.DefaultRouter()
-router.register('dapps', dapps_views.DappReadOnlyViewSet)
-
-router.register('ipfs', ipfs_views.IPFSDappViewSet)
-ipfs_router = routers.NestedSimpleRouter(router, 'ipfs', lookup='dapp')
-ipfs_router.register('buildoptions', ipfs_views.IPFSDappBuildOptionsViewSet)
-ipfs_router.register('bundles', ipfs_views.IPFSDappBundleViewSet)
-ipfs_router.register('deployments', ipfs_views.IPFSDeploymentViewSet)
-ipfs_router.register('logs', ipfs_views.IPFSDappAPILogViewSet)
-ipfs_router.register('githuboptions', ipfs_views.IPFSDappGithubOptionsViewSet)
-
-ipfs_build_router = routers.NestedSimpleRouter(ipfs_router,
-                                               'buildoptions',
-                                               lookup='buildoptions')
-ipfs_build_router.register('builds', ipfs_views.IPFSDappBuildViewSet)
-ipfs_build_router.register('envvars', ipfs_views.IPFSDappEnvVarViewSet)
-
-router.register('github/repositories', github_views.RepositoryViewSet)
-router.register('github/webhook', github_views.WebhookViewSet)
-
-router.register('users', users_views.UserViewSet)
+from .dapps import urlpatterns as dapps_urls
+from .github import urlpatterns as github_urls
+from .ipfs import urlpatterns as ipfs_urls
+from .users import urlpatterns as users_urls
 
 api_v1_urlpatterns = [
-    path('', include(router.urls)),
-    path('', include(ipfs_router.urls)),
-    path('', include(ipfs_build_router.urls)),
+    path('dapps/', include(dapps_urls)),
+    path('github/', include(github_urls)),
+    path('ipfs/', include(ipfs_urls)),
+    path('users/', include(users_urls)),
 ]
 
 urlpatterns = [

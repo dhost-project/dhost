@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 
 class GithubAPIError(Exception):
     """Raised if a status code was not expected."""
+
     pass
 
 
@@ -19,7 +20,6 @@ class GithubAPI:
 
     GITHUB_API_URL = 'https://api.github.com'
     GITHUB_TOKEN_TYPE = 'token'
-    GITHUB_WEBHOOK_URL = 'https://localhost:8000/github/webhook/'
 
     def __init__(self, token: str):
         # Github API token used to make requests

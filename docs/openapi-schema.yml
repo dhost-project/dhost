@@ -39,6 +39,96 @@ paths:
           description: ''
       tags:
       - api
+  /api/v1/github/repositories/:
+    get:
+      operationId: listRepositorys
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Repository'
+          description: ''
+      tags:
+      - api
+  /api/v1/github/repositories/fetch_all/:
+    get:
+      operationId: fetchAllRepository
+      description: Update every Github repos for user from the Github API.
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Repository'
+          description: ''
+      tags:
+      - api
+  /api/v1/github/repositories/{id}/:
+    get:
+      operationId: retrieveRepository
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Github repository unique ID.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Repository'
+          description: ''
+      tags:
+      - api
+  /api/v1/github/repositories/{id}/fetch/:
+    get:
+      operationId: fetchRepository
+      description: Update a single repo from Github API.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Github repository unique ID.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Repository'
+          description: ''
+      tags:
+      - api
+  /api/v1/github/repositories/{id}/fetch_branches/:
+    get:
+      operationId: fetchBranchesRepository
+      description: Update a single repo branches from the Github API.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Github repository unique ID.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Repository'
+          description: ''
+      tags:
+      - api
   /api/v1/ipfs/:
     get:
       operationId: listIPFSDapps
@@ -191,110 +281,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IPFSDapp'
-          description: ''
-      tags:
-      - api
-  /api/v1/github/repositories/:
-    get:
-      operationId: listRepositorys
-      description: ''
-      parameters: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Repository'
-          description: ''
-      tags:
-      - api
-  /api/v1/github/repositories/fetch_all/:
-    get:
-      operationId: fetchAllRepository
-      description: Update every Github repos for user from the Github API.
-      parameters: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Repository'
-          description: ''
-      tags:
-      - api
-  /api/v1/github/repositories/{id}/:
-    get:
-      operationId: retrieveRepository
-      description: ''
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: Github repository unique ID.
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Repository'
-          description: ''
-      tags:
-      - api
-  /api/v1/github/repositories/{id}/fetch/:
-    get:
-      operationId: fetchRepository
-      description: Update a single repo from Github API.
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: Github repository unique ID.
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Repository'
-          description: ''
-      tags:
-      - api
-  /api/v1/github/repositories/{id}/fetch_branches/:
-    get:
-      operationId: fetchBranchesRepository
-      description: Update a single repo branches from the Github API.
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: Github repository unique ID.
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Repository'
-          description: ''
-      tags:
-      - api
-  /api/v1/users/me/:
-    get:
-      operationId: meUser
-      description: ''
-      parameters: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
           description: ''
       tags:
       - api
@@ -1077,6 +1063,20 @@ paths:
           description: ''
       tags:
       - api
+  /api/v1/users/me/:
+    get:
+      operationId: meUser
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
   /api/v1/github/webhook/{id}/payload/:
     post:
       operationId: payloadWebhook
@@ -1139,6 +1139,39 @@ components:
       required:
       - slug
       - owner
+    Repository:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Github repository unique ID.
+        github_owner:
+          type: string
+          readOnly: true
+        github_repo:
+          type: string
+          readOnly: true
+        branches:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                readOnly: true
+        added_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Added at.
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Last updated from the Github API.
+      required:
+      - branches
     IPFSDapp:
       type: object
       properties:
@@ -1181,60 +1214,6 @@ components:
           readOnly: true
       required:
       - slug
-    Repository:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-          description: Github repository unique ID.
-        github_owner:
-          type: string
-          readOnly: true
-        github_repo:
-          type: string
-          readOnly: true
-        branches:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-                readOnly: true
-        added_at:
-          type: string
-          format: date-time
-          readOnly: true
-          description: Added at.
-        updated_at:
-          type: string
-          format: date-time
-          readOnly: true
-          description: Last updated from the Github API.
-      required:
-      - branches
-    User:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-        username:
-          type: string
-          pattern: ^[\w.@+-]+\z
-          maxLength: 150
-        email:
-          type: string
-          format: email
-          maxLength: 254
-        avatar:
-          type: string
-          format: binary
-          readOnly: true
-      required:
-      - username
     BuildOptions:
       type: object
       properties:
@@ -1386,3 +1365,24 @@ components:
       required:
       - variable
       - value
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        username:
+          type: string
+          pattern: ^[\w.@+-]+\z
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        avatar:
+          type: string
+          format: binary
+          readOnly: true
+      required:
+      - username
