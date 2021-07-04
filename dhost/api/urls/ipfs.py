@@ -9,7 +9,7 @@ from dhost.ipfs.views import (IPFSDappAPILogViewSet,
 
 router = routers.SimpleRouter()
 
-router.register('', IPFSDappViewSet)
+router.register('', IPFSDappViewSet, basename='ipfs_dapps')
 
 ipfs_router = routers.NestedSimpleRouter(router, '', lookup='dapp')
 ipfs_router.register('buildoptions', IPFSDappBuildOptionsViewSet)
