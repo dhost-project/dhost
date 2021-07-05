@@ -1,3 +1,4 @@
+import json
 import os
 from unittest import TestCase, mock
 
@@ -57,6 +58,18 @@ class GithubAPITestCase(TestCase):
                          str(context.exception))
 
     @mock.patch('requests.get')
+    def test_get_404_status_json_decode_error(self, mock_get):
+        # test in case json return a JSONDecodeError exception, this can occur
+        # if the content is empty for example
+        mock_get.return_value = mock.Mock(status_code=404,
+                                          json=lambda: json.loads(''),
+                                          content='test content')
+        with self.assertRaises(GithubAPIError) as context:
+            self.g.get('/test')
+        self.assertEqual('https://api.github.com/test (404) test content',
+                         str(context.exception))
+
+    @mock.patch('requests.get')
     def test_get_no_json(self, mock_get):
         mock_get.return_value = mock.Mock(status_code=200)
         self.g.get('/test', json=False)
@@ -81,10 +94,11 @@ class GithubAPITestCase(TestCase):
 
     @mock.patch('requests.post')
     def test_post_404_status(self, mock_post):
-        mock_post.return_value = mock.Mock(status_code=404, content='test')
+        mock_post.return_value = mock.MagicMock(
+            status_code=404, json=lambda: {'message': 'Not Found'})
         with self.assertRaises(GithubAPIError) as context:
             self.g.post('/test', data={'test_data': 'test'})
-        self.assertEqual('https://api.github.com/test (404) test',
+        self.assertEqual('https://api.github.com/test (404) Not Found',
                          str(context.exception))
 
     @mock.patch('requests.patch')
@@ -101,10 +115,11 @@ class GithubAPITestCase(TestCase):
 
     @mock.patch('requests.patch')
     def test_patch_404_status(self, mock_patch):
-        mock_patch.return_value = mock.Mock(status_code=404, content='test')
+        mock_patch.return_value = mock.MagicMock(
+            status_code=404, json=lambda: {'message': 'Not Found'})
         with self.assertRaises(GithubAPIError) as context:
             self.g.patch('/test', data={'test_data': 'test'})
-        self.assertEqual('https://api.github.com/test (404) test',
+        self.assertEqual('https://api.github.com/test (404) Not Found',
                          str(context.exception))
 
     @mock.patch('requests.get')
@@ -134,10 +149,11 @@ class GithubAPITestCase(TestCase):
 
     @mock.patch('requests.delete')
     def test_delete_404_status(self, mock_delete):
-        mock_delete.return_value = mock.Mock(status_code=404, content='test')
+        mock_delete.return_value = mock.Mock(
+            status_code=404, json=lambda: {'message': 'Not Found'})
         with self.assertRaises(GithubAPIError) as context:
             self.g.delete('/test')
-        self.assertEqual('https://api.github.com/test (404) test',
+        self.assertEqual('https://api.github.com/test (404) Not Found',
                          str(context.exception))
 
     @mock.patch(
