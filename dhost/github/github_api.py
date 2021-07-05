@@ -52,7 +52,7 @@ class GithubAPI:
             response_json = response.json()
             if 'message' in response_json:
                 content = response_json['message']
-        except AttributeError:
+        except TypeError:
             content = response.content
         raise GithubAPIError(f'{url} ({response.status_code}) {content}')
 

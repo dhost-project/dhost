@@ -53,8 +53,8 @@ class GithubAPITestCase(TestCase):
                                           json=lambda: {'message': 'Not Found'})
         with self.assertRaises(GithubAPIError) as context:
             self.g.get('/test')
-        self.assertIn('https://api.github.com/test (404) Not Found',
-                      str(context.exception))
+        self.assertEqual('https://api.github.com/test (404) Not Found',
+                         str(context.exception))
 
     @mock.patch('requests.get')
     def test_get_no_json(self, mock_get):
@@ -84,8 +84,8 @@ class GithubAPITestCase(TestCase):
         mock_post.return_value = mock.Mock(status_code=404, content='test')
         with self.assertRaises(GithubAPIError) as context:
             self.g.post('/test', data={'test_data': 'test'})
-        self.assertIn('https://api.github.com/test (404)',
-                      str(context.exception))
+        self.assertEqual('https://api.github.com/test (404) test',
+                         str(context.exception))
 
     @mock.patch('requests.patch')
     def test_patch(self, mock_patch):
@@ -104,8 +104,8 @@ class GithubAPITestCase(TestCase):
         mock_patch.return_value = mock.Mock(status_code=404, content='test')
         with self.assertRaises(GithubAPIError) as context:
             self.g.patch('/test', data={'test_data': 'test'})
-        self.assertIn('https://api.github.com/test (404)',
-                      str(context.exception))
+        self.assertEqual('https://api.github.com/test (404) test',
+                         str(context.exception))
 
     @mock.patch('requests.get')
     def test_head(self, mock_get):
@@ -137,8 +137,8 @@ class GithubAPITestCase(TestCase):
         mock_delete.return_value = mock.Mock(status_code=404, content='test')
         with self.assertRaises(GithubAPIError) as context:
             self.g.delete('/test')
-        self.assertIn('https://api.github.com/test (404)',
-                      str(context.exception))
+        self.assertEqual('https://api.github.com/test (404) test',
+                         str(context.exception))
 
     @mock.patch(
         'dhost.github.github_api.GithubAPI.head',

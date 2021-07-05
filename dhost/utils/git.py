@@ -7,7 +7,10 @@ def get_number_of_commits(last_major_version_hash):
     with open(os.path.devnull, 'w+') as null:
         try:
             number_of_commits = subprocess.Popen(
-                ['git', 'rev-list', last_major_version_hash + '..HEAD', '--count'],
+                [
+                    'git', 'rev-list', last_major_version_hash + '..HEAD',
+                    '--count'
+                ],
                 stdout=subprocess.PIPE,
                 stderr=null,
                 stdin=null,
