@@ -2,9 +2,12 @@
 import os
 import sys
 
-__version__ = '1.0a'
+from dhost.utils.version import get_version
 
 DJANGO_ENV = os.environ.get('DJANGO_ENV', 'development')
+
+# https://www.python.org/dev/peps/pep-0440/
+__version__ = get_version('1.0.a{}', last_major_version_hash='a58c02e')
 
 
 def prepare_env():
