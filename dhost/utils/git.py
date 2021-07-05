@@ -19,4 +19,4 @@ def get_number_of_commits(last_major_version_hash):
             pass
         if number_of_commits:
             return number_of_commits
-    return '0'
+    return ''
