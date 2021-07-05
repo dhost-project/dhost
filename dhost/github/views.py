@@ -1,16 +1,16 @@
-from rest_framework import viewsets, status
+from django.utils.translation import gettext_lazy as _
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from django.utils.translation import gettext_lazy as _
 
 from dhost.dapps.views import DappViewMixin
 
+from .github_api import GithubAPIError
 from .models import GithubOptions, Repository, Webhook
 from .permissions import HasGithubLinked
 from .serializers import GithubOptionsSerializer, RepositorySerializer
 from .webhook import PayloadHandler
-from .github_api import GithubAPIError
 
 
 class RepositoryViewSet(viewsets.ReadOnlyModelViewSet):

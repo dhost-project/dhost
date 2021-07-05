@@ -1,6 +1,6 @@
 """A wrapper for the Github REST API with OAuth."""
-import os
 import logging
+import os
 
 import requests
 
@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 
 class GithubAPIError(Exception):
     """Raised if a status code was not expected."""
+
     pass
 
 
@@ -19,7 +20,6 @@ class GithubAPI:
 
     GITHUB_API_URL = 'https://api.github.com'
     GITHUB_TOKEN_TYPE = 'token'
-    GITHUB_WEBHOOK_URL = 'https://localhost:8000/github/webhook/'
 
     def __init__(self, token: str):
         # Github API token used to make requests
@@ -47,12 +47,14 @@ class GithubAPI:
 
     def _request_error(self, response, url):
         """Raise an exception if a status code was not expected."""
+        import json
+
         try:
             # try to get a message from the response if it exist
             response_json = response.json()
             if 'message' in response_json:
                 content = response_json['message']
-        except:
+        except json.decoder.JSONDecodeError:
             content = response.content
         raise GithubAPIError(f'{url} ({response.status_code}) {content}')
 
