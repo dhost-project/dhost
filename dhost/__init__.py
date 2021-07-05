@@ -4,10 +4,11 @@ import sys
 
 from dhost.utils.version import get_version
 
-DJANGO_ENV = os.environ.get('DJANGO_ENV', 'development')
-
 # https://www.python.org/dev/peps/pep-0440/
-__version__ = get_version('1.0.a{}', last_major_version_hash='a58c02e')
+# get git hash with: git rev-parse --short HEAD
+__version__ = get_version('1.1.dev{}', last_major_version_hash='7ef4e00')
+
+DJANGO_ENV = os.environ.get('DJANGO_ENV', 'development')
 
 
 def prepare_env():

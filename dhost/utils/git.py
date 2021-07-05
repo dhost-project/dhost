@@ -3,12 +3,11 @@ import subprocess
 
 
 def get_number_of_commits(last_major_version_hash):
-    # get git hash with: git rev-parse --short HEAD
     # return the total number of commits since last version if specified
     with open(os.path.devnull, 'w+') as null:
         try:
             number_of_commits = subprocess.Popen(
-                ['git', 'rev-list', last_major_version_hash, 'HEAD', '--count'],
+                ['git', 'rev-list', last_major_version_hash + '..HEAD', '--count'],
                 stdout=subprocess.PIPE,
                 stderr=null,
                 stdin=null,
