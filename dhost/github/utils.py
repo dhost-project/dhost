@@ -24,7 +24,7 @@ def get_user_github_account(user):
     """Get the user's Github social_auth model.
 
     Args:
-        user (User)
+        user (User): The user.
 
     Returns:
         SocialAuth: The user's SocialAuth 'github' object.
@@ -42,10 +42,10 @@ def get_token_from_github_account(github_account):
     """Get the github_account's `access_token` stored in `extra_data`.
 
     Args:
-        SocialAuth: A SocialAuth object for Github.
+        github_account (SocialAuth): A SocialAuth object for Github.
 
     Returns:
-        str: Github API access_token
+        str: Github API access_token.
 
     Raise:
         Exception: In case the `access_token` is not present in the github

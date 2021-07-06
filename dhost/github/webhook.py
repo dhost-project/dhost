@@ -1,5 +1,5 @@
 class PayloadHandler:
-    """A class to handle Github webhooks.
+    r"""A class to handle Github webhooks.
 
     Github docs: https://docs.github.com/en/github-ae@latest/developers/\
         webhooks-and-events/webhooks/webhook-events-and-payloads#push
