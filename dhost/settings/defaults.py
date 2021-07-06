@@ -187,7 +187,7 @@ CORS_ALLOWED_ORIGINS = env_list('CORS_ALLOWED_ORIGINS', 'http://localhost:8000')
 # https://django-oauth-toolkit.readthedocs.io/en/latest/
 SCOPES_BACKEND_CLASS = 'oauth2.scopes.SettingsScopes'
 
-OAUTH2_PROVIDER_APPLICATION_MODEL = 'oauth2.Application'
+OAUTH2_PROVIDER_APPLICATION_MODEL = 'oauth2.OAuth2Application'
 
 # REFRESH_TOKEN_EXPIRE_SECONDS = env('REFRESH_TOKEN_EXPIRE_SECONDS')
 

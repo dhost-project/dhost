@@ -6,23 +6,26 @@ from rest_framework.views import APIView
 
 
 class APIRootView(APIView):
+    name = 'API Root'
 
     permission_classes = (AllowAny,)
 
     def get(self, request, format=None):
         """REST API root."""
         data = {
-            'dapps': reverse('api:dapps-list'),
-            'github_repos': reverse('api:github_repos-list'),
-            'ipfs_dapps': reverse('api:ipfs_dapps-list'),
-            'notifications': reverse('api:notifications-list'),
-            'me': reverse('api:users-me'),
+            'dapps': reverse('api:dapp-list'),
+            'github_repos': reverse('api:github_repo-list'),
+            'ipfs_dapps': reverse('api:ipfs_dapp-list'),
+            'notifications': reverse('api:notification-list'),
+            'applications': reverse('api:oauth2_application-list'),
+            'tokens': reverse('api:oauth2_token-list'),
+            'me': reverse('api:user-me'),
         }
         return Response(data)
 
 
 class APIv1RootView(APIRootView):
-    pass
+    name = 'API v1 Root'
 
 
 class DestroyListRetrieveViewSet(mixins.DestroyModelMixin,
