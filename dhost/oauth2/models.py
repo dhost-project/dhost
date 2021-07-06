@@ -4,7 +4,7 @@ from oauth2_provider.models import AbstractApplication
 from dhost.utils.avatar import avatar_generator
 
 
-class Application(AbstractApplication):
+class OAuth2Application(AbstractApplication):
     logo = models.ImageField(
         upload_to='oauth2_provider_app_logos/',
         null=True,
