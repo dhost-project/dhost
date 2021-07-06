@@ -6,6 +6,7 @@ from dhost.api.views import APIRootView, APIv1RootView
 from .dapps import urlpatterns as dapps_urls
 from .github import urlpatterns as github_urls
 from .ipfs import urlpatterns as ipfs_urls
+from .notifications import urlpatterns as notifications_urls
 from .users import urlpatterns as users_urls
 
 api_v1_urlpatterns = [
@@ -13,6 +14,7 @@ api_v1_urlpatterns = [
     path('dapps/', include(dapps_urls)),
     path('github/', include(github_urls)),
     path('ipfs/', include(ipfs_urls)),
+    path('notifications/', include(notifications_urls)),
     path('users/', include(users_urls)),
 ]
 

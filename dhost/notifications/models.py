@@ -22,3 +22,7 @@ class Notification(models.Model):
 
     def __str__(self):
         return self.subject
+
+    def read_by_user(self):
+        self.read = True
+        self.save()
