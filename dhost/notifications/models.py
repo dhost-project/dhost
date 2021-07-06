@@ -1,9 +1,12 @@
+import uuid
+
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
 class Notification(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -25,4 +28,8 @@ class Notification(models.Model):
 
     def read_by_user(self):
         self.read = True
+        self.save()
+
+    def unread_by_user(self):
+        self.read = False
         self.save()

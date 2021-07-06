@@ -22,3 +22,11 @@ class NotificationViewSet(DestroyListRetrieveViewSet):
         notification.read_by_user()
         serializer = self.get_serializer(notification)
         return Response(serializer.data)
+
+    @action(detail=True, methods=['get'])
+    def unread(self, request, pk=None):
+        """Mark notification has un-read."""
+        notification = self.get_object()
+        notification.unread_by_user()
+        serializer = self.get_serializer(notification)
+        return Response(serializer.data)
