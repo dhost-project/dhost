@@ -15,9 +15,10 @@ class BuildOptionsViewSet(APILogViewSetMixin, DappViewMixin,
                           viewsets.ModelViewSet):
     queryset = BuildOptions.objects.all()
     serializer_class = BuildOptionsSerializer
+    lookup_field = 'dapp_slug'
 
     def perform_create(self, serializer):
-        # Add `dapp` when creating the buildoptions
+        # add `dapp` when creating the buildoptions
         serializer.save(dapp=self.get_dapp())
 
     @action(detail=True, methods=['get'])

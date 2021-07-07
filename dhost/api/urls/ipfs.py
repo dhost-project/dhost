@@ -11,7 +11,6 @@ router = routers.SimpleRouter()
 router.register('', IPFSDappViewSet, basename='ipfs_dapp')
 
 ipfs_router = routers.SimpleRouter()
-ipfs_router.register('buildoptions', IPFSDappBuildOptionsViewSet)
 ipfs_router.register('bundles', IPFSDappBundleViewSet)
 ipfs_router.register('deployments', IPFSDeploymentViewSet)
 ipfs_router.register('githuboptions', IPFSDappGithubOptionsViewSet)
@@ -23,7 +22,16 @@ ipfs_build_router.register('envvars', IPFSDappEnvVarViewSet)
 
 nested_urls = [
     path('', include(ipfs_router.urls)),
-    path('', include(ipfs_build_router.urls)),
+    path(
+        'buildoptions/',
+        IPFSDappBuildOptionsViewSet.as_view({
+            'get': 'retrieve',
+            'post': 'create',
+            'put': 'update',
+            'patch': 'partial_update',
+            'delete': 'destroy'
+        })),
+    path('buildoptions/', include(ipfs_build_router.urls)),
 ]
 
 urlpatterns = [
