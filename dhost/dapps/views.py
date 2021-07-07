@@ -47,7 +47,7 @@ class DappReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class DappViewMixin:
-    """Mixin to handle the nested router.
+    """Mixin to handle the nested routes.
 
     Retrieve an argument with the dapp slug used to filter the dapps.
     """

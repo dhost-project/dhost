@@ -6,7 +6,7 @@ An OpenAPI Schema is available in the doc at `docs/openapi-schema.yml`. You can 
 
 The [http://localhost:8000/api/openapi](http://localhost:8000/api/openapi) page send the schema, it can be viewed with [Redoc](https://github.com/Redocly/redoc) at [http://localhost:8000/api/redoc/](http://localhost:8000/api/redoc/).
 
-You are seeing only the available routes, when you are not connected you don't have access to any, to do so either go to the `/admin` page or the browsable API `/api/v1/` and login, then go back to the `/redoc` page.
+You are seeing only the available routes, when you are not connected you don't have access to any, to do so either go to the `/admin` page or the browsable API `/api/v1/` and login, then go back to the `/api/redoc` page.
 
 ## Update the schema
 
