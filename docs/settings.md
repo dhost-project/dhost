@@ -1,6 +1,6 @@
 # Settings
 
-The settings are located in the file `dhost/settings.py`, this is the list of the custom settings you can set for this project.
+The settings are located in the file `dhost/settings/defaults.py`, this is the list of the custom settings you can set for this project.
 
 | Setting                   | Default values | Descriptions                                                   |
 | ------------------------- | -------------- | -------------------------------------------------------------- |

@@ -2,15 +2,15 @@
 
 ## Dev setup
 
-To setup your dev env check the [docs/dev.md](docs/dev.md).
+To setup your dev env check the [docs/dev.md](https://github.com/dhost-project/dhost/blob/master/docs/dev.md).
 
 ## Coding style
 
-Some of the following tools are configured inside [setup.cfg](setup.cfg).
+Some of the following tools are configured inside [setup.cfg](https://github.com/dhost-project/dhost/blob/master/setup.cfg).
 
 ### Editorconfig
 
-There is also an [editorconfig]((https://editorconfig.org/)) file [.editorconfig](.editorconfig) that can be used with your IDE or text editor.
+There is also an [editorconfig]((https://editorconfig.org/)) file [.editorconfig](https://github.com/dhost-project/dhost/blob/master/.editorconfig) that can be used with your IDE or text editor.
 
 * [VSCode extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
 * [Vim plugin](https://github.com/editorconfig/editorconfig-vim)
@@ -52,7 +52,7 @@ pydocstyle dhost
 
 ### Pre-commit
 
-[pre-commit](https://pre-commit.com/) is a git hook that will run before every commits. The pre-commit config can be found in [.pre-commit-config.yaml](.pre-commit-config.yaml).
+[pre-commit](https://pre-commit.com/) is a git hook that will run before every commits. The pre-commit config can be found in [.pre-commit-config.yaml](https://github.com/dhost-project/dhost/blob/master/.pre-commit-config.yaml).
 
 To install the pre-commit use:
 
@@ -94,4 +94,4 @@ django-admin compilemessages -i=venv
 
 ## Tests
 
-If you add code don't forget to also write tests for it.
+If you add code don't forget to also write tests for it. For more informations about testing refer to the tests section from [docs/dev.md](https://github.com/dhost-project/dhost/blob/master/docs/dev.md).

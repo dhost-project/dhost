@@ -4,12 +4,12 @@
 
 The environment variables allow us to define the application settings without having to edit the settings. On linux you can use `export ENV_NAME=VAR_VALUE` to set one.
 
-The list of variables there default values and descriptions can be found in the `docs/environment_variables.md` file.
+The list of variables there default values and descriptions can be found in the [docs/environment_variables.md](https://github.com/dhost-project/dhost/blob/master/docs/environment_variables.md) file.
 
 ### AWS
 
 AWS can be used for static and media storage inside a bucket.
-The AWS environment variables can be found in the `docs/aws_setup.md` file.
+The AWS environment variables can be found in the [docs/aws_setup.md](https://github.com/dhost-project/dhost/blob/master/docs/aws_setup.md) file.
 
 ## Heroku
 
@@ -17,7 +17,7 @@ The `Procfile` file is a config for [Heroku](https://www.heroku.com/), it define
 
 This file alone is enought to host the site on Heroku, but there is some extra steps you need to take, main one is setting the environment variables to point to the database. This can be done in the **Settings** tab in your heroku dashboard. Also note that there is a `Heroku Postgres` add-ons available for free [here](https://elements.heroku.com/addons/heroku-postgresql).
 
-You should check the `docs/environment_variables.md` file for more informations about variables.
+You should check the [docs/environment_variables.md](https://github.com/dhost-project/dhost/blob/master/docs/environment_variables.md) file for more informations about variables.
 
 ## Bare metal
 
@@ -41,7 +41,7 @@ Install the requirements.
 pip install -r requirements.txt
 ```
 
-At this point you should check the `docs/environment_variables.md` file for more informations about variables.
+At this point you should check the [docs/environment_variables.md](https://github.com/dhost-project/dhost/blob/master/docs/environment_variables.md) file for more informations about variables.
 Mainly `DEBUG`, `SECRET_KEY` and `DATABASE_URL`.
 
 Migrate the database.

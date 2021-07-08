@@ -20,7 +20,8 @@ The variable `DJANGO_ENV` define wich environment to use. By default it's `devel
 
 Note:
 
-* `BASE_DIR` is the location of the base directory wich is the root project's folder.
+* `ROOT_DIR` is the location of the base directory wich is the root project's folder.
+* `BASE_DIR` is at `ROOT_DIR/dhost`, it's the apps root.
 
 | Environment variables       | Prod | Default values          | Descriptions                                                                                                                                                                |
 | --------------------------- | ---- | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
