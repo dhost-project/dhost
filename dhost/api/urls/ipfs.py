@@ -32,7 +32,6 @@ urlpatterns = [
             'delete': 'destroy'
         }),
     ),
-    path('<slug:dapp_slug>/buildoptions/', include(ipfs_build_router.urls)),
     path(
         '<slug:dapp_slug>/githuboptions/',
         IPFSDappGithubOptionsViewSet.as_view({
@@ -43,4 +42,5 @@ urlpatterns = [
             'delete': 'destroy'
         }),
     ),
+    path('<slug:dapp_slug>/buildoptions/', include(ipfs_build_router.urls)),
 ]

@@ -15,7 +15,7 @@ User = get_user_model()
 class NotificationViewSetTestCase(APITestCase, URLPatternsTestCase):
 
     router = routers.SimpleRouter()
-    router.register('tests', NotificationViewSet, basename='notifications')
+    router.register('tests', NotificationViewSet, basename='notification')
     urlpatterns = router.urls
 
     @classmethod
@@ -36,59 +36,59 @@ class NotificationViewSetTestCase(APITestCase, URLPatternsTestCase):
     def setUp(self):
         self.client.force_authenticate(user=self.u1)
 
-    def test_list_notifications_unauthorized(self):
-        url = reverse('notifications-list')
+    def test_list_notification_unauthorized(self):
+        url = reverse('notification-list')
         self.client.force_authenticate(user=None)
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
-    def test_list_notifications(self):
-        url = reverse('notifications-list')
+    def test_list_notification(self):
+        url = reverse('notification-list')
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 2)
 
     def test_retrieve_notification_404(self):
         # exist but return 404 because it's not for the user
-        url = reverse('notifications-detail', args=(self.notif_u2.id,))
+        url = reverse('notification-detail', args=(self.notif_u2.id,))
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_retrieve_notification(self):
-        url = reverse('notifications-detail', args=(self.notif_unread.id,))
+        url = reverse('notification-detail', args=(self.notif_unread.id,))
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn('subject', response.data)
         self.assertIn('time', response.data)
 
     def test_destroy_notification_404(self):
-        url = reverse('notifications-detail', args=(self.notif_u2.id,))
+        url = reverse('notification-detail', args=(self.notif_u2.id,))
         response = self.client.delete(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_destroy_notification(self):
-        url = reverse('notifications-detail', args=(self.notif_unread.id,))
+        url = reverse('notification-detail', args=(self.notif_unread.id,))
         response = self.client.delete(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_read_notification_404(self):
-        url = reverse('notifications-read', args=(self.notif_u2.id,))
+        url = reverse('notification-read', args=(self.notif_u2.id,))
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_read_notification(self):
-        url = reverse('notifications-read', args=(self.notif_unread.id,))
+        url = reverse('notification-read', args=(self.notif_unread.id,))
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue(response.data['read'])
 
     def test_unread_notification_404(self):
-        url = reverse('notifications-unread', args=(self.notif_u2.id,))
+        url = reverse('notification-unread', args=(self.notif_u2.id,))
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_unread_notification(self):
-        url = reverse('notifications-unread', args=(self.notif_unread.id,))
+        url = reverse('notification-unread', args=(self.notif_unread.id,))
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertFalse(response.data['read'])
