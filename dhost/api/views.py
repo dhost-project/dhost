@@ -1,5 +1,7 @@
+from django.conf import settings
 from django.urls import reverse
 from rest_framework import mixins, viewsets
+from rest_framework.metadata import SimpleMetadata
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -7,9 +9,18 @@ from rest_framework.views import APIView
 from dhost import __version__
 
 
+class APIRootMetadata(SimpleMetadata):
+
+    def determine_metadata(self, request, view):
+        metadata = super().determine_metadata(request, view)
+        metadata['version'] = __version__
+        return metadata
+
+
 class APIRootView(APIView):
     name = 'API Root'
     description = f'DHost REST API version {__version__}'
+    metadata_class = APIRootMetadata
 
     permission_classes = (AllowAny,)
 
@@ -24,6 +35,13 @@ class APIRootView(APIView):
             'tokens': reverse('api:oauth2_token-list'),
             'me': reverse('api:user-me'),
         }
+
+        if settings.SETTINGS_MODULE == 'dhost.settings.development':
+            data.update({
+                'doc': reverse('api:redoc'),
+                'schema': reverse('api:openapi-schema'),
+            })
+
         return Response(data)
 
 
