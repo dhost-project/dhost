@@ -1,9 +1,9 @@
 from django.conf import settings
-from django.urls import reverse
 from rest_framework import mixins, viewsets
 from rest_framework.metadata import SimpleMetadata
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework.reverse import reverse_lazy
 from rest_framework.views import APIView
 
 from dhost import __version__
@@ -26,20 +26,55 @@ class APIRootView(APIView):
 
     def get(self, request, format=None):
         """REST API root."""
+
         data = {
-            'dapps': reverse('api:dapp-list'),
-            'github_repos': reverse('api:github_repo-list'),
-            'ipfs_dapps': reverse('api:ipfs_dapp-list'),
-            'notifications': reverse('api:notification-list'),
-            'applications': reverse('api:oauth2_application-list'),
-            'tokens': reverse('api:oauth2_token-list'),
-            'me': reverse('api:user-me'),
+            'dapps':
+                reverse_lazy(
+                    'api:dapp-list',
+                    request=request,
+                ),
+            'github_repos':
+                reverse_lazy(
+                    'api:github_repo-list',
+                    request=request,
+                ),
+            'ipfs_dapps':
+                reverse_lazy(
+                    'api:ipfs_dapp-list',
+                    request=request,
+                ),
+            'notifications':
+                reverse_lazy(
+                    'api:notification-list',
+                    request=request,
+                ),
+            'applications':
+                reverse_lazy(
+                    'api:oauth2_application-list',
+                    request=request,
+                ),
+            'tokens':
+                reverse_lazy(
+                    'api:oauth2_token-list',
+                    request=request,
+                ),
+            'me':
+                reverse_lazy(
+                    'api:user-me',
+                    request=request,
+                ),
         }
 
         if settings.SETTINGS_MODULE == 'dhost.settings.development':
             data.update({
-                'doc': reverse('api:redoc'),
-                'schema': reverse('api:openapi-schema'),
+                'doc': reverse_lazy(
+                    'api:redoc',
+                    request=request,
+                ),
+                'schema': reverse_lazy(
+                    'api:openapi-schema',
+                    request=request,
+                ),
             })
 
         return Response(data)
