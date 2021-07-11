@@ -1,8 +1,39 @@
 openapi: 3.0.2
 info:
-  title: ''
-  version: ''
+  title: 'DHost'
+  version: '1.1.dev'
+  description: 'DHost REST API version 1.1.dev'
 paths:
+  /api/:
+    get:
+      operationId: listAPIRoots
+      description: REST API root.
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+      tags:
+      - api
+  /api/v1/:
+    get:
+      operationId: listAPIv1Roots
+      description: REST API root.
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+      tags:
+      - api
   /api/v1/dapps/:
     get:
       operationId: listDapps
@@ -1063,6 +1094,169 @@ paths:
           description: ''
       tags:
       - api
+  /api/v1/notifications/:
+    get:
+      operationId: listNotifications
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Notification'
+          description: ''
+      tags:
+      - api
+  /api/v1/notifications/{id}/:
+    get:
+      operationId: retrieveNotification
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this notification.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyNotification
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this notification.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/v1/notifications/{id}/read/:
+    get:
+      operationId: readNotification
+      description: Mark notification has read.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this notification.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: ''
+      tags:
+      - api
+  /api/v1/notifications/{id}/unread/:
+    get:
+      operationId: unreadNotification
+      description: Mark notification has un-read.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this notification.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: ''
+      tags:
+      - api
+  /api/v1/oauth2/applications/:
+    get:
+      operationId: listOAuth2Applications
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OAuth2Application'
+          description: ''
+      tags:
+      - api
+  /api/v1/oauth2/applications/{id}/:
+    get:
+      operationId: retrieveOAuth2Application
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this o auth2 application.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuth2Application'
+          description: ''
+      tags:
+      - api
+  /api/v1/oauth2/tokens/:
+    get:
+      operationId: listAccessTokens
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OAuth2AccessToken'
+          description: ''
+      tags:
+      - api
+  /api/v1/oauth2/tokens/{id}/:
+    get:
+      operationId: retrieveAccessToken
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this access token.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuth2AccessToken'
+          description: ''
+      tags:
+      - api
   /api/v1/users/me/:
     get:
       operationId: meUser
@@ -1365,6 +1559,111 @@ components:
       required:
       - variable
       - value
+    Notification:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        subject:
+          type: string
+          readOnly: true
+        content:
+          type: string
+          readOnly: true
+        read:
+          type: boolean
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+          pattern: "^(?:[a-z0-9.+-]*)://(?:[^\\s:@/]+(?::[^\\s:@/]*)?@)?(?:(?:0|25[0-5]|2[0-4]\\\
+            d|1\\d?\\d?|[1-9]\\d?)(?:\\.(?:0|25[0-5]|2[0-4]\\d|1\\d?\\d?|[1-9]\\d?)){3}|\\\
+            [[0-9a-f:.]+\\]|([a-z\xA1-\uFFFF0-9](?:[a-z\xA1-\uFFFF0-9-]{0,61}[a-z\xA1\
+            -\uFFFF0-9])?(?:\\.(?!-)[a-z\xA1-\uFFFF0-9-]{1,63}(?<!-))*\\.(?!-)(?:[a-z\xA1\
+            -\uFFFF-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\\.?|localhost))(?::\\d{2,5})?(?:[/?#][^\\\
+            s]*)?\\z"
+        time:
+          type: string
+          format: date-time
+          readOnly: true
+    OAuth2Application:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          type: string
+          nullable: true
+        name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+        logo:
+          type: string
+          format: binary
+          nullable: true
+        client_id:
+          type: string
+          readOnly: true
+        client_secret:
+          type: string
+          readOnly: true
+        client_type:
+          enum:
+          - confidential
+          - public
+          type: string
+        authorization_grant_type:
+          enum:
+          - authorization-code
+          - implicit
+          - password
+          - client-credentials
+          - openid-hybrid
+          type: string
+        skip_authorization:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - client_type
+      - authorization_grant_type
+    OAuth2AccessToken:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        expires:
+          type: string
+          format: date-time
+        scope:
+          type: string
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+        application:
+          type: integer
+          nullable: true
+      required:
+      - expires
     User:
       type: object
       properties:

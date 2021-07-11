@@ -4,9 +4,12 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from dhost import __version__
+
 
 class APIRootView(APIView):
     name = 'API Root'
+    description = f'DHost REST API version {__version__}'
 
     permission_classes = (AllowAny,)
 

@@ -31,6 +31,8 @@ if settings.SETTINGS_MODULE == 'dhost.settings.development':  # pragma: no cover
     from rest_framework.permissions import AllowAny
     from rest_framework.schemas import get_schema_view
 
+    from dhost import __version__
+
     urlpatterns += [
         path(
             'api-auth/',
@@ -39,10 +41,10 @@ if settings.SETTINGS_MODULE == 'dhost.settings.development':  # pragma: no cover
         path(
             'openapi',
             get_schema_view(
-                title="DHost",
-                description="API",
-                version="1.1.0",
-                url="",
+                title='DHost',
+                description=f"DHost REST API version {__version__}.",
+                version=__version__,
+                url='',
                 permission_classes=[AllowAny],
             ),
             name='openapi-schema',
