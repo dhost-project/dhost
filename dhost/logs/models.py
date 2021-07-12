@@ -9,6 +9,20 @@ from django.utils.translation import gettext_lazy as _
 from dhost.dapps.models import Dapp
 
 
+def get_obj_model(obj):
+    return ContentType.objects.get_for_model(obj)
+
+
+class APILogManager(models.Manager):
+
+    def log_action(self, user, obj, action_flag, dapp):
+        return APILog.objects.create(user=user,
+                                     content_type=get_obj_model(obj),
+                                     object_id=obj.pk,
+                                     action_flag=action_flag,
+                                     dapp=dapp)
+
+
 class ActionFlags(models.TextChoices):
     OTHER = 'other', _('Other')
     DAPP_ADDITION = 'dapp_add', _('Dapp created')
@@ -57,11 +71,9 @@ class APILog(models.Model):
     )
     change_message = models.TextField(blank=True)
     action_time = models.DateTimeField(default=timezone.now, editable=False)
+    objects = APILogManager()
 
     class Meta:
         verbose_name = _('API log entry')
         verbose_name_plural = _('API log entries')
         ordering = ['-action_time']
-
-    def __str__(self):
-        return self.change_message
