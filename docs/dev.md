@@ -33,7 +33,7 @@ Migrate the database.
 ./manage.py migrate
 ```
 
-You can now run the development server. Next time you wan't to start the server, this is the only command you will need (after activating your virtual environment).
+You can now run the development server. Next time you want to start the server, this is the only command you will need (after activating your virtual environment).
 
 ```sh
 ./manage.py runserver
@@ -45,7 +45,7 @@ Additionnaly you can [load a fixture](https://docs.djangoproject.com/en/dev/ref/
 ./manage.py loaddata dhost/demo/fixture.json
 ```
 
-If you don't wan't to load the data in the database but still want to use the fixture, you can use the [testserver](https://docs.djangoproject.com/en/dev/ref/django-admin/#testserver).
+If you don't want to load the data in the database but still want to use the fixture, you can use the [testserver](https://docs.djangoproject.com/en/dev/ref/django-admin/#testserver).
 
 ```sh
 ./manage.py testserver dhost/demo/fixture.json

@@ -16,6 +16,10 @@ if settings.SETTINGS_MODULE == 'dhost.settings.development':  # pragma: no cover
 
     urlpatterns += [
         path(
+            'api-auth/',
+            include('rest_framework.urls', namespace='rest_framework'),
+        ),
+        path(
             "400/",
             default_views.bad_request,
             kwargs={"exception": Exception("Bad Request!")},

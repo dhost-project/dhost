@@ -31,10 +31,6 @@ if settings.SETTINGS_MODULE == 'dhost.settings.development':  # pragma: no cover
 
     urlpatterns += [
         path(
-            'api-auth/',
-            include('rest_framework.urls', namespace='rest_framework'),
-        ),
-        path(
             'openapi',
             get_schema_view(
                 title='DHost',
