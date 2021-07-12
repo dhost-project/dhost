@@ -19,22 +19,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/:
-    get:
-      operationId: listAPIv1Roots
-      description: REST API root.
-      parameters: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items: {}
-          description: ''
-      tags:
-      - api
-  /api/v1/dapps/:
+  /api/dapps/:
     get:
       operationId: listDapps
       description: A list of every dapps, regardless of wich type they are.
@@ -50,7 +35,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/dapps/{slug}/:
+  /api/dapps/{slug}/:
     get:
       operationId: retrieveDapp
       description: A list of every dapps, regardless of wich type they are.
@@ -70,7 +55,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/github/repositories/:
+  /api/github/repositories/:
     get:
       operationId: listRepositorys
       description: ''
@@ -86,7 +71,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/github/repositories/fetch_all/:
+  /api/github/repositories/fetch_all/:
     get:
       operationId: fetchAllRepository
       description: Update every Github repos for user from the Github API.
@@ -100,7 +85,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/github/repositories/{id}/:
+  /api/github/repositories/{id}/:
     get:
       operationId: retrieveRepository
       description: ''
@@ -120,7 +105,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/github/repositories/{id}/fetch/:
+  /api/github/repositories/{id}/fetch/:
     get:
       operationId: fetchRepository
       description: Update a single repo from Github API.
@@ -140,7 +125,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/github/repositories/{id}/fetch_branches/:
+  /api/github/repositories/{id}/fetch_branches/:
     get:
       operationId: fetchBranchesRepository
       description: Update a single repo branches from the Github API.
@@ -160,7 +145,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/:
+  /api/ipfs/:
     get:
       operationId: listIPFSDapps
       description: ''
@@ -185,12 +170,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/IPFSDapp'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
       responses:
         '201':
           content:
@@ -200,7 +179,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{slug}/:
+  /api/ipfs/{slug}/:
     get:
       operationId: retrieveIPFSDapp
       description: ''
@@ -235,12 +214,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/IPFSDapp'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
       responses:
         '200':
           content:
@@ -263,12 +236,6 @@ paths:
       requestBody:
         content:
           application/json:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
-          multipart/form-data:
             schema:
               $ref: '#/components/schemas/IPFSDapp'
       responses:
@@ -295,7 +262,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{slug}/deploy/:
+  /api/ipfs/{slug}/deploy/:
     get:
       operationId: deployIPFSDapp
       description: ''
@@ -315,7 +282,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/buildoptions/:
+  /api/ipfs/{dapp_slug}/buildoptions/:
     get:
       operationId: listBuildOptions
       description: ''
@@ -352,12 +319,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/BuildOptions'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/BuildOptions'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/BuildOptions'
       responses:
         '201':
           content:
@@ -367,7 +328,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/buildoptions/{dapp}/:
+  /api/ipfs/{dapp_slug}/buildoptions/{dapp}/:
     get:
       operationId: retrieveBuildOptions
       description: ''
@@ -414,12 +375,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/BuildOptions'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/BuildOptions'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/BuildOptions'
       responses:
         '200':
           content:
@@ -448,12 +403,6 @@ paths:
       requestBody:
         content:
           application/json:
-            schema:
-              $ref: '#/components/schemas/BuildOptions'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/BuildOptions'
-          multipart/form-data:
             schema:
               $ref: '#/components/schemas/BuildOptions'
       responses:
@@ -486,7 +435,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/buildoptions/{dapp}/build/:
+  /api/ipfs/{dapp_slug}/buildoptions/{dapp}/build/:
     get:
       operationId: buildBuildOptions
       description: ''
@@ -512,7 +461,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/bundles/:
+  /api/ipfs/{dapp_slug}/bundles/:
     get:
       operationId: listBundles
       description: ''
@@ -534,7 +483,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/bundles/{id}/:
+  /api/ipfs/{dapp_slug}/bundles/{id}/:
     get:
       operationId: retrieveBundle
       description: ''
@@ -560,7 +509,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/deployments/:
+  /api/ipfs/{dapp_slug}/deployments/:
     get:
       operationId: listIPFSDeployments
       description: ''
@@ -582,7 +531,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/deployments/{id}/:
+  /api/ipfs/{dapp_slug}/deployments/{id}/:
     get:
       operationId: retrieveIPFSDeployment
       description: ''
@@ -608,7 +557,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/logs/:
+  /api/ipfs/{dapp_slug}/logs/:
     get:
       operationId: listAPILogs
       description: ''
@@ -630,7 +579,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/logs/{id}/:
+  /api/ipfs/{dapp_slug}/logs/{id}/:
     get:
       operationId: retrieveAPILog
       description: ''
@@ -656,7 +605,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/githuboptions/:
+  /api/ipfs/{dapp_slug}/githuboptions/:
     get:
       operationId: listGithubOptions
       description: ''
@@ -693,12 +642,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/GithubOptions'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/GithubOptions'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/GithubOptions'
       responses:
         '201':
           content:
@@ -708,7 +651,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/githuboptions/{dapp}/:
+  /api/ipfs/{dapp_slug}/githuboptions/{dapp}/:
     get:
       operationId: retrieveGithubOptions
       description: ''
@@ -755,12 +698,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/GithubOptions'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/GithubOptions'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/GithubOptions'
       responses:
         '200':
           content:
@@ -789,12 +726,6 @@ paths:
       requestBody:
         content:
           application/json:
-            schema:
-              $ref: '#/components/schemas/GithubOptions'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/GithubOptions'
-          multipart/form-data:
             schema:
               $ref: '#/components/schemas/GithubOptions'
       responses:
@@ -827,7 +758,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/buildoptions/{buildoptions_pk}/builds/:
+  /api/ipfs/{dapp_slug}/buildoptions/{buildoptions_pk}/builds/:
     get:
       operationId: listBuilds
       description: ''
@@ -855,7 +786,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/buildoptions/{buildoptions_pk}/builds/{id}/:
+  /api/ipfs/{dapp_slug}/buildoptions/{buildoptions_pk}/builds/{id}/:
     get:
       operationId: retrieveBuild
       description: ''
@@ -887,7 +818,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/buildoptions/{buildoptions_pk}/envvars/:
+  /api/ipfs/{dapp_slug}/buildoptions/{buildoptions_pk}/envvars/:
     get:
       operationId: listEnvVars
       description: ''
@@ -936,12 +867,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/EnvVar'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/EnvVar'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/EnvVar'
       responses:
         '201':
           content:
@@ -951,7 +876,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/buildoptions/{buildoptions_pk}/envvars/{id}/:
+  /api/ipfs/{dapp_slug}/buildoptions/{buildoptions_pk}/envvars/{id}/:
     get:
       operationId: retrieveEnvVar
       description: ''
@@ -1010,12 +935,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/EnvVar'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/EnvVar'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/EnvVar'
       responses:
         '200':
           content:
@@ -1050,12 +969,6 @@ paths:
       requestBody:
         content:
           application/json:
-            schema:
-              $ref: '#/components/schemas/EnvVar'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/EnvVar'
-          multipart/form-data:
             schema:
               $ref: '#/components/schemas/EnvVar'
       responses:
@@ -1094,7 +1007,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/notifications/:
+  /api/notifications/:
     get:
       operationId: listNotifications
       description: ''
@@ -1110,7 +1023,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/notifications/{id}/:
+  /api/notifications/{id}/:
     get:
       operationId: retrieveNotification
       description: ''
@@ -1145,7 +1058,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/notifications/{id}/read/:
+  /api/notifications/{id}/read/:
     get:
       operationId: readNotification
       description: Mark notification has read.
@@ -1165,7 +1078,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/notifications/{id}/unread/:
+  /api/notifications/{id}/unread/:
     get:
       operationId: unreadNotification
       description: Mark notification has un-read.
@@ -1185,7 +1098,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/oauth2/applications/:
+  /api/oauth2/applications/:
     get:
       operationId: listOAuth2Applications
       description: ''
@@ -1201,7 +1114,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/oauth2/applications/{id}/:
+  /api/oauth2/applications/{id}/:
     get:
       operationId: retrieveOAuth2Application
       description: ''
@@ -1221,7 +1134,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/oauth2/tokens/:
+  /api/oauth2/tokens/:
     get:
       operationId: listAccessTokens
       description: ''
@@ -1237,7 +1150,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/oauth2/tokens/{id}/:
+  /api/oauth2/tokens/{id}/:
     get:
       operationId: retrieveAccessToken
       description: ''
@@ -1257,7 +1170,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/users/me/:
+  /api/users/me/:
     get:
       operationId: meUser
       description: ''
@@ -1271,7 +1184,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/github/webhook/{id}/payload/:
+  /api/github/webhook/{id}/payload/:
     post:
       operationId: payloadWebhook
       description: "Receive a webhook payload from Github.\n\nThis view will receive\
@@ -1289,10 +1202,6 @@ paths:
       requestBody:
         content:
           application/json:
-            schema: {}
-          application/x-www-form-urlencoded:
-            schema: {}
-          multipart/form-data:
             schema: {}
       responses:
         '201':

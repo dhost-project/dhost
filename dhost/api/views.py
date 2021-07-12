@@ -21,12 +21,10 @@ class APIRootView(APIView):
     name = 'API Root'
     description = f'DHost REST API version {__version__}'
     metadata_class = APIRootMetadata
-
     permission_classes = (AllowAny,)
 
     def get(self, request, format=None):
         """REST API root."""
-
         data = {
             'dapps':
                 reverse_lazy(
@@ -78,10 +76,6 @@ class APIRootView(APIView):
             })
 
         return Response(data)
-
-
-class APIv1RootView(APIRootView):
-    name = 'API v1 Root'
 
 
 class DestroyListRetrieveViewSet(mixins.DestroyModelMixin,
