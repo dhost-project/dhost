@@ -3,7 +3,7 @@ import subprocess
 
 
 def get_number_of_commits(last_major_version_hash):
-    # return the total number of commits since last version if specified
+    """Get the total number of commits since last version if specified."""
     with open(os.path.devnull, 'w+') as null:
         try:
             number_of_commits = subprocess.Popen(
@@ -20,3 +20,13 @@ def get_number_of_commits(last_major_version_hash):
         if number_of_commits:
             return number_of_commits
     return ''
+
+
+def generate_version(version_format, last_major_version_hash):
+    return version_format.format(get_number_of_commits(last_major_version_hash))
+
+
+def get_version():
+    from dhost import __version__
+
+    return __version__

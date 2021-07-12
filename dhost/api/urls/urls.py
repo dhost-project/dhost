@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.urls import include, path
 
-from dhost.api.views import APIRootView
+from dhost.api.views import APIPingView, APIRootView
 
 from .dapps import urlpatterns as dapps_urls
 from .github import urlpatterns as github_urls
@@ -14,6 +14,7 @@ app_name = 'api'
 
 urlpatterns = [
     path('', APIRootView.as_view()),
+    path('ping', APIPingView.as_view()),
     path('dapps/', include(dapps_urls)),
     path('github/', include(github_urls)),
     path('ipfs/', include(ipfs_urls)),
