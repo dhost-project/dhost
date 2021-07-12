@@ -4,15 +4,13 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from dhost.dapps.views import DappViewMixin
-from dhost.logs.views_mixins import APILogViewSetMixin
 
 from .models import Build, BuildOptions, EnvVar
 from .serializers import (BuildOptionsSerializer, BuildSerializer,
                           EnvVarSerializer)
 
 
-class BuildOptionsViewSet(APILogViewSetMixin, DappViewMixin,
-                          viewsets.ModelViewSet):
+class BuildOptionsViewSet(DappViewMixin, viewsets.ModelViewSet):
     queryset = BuildOptions.objects.all()
     serializer_class = BuildOptionsSerializer
 
@@ -51,7 +49,7 @@ class BuildViewSet(BuildViewMixin, viewsets.ReadOnlyModelViewSet):
     serializer_class = BuildSerializer
 
 
-class EnvVarViewSet(APILogViewSetMixin, BuildViewMixin, viewsets.ModelViewSet):
+class EnvVarViewSet(BuildViewMixin, viewsets.ModelViewSet):
     queryset = EnvVar.objects.all()
     serializer_class = EnvVarSerializer
 
