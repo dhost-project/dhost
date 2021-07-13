@@ -10,6 +10,9 @@ urlpatterns = [
     path('u/', include('dhost.users.urls')),
 ]
 
+admin.site.site_header = 'DHost'
+admin.site.site_title = 'dhost'
+
 if settings.SETTINGS_MODULE == 'dhost.settings.development':  # pragma: no cover
     from django.conf.urls.static import static
     from django.views import defaults as default_views
