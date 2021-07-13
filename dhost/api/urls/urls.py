@@ -44,7 +44,7 @@ if settings.SETTINGS_MODULE == 'dhost.settings.development':  # pragma: no cover
             name='openapi-schema',
         ),
         path(
-            'redoc/',
+            'doc/',
             TemplateView.as_view(
                 template_name='redoc.html',
                 extra_context={'schema_url': 'api:openapi-schema'},
