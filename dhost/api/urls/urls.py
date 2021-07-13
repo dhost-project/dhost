@@ -14,7 +14,7 @@ app_name = 'api'
 
 urlpatterns = [
     path('', APIRootView.as_view()),
-    path('ping', APIPingView.as_view()),
+    path('ping/', APIPingView.as_view(), name='ping'),
     path('dapps/', include(dapps_urls)),
     path('github/', include(github_urls)),
     path('ipfs/', include(ipfs_urls)),
@@ -29,16 +29,17 @@ if settings.SETTINGS_MODULE == 'dhost.settings.development':  # pragma: no cover
     from rest_framework.schemas import get_schema_view
 
     from dhost import __version__
+    from dhost.api.schema import SuperUserSchemaGenerator
 
     urlpatterns += [
         path(
-            'openapi',
+            'openapi/',
             get_schema_view(
                 title='DHost',
                 description=f"DHost REST API version {__version__}.",
                 version=__version__,
-                url='',
                 permission_classes=[AllowAny],
+                generator_class=SuperUserSchemaGenerator,
             ),
             name='openapi-schema',
         ),

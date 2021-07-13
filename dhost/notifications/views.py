@@ -1,7 +1,7 @@
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from dhost.api.views import DestroyListRetrieveViewSet
+from dhost.api.viewsets import DestroyListRetrieveViewSet
 
 from .models import Notification
 from .serializers import NotificationSerializer

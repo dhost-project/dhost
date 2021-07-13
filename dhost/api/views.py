@@ -1,5 +1,4 @@
 from django.conf import settings
-from rest_framework import mixins, viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.reverse import reverse_lazy
@@ -16,6 +15,11 @@ class APIRootView(APIView):
     def get(self, request, format=None):
         """REST API root."""
         response = {
+            'ping':
+                reverse_lazy(
+                    'api:ping',
+                    request=request,
+                ),
             'dapps':
                 reverse_lazy(
                     'api:dapp-list',
@@ -75,16 +79,3 @@ class APIPingView(APIView):
     def get(self, request, format=None):
         response = {'version': get_version()}
         return Response(response)
-
-
-class DestroyListRetrieveViewSet(mixins.DestroyModelMixin,
-                                 mixins.ListModelMixin,
-                                 mixins.RetrieveModelMixin,
-                                 viewsets.GenericViewSet):
-    """A viewset that provides `retrieve`, `destroy`, and `list` actions.
-
-    To use it, override the class and set the `.queryset` and
-    `.serializer_class` attributes.
-    """
-
-    pass
