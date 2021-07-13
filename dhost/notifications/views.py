@@ -24,7 +24,7 @@ class NotificationViewSet(DestroyListRetrieveViewSet):
     @action(detail=False, methods=['get'])
     def unread_count(self, request):
         """Count of unread notifications."""
-        data = {'unread_count': self.get_queryset().unread().count()}
+        data = {'count': self.get_queryset().unread().count()}
         return Response(data)
 
     @action(detail=True, methods=['get'])
@@ -46,11 +46,11 @@ class NotificationViewSet(DestroyListRetrieveViewSet):
     @action(detail=False, methods=['get'])
     def mark_all_as_read(self, request):
         """Mark all notifications has read."""
-        data = {'read_count': self.get_queryset().mark_all_as_read()}
+        data = {'count': self.get_queryset().mark_all_as_read()}
         return Response(data)
 
     @action(detail=False, methods=['get'])
     def mark_all_as_unread(self, request):
         """Mark all notifications has unread."""
-        data = {'unread_count': self.get_queryset().mark_all_as_unread()}
+        data = {'count': self.get_queryset().mark_all_as_unread()}
         return Response(data)
