@@ -28,9 +28,9 @@ class APILogTestCase(TestCase):
         self.assertFalse(self.notif_unread.read)
 
     def test_read_by_user(self):
-        self.notif_unread.read_by_user()
+        self.notif_unread.mark_as_read()
         self.assertTrue(self.notif_unread.read)
 
     def test_unread_by_user(self):
-        self.notif_read.unread_by_user()
+        self.notif_read.mark_as_unread()
         self.assertFalse(self.notif_read.read)

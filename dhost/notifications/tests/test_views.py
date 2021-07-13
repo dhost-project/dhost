@@ -59,7 +59,7 @@ class NotificationViewSetTestCase(APITestCase, URLPatternsTestCase):
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn('subject', response.data)
-        self.assertIn('time', response.data)
+        self.assertIn('timestamp', response.data)
 
     def test_destroy_notification_404(self):
         url = reverse('notifications-detail', args=(self.notif_u2.id,))
