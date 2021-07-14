@@ -28,4 +28,4 @@ class APILogTestCase(TestCase):
         )
         self.assertTrue(isinstance(log, APILog))
         self.assertEqual(str, type(log.__str__()))
-        self.assertEqual('test', str(log))
+        self.assertIn('test', str(log))
