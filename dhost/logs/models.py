@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils import timezone
+from django.utils.timesince import timesince
 from django.utils.translation import gettext_lazy as _
 
 from dhost.dapps.models import Dapp
@@ -77,3 +78,15 @@ class APILog(models.Model):
         verbose_name = _('API log entry')
         verbose_name_plural = _('API log entries')
         ordering = ['-action_time']
+
+    def __str__(self):
+        data = {
+            'user': self.user,
+            'dapp': self.dapp,
+            'action_flag': self.action_flag,
+            'timesince': self.timesince(),
+        }
+        return '{user} {dapp} {action_flag} {timesince} ago'.format(**data)
+
+    def timesince(self, now=None):
+        return timesince(self.action_time, now)
