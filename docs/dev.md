@@ -4,50 +4,50 @@
 
 Create a Python virtual environment.
 
-```sh
+```bash
 python3.9 -m venv venv
 ```
 
 Activate it (on linux).
 
-```sh
+```bash
 source ./venv/bin/activate
 ```
 
 Install the requirements.
 
-```sh
+```bash
 pip install -r requirements.txt
 pip install -r requirements_dev.txt
 ```
 
 Collect static files.
 
-```sh
+```bash
 ./manage.py collectstatic
 ```
 
 Migrate the database.
 
-```sh
+```bash
 ./manage.py migrate
 ```
 
 You can now run the development server. Next time you want to start the server, this is the only command you will need (after activating your virtual environment).
 
-```sh
+```bash
 ./manage.py runserver
 ```
 
-Additionnaly you can [load a fixture](https://docs.djangoproject.com/en/dev/ref/django-admin/#loaddata) located in [dhost/demo/fixture.json](https://github.com/dhost-project/dhost/blob/master/dhost/demo/fixture.json). More informations in [dhost/demo/README.md](https://github.com/dhost-project/dhost/blob/master/dhost/demo/README.md).
+Additionnaly you can [load a fixture](https://docs.djangoproject.com/en/dev/ref/django-admin/#loaddata) located in [dhost/demo/fixture.json](./../dhost/demo/fixture.json). More informations in [dhost/demo/README.md](./../dhost/demo/README.md).
 
-```sh
+```bash
 ./manage.py loaddata dhost/demo/fixture.json
 ```
 
 If you don't want to load the data in the database but still want to use the fixture, you can use the [testserver](https://docs.djangoproject.com/en/dev/ref/django-admin/#testserver).
 
-```sh
+```bash
 ./manage.py testserver dhost/demo/fixture.json
 ```
 
@@ -55,15 +55,15 @@ If you don't want to load the data in the database but still want to use the fix
 
 There is specific test settings available, this greatly improve speed, to use them simply specify the file when starting them.
 
-```sh
+```bash
 ./manage.py test --settings dhost.settings.tests
 ```
 
-Note that the `test` command is modified for this project, the new command can be found in [dhost/core/management/commands/test.py](https://github.com/dhost-project/dhost/blob/master/dhost/core/management/commands/test.py) it's a minor modification witch delete the `TEST_DIR` located in the `.cache` folder (by default at the root of the project).
+Note that the `test` command is modified for this project, the new command can be found in [dhost/core/management/commands/test.py](./../dhost/core/management/commands/test.py), it's a minor modification witch delete the `TEST_DIR` located in the `.cache` folder (by default at the root of the project).
 
 The `TEST_DIR` folder contain test datas and can be deleted safely after running a test. You can also delete it manually using the `deltestdir` command.
 
-```sh
+```bash
 ./manage.py deltestdir
 ```
 
@@ -71,7 +71,7 @@ The flag `--noinput` is available for the `deltestdir` command, it will tell Dja
 
 Note that you can also choose to keep the test datas with the `--keepdata` flag when running tests:
 
-```sh
+```bash
 ./manage.py test --keepdata
 ```
 
@@ -92,19 +92,19 @@ class ExampleTestCase(TestCase):
 
 To use [coverage](https://coverage.readthedocs.io/en/coverage-5.5/#quick-start) with django use:
 
-```sh
+```bash
 coverage run manage.py test
 ```
 
 To see the report use:
 
-```sh
+```bash
 coverage report -m
 ```
 
 To see the report in HTML format use:
 
-```sh
+```bash
 coverage html
 ```
 

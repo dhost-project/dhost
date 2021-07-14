@@ -1,31 +1,25 @@
 from django.conf import settings
-from rest_framework import mixins, viewsets
-from rest_framework.metadata import SimpleMetadata
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.reverse import reverse_lazy
 from rest_framework.views import APIView
 
-from dhost import __version__
-
-
-class APIRootMetadata(SimpleMetadata):
-
-    def determine_metadata(self, request, view):
-        metadata = super().determine_metadata(request, view)
-        metadata['version'] = __version__
-        return metadata
+from dhost.utils import get_version
 
 
 class APIRootView(APIView):
-    name = 'API Root'
-    description = f'DHost REST API version {__version__}'
-    metadata_class = APIRootMetadata
     permission_classes = (AllowAny,)
+    name = 'API Root'
+    description = 'DHost REST API'
 
     def get(self, request, format=None):
         """REST API root."""
-        data = {
+        response = {
+            'ping':
+                reverse_lazy(
+                    'api:ping',
+                    request=request,
+                ),
             'dapps':
                 reverse_lazy(
                     'api:dapp-list',
@@ -64,7 +58,7 @@ class APIRootView(APIView):
         }
 
         if settings.SETTINGS_MODULE == 'dhost.settings.development':
-            data.update({
+            response.update({
                 'doc': reverse_lazy(
                     'api:redoc',
                     request=request,
@@ -75,17 +69,13 @@ class APIRootView(APIView):
                 ),
             })
 
-        return Response(data)
+        return Response(response)
 
 
-class DestroyListRetrieveViewSet(mixins.DestroyModelMixin,
-                                 mixins.ListModelMixin,
-                                 mixins.RetrieveModelMixin,
-                                 viewsets.GenericViewSet):
-    """A viewset that provides `retrieve`, `destroy`, and `list` actions.
+class APIPingView(APIView):
+    permission_classes = (AllowAny,)
+    name = 'Ping'
 
-    To use it, override the class and set the `.queryset` and
-    `.serializer_class` attributes.
-    """
-
-    pass
+    def get(self, request, format=None):
+        response = {'version': get_version()}
+        return Response(response)

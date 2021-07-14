@@ -2,15 +2,15 @@
 
 ## Dev setup
 
-To setup your dev env check the [docs/dev.md](https://github.com/dhost-project/dhost/blob/master/docs/dev.md).
+To setup your dev env check the [docs/dev.md](./docs/dev.md).
 
 ## Coding style
 
-Some of the following tools are configured inside [setup.cfg](https://github.com/dhost-project/dhost/blob/master/setup.cfg).
+Some of the following tools are configured inside [setup.cfg](./setup.cfg).
 
 ### Editorconfig
 
-There is also an [editorconfig]((https://editorconfig.org/)) file [.editorconfig](https://github.com/dhost-project/dhost/blob/master/.editorconfig) that can be used with your IDE or text editor.
+There is also an [editorconfig]((https://editorconfig.org/)) file [.editorconfig](./.editorconfig) that can be used with your IDE or text editor.
 
 * [VSCode extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
 * [Vim plugin](https://github.com/editorconfig/editorconfig-vim)
@@ -20,7 +20,7 @@ There is also an [editorconfig]((https://editorconfig.org/)) file [.editorconfig
 
 [Yapf](https://pypi.org/project/yapf/) is a Python code formater.
 
-```sh
+```bash
 yapf -i -r dhost
 ```
 
@@ -28,7 +28,7 @@ yapf -i -r dhost
 
 [flake8](https://flake8.pycqa.org/en/latest/) is a Python code linter, it's used to verify coding errors and check style.
 
-```sh
+```bash
 flake8 dhost
 ```
 
@@ -36,7 +36,7 @@ flake8 dhost
 
 [isort](https://pycqa.github.io/isort/) is a Python utility / library to sort imports alphabetically, and automatically separated into sections and by type.
 
-```sh
+```bash
 isort .
 ```
 
@@ -44,7 +44,7 @@ isort .
 
 [pydocstyle](https://pycodestyle.pycqa.org/en/latest/) is a tool to check your Python code against some of the style conventions in PEP 8.
 
-```sh
+```bash
 pydocstyle dhost
 ```
 
@@ -52,17 +52,17 @@ pydocstyle dhost
 
 ### Pre-commit
 
-[pre-commit](https://pre-commit.com/) is a git hook that will run before every commits. The pre-commit config can be found in [.pre-commit-config.yaml](https://github.com/dhost-project/dhost/blob/master/.pre-commit-config.yaml).
+[pre-commit](https://pre-commit.com/) is a git hook that will run before every commits. The pre-commit config can be found in [.pre-commit-config.yaml](./.pre-commit-config.yaml).
 
 To install the pre-commit use:
 
-```sh
+```bash
 pre-commit install
 ```
 
 To test it use:
 
-```sh
+```bash
 pre-commit run --all-file
 ```
 
@@ -72,7 +72,7 @@ pre-commit run --all-file
 
 Run it with:
 
-```sh
+```bash
 tox
 ```
 
@@ -80,7 +80,7 @@ tox
 
 Create / update `.po` files.
 
-```sh
+```bash
 django-admin makemessages -l fr -i=venv
 ```
 
@@ -88,10 +88,10 @@ You can translate the content located in the `/locale/<lang_code>/LC_MESSAGES/dj
 
 Then compile `.po` to `.mo`.
 
-```sh
+```bash
 django-admin compilemessages -i=venv
 ```
 
 ## Tests
 
-If you add code don't forget to also write tests for it. For more informations about testing refer to the tests section from [docs/dev.md](https://github.com/dhost-project/dhost/blob/master/docs/dev.md).
+If you add code don't forget to also write tests for it. For more informations about testing refer to the tests section from [docs/dev.md](./docs/dev.md).

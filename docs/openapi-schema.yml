@@ -19,6 +19,21 @@ paths:
           description: ''
       tags:
       - api
+  /api/ping/:
+    get:
+      operationId: listAPIPings
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+      tags:
+      - api
   /api/dapps/:
     get:
       operationId: listDapps
@@ -1023,6 +1038,62 @@ paths:
           description: ''
       tags:
       - api
+  /api/notifications/count/:
+    get:
+      operationId: countNotification
+      description: Total count of notifications.
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: ''
+      tags:
+      - api
+  /api/notifications/mark_all_as_read/:
+    get:
+      operationId: markAllAsReadNotification
+      description: Mark all notifications has read.
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: ''
+      tags:
+      - api
+  /api/notifications/mark_all_as_unread/:
+    get:
+      operationId: markAllAsUnreadNotification
+      description: Mark all notifications has unread.
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: ''
+      tags:
+      - api
+  /api/notifications/unread_count/:
+    get:
+      operationId: unreadCountNotification
+      description: Count of unread notifications.
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: ''
+      tags:
+      - api
   /api/notifications/{id}/:
     get:
       operationId: retrieveNotification
@@ -1081,7 +1152,7 @@ paths:
   /api/notifications/{id}/unread/:
     get:
       operationId: unreadNotification
-      description: Mark notification has un-read.
+      description: Mark notification has unread.
       parameters:
       - name: id
         in: path
@@ -1483,6 +1554,13 @@ components:
           readOnly: true
         read:
           type: boolean
+        level:
+          enum:
+          - info
+          - success
+          - warning
+          - error
+          type: string
           readOnly: true
         url:
           type: string
@@ -1494,7 +1572,7 @@ components:
             -\uFFFF0-9])?(?:\\.(?!-)[a-z\xA1-\uFFFF0-9-]{1,63}(?<!-))*\\.(?!-)(?:[a-z\xA1\
             -\uFFFF-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\\.?|localhost))(?::\\d{2,5})?(?:[/?#][^\\\
             s]*)?\\z"
-        time:
+        timestamp:
           type: string
           format: date-time
           readOnly: true
