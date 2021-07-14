@@ -1735,7 +1735,7 @@
     }
   },
   {
-    "model": "oauth2.application",
+    "model": "oauth2.oauth2application",
     "pk": 1,
     "fields": {
       "client_id": "dhost_cli",
@@ -1754,7 +1754,7 @@
     }
   },
   {
-    "model": "oauth2.application",
+    "model": "oauth2.oauth2application",
     "pk": 2,
     "fields": {
       "client_id": "dhost_dashboard",

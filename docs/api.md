@@ -2,16 +2,16 @@
 
 ## OpenAPI Schema
 
-An OpenAPI Schema is available in the doc at `docs/openapi-schema.yml`. You can view it in your browser with the [Swagger Editor](https://editor.swagger.io/).
+An OpenAPI Schema is available in the doc at [openapi-schema.yml](./openapi-schema.yml). You can view it in your browser with the [Swagger Editor](https://editor.swagger.io/).
 
-The [http://localhost:8000/openapi](http://localhost:8000/openapi) page send the schema, it can be viewed with [Redoc](https://github.com/Redocly/redoc) at [http://localhost:8000/redoc/](http://localhost:8000/redoc/).
+The [localhost:8000/api/openapi](http://localhost:8000/api/openapi) page send the schema, it can be viewed with [Redoc](https://github.com/Redocly/redoc) at [localhost:8000/api/doc/](http://localhost:8000/api/doc/).
 
-You are seeing only the available routes, when you are not connected you don't have access to any, to do so either go to the `/admin` page or the browsable API `/api/v1/` and login, then go back to the `/redoc` page.
+You are only seeing available routes, when you are not connected you don't have access to any, to do so either go to the [localhost:8000/admin/login/](http://localhost:8000/admin/login/) page or the browsable API [localhost:8000/api-auth/login/](http://localhost:8000/api-auth/login/?next=/api/) and login, then go back to the [localhost:8000/api/doc/](http://localhost:8000/api/doc/) page.
 
 ## Update the schema
 
-To update the schema you can use the `generateschema` command from Django REST framework.
+To update the schema you can use the [generateschema](https://www.django-rest-framework.org/coreapi/schemas/#generating-a-schema-with-the-generateschema-management-command) command from Django REST framework.
 
-```sh
+```bash
 ./manage.py generateschema --file docs/openapi-schema.yml
 ```

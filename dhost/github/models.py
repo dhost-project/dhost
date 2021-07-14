@@ -7,15 +7,16 @@ from django.utils.translation import gettext_lazy as _
 
 from dhost.dapps.models import Dapp
 
-from .github import DjangoGithubAPI
+from .github_api import DjangoGithubAPI
 from .managers import (BranchManager, RepositoryManager, WebhookManager,
                        serialize_branch, serialize_repository,
                        serialize_webhook)
 
 
 class Repository(models.Model):
-    """Model representing a Github repository, the instance is created and
-    updated from the response of the Github API.
+    """Model representing a Github repository.
+
+    The instance is created and updated from the response of the Github API.
     """
 
     id = models.IntegerField(
@@ -163,17 +164,20 @@ class Webhook(models.Model):
         pass
 
     def deactivate(self):
-        """Deactivate only if there is no DappGithubRepo linked to it that have
+        """Deactivate the webhook.
+
+        Deactivate only if there is no DappGithubRepo linked to it that have
         `auto_deploy` turned on.
         """
         pass
 
 
 class GithubOptions(models.Model):
-    """Represent the link between a Dapp and a Github repository, it also add
-    some options related to the deployment `auto_deploy` specifies if the Dapp
-    should be re-deployed when a webhook linked to that repo is called.
-    It also contains the branch to be used when downloading the repo.
+    """Represent the link between a Dapp and a Github repository.
+
+    It also add some options related to the deployment `auto_deploy` specifies
+    if the Dapp should be re-deployed when a webhook linked to that repo is
+    called. It also contains the branch to be used when downloading the repo.
     """
 
     dapp = models.OneToOneField(

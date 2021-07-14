@@ -1,11 +1,12 @@
 class PayloadHandler:
-    """
+    r"""A class to handle Github webhooks.
+
     Github docs: https://docs.github.com/en/github-ae@latest/developers/\
         webhooks-and-events/webhooks/webhook-events-and-payloads#push
 
     Args:
-        webhook (Webhook): Webhook instance
-        payload (JSON): JSON representation of the payload
+        webhook (Webhook): Webhook instance.
+        payload (JSON): JSON representation of the payload.
     """
 
     def __init__(self, webhook, payload):

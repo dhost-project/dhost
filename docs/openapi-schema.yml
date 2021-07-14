@@ -1,9 +1,40 @@
 openapi: 3.0.2
 info:
-  title: ''
-  version: ''
+  title: 'DHost'
+  version: '1.1.dev'
+  description: 'DHost REST API version 1.1.dev'
 paths:
-  /api/v1/dapps/:
+  /api/:
+    get:
+      operationId: listAPIRoots
+      description: REST API root.
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+      tags:
+      - api
+  /api/ping/:
+    get:
+      operationId: listAPIPings
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+      tags:
+      - api
+  /api/dapps/:
     get:
       operationId: listDapps
       description: A list of every dapps, regardless of wich type they are.
@@ -19,7 +50,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/dapps/{slug}/:
+  /api/dapps/{slug}/:
     get:
       operationId: retrieveDapp
       description: A list of every dapps, regardless of wich type they are.
@@ -39,7 +70,97 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/:
+  /api/github/repositories/:
+    get:
+      operationId: listRepositorys
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Repository'
+          description: ''
+      tags:
+      - api
+  /api/github/repositories/fetch_all/:
+    get:
+      operationId: fetchAllRepository
+      description: Update every Github repos for user from the Github API.
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Repository'
+          description: ''
+      tags:
+      - api
+  /api/github/repositories/{id}/:
+    get:
+      operationId: retrieveRepository
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Github repository unique ID.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Repository'
+          description: ''
+      tags:
+      - api
+  /api/github/repositories/{id}/fetch/:
+    get:
+      operationId: fetchRepository
+      description: Update a single repo from Github API.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Github repository unique ID.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Repository'
+          description: ''
+      tags:
+      - api
+  /api/github/repositories/{id}/fetch_branches/:
+    get:
+      operationId: fetchBranchesRepository
+      description: Update a single repo branches from the Github API.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Github repository unique ID.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Repository'
+          description: ''
+      tags:
+      - api
+  /api/ipfs/:
     get:
       operationId: listIPFSDapps
       description: ''
@@ -57,17 +178,11 @@ paths:
       - api
     post:
       operationId: createIPFSDapp
-      description: ''
+      description: Log the action on a create call.
       parameters: []
       requestBody:
         content:
           application/json:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
-          multipart/form-data:
             schema:
               $ref: '#/components/schemas/IPFSDapp'
       responses:
@@ -79,7 +194,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{slug}/:
+  /api/ipfs/{slug}/:
     get:
       operationId: retrieveIPFSDapp
       description: ''
@@ -101,7 +216,7 @@ paths:
       - api
     put:
       operationId: updateIPFSDapp
-      description: ''
+      description: Log the action on an update call.
       parameters:
       - name: slug
         in: path
@@ -112,12 +227,6 @@ paths:
       requestBody:
         content:
           application/json:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
-          multipart/form-data:
             schema:
               $ref: '#/components/schemas/IPFSDapp'
       responses:
@@ -131,7 +240,7 @@ paths:
       - api
     patch:
       operationId: partialUpdateIPFSDapp
-      description: ''
+      description: Log the action on an partial update call.
       parameters:
       - name: slug
         in: path
@@ -142,12 +251,6 @@ paths:
       requestBody:
         content:
           application/json:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/IPFSDapp'
-          multipart/form-data:
             schema:
               $ref: '#/components/schemas/IPFSDapp'
       responses:
@@ -161,7 +264,7 @@ paths:
       - api
     delete:
       operationId: destroyIPFSDapp
-      description: ''
+      description: Log the action on a delete call.
       parameters:
       - name: slug
         in: path
@@ -174,7 +277,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{slug}/deploy/:
+  /api/ipfs/{slug}/deploy/:
     get:
       operationId: deployIPFSDapp
       description: ''
@@ -194,111 +297,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/github/repositories/:
-    get:
-      operationId: listRepositorys
-      description: ''
-      parameters: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Repository'
-          description: ''
-      tags:
-      - api
-  /api/v1/github/repositories/fetch_all/:
-    get:
-      operationId: fetchAllRepository
-      description: Update every Github repos for user from the Github API.
-      parameters: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Repository'
-          description: ''
-      tags:
-      - api
-  /api/v1/github/repositories/{id}/:
-    get:
-      operationId: retrieveRepository
-      description: ''
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: Github repository unique ID.
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Repository'
-          description: ''
-      tags:
-      - api
-  /api/v1/github/repositories/{id}/fetch/:
-    get:
-      operationId: fetchRepository
-      description: Update a single repo from Github API.
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: Github repository unique ID.
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Repository'
-          description: ''
-      tags:
-      - api
-  /api/v1/github/repositories/{id}/fetch_branches/:
-    get:
-      operationId: fetchBranchesRepository
-      description: Update repo's branches from the Github API.
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: Github repository unique ID.
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Repository'
-          description: ''
-      tags:
-      - api
-  /api/v1/users/me/:
-    get:
-      operationId: meUser
-      description: ''
-      parameters: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-          description: ''
-      tags:
-      - api
-  /api/v1/ipfs/{dapp_slug}/buildoptions/:
+  /api/ipfs/{dapp_slug}/buildoptions/:
     get:
       operationId: listBuildOptions
       description: ''
@@ -322,7 +321,7 @@ paths:
       - api
     post:
       operationId: createBuildOptions
-      description: ''
+      description: Log the action on a create call.
       parameters:
       - name: dapp_slug
         in: path
@@ -335,12 +334,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/BuildOptions'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/BuildOptions'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/BuildOptions'
       responses:
         '201':
           content:
@@ -350,7 +343,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/buildoptions/{dapp}/:
+  /api/ipfs/{dapp_slug}/buildoptions/{dapp}/:
     get:
       operationId: retrieveBuildOptions
       description: ''
@@ -378,7 +371,7 @@ paths:
       - api
     put:
       operationId: updateBuildOptions
-      description: ''
+      description: Log the action on an update call.
       parameters:
       - name: dapp_slug
         in: path
@@ -395,12 +388,6 @@ paths:
       requestBody:
         content:
           application/json:
-            schema:
-              $ref: '#/components/schemas/BuildOptions'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/BuildOptions'
-          multipart/form-data:
             schema:
               $ref: '#/components/schemas/BuildOptions'
       responses:
@@ -414,7 +401,7 @@ paths:
       - api
     patch:
       operationId: partialUpdateBuildOptions
-      description: ''
+      description: Log the action on an partial update call.
       parameters:
       - name: dapp_slug
         in: path
@@ -433,12 +420,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/BuildOptions'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/BuildOptions'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/BuildOptions'
       responses:
         '200':
           content:
@@ -450,7 +431,7 @@ paths:
       - api
     delete:
       operationId: destroyBuildOptions
-      description: ''
+      description: Log the action on a delete call.
       parameters:
       - name: dapp_slug
         in: path
@@ -469,7 +450,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/buildoptions/{dapp}/build/:
+  /api/ipfs/{dapp_slug}/buildoptions/{dapp}/build/:
     get:
       operationId: buildBuildOptions
       description: ''
@@ -495,7 +476,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/bundles/:
+  /api/ipfs/{dapp_slug}/bundles/:
     get:
       operationId: listBundles
       description: ''
@@ -517,7 +498,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/bundles/{id}/:
+  /api/ipfs/{dapp_slug}/bundles/{id}/:
     get:
       operationId: retrieveBundle
       description: ''
@@ -543,7 +524,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/deployments/:
+  /api/ipfs/{dapp_slug}/deployments/:
     get:
       operationId: listIPFSDeployments
       description: ''
@@ -565,7 +546,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/deployments/{id}/:
+  /api/ipfs/{dapp_slug}/deployments/{id}/:
     get:
       operationId: retrieveIPFSDeployment
       description: ''
@@ -591,7 +572,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/logs/:
+  /api/ipfs/{dapp_slug}/logs/:
     get:
       operationId: listAPILogs
       description: ''
@@ -613,7 +594,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/logs/{id}/:
+  /api/ipfs/{dapp_slug}/logs/{id}/:
     get:
       operationId: retrieveAPILog
       description: ''
@@ -639,7 +620,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/githuboptions/:
+  /api/ipfs/{dapp_slug}/githuboptions/:
     get:
       operationId: listGithubOptions
       description: ''
@@ -676,12 +657,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/GithubOptions'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/GithubOptions'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/GithubOptions'
       responses:
         '201':
           content:
@@ -691,7 +666,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/githuboptions/{dapp}/:
+  /api/ipfs/{dapp_slug}/githuboptions/{dapp}/:
     get:
       operationId: retrieveGithubOptions
       description: ''
@@ -738,12 +713,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/GithubOptions'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/GithubOptions'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/GithubOptions'
       responses:
         '200':
           content:
@@ -772,12 +741,6 @@ paths:
       requestBody:
         content:
           application/json:
-            schema:
-              $ref: '#/components/schemas/GithubOptions'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/GithubOptions'
-          multipart/form-data:
             schema:
               $ref: '#/components/schemas/GithubOptions'
       responses:
@@ -810,7 +773,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/buildoptions/{buildoptions_pk}/builds/:
+  /api/ipfs/{dapp_slug}/buildoptions/{buildoptions_pk}/builds/:
     get:
       operationId: listBuilds
       description: ''
@@ -838,7 +801,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/buildoptions/{buildoptions_pk}/builds/{id}/:
+  /api/ipfs/{dapp_slug}/buildoptions/{buildoptions_pk}/builds/{id}/:
     get:
       operationId: retrieveBuild
       description: ''
@@ -870,7 +833,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/buildoptions/{buildoptions_pk}/envvars/:
+  /api/ipfs/{dapp_slug}/buildoptions/{buildoptions_pk}/envvars/:
     get:
       operationId: listEnvVars
       description: ''
@@ -900,7 +863,7 @@ paths:
       - api
     post:
       operationId: createEnvVar
-      description: ''
+      description: Log the action on a create call.
       parameters:
       - name: dapp_slug
         in: path
@@ -919,12 +882,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/EnvVar'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/EnvVar'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/EnvVar'
       responses:
         '201':
           content:
@@ -934,7 +891,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/ipfs/{dapp_slug}/buildoptions/{buildoptions_pk}/envvars/{id}/:
+  /api/ipfs/{dapp_slug}/buildoptions/{buildoptions_pk}/envvars/{id}/:
     get:
       operationId: retrieveEnvVar
       description: ''
@@ -968,7 +925,7 @@ paths:
       - api
     put:
       operationId: updateEnvVar
-      description: ''
+      description: Log the action on an update call.
       parameters:
       - name: dapp_slug
         in: path
@@ -991,12 +948,6 @@ paths:
       requestBody:
         content:
           application/json:
-            schema:
-              $ref: '#/components/schemas/EnvVar'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/EnvVar'
-          multipart/form-data:
             schema:
               $ref: '#/components/schemas/EnvVar'
       responses:
@@ -1010,7 +961,7 @@ paths:
       - api
     patch:
       operationId: partialUpdateEnvVar
-      description: ''
+      description: Log the action on an partial update call.
       parameters:
       - name: dapp_slug
         in: path
@@ -1035,12 +986,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/EnvVar'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/EnvVar'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/EnvVar'
       responses:
         '200':
           content:
@@ -1052,7 +997,7 @@ paths:
       - api
     delete:
       operationId: destroyEnvVar
-      description: ''
+      description: Log the action on a delete call.
       parameters:
       - name: dapp_slug
         in: path
@@ -1077,10 +1022,247 @@ paths:
           description: ''
       tags:
       - api
-  /api/v1/github/webhook/{id}/payload/:
+  /api/notifications/:
+    get:
+      operationId: listNotifications
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Notification'
+          description: ''
+      tags:
+      - api
+  /api/notifications/count/:
+    get:
+      operationId: countNotification
+      description: Total count of notifications.
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: ''
+      tags:
+      - api
+  /api/notifications/mark_all_as_read/:
+    get:
+      operationId: markAllAsReadNotification
+      description: Mark all notifications has read.
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: ''
+      tags:
+      - api
+  /api/notifications/mark_all_as_unread/:
+    get:
+      operationId: markAllAsUnreadNotification
+      description: Mark all notifications has unread.
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: ''
+      tags:
+      - api
+  /api/notifications/unread_count/:
+    get:
+      operationId: unreadCountNotification
+      description: Count of unread notifications.
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: ''
+      tags:
+      - api
+  /api/notifications/{id}/:
+    get:
+      operationId: retrieveNotification
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this notification.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyNotification
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this notification.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/notifications/{id}/read/:
+    get:
+      operationId: readNotification
+      description: Mark notification has read.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this notification.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: ''
+      tags:
+      - api
+  /api/notifications/{id}/unread/:
+    get:
+      operationId: unreadNotification
+      description: Mark notification has unread.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this notification.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: ''
+      tags:
+      - api
+  /api/oauth2/applications/:
+    get:
+      operationId: listOAuth2Applications
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OAuth2Application'
+          description: ''
+      tags:
+      - api
+  /api/oauth2/applications/{id}/:
+    get:
+      operationId: retrieveOAuth2Application
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this o auth2 application.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuth2Application'
+          description: ''
+      tags:
+      - api
+  /api/oauth2/tokens/:
+    get:
+      operationId: listAccessTokens
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OAuth2AccessToken'
+          description: ''
+      tags:
+      - api
+  /api/oauth2/tokens/{id}/:
+    get:
+      operationId: retrieveAccessToken
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this access token.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuth2AccessToken'
+          description: ''
+      tags:
+      - api
+  /api/users/me/:
+    get:
+      operationId: meUser
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+  /api/github/webhook/{id}/payload/:
     post:
       operationId: payloadWebhook
-      description: Receive a webhook payload from Github.
+      description: "Receive a webhook payload from Github.\n\nThis view will receive\
+        \ a webhook from Github and process it. It needs\nto send back a valid response\
+        \ or Github will disconnect it. We also\nneed to send back a body containing\
+        \ a message, this will come from the\npayload handler class.\n\nGithub docs:\n\
+        \    https://docs.github.com/en/github-ae@latest/developers/"
       parameters:
       - name: id
         in: path
@@ -1091,10 +1273,6 @@ paths:
       requestBody:
         content:
           application/json:
-            schema: {}
-          application/x-www-form-urlencoded:
-            schema: {}
-          multipart/form-data:
             schema: {}
       responses:
         '201':
@@ -1135,6 +1313,39 @@ components:
       required:
       - slug
       - owner
+    Repository:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Github repository unique ID.
+        github_owner:
+          type: string
+          readOnly: true
+        github_repo:
+          type: string
+          readOnly: true
+        branches:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                readOnly: true
+        added_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Added at.
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Last updated from the Github API.
+      required:
+      - branches
     IPFSDapp:
       type: object
       properties:
@@ -1177,60 +1388,6 @@ components:
           readOnly: true
       required:
       - slug
-    Repository:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-          description: Github repository unique ID.
-        github_owner:
-          type: string
-          readOnly: true
-        github_repo:
-          type: string
-          readOnly: true
-        branches:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-                readOnly: true
-        added_at:
-          type: string
-          format: date-time
-          readOnly: true
-          description: Added at.
-        updated_at:
-          type: string
-          format: date-time
-          readOnly: true
-          description: Last updated from the Github API.
-      required:
-      - branches
-    User:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-        username:
-          type: string
-          pattern: ^[\w.@+-]+\z
-          maxLength: 150
-        email:
-          type: string
-          format: email
-          maxLength: 254
-        avatar:
-          type: string
-          format: binary
-          readOnly: true
-      required:
-      - username
     BuildOptions:
       type: object
       properties:
@@ -1297,16 +1454,29 @@ components:
           readOnly: true
         action_flag:
           enum:
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
-          - 6
-          - 7
-          - 8
-          - 9
-          type: integer
+          - other
+          - dapp_add
+          - dapp_change
+          - bundle_add
+          - bundle_del
+          - auto_deploy_start
+          - deploy_start
+          - deploy_success
+          - deploy_fail
+          - build_opt_add
+          - build_opt_change
+          - build_opt_del
+          - auto_build_start
+          - build_start
+          - build_success
+          - build_fail
+          - env_var_add
+          - env_var_change
+          - env_var_del
+          - github_opt_add
+          - github_opt_change
+          - github_opt_del
+          type: string
           readOnly: true
         change_message:
           type: string
@@ -1369,3 +1539,136 @@ components:
       required:
       - variable
       - value
+    Notification:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        subject:
+          type: string
+          readOnly: true
+        content:
+          type: string
+          readOnly: true
+        read:
+          type: boolean
+        level:
+          enum:
+          - info
+          - success
+          - warning
+          - error
+          type: string
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+          pattern: "^(?:[a-z0-9.+-]*)://(?:[^\\s:@/]+(?::[^\\s:@/]*)?@)?(?:(?:0|25[0-5]|2[0-4]\\\
+            d|1\\d?\\d?|[1-9]\\d?)(?:\\.(?:0|25[0-5]|2[0-4]\\d|1\\d?\\d?|[1-9]\\d?)){3}|\\\
+            [[0-9a-f:.]+\\]|([a-z\xA1-\uFFFF0-9](?:[a-z\xA1-\uFFFF0-9-]{0,61}[a-z\xA1\
+            -\uFFFF0-9])?(?:\\.(?!-)[a-z\xA1-\uFFFF0-9-]{1,63}(?<!-))*\\.(?!-)(?:[a-z\xA1\
+            -\uFFFF-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\\.?|localhost))(?::\\d{2,5})?(?:[/?#][^\\\
+            s]*)?\\z"
+        timestamp:
+          type: string
+          format: date-time
+          readOnly: true
+    OAuth2Application:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          type: string
+          nullable: true
+        name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+        logo:
+          type: string
+          format: binary
+          nullable: true
+        client_id:
+          type: string
+          readOnly: true
+        client_secret:
+          type: string
+          readOnly: true
+        client_type:
+          enum:
+          - confidential
+          - public
+          type: string
+        authorization_grant_type:
+          enum:
+          - authorization-code
+          - implicit
+          - password
+          - client-credentials
+          - openid-hybrid
+          type: string
+        skip_authorization:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - client_type
+      - authorization_grant_type
+    OAuth2AccessToken:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        expires:
+          type: string
+          format: date-time
+        scope:
+          type: string
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+        application:
+          type: integer
+          nullable: true
+      required:
+      - expires
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        username:
+          type: string
+          pattern: ^[\w.@+-]+\z
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        avatar:
+          type: string
+          format: binary
+          readOnly: true
+      required:
+      - username

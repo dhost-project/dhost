@@ -3,7 +3,7 @@
 ## Env vars
 
 | Environment variables     | Prod | Default values | Descriptions                                                                                               |
-| ------------------------- | ---- | -------------- | ---------------------------------------------------------------------------------------------------------- |
+| ------------------------- | :--: | :------------: | ---------------------------------------------------------------------------------------------------------- |
 | `AWS_ACCESS_KEY_ID`       | ❓   |                | AWS access key more infos [here](https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html) |
 | `AWS_SECRET_ACCESS_KEY`   | ❓   |                | AWS secret key                                                                                             |
 | `AWS_DEFAULT_ACL`         | ❓   | `None`         | AWS ACL                                                                                                    |

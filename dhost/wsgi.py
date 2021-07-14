@@ -1,5 +1,4 @@
-"""
-WSGI config for dhost project.
+"""WSGI config for dhost project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

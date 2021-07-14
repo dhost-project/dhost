@@ -138,7 +138,7 @@ class RepositoryTestCase(TestDataMixin, TestCase):
         self.assertTrue(repo.users.filter(id=self.u1.id).exists())
 
     @mock.patch(
-        'dhost.github.github.DjangoGithubAPI.list_repos',
+        'dhost.github.github_api.DjangoGithubAPI.list_repos',
         mock.MagicMock(return_value=[
             {
                 "id": 1,
@@ -183,7 +183,7 @@ class RepositoryTestCase(TestDataMixin, TestCase):
         self.assertEqual(0, Repository.objects.filter(users=self.u1).count())
 
     @mock.patch(
-        'dhost.github.github.DjangoGithubAPI.get_repo',
+        'dhost.github.github_api.DjangoGithubAPI.get_repo',
         mock.MagicMock(
             return_value={
                 "id": 1,
@@ -199,7 +199,7 @@ class RepositoryTestCase(TestDataMixin, TestCase):
         self.assertEqual(self.repo1.extra_data['size'], 100)
 
     @mock.patch(
-        'dhost.github.github.DjangoGithubAPI.get_repo',
+        'dhost.github.github_api.DjangoGithubAPI.get_repo',
         mock.MagicMock(
             return_value={
                 "id": 222222,
@@ -242,7 +242,7 @@ class RepositoryTestCase(TestDataMixin, TestCase):
             self.repo1.update_from_json(repo_json)
             self.assertNotEqual(self.repo1.extra_data['size'], 100)
 
-    @mock.patch('dhost.github.github.DjangoGithubAPI.download_repo')
+    @mock.patch('dhost.github.github_api.DjangoGithubAPI.download_repo')
     def test_download_repo(self, download_repo_mock):
         self.repo1.download(user=self.u1,
                             ref='master',
@@ -307,7 +307,7 @@ class BranchTestCase(TestDataMixin, TestCase):
         self.assertEqual(0, Branch.objects.all().count())
 
     @mock.patch(
-        'dhost.github.github.DjangoGithubAPI.list_branches',
+        'dhost.github.github_api.DjangoGithubAPI.list_branches',
         mock.MagicMock(return_value=[
             {
                 "name": "master",
@@ -364,7 +364,7 @@ class WebhookTestCase(TestDataMixin, TestCase):
         self.assertEqual(webhook.extra_data, webhook_json)
 
     @mock.patch(
-        'dhost.github.github.DjangoGithubAPI.create_hook',
+        'dhost.github.github_api.DjangoGithubAPI.create_hook',
         mock.MagicMock(return_value={
             'id': 2,
             'name': 'test_name',

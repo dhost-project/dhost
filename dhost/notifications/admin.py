@@ -5,4 +5,6 @@ from .models import Notification
 
 @admin.register(Notification)
 class NotificationAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('subject', 'user', 'timestamp')
+    search_fields = ('user__username', 'subject')
+    list_filter = ('read', 'timestamp')

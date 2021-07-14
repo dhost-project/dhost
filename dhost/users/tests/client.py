@@ -13,7 +13,8 @@ def extract_token_from_url(url):
 
 
 class PasswordResetConfirmClient(Client):
-    """
+    """Simple password test client.
+
     This client eases testing the password reset flow by emulating the
     PasswordResetConfirmView's redirect and saving of the reset token in the
     user's session. This request puts 'my-token' in the session and redirects
