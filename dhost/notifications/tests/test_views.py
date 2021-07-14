@@ -58,7 +58,7 @@ class NotificationViewSetTestCase(APITestCase, URLPatternsTestCase):
         url = reverse('notifications-detail', args=(self.notif_unread.id,))
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn('subject', response.data)
+        self.assertEqual(response.data['subject'], self.notif_unread.subject)
         self.assertIn('timestamp', response.data)
 
     def test_destroy_notification_404(self):
@@ -81,6 +81,7 @@ class NotificationViewSetTestCase(APITestCase, URLPatternsTestCase):
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue(response.data['read'])
+        self.assertTrue(Notification.objects.get(id=self.notif_unread.id).read)
 
     def test_unread_notification_404(self):
         url = reverse('notifications-unread', args=(self.notif_u2.id,))
@@ -88,7 +89,48 @@ class NotificationViewSetTestCase(APITestCase, URLPatternsTestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_unread_notification(self):
-        url = reverse('notifications-unread', args=(self.notif_unread.id,))
+        url = reverse('notifications-unread', args=(self.notif_read.id,))
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertFalse(response.data['read'])
+        self.assertFalse(Notification.objects.get(id=self.notif_read.id).read)
+
+    def test_mark_all_as_read_notification(self):
+        url = reverse('notifications-mark-all-as-read')
+        response = self.client.get(url, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['count'], 1)
+        self.assertTrue(Notification.objects.get(id=self.notif_unread.id).read)
+
+    def test_mark_all_as_read_notification_none_to_read(self):
+        url = reverse('notifications-mark-all-as-read')
+        self.notif_unread.read = True
+        self.notif_unread.save()
+        response = self.client.get(url, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['count'], 0)
+
+    def test_mark_all_as_unread_notification(self):
+        url = reverse('notifications-mark-all-as-unread')
+        response = self.client.get(url, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['count'], 1)
+        self.assertFalse(Notification.objects.get(id=self.notif_read.id).read)
+
+    def test_mark_all_as_unread_notification_none_to_unread(self):
+        url = reverse('notifications-mark-all-as-unread')
+        self.notif_read.read = False
+        self.notif_read.save()
+        response = self.client.get(url, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['count'], 0)
+
+    def test_unread_count(self):
+        url = reverse('notifications-unread-count')
+        response = self.client.get(url, format='json')
+        self.assertEqual(response.data['count'], 1)
+
+    def test_count(self):
+        url = reverse('notifications-count')
+        response = self.client.get(url, format='json')
+        self.assertEqual(response.data['count'], 2)
