@@ -24,7 +24,7 @@ Note:
 * `BASE_DIR` is at `ROOT_DIR/dhost`, it's the apps root.
 
 | Environment variables            | Prod | Default values          | Descriptions                                                                                                                                                                |
-| ---------------------------      | ---- | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ---------------------------      | :--: | :---------------------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `DEBUG`                          | ✅   | `True`                  | Set to `False` for production, more infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#debug).                                                                |
 | `DJANGO_SECRET_KEY`              | ✅   |                         | Your website secret key, more infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#secret-key).                                                                 |
 | `SITE_ID`                        | ❓   | `1`                     | More infos [here](https://docs.djangoproject.com/en/3.1/ref/settings/#site-id).                                                                                             |

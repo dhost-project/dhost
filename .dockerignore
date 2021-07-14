@@ -2,5 +2,5 @@
 **/*.pyc
 *.sqlite
 media
-static
+staticfiles
 venv

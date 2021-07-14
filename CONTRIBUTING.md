@@ -20,7 +20,7 @@ There is also an [editorconfig]((https://editorconfig.org/)) file [.editorconfig
 
 [Yapf](https://pypi.org/project/yapf/) is a Python code formater.
 
-```sh
+```bash
 yapf -i -r dhost
 ```
 
@@ -28,7 +28,7 @@ yapf -i -r dhost
 
 [flake8](https://flake8.pycqa.org/en/latest/) is a Python code linter, it's used to verify coding errors and check style.
 
-```sh
+```bash
 flake8 dhost
 ```
 
@@ -36,7 +36,7 @@ flake8 dhost
 
 [isort](https://pycqa.github.io/isort/) is a Python utility / library to sort imports alphabetically, and automatically separated into sections and by type.
 
-```sh
+```bash
 isort .
 ```
 
@@ -44,7 +44,7 @@ isort .
 
 [pydocstyle](https://pycodestyle.pycqa.org/en/latest/) is a tool to check your Python code against some of the style conventions in PEP 8.
 
-```sh
+```bash
 pydocstyle dhost
 ```
 
@@ -56,13 +56,13 @@ pydocstyle dhost
 
 To install the pre-commit use:
 
-```sh
+```bash
 pre-commit install
 ```
 
 To test it use:
 
-```sh
+```bash
 pre-commit run --all-file
 ```
 
@@ -72,7 +72,7 @@ pre-commit run --all-file
 
 Run it with:
 
-```sh
+```bash
 tox
 ```
 
@@ -80,7 +80,7 @@ tox
 
 Create / update `.po` files.
 
-```sh
+```bash
 django-admin makemessages -l fr -i=venv
 ```
 
@@ -88,7 +88,7 @@ You can translate the content located in the `/locale/<lang_code>/LC_MESSAGES/dj
 
 Then compile `.po` to `.mo`.
 
-```sh
+```bash
 django-admin compilemessages -i=venv
 ```
 

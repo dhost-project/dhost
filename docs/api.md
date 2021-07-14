@@ -12,6 +12,6 @@ You are only seeing available routes, when you are not connected you don't have 
 
 To update the schema you can use the [generateschema](https://www.django-rest-framework.org/coreapi/schemas/#generating-a-schema-with-the-generateschema-management-command) command from Django REST framework.
 
-```sh
+```bash
 ./manage.py generateschema --file docs/openapi-schema.yml
 ```

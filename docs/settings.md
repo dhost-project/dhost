@@ -1,9 +1,9 @@
 # Settings
 
-The settings are located in the file `dhost/settings/defaults.py`, this is the list of the custom settings you can set for this project.
+The settings are located in [dhost/settings/defaults.py](./../dhost/settings/defaults.py), this is the list of the custom settings you can set for this project.
 
 | Setting                   | Default values | Descriptions                                                   |
-| ------------------------- | -------------- | -------------------------------------------------------------- |
+| ------------------------- | :------------: | -------------------------------------------------------------- |
 | `AVATAR_EXTENSION`        | `'png'`        | The avatar image extension                                     |
 | `AVATAR_DIMENSION`        | `256`          | The size of the image (used for width and height) in pixels    |
 | `AVATAR_SQUARE_NUMBER`    | `12`           | The number of squares in the image per side (rows and columns) |
