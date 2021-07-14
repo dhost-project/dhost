@@ -16,7 +16,7 @@ def get_obj_model(obj):
 
 class APILogManager(models.Manager):
 
-    def log_action(self, user, obj, action_flag, dapp):
+    def log_action(self, obj, dapp, action_flag, user=None):
         return APILog.objects.create(user=user,
                                      content_type=get_obj_model(obj),
                                      object_id=obj.pk,
@@ -51,7 +51,12 @@ class ActionFlags(models.TextChoices):
 
 class APILog(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
     dapp = models.ForeignKey(
         Dapp,
         on_delete=models.CASCADE,
