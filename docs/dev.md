@@ -39,7 +39,7 @@ You can now run the development server. Next time you want to start the server, 
 ./manage.py runserver
 ```
 
-Additionnaly you can [load a fixture](https://docs.djangoproject.com/en/dev/ref/django-admin/#loaddata) located in [dhost/demo/fixture.json](https://github.com/dhost-project/dhost/blob/master/dhost/demo/fixture.json). More informations in [dhost/demo/README.md](https://github.com/dhost-project/dhost/blob/master/dhost/demo/README.md).
+Additionnaly you can [load a fixture](https://docs.djangoproject.com/en/dev/ref/django-admin/#loaddata) located in [dhost/demo/fixture.json](./../dhost/demo/fixture.json). More informations in [dhost/demo/README.md](./../dhost/demo/README.md).
 
 ```sh
 ./manage.py loaddata dhost/demo/fixture.json
@@ -59,7 +59,7 @@ There is specific test settings available, this greatly improve speed, to use th
 ./manage.py test --settings dhost.settings.tests
 ```
 
-Note that the `test` command is modified for this project, the new command can be found in [dhost/core/management/commands/test.py](https://github.com/dhost-project/dhost/blob/master/dhost/core/management/commands/test.py) it's a minor modification witch delete the `TEST_DIR` located in the `.cache` folder (by default at the root of the project).
+Note that the `test` command is modified for this project, the new command can be found in [dhost/core/management/commands/test.py](./../dhost/core/management/commands/test.py), it's a minor modification witch delete the `TEST_DIR` located in the `.cache` folder (by default at the root of the project).
 
 The `TEST_DIR` folder contain test datas and can be deleted safely after running a test. You can also delete it manually using the `deltestdir` command.
 

@@ -2,7 +2,7 @@
 
 ## Setup
 
-For a complete setup guide go to [docs/setup.md](https://github.com/dhost-project/dhost/blob/master/docs/setup.md) or use Docker:
+For a complete setup guide go to [docs/setup.md](./docs/setup.md) or use Docker:
 
 ```
 docker build . -t 'api' -f Dockerfile_dev
@@ -18,8 +18,8 @@ Login with `admin` `admin` to make requests.
 
 ## Contributing
 
-To start contributing please refer to the [CONTRIBUTING.md](https://github.com/dhost-project/dhost/blob/master/CONTRIBUTING.md) doc.
+To start contributing please refer to the [CONTRIBUTING.md](./CONTRIBUTING.md) doc.
 
 ## License
 
-The project is licensed under the [MIT License](https://github.com/dhost-project/dhost/blob/master/LICENSE).
+The project is licensed under the [MIT License](./LICENSE).

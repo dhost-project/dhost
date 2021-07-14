@@ -2,7 +2,7 @@
 
 ## OpenAPI Schema
 
-An OpenAPI Schema is available in the doc at [docs/openapi-schema.yml](https://github.com/dhost-project/dhost/blob/master/docs/openapi-schema.yml). You can view it in your browser with the [Swagger Editor](https://editor.swagger.io/).
+An OpenAPI Schema is available in the doc at [openapi-schema.yml](./openapi-schema.yml). You can view it in your browser with the [Swagger Editor](https://editor.swagger.io/).
 
 The [localhost:8000/api/openapi](http://localhost:8000/api/openapi) page send the schema, it can be viewed with [Redoc](https://github.com/Redocly/redoc) at [localhost:8000/api/doc/](http://localhost:8000/api/doc/).
 

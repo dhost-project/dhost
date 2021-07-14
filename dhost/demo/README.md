@@ -2,7 +2,7 @@
 
 For demo or dev purposes a fixture is available, it will load data into the database.
 
-The demo fixture is located in [dhost/demo/fixture.json](fixture.json).
+The demo fixture is located in [dhost/demo/fixture.json](./fixture.json).
 
 ## Load fixture
 
