@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import status, viewsets
+from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -21,11 +21,8 @@ class BuildOptionsViewSet(DappViewMixin, viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     def build(self, request, pk=None, dapp_slug=None):
         build_options = self.get_object()
-        is_success, _ = build_options.build()
-        if is_success:
-            return Response({'status': 'build started.'})
-        else:
-            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        build_options.build()
+        return Response({'status': 'build started.'})
 
 
 class BuildViewMixin(DappViewMixin):
