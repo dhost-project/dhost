@@ -146,7 +146,7 @@ class Build(models.Model):
         )
 
     def end_build(self, bundle_path, is_success=False, logs=None, error=None):
-        """Callback function for the end of build process."""
+        """End of build process."""
         self.is_success = is_success
         self.logs = logs
         self.end = timezone.now()

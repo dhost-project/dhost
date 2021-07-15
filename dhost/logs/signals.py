@@ -4,9 +4,10 @@ from django.dispatch import receiver
 
 from dhost.builds.models import (Build, BuildOptions, EnvVar, build_fail,
                                  build_success, post_build_start)
-from dhost.dapps.models import Bundle, Dapp
+from dhost.dapps.models import (Bundle, Dapp, deploy_fail, deploy_success,
+                                post_deploy_start)
 from dhost.github.models import GithubOptions
-from dhost.ipfs.models import IPFSDapp
+from dhost.ipfs.models import IPFSDapp, IPFSDeployment
 
 from .models import ActionFlags, APILog
 
@@ -25,14 +26,18 @@ def log_with_user(instance, action_flag, dapp):
     log_action(instance=instance, action_flag=action_flag, dapp=dapp, user=user)
 
 
-@receiver(post_save, sender=Dapp)
 @receiver(post_save, sender=IPFSDapp)
 def log_dapp_create_or_update(sender, instance, created, **kwargs):
     if created:
         action_flag = ActionFlags.DAPP_ADDITION
     else:
         action_flag = ActionFlags.DAPP_CHANGE
-    log_with_user(instance=instance, action_flag=action_flag, dapp=instance)
+
+    # we can't just use 'instance' because it's not a 'Dapp' models instance
+    # rather a child object
+    dapp = Dapp.objects.get(pk=instance.dapp_ptr_id)
+
+    log_with_user(instance=instance, action_flag=action_flag, dapp=dapp)
 
 
 @receiver(post_save, sender=Bundle)
@@ -105,9 +110,13 @@ def log_github_options_delete(sender, instance, **kwargs):
 
 
 @receiver(post_build_start, sender=BuildOptions)
-def log_build_start(sender, instance, **kwargs):
+def log_build_start(sender, instance, auto=False, **kwargs):
+    if auto:
+        action_flag = ActionFlags.AUTO_BUILD_START
+    else:
+        action_flag = ActionFlags.BUILD_START
     log_with_user(instance=instance,
-                  action_flag=ActionFlags.BUILD_START,
+                  action_flag=action_flag,
                   dapp=instance.buildoptions.dapp)
 
 
@@ -123,3 +132,28 @@ def log_build_fail(sender, instance, **kwargs):
     log_with_user(instance=instance,
                   action_flag=ActionFlags.BUILD_FAIL,
                   dapp=instance.buildoptions.dapp)
+
+
+@receiver(post_deploy_start, sender=IPFSDeployment)
+def log_deploy_start(sender, instance, auto=False, **kwargs):
+    if auto:
+        action_flag = ActionFlags.AUTO_DEPLOY_START
+    else:
+        action_flag = ActionFlags.DEPLOY_START
+    log_with_user(instance=instance,
+                  action_flag=action_flag,
+                  dapp=instance.dapp)
+
+
+@receiver(deploy_success, sender=IPFSDeployment)
+def log_deploy_success(sender, instance, **kwargs):
+    log_with_user(instance=instance,
+                  action_flag=ActionFlags.DEPLOY_SUCCESS,
+                  dapp=instance.dapp)
+
+
+@receiver(deploy_fail, sender=IPFSDeployment)
+def log_deploy_fail(sender, instance, **kwargs):
+    log_with_user(instance=instance,
+                  action_flag=ActionFlags.DEPLOY_FAIL,
+                  dapp=instance.dapp)

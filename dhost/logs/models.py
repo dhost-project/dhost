@@ -17,11 +17,11 @@ def get_obj_model(obj):
 class APILogManager(models.Manager):
 
     def log_action(self, obj, dapp, action_flag, user=None):
-        return APILog.objects.create(user=user,
-                                     content_type=get_obj_model(obj),
-                                     object_id=obj.pk,
-                                     action_flag=action_flag,
-                                     dapp=dapp)
+        return self.create(user=user,
+                           content_type=get_obj_model(obj),
+                           object_id=obj.pk,
+                           action_flag=action_flag,
+                           dapp=dapp)
 
 
 class ActionFlags(models.TextChoices):
@@ -80,8 +80,8 @@ class APILog(models.Model):
     objects = APILogManager()
 
     class Meta:
-        verbose_name = _('API log entry')
-        verbose_name_plural = _('API log entries')
+        verbose_name = _('Dapp log entry')
+        verbose_name_plural = _('Dapp log entries')
         ordering = ['-action_time']
 
     def __str__(self):
