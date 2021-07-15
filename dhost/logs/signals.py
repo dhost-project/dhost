@@ -2,7 +2,8 @@ from crum import get_current_user
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 
-from dhost.builds.models import BuildOptions, EnvVar
+from dhost.builds.models import (Build, BuildOptions, EnvVar, build_fail,
+                                 build_success, post_build_start)
 from dhost.dapps.models import Bundle, Dapp
 from dhost.github.models import GithubOptions
 from dhost.ipfs.models import IPFSDapp
@@ -101,3 +102,24 @@ def log_github_options_delete(sender, instance, **kwargs):
     log_with_user(instance=instance,
                   action_flag=ActionFlags.GITHUB_OPTIONS_DELETION,
                   dapp=instance.dapp)
+
+
+@receiver(post_build_start, sender=BuildOptions)
+def log_build_start(sender, instance, **kwargs):
+    log_with_user(instance=instance,
+                  action_flag=ActionFlags.BUILD_START,
+                  dapp=instance.buildoptions.dapp)
+
+
+@receiver(build_success, sender=Build)
+def log_build_success(sender, instance, **kwargs):
+    log_with_user(instance=instance,
+                  action_flag=ActionFlags.BUILD_SUCCESS,
+                  dapp=instance.buildoptions.dapp)
+
+
+@receiver(build_fail, sender=Build)
+def log_build_fail(sender, instance, **kwargs):
+    log_with_user(instance=instance,
+                  action_flag=ActionFlags.BUILD_FAIL,
+                  dapp=instance.buildoptions.dapp)
