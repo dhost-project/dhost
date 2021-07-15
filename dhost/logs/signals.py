@@ -1,4 +1,3 @@
-from crum import get_current_user
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 
@@ -9,21 +8,8 @@ from dhost.dapps.models import (Bundle, Dapp, deploy_fail, deploy_success,
 from dhost.github.models import GithubOptions
 from dhost.ipfs.models import IPFSDapp, IPFSDeployment
 
-from .models import ActionFlags, APILog
-
-
-def log_action(instance, action_flag, dapp, user=None):
-    """Log an action on a dapp."""
-    APILog.objects.log_action(user=user,
-                              obj=instance,
-                              action_flag=action_flag,
-                              dapp=dapp)
-
-
-def log_with_user(instance, action_flag, dapp):
-    """Log with the current user."""
-    user = get_current_user()
-    log_action(instance=instance, action_flag=action_flag, dapp=dapp, user=user)
+from .models import ActionFlags
+from .utils import log_with_user
 
 
 @receiver(post_save, sender=IPFSDapp)
