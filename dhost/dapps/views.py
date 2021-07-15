@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import status, viewsets
+from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -23,11 +23,8 @@ class DappViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     def deploy(self, request, slug=None):
         dapp = self.get_object()
-        is_success = dapp.deploy()
-        if is_success:
-            return Response({'status': 'deployment successfull'})
-        else:
-            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        dapp.deploy()
+        return Response({'status': 'deployment started.'})
 
 
 class DappReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):

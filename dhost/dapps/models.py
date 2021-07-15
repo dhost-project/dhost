@@ -1,12 +1,18 @@
 import os
 import uuid
 
+import django.dispatch
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from .utils import get_dapp_type
+
+pre_deploy_start = django.dispatch.Signal()
+post_deploy_start = django.dispatch.Signal()
+deploy_success = django.dispatch.Signal()
+deploy_fail = django.dispatch.Signal()
 
 
 def bundle_path():
@@ -63,6 +69,8 @@ class Dapp(models.Model):
 
     created_at = models.DateTimeField(_('created at'), default=timezone.now)
 
+    deployment_class = None
+
     class Meta:
         verbose_name = _('dapp')
         verbose_name_plural = _('dapps')
@@ -70,7 +78,7 @@ class Dapp(models.Model):
     def __str__(self):
         return self.slug
 
-    def deploy(self, bundle=None):
+    def deploy(self, bundle=None, **kwargs):
         """Deploy the dapp.
 
         Create an `IPFSDeployment` object and start the deployment process
@@ -79,10 +87,10 @@ class Dapp(models.Model):
         if bundle is None and len(self.bundles.all()) > 0:
             bundle = self.bundles.all()[0]
 
-        deployment = self.create_deployment(bundle)
-        deployment.save()
-        is_success = deployment.deploy()
-        return is_success
+        deployment = self.deployment_class.objects.create(dapp=self,
+                                                          bundle=bundle,
+                                                          **kwargs)
+        deployment.start_deploy()
 
     def create_deployment(self, bundle=None):
         """Return a specific application deployment instance."""
@@ -101,8 +109,6 @@ class Bundle(models.Model):
         on_delete=models.CASCADE,
         related_name='bundles',
         related_query_name='bundles',
-        null=True,
-        blank=True,
     )
     folder = models.FilePathField(
         _('folder'),
@@ -168,5 +174,16 @@ class Deployment(models.Model):
     def __str__(self):
         return 'dplmt:{}'.format(self.id.hex[:7])
 
+    def start_deploy(self):
+        pre_deploy_start.send(sender=self.__class__, instance=self)
+        self.deploy()
+        post_deploy_start.send(sender=self.__class__, instance=self)
+
     def deploy(self):
         raise NotImplementedError
+
+    def end_deploy(self, is_success=False):
+        if is_success:
+            deploy_success.send(sender=self.__class__, instance=self)
+        else:
+            deploy_fail.send(sender=self.__class__, instance=self)
