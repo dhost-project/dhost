@@ -1,9 +1,7 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import status, viewsets
+from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-
-from dhost.logs.views_mixins import APILogViewSetMixin
 
 from .models import Bundle, Dapp, Deployment
 from .permissions import DappPermission
@@ -11,7 +9,7 @@ from .serializers import (BundleSerializer, DappReadOnlySerializer,
                           DappSerializer, DeploymentSerializer)
 
 
-class DappViewSet(APILogViewSetMixin, viewsets.ModelViewSet):
+class DappViewSet(viewsets.ModelViewSet):
     queryset = Dapp.objects.all()
     serializer_class = DappSerializer
     permission_classes = [DappPermission]
@@ -25,11 +23,8 @@ class DappViewSet(APILogViewSetMixin, viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     def deploy(self, request, slug=None):
         dapp = self.get_object()
-        is_success = dapp.deploy()
-        if is_success:
-            return Response({'status': 'deployment successfull'})
-        else:
-            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        dapp.deploy()
+        return Response({'status': 'deployment started.'})
 
 
 class DappReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):

@@ -1,6 +1,7 @@
 import os
 import uuid
 
+import django.dispatch
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
@@ -8,7 +9,12 @@ from django.utils.translation import gettext_lazy as _
 
 from dhost.dapps.models import Bundle, Dapp
 
-from .build_service import BuildService
+from .build_service import start_build_service
+
+pre_build_start = django.dispatch.Signal()
+post_build_start = django.dispatch.Signal()
+build_success = django.dispatch.Signal()
+build_fail = django.dispatch.Signal()
 
 
 def source_path():
@@ -56,10 +62,11 @@ class BuildOptions(models.Model):
         From the source in the Docker container specified in `docker_container`
         and with the command.
         """
-        build = Build(options=self, source_path=self.source)
-        build.save()
-        is_success, bundle = build.build()
-        return is_success, bundle
+        build = Build.objects.create(buildoptions=self, source_path=self.source)
+        pre_build_start.send(sender=self.__class__, instance=build)
+        build.start_build()
+        post_build_start.send(sender=self.__class__, instance=build)
+        return build
 
 
 class Build(models.Model):
@@ -117,51 +124,40 @@ class Build(models.Model):
     def __str__(self):
         return 'build:{}'.format(self.id.hex[:7])
 
-    def build(self):
+    def start_build(self):
         """Start the build process.
 
         When it's done and if the build succeed, create a `Bundle` object
         containing the static files generated during the build process.
-
-        Returns:
-            bool: success status, True if succeed
-            Bundle: if succeed then the Bundle object is created
         """
-        bundle_path_var = self.start_build()
-        if self.is_success:
-            bundle = Bundle.objects.create(
-                options=self.options,
-                folder=bundle_path_var,
-            )
-            bundle.save()
-            self.bundle = bundle
-            self.save()
-        return self.is_success, self.bundle
-
-    def start_build(self):
-        container = self.options.docker
-        source_path = self.source_path
-        command = self.options.command
         self.start = timezone.now()
+        self.save()
 
         # Generate dict of the environment variables
         envvars = {}
-        for var_object in self.options.envvars.all():
+        for var_object in self.buildoptions.envvars.all():
             envvars[var_object.variable] = var_object.value
 
-        build_service = BuildService(
-            container=container,
-            source_path=source_path,
-            command=command,
+        start_build_service(
+            container=self.buildoptions.docker,
+            source_path=self.source_path,
+            command=self.buildoptions.command,
             envvars=envvars,
         )
-        return build_service.build()
 
-    def stop_build(self, is_success=False, logs=None):
+    def end_build(self, bundle_path, is_success=False, logs=None, error=None):
+        """End of build process."""
         self.is_success = is_success
         self.logs = logs
         self.end = timezone.now()
         self.save()
+
+        if is_success:
+            Bundle.objects.create(dapp=self.buildoptions.dapp,
+                                  folder=bundle_path)
+            build_success.send(sender=self.__class__, instance=self)
+        else:
+            build_fail.send(sender=self.__class__, instance=self, error=error)
 
 
 class EnvVar(models.Model):

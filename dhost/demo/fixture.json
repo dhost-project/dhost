@@ -1678,6 +1678,19 @@
     }
   },
   {
+    "model": "logs.apilog",
+    "pk": "03125ae8-ff08-4618-8678-a6fe7b2323fd",
+    "fields": {
+      "user": "19bf9882-7033-456d-995b-66c2b88bec35",
+      "dapp": "dhost",
+      "content_type": 17,
+      "object_id": "dhost",
+      "action_flag": "dapp_add",
+      "change_message": "",
+      "action_time": "2021-07-15T12:19:57.995Z"
+    }
+  },
+  {
     "model": "users.user",
     "pk": "19bf9882-7033-456d-995b-66c2b88bec35",
     "fields": {

@@ -7,3 +7,6 @@ class LogsConfig(AppConfig):
     name = 'dhost.logs'
     app_label = 'logs'
     verbose_name = _('API logs')
+
+    def ready(self):
+        import dhost.logs.signals  # noqa

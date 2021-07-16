@@ -4,9 +4,24 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils import timezone
+from django.utils.timesince import timesince
 from django.utils.translation import gettext_lazy as _
 
 from dhost.dapps.models import Dapp
+
+
+def get_obj_model(obj):
+    return ContentType.objects.get_for_model(obj)
+
+
+class APILogManager(models.Manager):
+
+    def log_action(self, obj, dapp, action_flag, user=None):
+        return self.create(user=user,
+                           content_type=get_obj_model(obj),
+                           object_id=obj.pk,
+                           action_flag=action_flag,
+                           dapp=dapp)
 
 
 class ActionFlags(models.TextChoices):
@@ -36,7 +51,12 @@ class ActionFlags(models.TextChoices):
 
 class APILog(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
     dapp = models.ForeignKey(
         Dapp,
         on_delete=models.CASCADE,
@@ -57,11 +77,21 @@ class APILog(models.Model):
     )
     change_message = models.TextField(blank=True)
     action_time = models.DateTimeField(default=timezone.now, editable=False)
+    objects = APILogManager()
 
     class Meta:
-        verbose_name = _('API log entry')
-        verbose_name_plural = _('API log entries')
+        verbose_name = _('Dapp log entry')
+        verbose_name_plural = _('Dapp log entries')
         ordering = ['-action_time']
 
     def __str__(self):
-        return self.change_message
+        data = {
+            'user': self.user,
+            'dapp': self.dapp,
+            'action_flag': self.action_flag,
+            'timesince': self.timesince(),
+        }
+        return '{user} {dapp} {action_flag} {timesince} ago'.format(**data)
+
+    def timesince(self, now=None):
+        return timesince(self.action_time, now)

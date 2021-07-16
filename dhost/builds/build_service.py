@@ -18,7 +18,7 @@ class BuildService:
 
         print('Initialized Build')
 
-    def build(self):
+    def start_build(self):
         """Start the process."""
         print('Building source: {}, in container: {}, with command:`{}`'.format(
             str(self.source_path), str(self.container), str(self.command)))
@@ -47,3 +47,8 @@ class BuildService:
 
     def retrieve_bundle(self):
         pass
+
+
+def start_build_service(**kwargs):
+    build_service = BuildService(**kwargs)
+    build_service.start_build()
