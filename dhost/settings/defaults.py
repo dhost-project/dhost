@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'dhost.builds',
     'dhost.core',
     'dhost.dapps',
+    'dhost.frontend',
     'dhost.github',
     'dhost.ipfs',
     'dhost.logs',
@@ -80,7 +81,7 @@ ROOT_URLCONF = 'dhost.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'frontend', 'build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -140,13 +141,13 @@ LANGUAGES = [
     ('fr', 'Français'),
 ]
 
-STATIC_URL = env('STATIC_URL', '/static/')
+STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(ROOT_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-MEDIA_URL = env('MEDIA_URL', '/media/')
+MEDIA_URL = '/media/'
 
 MEDIA_ROOT = env('MEDIA_ROOT', os.path.join(ROOT_DIR, 'media'))
 

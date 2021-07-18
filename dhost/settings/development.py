@@ -12,3 +12,5 @@ CORS_ALLOW_ALL_ORIGINS = True
 # 403 anyway because the authentication will not be via the oauth provider
 REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'].append(  # noqa
     'rest_framework.authentication.SessionAuthentication')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
+    path('', include('dhost.frontend.urls')),
     path('admin/', admin.site.urls),
     path('api/', include('dhost.api.urls')),
     path('oauth2/', include('dhost.oauth2.urls', namespace='oauth2_provider')),

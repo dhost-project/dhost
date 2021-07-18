@@ -181,8 +181,7 @@ class GithubAPITestCase(TestCase):
                              path=os.path.join(TMP_PATH, 'repos'))
         self.assertTrue(os.path.exists(TMP_PATH + '/repos/Hello-World.tar'))
         mock_get.assert_called_once_with(
-            '/repos/octocat/Hello-World/tarball/master',
-            allow_redirects=True)
+            '/repos/octocat/Hello-World/tarball/master', allow_redirects=True)
 
     @mock.patch('dhost.github.github_api.GithubAPI.get')
     def test_download_repo_with_archive_name(self, mock_get):
@@ -215,14 +214,14 @@ class GithubAPITestCase(TestCase):
         self.g.create_hook(owner='octocat',
                            repo='Hello-World',
                            webhook_url='webhook_test_url')
-        mock.assert_called_once_with(
-            '/repos/octocat/Hello-World/hooks', data={
-                'name': 'web',
-                'config': {
-                    'url': 'webhook_test_url',
-                    'insecure_ssl': False,
-                },
-            })
+        mock.assert_called_once_with('/repos/octocat/Hello-World/hooks',
+                                     data={
+                                         'name': 'web',
+                                         'config': {
+                                             'url': 'webhook_test_url',
+                                             'insecure_ssl': False,
+                                         },
+                                     })
 
     @mock.patch('dhost.github.github_api.GithubAPI.patch')
     def test_update_hook(self, mock):

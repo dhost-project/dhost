@@ -21,7 +21,7 @@ class GithubAPI:
     GITHUB_API_URL = 'https://api.github.com'
     GITHUB_TOKEN_TYPE = 'token'
 
-    def __init__(self, token: str, fail_silently: bool=False):
+    def __init__(self, token: str, fail_silently: bool = False):
         # Github API token used to make requests
         self.token = token
         self.fail_silently = fail_silently
@@ -89,8 +89,7 @@ class GithubAPI:
         return r
 
     def head(self, url, headers=None, code=200, **kwargs):
-        r = self.get(url=url, headers=headers, code=code,
-                      **kwargs)
+        r = self.get(url=url, headers=headers, code=code, **kwargs)
         return r.headers
 
     def get_scopes(self, username):

@@ -127,6 +127,9 @@ dmypy.json
 # VSCode
 /.vscode
 
+node_modules/
+dhost/static/
+
 staticfiles
 db.sqlite3
 media
