@@ -115,14 +115,12 @@ class BranchManager(models.Manager):
             branch_list (list): a list of branches returned by the Github API.
             repo (Repository): a repo object.
         """
-        # Create a list of branches name gathered during the Github API call
+        # create a list of branches name gathered during the Github API call
         branch_name_list = [r['name'] for r in branch_list]
 
-        # Get all the repo's branches
         branch_obj_list = repo.branches.all()
-
         for branch_obj in branch_obj_list:
-            # If the branch object is not present in the `branch_name_list`
+            # if the branch object is not present in the `branch_name_list`
             # it's not available anymore and thus the branch should be deleted
             if branch_obj.name not in branch_name_list:
                 self.remove_unavailable(branch_obj)
@@ -151,12 +149,27 @@ class BranchManager(models.Manager):
 
 class WebhookManager(models.Manager):
 
-    def create_webhook(self, repo, user, name='web'):
+    def create_webhook(self, repo, user, name='web', active=True):
+        """Create a Github Webhook on Django and Github.
+
+        Args:
+            repo (Repository): repo object on wich to create the webhook.
+            user (User): user who will make the Github API call.
+            name (str): the name of the webhook.
+            active (bool): if the webhook is active.
+
+        Returns:
+            Webhook: the newly created webhook object.
+        """
+        webhook = self.create(repo=repo, name=name)
+        webhook_url = webhook.get_reverse_payload_url()
         g = DjangoGithubAPI(user=user)
         webhook_json = g.create_hook(owner=repo.github_owner,
                                      repo=repo.github_repo,
-                                     name=name)
-        return self.create_from_json(repo=repo, webhook_json=webhook_json)
+                                     name=name,
+                                     webhook_url=webhook_url,
+                                     active=active)
+        return webhook
 
     def create_from_json(self, webhook_json, repo):
         data = self.serialize(webhook_json)

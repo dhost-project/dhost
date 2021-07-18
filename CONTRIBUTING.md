@@ -4,7 +4,10 @@
 
 To setup your dev env check the [docs/dev.md](./docs/dev.md).
 
-## Coding style
+## Style guide
+
+* Single quotes are preffered (`'`), and double quotes for doc strings (`"""`).
+* Use f-string format (`'{}'.format()` or `f'{}'`) instead of the %-format (`'%s' % ()`).
 
 Some of the following tools are configured inside [setup.cfg](./setup.cfg).
 

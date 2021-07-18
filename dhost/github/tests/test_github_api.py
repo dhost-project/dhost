@@ -69,17 +69,6 @@ class GithubAPITestCase(TestCase):
         self.assertEqual('https://api.github.com/test (404) test content',
                          str(context.exception))
 
-    @mock.patch('requests.get')
-    def test_get_no_json(self, mock_get):
-        mock_get.return_value = mock.Mock(status_code=200)
-        self.g.get('/test', json=False)
-        mock_get.assert_called_once_with(
-            'https://api.github.com/test',
-            headers={
-                'Accept': 'application/vnd.github.v3+json',
-                'Authorization': 'token github_token'
-            })
-
     @mock.patch('requests.post')
     def test_post(self, mock_post):
         mock_post.return_value = mock.Mock(status_code=201, json=lambda: {})
@@ -193,7 +182,6 @@ class GithubAPITestCase(TestCase):
         self.assertTrue(os.path.exists(TMP_PATH + '/repos/Hello-World.tar'))
         mock_get.assert_called_once_with(
             '/repos/octocat/Hello-World/tarball/master',
-            json=False,
             allow_redirects=True)
 
     @mock.patch('dhost.github.github_api.GithubAPI.get')
@@ -228,7 +216,7 @@ class GithubAPITestCase(TestCase):
                            repo='Hello-World',
                            webhook_url='webhook_test_url')
         mock.assert_called_once_with(
-            '/repos/octocat/Hello-World/hooks', {
+            '/repos/octocat/Hello-World/hooks', data={
                 'name': 'web',
                 'config': {
                     'url': 'webhook_test_url',

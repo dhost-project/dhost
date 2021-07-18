@@ -16,14 +16,15 @@ class GithubAPIError(Exception):
 
 
 class GithubAPI:
-    """A github REST API wrapper."""
+    """A Github REST API wrapper."""
 
     GITHUB_API_URL = 'https://api.github.com'
     GITHUB_TOKEN_TYPE = 'token'
 
-    def __init__(self, token: str):
+    def __init__(self, token: str, fail_silently: bool=False):
         # Github API token used to make requests
         self.token = token
+        self.fail_silently = fail_silently
 
     def get_token(self):
         return self.token
@@ -47,51 +48,50 @@ class GithubAPI:
 
     def _request_error(self, response, url):
         """Raise an exception if a status code was not expected."""
-        import json
+        if not self.fail_silently:
+            import json
 
-        try:
-            # try to get a message from the response if it exist
-            response_json = response.json()
-            if 'message' in response_json:
-                content = response_json['message']
-        except json.decoder.JSONDecodeError:
-            content = response.content
-        raise GithubAPIError(f'{url} ({response.status_code}) {content}')
+            try:
+                # try to get a message from the response if it exist
+                response_json = response.json()
+                if 'message' in response_json:
+                    content = response_json['message']
+            except json.decoder.JSONDecodeError:
+                content = response.content
+            raise GithubAPIError(f'{url} ({response.status_code}) {content}')
 
-    def get(self, url, headers=None, code=200, json=True, *args, **kwargs):
+    def get(self, url, headers=None, code=200, **kwargs):
         url, headers = self._prepare_request(url, headers)
-        r = requests.get(url, headers=headers, *args, **kwargs)
-        if r.status_code == code:
-            if json:
-                return r.json()
-            else:
-                return r
-        self._request_error(response=r, url=url)
+        r = requests.get(url, headers=headers, **kwargs)
+        if r.status_code != code:
+            self._request_error(response=r, url=url)
+        return r
 
-    def post(self, url, data, headers=None, *args, **kwargs):
+    def post(self, url, data, headers=None, code=201, **kwargs):
         url, headers = self._prepare_request(url, headers)
-        r = requests.post(url, headers=headers, data=data, *args, **kwargs)
-        if r.status_code == 201:
-            return r.json()
-        self._request_error(response=r, url=url)
+        r = requests.post(url, headers=headers, data=data, **kwargs)
+        if r.status_code != code:
+            self._request_error(response=r, url=url)
+        return r
 
-    def patch(self, url, data, headers=None, *args, **kwargs):
+    def patch(self, url, data, headers=None, code=200, **kwargs):
         url, headers = self._prepare_request(url, headers)
-        r = requests.patch(url, headers=headers, data=data, *args, **kwargs)
-        if r.status_code == 200:
-            return r.json()
-        self._request_error(response=r, url=url)
+        r = requests.patch(url, headers=headers, data=data, **kwargs)
+        if r.status_code != code:
+            self._request_error(response=r, url=url)
+        return r
 
-    def head(self, url, headers=None, *args, **kwargs):
-        r = self.get(url=url, headers=headers, json=False, *args, **kwargs)
+    def delete(self, url, headers=None, code=204, **kwargs):
+        url, headers = self._prepare_request(url, headers)
+        r = requests.delete(url, headers=headers, **kwargs)
+        if r.status_code != code:
+            self._request_error(response=r, url=url)
+        return r
+
+    def head(self, url, headers=None, code=200, **kwargs):
+        r = self.get(url=url, headers=headers, code=code,
+                      **kwargs)
         return r.headers
-
-    def delete(self, url, headers=None, *args, **kwargs):
-        url, headers = self._prepare_request(url, headers)
-        r = requests.delete(url, headers=headers, *args, **kwargs)
-        if r.status_code == 204:
-            return r.json()
-        self._request_error(response=r, url=url)
 
     def get_scopes(self, username):
         """Return oauth scopes."""
@@ -100,23 +100,22 @@ class GithubAPI:
         return scopes
 
     def get_user(self, username):
-        return self.get(f'/users/{username}')
+        return self.get(f'/users/{username}').json()
 
     def list_repos(self):
         """Return a list of accessible repositories from the current token."""
-        return self.get('/user/repos')
+        return self.get('/user/repos').json()
 
     def get_repo(self, owner, repo):
         """Return a single repository."""
-        return self.get(f'/repos/{owner}/{repo}')
+        return self.get(f'/repos/{owner}/{repo}').json()
 
     def list_branches(self, owner, repo):
-        return self.get(f'/repos/{owner}/{repo}/branches')
+        return self.get(f'/repos/{owner}/{repo}/branches').json()
 
     def download_repo(self, owner, repo, ref, path, archive_name=None):
         """Download a repository archive."""
         r = self.get(f'/repos/{owner}/{repo}/tarball/{ref}',
-                     json=False,
                      allow_redirects=True)
 
         archive_name = repo if archive_name is None else archive_name
@@ -136,13 +135,13 @@ class GithubAPI:
         return tar_path
 
     def list_hooks(self, owner, repo):
-        return self.get(f'/repos/{owner}/{repo}/hooks')
+        return self.get(f'/repos/{owner}/{repo}/hooks').json()
 
     def get_hook(self, owner, repo, hook_id):
-        return self.get(f'/repos/{owner}/{repo}/hooks/{hook_id}')
+        return self.get(f'/repos/{owner}/{repo}/hooks/{hook_id}').json()
 
     def get_hook_config(self, owner, repo, hook_id):
-        return self.get(f'/repos/{owner}/{repo}/hooks/{hook_id}/config')
+        return self.get(f'/repos/{owner}/{repo}/hooks/{hook_id}/config').json()
 
     def create_hook(self, owner, repo, webhook_url, active=True, name='web'):
         """Create a Github repository webhook."""
@@ -153,20 +152,21 @@ class GithubAPI:
                 'insecure_ssl': False,
             },
         }
-        return self.post(f'/repos/{owner}/{repo}/hooks', data)
+        return self.post(f'/repos/{owner}/{repo}/hooks', data=data).json()
 
     def update_hook(self, owner, repo, hook_id, data):
-        return self.patch(f'/repos/{owner}/{repo}/hooks/{hook_id}', data)
+        return self.patch(f'/repos/{owner}/{repo}/hooks/{hook_id}', data).json()
 
     def update_hook_config(self, owner, repo, hook_id, data):
-        return self.patch(f'/repos/{owner}/{repo}/hooks/{hook_id}/config', data)
+        return self.patch(f'/repos/{owner}/{repo}/hooks/{hook_id}/config',
+                          data).json()
 
     def delete_hook(self, owner, repo, hook_id):
-        return self.delete(f'/repos/{owner}/{repo}/hooks/{hook_id}')
+        return self.delete(f'/repos/{owner}/{repo}/hooks/{hook_id}').json()
 
     def ping_hook(self, owner, repo, hook_id):
         return self.get(f'/repos/{owner}/{repo}/hooks/{hook_id}/pings',
-                        code=204)
+                        code=204).json()
 
 
 class DjangoGithubAPI(GithubAPI):

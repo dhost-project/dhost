@@ -1,6 +1,7 @@
 import os
 
 from django.conf import settings
+from django.urls import reverse
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -170,6 +171,9 @@ class Webhook(models.Model):
         `auto_deploy` turned on.
         """
         pass
+
+    def get_reverse_payload_url(self):
+        return reverse('api:github_webhook-payload', args={'pk': self.pk})
 
 
 class GithubOptions(models.Model):
