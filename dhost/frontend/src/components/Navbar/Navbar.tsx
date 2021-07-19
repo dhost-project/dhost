@@ -1,10 +1,7 @@
 import './style.scss'
 
 function Navbar(): React.ReactElement {
-  return (
-    <nav>
-    </nav>
-  )
+  return <nav></nav>
 }
 
 export default Navbar

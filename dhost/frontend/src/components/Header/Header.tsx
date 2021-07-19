@@ -1,7 +1,7 @@
 import './style.scss'
 
 function Header(): React.ReactElement {
-  return <header>Header</header>
+  return <header></header>
 }
 
 export default Header
