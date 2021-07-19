@@ -1,5 +1,17 @@
 # Contributing to DHost dashboard
 
-## Packages
+## Setup
 
-When installing a package that will be bundled into your production bundle, you should use `npm install --save`. If you're installing a package for development purposes (e.g. a linter, testing libraries) then you should use `npm install --save-dev`.
+```bash
+yarn install
+```
+
+```bash
+yarn start
+```
+
+To bundle the app and serve it with Django run `build`, this will create a `build` folder containing the index file and all the static resources.
+
+```bash
+yarn build
+```
