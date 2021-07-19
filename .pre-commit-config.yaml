@@ -9,7 +9,6 @@ repos:
       - id: check-yaml
       - id: trailing-whitespace
       - id: requirements-txt-fixer
-      - id: pretty-format-json
         args: ['--autofix', '--no-sort-keys']
 
   - repo: https://github.com/PyCQA/isort
