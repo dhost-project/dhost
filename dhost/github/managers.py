@@ -169,6 +169,7 @@ class WebhookManager(models.Manager):
                                      name=name,
                                      webhook_url=webhook_url,
                                      active=active)
+        webhook.update_from_json(webhook_json)
         return webhook
 
     def create_from_json(self, webhook_json, repo):

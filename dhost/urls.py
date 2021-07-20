@@ -1,9 +1,8 @@
 from django.conf import settings
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 
 urlpatterns = [
-    path('', include('dhost.frontend.urls')),
     path('admin/', admin.site.urls),
     path('api/', include('dhost.api.urls')),
     path('oauth2/', include('dhost.oauth2.urls', namespace='oauth2_provider')),
@@ -16,29 +15,13 @@ admin.site.site_title = 'dhost'
 
 if settings.SETTINGS_MODULE == 'dhost.settings.development':  # pragma: no cover
     from django.conf.urls.static import static
-    from django.views import defaults as default_views
 
-    urlpatterns += [
-        path(
-            'api-auth/',
-            include('rest_framework.urls', namespace='rest_framework'),
-        ),
-        path(
-            "400/",
-            default_views.bad_request,
-            kwargs={"exception": Exception("Bad Request!")},
-        ),
-        path(
-            "403/",
-            default_views.permission_denied,
-            kwargs={"exception": Exception("Permission Denied")},
-        ),
-        path(
-            "404/",
-            default_views.page_not_found,
-            kwargs={"exception": Exception("Page not Found")},
-        ),
-        path("500/", default_views.server_error),
-    ]
+    urlpatterns.append(
+        path('api-auth/',
+             include('rest_framework.urls', namespace='rest_framework')))
 
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# added last to redirect any URL not previously handled by Django to the react
+# dashboard wich will route the URL itself in the browser
+urlpatterns += [re_path('.*', include('dhost.frontend.urls'))]
