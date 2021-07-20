@@ -1,19 +1,12 @@
-import { RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import './styles.scss'
 
-type TParams = { slug: string }
-
-function DappReadOnlyList({
-  match,
-}: RouteComponentProps<TParams>): React.ReactElement {
+function DappReadOnlyList(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
     <div>
-      <h2>
-        {t('DAPP_LIST_TITLE')} {match.params.slug}
-      </h2>
+      <h2>{t('DAPP_READ_ONLY_LIST_TITLE')}</h2>
     </div>
   )
 }

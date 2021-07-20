@@ -2,7 +2,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import './styles.scss'
 
-type TParams = { slug: string }
+type TParams = { dapp_slug: string }
 
 function Logs({ match }: RouteComponentProps<TParams>): React.ReactElement {
   const { t } = useTranslation()
@@ -10,7 +10,7 @@ function Logs({ match }: RouteComponentProps<TParams>): React.ReactElement {
   return (
     <div>
       <h2>
-        {t('LOGS_TITLE')} {match.params.slug}
+        {t('LOGS_TITLE')} {match.params.dapp_slug}
       </h2>
     </div>
   )

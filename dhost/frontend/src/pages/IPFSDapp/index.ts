@@ -5,3 +5,4 @@ export {
   DappIndex as IPFSDappIndex,
   DappEdit as IPFSDappEdit,
 } from '../Dapp'
+export { default as IPFSDapp } from './IPFSDapp'

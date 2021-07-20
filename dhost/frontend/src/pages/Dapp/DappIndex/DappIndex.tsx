@@ -2,7 +2,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import './styles.scss'
 
-type TParams = { slug: string }
+type TParams = { dapp_slug: string }
 
 function Overview({ match }: RouteComponentProps<TParams>): React.ReactElement {
   const { t } = useTranslation()
@@ -10,7 +10,7 @@ function Overview({ match }: RouteComponentProps<TParams>): React.ReactElement {
   return (
     <div>
       <h2>
-        {t('OVERVIEW_TITLE')} {match.params.slug}
+        {t('DAPP_INDEX_TITLE')} {match.params.dapp_slug}
       </h2>
     </div>
   )
