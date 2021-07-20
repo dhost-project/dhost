@@ -16,8 +16,8 @@ function RouterOutlet(): React.ReactElement {
   return (
     <BrowserRouter>
       <Header />
-      <Dappbar />
       <Navbar />
+      <Dappbar />
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/about" exact component={About} />
