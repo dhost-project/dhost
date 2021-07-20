@@ -1,7 +1,5 @@
 import { useTranslation } from "react-i18next"
 
-import "./styles.scss"
-
 function About(): React.ReactElement {
   const { t } = useTranslation()
 

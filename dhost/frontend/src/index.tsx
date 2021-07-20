@@ -4,7 +4,7 @@ import ReactDOM from "react-dom"
 import { initReactI18next } from "react-i18next"
 
 import App from "./App"
-import "./index.css"
+import "./index.scss"
 import { en, fr } from "./locale/index"
 import reportWebVitals from "./reportWebVitals"
 

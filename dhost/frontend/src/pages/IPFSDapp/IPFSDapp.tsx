@@ -12,7 +12,6 @@ import {
   DappIndex as IPFSDappIndex,
   DappEdit as IPFSDappEdit,
 } from "../Dapp"
-import "./styles.scss"
 
 function IPFSDapp(): React.ReactElement {
   const { path } = useRouteMatch()

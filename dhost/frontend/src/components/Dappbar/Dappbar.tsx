@@ -1,8 +1,6 @@
 import Container from "react-bootstrap/Container"
 import Nav from "react-bootstrap/Nav"
 
-import "./style.scss"
-
 function Dappbar(): React.ReactElement {
   return (
     <div>
