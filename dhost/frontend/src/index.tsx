@@ -1,4 +1,3 @@
-import "bootstrap/dist/css/bootstrap.css"
 import i18n from "i18next"
 import { StrictMode } from "react"
 import ReactDOM from "react-dom"
