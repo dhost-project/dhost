@@ -9,7 +9,7 @@ import './index.css'
 import { en, fr } from './locale/index'
 import reportWebVitals from './reportWebVitals'
 
-i18n
+void i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     resources: {
