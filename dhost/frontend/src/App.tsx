@@ -1,4 +1,4 @@
-import RouterOutlet from './Router'
+import RouterOutlet from "./Router"
 
 function App(): React.ReactElement {
   return <RouterOutlet />

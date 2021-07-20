@@ -1,1 +1,1 @@
-export { default } from './DappReadOnlyList'
+export { default } from "./DappReadOnlyList"

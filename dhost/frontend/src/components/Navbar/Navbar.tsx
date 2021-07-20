@@ -1,4 +1,4 @@
-import './style.scss'
+import "./style.scss"
 
 function Navbar(): React.ReactElement {
   return <nav></nav>

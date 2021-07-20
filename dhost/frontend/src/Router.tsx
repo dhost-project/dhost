@@ -1,16 +1,16 @@
-import React from 'react'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import React from "react"
+import { BrowserRouter, Switch, Route } from "react-router-dom"
 
-import About from './pages/About'
-import { DappReadOnlyList } from './pages/Dapp'
-import Home from './pages/Home'
-import IPFSDapp from './pages/IPFSDapp'
-import NotFound from './pages/NotFound'
+import About from "./pages/About"
+import { DappReadOnlyList } from "./pages/Dapp"
+import Home from "./pages/Home"
+import IPFSDapp from "./pages/IPFSDapp"
+import NotFound from "./pages/NotFound"
 
-import Dappbar from './components/Dappbar'
-import Footer from './components/Footer'
-import Header from './components/Header'
-import Navbar from './components/Navbar'
+import Dappbar from "./components/Dappbar"
+import Footer from "./components/Footer"
+import Header from "./components/Header"
+import Navbar from "./components/Navbar"
 
 function RouterOutlet(): React.ReactElement {
   return (

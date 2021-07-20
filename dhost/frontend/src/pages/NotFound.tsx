@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from "react-i18next"
 
 function NotFound(): React.ReactElement {
   const { t } = useTranslation()
@@ -6,7 +6,7 @@ function NotFound(): React.ReactElement {
   return (
     <div>
       <h1>404</h1>
-      <h2>{t('PAGE_NOT_FOUND')}</h2>
+      <h2>{t("PAGE_NOT_FOUND")}</h2>
     </div>
   )
 }

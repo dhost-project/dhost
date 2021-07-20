@@ -1,4 +1,4 @@
-import './style.scss'
+import "./style.scss"
 
 function Dappbar(): React.ReactElement {
   return <nav></nav>

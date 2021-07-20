@@ -1,4 +1,4 @@
-import './style.scss'
+import "./style.scss"
 
 function Sidebar(): React.ReactElement {
   return <div></div>

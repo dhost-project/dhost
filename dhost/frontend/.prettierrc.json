@@ -3,7 +3,7 @@
   "trailingComma": "es5",
   "tabWidth": 2,
   "semi": false,
-  "singleQuote": true,
+  "singleQuote": false,
   "importOrder": ["^./contexts/(.*)$", "^./pages/(.*)$", "^./components/(.*)$", "^[./]"],
   "importOrderSeparation": true
 }
