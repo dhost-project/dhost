@@ -4,16 +4,14 @@ from .models import IPFSDapp, IPFSDeployment
 
 
 class IPFSDeploymentSerializer(DeploymentSerializer):
-
     class Meta(DeploymentSerializer.Meta):
         model = IPFSDeployment
-        fields = DeploymentSerializer.Meta.fields + ['ipfs_hash']
-        read_only_fields = DeploymentSerializer.Meta.fields + ['ipfs_hash']
+        fields = DeploymentSerializer.Meta.fields + ["ipfs_hash"]
+        read_only_fields = DeploymentSerializer.Meta.fields + ["ipfs_hash"]
 
 
 class IPFSDappSerializer(DappSerializer):
-
     class Meta(DappSerializer.Meta):
         model = IPFSDapp
-        fields = DappSerializer.Meta.fields + ['ipfs_gateway', 'ipfs_hash']
-        read_only_fields = DappSerializer.Meta.read_only_fields + ['ipfs_hash']
+        fields = DappSerializer.Meta.fields + ["ipfs_gateway", "ipfs_hash"]
+        read_only_fields = DappSerializer.Meta.read_only_fields + ["ipfs_hash"]

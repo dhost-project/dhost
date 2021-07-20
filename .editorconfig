@@ -37,3 +37,7 @@ indent_size = 2
 
 [*.po]
 max_line_length = 79
+
+[*.{ts,tsx}]
+max_line_length = 80
+indent_size = 2

@@ -9,71 +9,71 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('dapps', '0001_initial'),
+        ("dapps", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='IPFSDapp',
+            name="IPFSDapp",
             fields=[
                 (
-                    'dapp_ptr',
+                    "dapp_ptr",
                     models.OneToOneField(
                         auto_created=True,
                         on_delete=django.db.models.deletion.CASCADE,
                         parent_link=True,
                         primary_key=True,
                         serialize=False,
-                        to='dapps.dapp',
+                        to="dapps.dapp",
                     ),
                 ),
                 (
-                    'ipfs_hash',
-                    models.CharField(blank=True,
-                                     max_length=128,
-                                     verbose_name='IPFS hash'),
+                    "ipfs_hash",
+                    models.CharField(
+                        blank=True, max_length=128, verbose_name="IPFS hash"
+                    ),
                 ),
                 (
-                    'ipfs_gateway',
+                    "ipfs_gateway",
                     models.URLField(
                         blank=True,
-                        default='https://ipfs.io/ipfs/',
+                        default="https://ipfs.io/ipfs/",
                         null=True,
-                        verbose_name='IPFS public gateway',
+                        verbose_name="IPFS public gateway",
                     ),
                 ),
             ],
             options={
-                'verbose_name': 'IPFS Dapp',
-                'verbose_name_plural': 'IPFS Dapps',
+                "verbose_name": "IPFS Dapp",
+                "verbose_name_plural": "IPFS Dapps",
             },
-            bases=('dapps.dapp',),
+            bases=("dapps.dapp",),
         ),
         migrations.CreateModel(
-            name='IPFSDeployment',
+            name="IPFSDeployment",
             fields=[
                 (
-                    'deployment_ptr',
+                    "deployment_ptr",
                     models.OneToOneField(
                         auto_created=True,
                         on_delete=django.db.models.deletion.CASCADE,
                         parent_link=True,
                         primary_key=True,
                         serialize=False,
-                        to='dapps.deployment',
+                        to="dapps.deployment",
                     ),
                 ),
                 (
-                    'ipfs_hash',
-                    models.CharField(blank=True,
-                                     max_length=128,
-                                     verbose_name='IPFS hash'),
+                    "ipfs_hash",
+                    models.CharField(
+                        blank=True, max_length=128, verbose_name="IPFS hash"
+                    ),
                 ),
             ],
             options={
-                'verbose_name': 'IPFS Deployment',
-                'verbose_name_plural': 'IPFS Deployments',
+                "verbose_name": "IPFS Deployment",
+                "verbose_name_plural": "IPFS Deployments",
             },
-            bases=('dapps.deployment',),
+            bases=("dapps.deployment",),
         ),
     ]

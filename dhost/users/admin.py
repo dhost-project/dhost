@@ -8,26 +8,29 @@ from .models import User
 @admin.register(User)
 class UserAdmin(auth_admin.UserAdmin):
     fieldsets = (
-        (None, {'fields': ('username', 'password')}),
+        (None, {"fields": ("username", "password")}),
         (
-            _('Personal info'),
+            _("Personal info"),
             {
-                'fields': (
-                    'first_name',
-                    'last_name',
-                    'email',
-                    'avatar',
+                "fields": (
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "avatar",
                 )
-            }),
+            },
+        ),
         (
-            _('Permissions'),
+            _("Permissions"),
             {
-                'fields': (
-                    'is_active',
-                    'is_staff',
-                    'is_superuser',
-                    'groups',
-                    'user_permissions',
+                "fields": (
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "groups",
+                    "user_permissions",
                 ),
-            }),
-        (_('Important dates'), {'fields': ('last_login', 'date_joined')}))
+            },
+        ),
+        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
+    )

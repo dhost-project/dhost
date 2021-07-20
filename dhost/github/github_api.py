@@ -18,10 +18,10 @@ class GithubAPIError(Exception):
 class GithubAPI:
     """A Github REST API wrapper."""
 
-    GITHUB_API_URL = 'https://api.github.com'
-    GITHUB_TOKEN_TYPE = 'token'
+    GITHUB_API_URL = "https://api.github.com"
+    GITHUB_TOKEN_TYPE = "token"
 
-    def __init__(self, token: str, fail_silently: bool=False):
+    def __init__(self, token: str, fail_silently: bool = False):
         # Github API token used to make requests
         self.token = token
         self.fail_silently = fail_silently
@@ -32,10 +32,10 @@ class GithubAPI:
     def _get_authorization_header(self):
         token = self.get_token()
         token_type = self.GITHUB_TOKEN_TYPE
-        return {'Authorization': '{} {}'.format(token_type, token)}
+        return {"Authorization": "{} {}".format(token_type, token)}
 
     def get_headers(self, additionnal_headers=None):
-        headers = {'Accept': 'application/vnd.github.v3+json'}
+        headers = {"Accept": "application/vnd.github.v3+json"}
         headers.update(self._get_authorization_header())
         if additionnal_headers:
             headers.update(additionnal_headers)
@@ -54,11 +54,11 @@ class GithubAPI:
             try:
                 # try to get a message from the response if it exist
                 response_json = response.json()
-                if 'message' in response_json:
-                    content = response_json['message']
+                if "message" in response_json:
+                    content = response_json["message"]
             except json.decoder.JSONDecodeError:
                 content = response.content
-            raise GithubAPIError(f'{url} ({response.status_code}) {content}')
+            raise GithubAPIError(f"{url} ({response.status_code}) {content}")
 
     def get(self, url, headers=None, code=200, **kwargs):
         url, headers = self._prepare_request(url, headers)
@@ -89,84 +89,86 @@ class GithubAPI:
         return r
 
     def head(self, url, headers=None, code=200, **kwargs):
-        r = self.get(url=url, headers=headers, code=code,
-                      **kwargs)
+        r = self.get(url=url, headers=headers, code=code, **kwargs)
         return r.headers
 
     def get_scopes(self, username):
         """Return oauth scopes."""
-        head = self.head(f'/users/{username}')
-        scopes = head['X-OAuth-Scopes']
+        head = self.head(f"/users/{username}")
+        scopes = head["X-OAuth-Scopes"]
         return scopes
 
     def get_user(self, username):
-        return self.get(f'/users/{username}').json()
+        return self.get(f"/users/{username}").json()
 
     def list_repos(self):
         """Return a list of accessible repositories from the current token."""
-        return self.get('/user/repos').json()
+        return self.get("/user/repos").json()
 
     def get_repo(self, owner, repo):
         """Return a single repository."""
-        return self.get(f'/repos/{owner}/{repo}').json()
+        return self.get(f"/repos/{owner}/{repo}").json()
 
     def list_branches(self, owner, repo):
-        return self.get(f'/repos/{owner}/{repo}/branches').json()
+        return self.get(f"/repos/{owner}/{repo}/branches").json()
 
     def download_repo(self, owner, repo, ref, path, archive_name=None):
         """Download a repository archive."""
-        r = self.get(f'/repos/{owner}/{repo}/tarball/{ref}',
-                     allow_redirects=True)
+        r = self.get(
+            f"/repos/{owner}/{repo}/tarball/{ref}", allow_redirects=True
+        )
 
         archive_name = repo if archive_name is None else archive_name
 
         # The archive path is: /<path>/<repo>.tar
-        tar_path = os.path.join(path, archive_name + '.tar')
+        tar_path = os.path.join(path, archive_name + ".tar")
 
         # Create the folder if it doesn't exists already
         if not os.path.exists(path):
             os.makedirs(path)
 
         # write to the archive file
-        with open(tar_path, 'wb') as source:
+        with open(tar_path, "wb") as source:
             source.write(r.content)
             source.close()
 
         return tar_path
 
     def list_hooks(self, owner, repo):
-        return self.get(f'/repos/{owner}/{repo}/hooks').json()
+        return self.get(f"/repos/{owner}/{repo}/hooks").json()
 
     def get_hook(self, owner, repo, hook_id):
-        return self.get(f'/repos/{owner}/{repo}/hooks/{hook_id}').json()
+        return self.get(f"/repos/{owner}/{repo}/hooks/{hook_id}").json()
 
     def get_hook_config(self, owner, repo, hook_id):
-        return self.get(f'/repos/{owner}/{repo}/hooks/{hook_id}/config').json()
+        return self.get(f"/repos/{owner}/{repo}/hooks/{hook_id}/config").json()
 
-    def create_hook(self, owner, repo, webhook_url, active=True, name='web'):
+    def create_hook(self, owner, repo, webhook_url, active=True, name="web"):
         """Create a Github repository webhook."""
         data = {
-            'name': name,
-            'config': {
-                'url': webhook_url,
-                'insecure_ssl': False,
+            "name": name,
+            "config": {
+                "url": webhook_url,
+                "insecure_ssl": False,
             },
         }
-        return self.post(f'/repos/{owner}/{repo}/hooks', data=data).json()
+        return self.post(f"/repos/{owner}/{repo}/hooks", data=data).json()
 
     def update_hook(self, owner, repo, hook_id, data):
-        return self.patch(f'/repos/{owner}/{repo}/hooks/{hook_id}', data).json()
+        return self.patch(f"/repos/{owner}/{repo}/hooks/{hook_id}", data).json()
 
     def update_hook_config(self, owner, repo, hook_id, data):
-        return self.patch(f'/repos/{owner}/{repo}/hooks/{hook_id}/config',
-                          data).json()
+        return self.patch(
+            f"/repos/{owner}/{repo}/hooks/{hook_id}/config", data
+        ).json()
 
     def delete_hook(self, owner, repo, hook_id):
-        return self.delete(f'/repos/{owner}/{repo}/hooks/{hook_id}').json()
+        return self.delete(f"/repos/{owner}/{repo}/hooks/{hook_id}").json()
 
     def ping_hook(self, owner, repo, hook_id):
-        return self.get(f'/repos/{owner}/{repo}/hooks/{hook_id}/pings',
-                        code=204).json()
+        return self.get(
+            f"/repos/{owner}/{repo}/hooks/{hook_id}/pings", code=204
+        ).json()
 
 
 class DjangoGithubAPI(GithubAPI):
@@ -191,6 +193,6 @@ class DjangoGithubAPI(GithubAPI):
         try:
             super()._request_error(*args, **kwargs)
         except GithubAPIError as e:
-            message = '{}, user: {}'.format(str(e), self.user)
+            message = "{}, user: {}".format(str(e), self.user)
             logger.warning(message)
             raise e

@@ -7,5 +7,5 @@ class OTPAdmin(OTPAdminSite):
     pass
 
 
-admin_site = OTPAdmin(name='OTPAdmin')
+admin_site = OTPAdmin(name="OTPAdmin")
 admin_site.register(TOTPDevice, TOTPDeviceAdmin)

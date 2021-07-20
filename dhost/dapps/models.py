@@ -16,23 +16,23 @@ deploy_fail = django.dispatch.Signal()
 
 
 def bundle_path():
-    return os.path.join(settings.MEDIA_ROOT, 'bundle')
+    return os.path.join(settings.MEDIA_ROOT, "bundle")
 
 
 class Dapp(models.Model):
     slug = models.SlugField(
-        _('dapp name'),
+        _("dapp name"),
         primary_key=True,
         max_length=256,
     )
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        verbose_name=_('owner'),
+        verbose_name=_("owner"),
         related_name="%(app_label)s_%(class)s",
         related_query_name="%(app_label)s_%(class)s",
         on_delete=models.CASCADE,
     )
-    url = models.CharField(_('URL'), max_length=2048, blank=True)
+    url = models.CharField(_("URL"), max_length=2048, blank=True)
 
     class Statuses(models.TextChoices):
         """All the different statuses a Dapp can be in.
@@ -51,29 +51,29 @@ class Dapp(models.Model):
           * ERROR: Error while trying to retrieve the state of the Dapp
         """
 
-        STOPED = 'SO', _('Stoped')
-        BUILDING = 'BI', _('Building')
-        BUILT = 'BT', _('Builed')
-        DEPLOYING = 'DP', _('Deploying')
-        STARTING = 'SA', _('Starting')
-        UP = 'UP', _('Running')
-        UNAVAILABLE = 'UA', _('Unavailable')
-        ERROR = 'ER', _('Error')
+        STOPED = "SO", _("Stoped")
+        BUILDING = "BI", _("Building")
+        BUILT = "BT", _("Builed")
+        DEPLOYING = "DP", _("Deploying")
+        STARTING = "SA", _("Starting")
+        UP = "UP", _("Running")
+        UNAVAILABLE = "UA", _("Unavailable")
+        ERROR = "ER", _("Error")
 
     status = models.CharField(
-        _('status'),
+        _("status"),
         max_length=2,
         choices=Statuses.choices,
         default=Statuses.STOPED,
     )
 
-    created_at = models.DateTimeField(_('created at'), default=timezone.now)
+    created_at = models.DateTimeField(_("created at"), default=timezone.now)
 
     deployment_class = None
 
     class Meta:
-        verbose_name = _('dapp')
-        verbose_name_plural = _('dapps')
+        verbose_name = _("dapp")
+        verbose_name_plural = _("dapps")
 
     def __str__(self):
         return self.slug
@@ -87,9 +87,9 @@ class Dapp(models.Model):
         if bundle is None and len(self.bundles.all()) > 0:
             bundle = self.bundles.all()[0]
 
-        deployment = self.deployment_class.objects.create(dapp=self,
-                                                          bundle=bundle,
-                                                          **kwargs)
+        deployment = self.deployment_class.objects.create(
+            dapp=self, bundle=bundle, **kwargs
+        )
         deployment.start_deploy()
 
     def create_deployment(self, bundle=None):
@@ -107,11 +107,11 @@ class Bundle(models.Model):
     dapp = models.ForeignKey(
         Dapp,
         on_delete=models.CASCADE,
-        related_name='bundles',
-        related_query_name='bundles',
+        related_name="bundles",
+        related_query_name="bundles",
     )
     folder = models.FilePathField(
-        _('folder'),
+        _("folder"),
         null=True,
         blank=True,
         path=bundle_path,
@@ -121,11 +121,11 @@ class Bundle(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        verbose_name = _('bundle')
-        verbose_name_plural = _('bundles')
+        verbose_name = _("bundle")
+        verbose_name_plural = _("bundles")
 
     def __str__(self):
-        return 'bundl:{}'.format(self.id.hex[:7])
+        return "bundl:{}".format(self.id.hex[:7])
 
     def delete(self, *args, **kwargs):
         # TODO delete bundle folder when deleting the object
@@ -138,25 +138,25 @@ class Deployment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     dapp = models.ForeignKey(
         Dapp,
-        related_name='deployments',
-        related_query_name='deployments',
+        related_name="deployments",
+        related_query_name="deployments",
         on_delete=models.CASCADE,
         null=True,
     )
     bundle = models.ForeignKey(
         Bundle,
-        related_name='deployments',
-        related_query_name='deployments',
+        related_name="deployments",
+        related_query_name="deployments",
         on_delete=models.CASCADE,
         null=True,
     )
 
     class Statuses(models.TextChoices):
-        STOPED = 'SO', _('Stoped')
-        DEPLOYING = 'DP', _('Deploying')
-        STARTING = 'SA', _('Starting')
-        UP = 'UP', _('Running')
-        UNAVAILABLE = 'UA', _('Unavailable')
+        STOPED = "SO", _("Stoped")
+        DEPLOYING = "DP", _("Deploying")
+        STARTING = "SA", _("Starting")
+        UP = "UP", _("Running")
+        UNAVAILABLE = "UA", _("Unavailable")
 
     status = models.CharField(
         max_length=2,
@@ -168,11 +168,11 @@ class Deployment(models.Model):
     end = models.DateTimeField(null=True, blank=True)
 
     class Meta:
-        verbose_name = _('deployment')
-        verbose_name_plural = _('deployments')
+        verbose_name = _("deployment")
+        verbose_name_plural = _("deployments")
 
     def __str__(self):
-        return 'dplmt:{}'.format(self.id.hex[:7])
+        return "dplmt:{}".format(self.id.hex[:7])
 
     def start_deploy(self):
         pre_deploy_start.send(sender=self.__class__, instance=self)

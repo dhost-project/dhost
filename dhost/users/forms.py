@@ -6,10 +6,9 @@ User = get_user_model()
 
 
 class SignupForm(UserCreationForm):
-
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('username', 'email')
+        fields = ("username", "email")
 
     def __init__(self, *args, **kwargs):
         self.user = None
@@ -25,8 +24,7 @@ class SignupForm(UserCreationForm):
 
 
 class AccountSettingsForm(ModelForm):
-
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'avatar')
-        field_classes = {'username': UsernameField}
+        fields = ("username", "email", "first_name", "last_name", "avatar")
+        field_classes = {"username": UsernameField}

@@ -1,1 +1,1 @@
-default_app_config = 'dhost.notifications.apps.NotificationsConfig'
+default_app_config = "dhost.notifications.apps.NotificationsConfig"

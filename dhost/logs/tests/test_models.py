@@ -11,11 +11,10 @@ User = get_user_model()
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
 class APILogTestCase(TestCase):
-
     @classmethod
     def setUpTestData(cls):
-        cls.u1 = User.objects.create(username='john', password='john')
-        cls.dapp1 = Dapp.objects.create(slug='test', owner=cls.u1)
+        cls.u1 = User.objects.create(username="john", password="john")
+        cls.dapp1 = Dapp.objects.create(slug="test", owner=cls.u1)
 
     def test_log_create(self):
         log = APILog.objects.create(
@@ -24,8 +23,8 @@ class APILogTestCase(TestCase):
             content_type=ContentType.objects.get_for_model(self.dapp1),
             object_id=self.dapp1.pk,
             action_flag=ActionFlags.DAPP_ADDITION,
-            change_message='test',
+            change_message="test",
         )
         self.assertTrue(isinstance(log, APILog))
         self.assertEqual(str, type(log.__str__()))
-        self.assertIn('test', str(log))
+        self.assertIn("test", str(log))

@@ -5,26 +5,30 @@ from rest_framework.response import Response
 
 from .models import Bundle, Dapp, Deployment
 from .permissions import DappPermission
-from .serializers import (BundleSerializer, DappReadOnlySerializer,
-                          DappSerializer, DeploymentSerializer)
+from .serializers import (
+    BundleSerializer,
+    DappReadOnlySerializer,
+    DappSerializer,
+    DeploymentSerializer,
+)
 
 
 class DappViewSet(viewsets.ModelViewSet):
     queryset = Dapp.objects.all()
     serializer_class = DappSerializer
     permission_classes = [DappPermission]
-    lookup_field = 'slug'
+    lookup_field = "slug"
 
     def get_queryset(self):
         queryset = super().get_queryset()
         owner = self.request.user
         return queryset.filter(owner=owner)
 
-    @action(detail=True, methods=['get'])
+    @action(detail=True, methods=["get"])
     def deploy(self, request, slug=None):
         dapp = self.get_object()
         dapp.deploy()
-        return Response({'status': 'deployment started.'})
+        return Response({"status": "deployment started."})
 
 
 class DappReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):
@@ -33,7 +37,7 @@ class DappReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Dapp.objects.all()
     serializer_class = DappReadOnlySerializer
     permission_classes = [DappPermission]
-    lookup_field = 'slug'
+    lookup_field = "slug"
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -48,8 +52,8 @@ class DappViewMixin:
     """
 
     dapp_model_class = Dapp
-    dapp_reverse_name = 'dapp'  # name of the model field linked to the Dapp
-    dapp_url_slug = 'dapp_slug'  # URL slug for the Dapp
+    dapp_reverse_name = "dapp"  # name of the model field linked to the Dapp
+    dapp_url_slug = "dapp_slug"  # URL slug for the Dapp
 
     def get_dapp(self):
         owner = self.request.user

@@ -6,16 +6,16 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('logs', '0003_alter_apilog_user'),
+        ("logs", "0003_alter_apilog_user"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='apilog',
+            name="apilog",
             options={
-                'ordering': ['-action_time'],
-                'verbose_name': 'Dapp log entry',
-                'verbose_name_plural': 'Dapp log entries'
+                "ordering": ["-action_time"],
+                "verbose_name": "Dapp log entry",
+                "verbose_name_plural": "Dapp log entries",
             },
         ),
     ]

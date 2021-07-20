@@ -21,4 +21,4 @@ class PayloadHandler:
         return self.webhook.repo
 
     def ping(self):
-        return 'pong'
+        return "pong"

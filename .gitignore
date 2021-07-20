@@ -127,6 +127,20 @@ dmypy.json
 # VSCode
 /.vscode
 
+node_modules/
+dhost/static/
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
 staticfiles
 db.sqlite3
 media

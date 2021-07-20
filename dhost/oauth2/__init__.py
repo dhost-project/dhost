@@ -1,1 +1,1 @@
-default_app_config = 'dhost.oauth2.apps.OAuthConfig'
+default_app_config = "dhost.oauth2.apps.OAuthConfig"

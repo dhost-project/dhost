@@ -1,1 +1,1 @@
-default_app_config = 'dhost.dapps.apps.DappsConfig'
+default_app_config = "dhost.dapps.apps.DappsConfig"
