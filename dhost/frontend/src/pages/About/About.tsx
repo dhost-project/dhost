@@ -2,14 +2,14 @@ import { useTranslation } from 'react-i18next'
 
 import './styles.scss'
 
-function DappReadOnlyList(): React.ReactElement {
+function About(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
     <div>
-      <h2>{t('DAPP_READ_ONLY_LIST_TITLE')}</h2>
+      <h2>{t('ABOUT_TITLE')}</h2>
     </div>
   )
 }
 
-export default DappReadOnlyList
+export default About

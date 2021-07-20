@@ -4,7 +4,7 @@ import {
   Route,
   useRouteMatch,
 } from 'react-router-dom'
-import './styles.scss'
+
 import {
   DappDeploy as IPFSDappDeploy,
   DappFiles as IPFSDappFiles,
@@ -12,6 +12,7 @@ import {
   DappIndex as IPFSDappIndex,
   DappEdit as IPFSDappEdit,
 } from '../Dapp'
+import './styles.scss'
 
 function IPFSDapp(): React.ReactElement {
   const { path } = useRouteMatch()
