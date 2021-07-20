@@ -1,4 +1,3 @@
-import "./App.scss"
 import RouterOutlet from "./Router"
 
 function App(): React.ReactElement {

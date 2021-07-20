@@ -1,8 +1,6 @@
 import { useTranslation } from "react-i18next"
 import { RouteComponentProps } from "react-router-dom"
 
-import "./styles.scss"
-
 type TParams = { dapp_slug: string }
 
 function Files({ match }: RouteComponentProps<TParams>): React.ReactElement {

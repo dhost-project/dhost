@@ -3,8 +3,6 @@ import Nav from "react-bootstrap/Nav"
 import NavDropdown from "react-bootstrap/NavDropdown"
 import Navbar from "react-bootstrap/Navbar"
 
-import "./style.scss"
-
 function TopNavbar(): React.ReactElement {
   return (
     <Navbar bg="dark" expand="lg" variant="dark">
