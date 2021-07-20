@@ -5,13 +5,13 @@ from django.conf import settings
 from django.core.files import File
 from PIL import Image, ImageDraw
 
-EXTENSION = getattr(settings, 'AVATAR_EXTENSION', 'png')
-DIMENSION = getattr(settings, 'AVATAR_DIMENSION', 256)
+EXTENSION = getattr(settings, "AVATAR_EXTENSION", "png")
+DIMENSION = getattr(settings, "AVATAR_DIMENSION", 256)
 # number of squares per rows and columns
 # over 15 the patern will start repeating itself
-SQUARE_NUMBER = getattr(settings, 'AVATAR_SQUARE_NUMBER', 12)
-BACKGROUND_COLOR = getattr(settings, 'AVATAR_BACKGROUND_COLOR', '#f2f2f2')
-MARGIN = getattr(settings, 'AVATAR_MARGIN', 8)
+SQUARE_NUMBER = getattr(settings, "AVATAR_SQUARE_NUMBER", 12)
+BACKGROUND_COLOR = getattr(settings, "AVATAR_BACKGROUND_COLOR", "#f2f2f2")
+MARGIN = getattr(settings, "AVATAR_MARGIN", 8)
 
 TOTAL_WIDTH = DIMENSION
 TOTAL_HEIGHT = DIMENSION
@@ -30,10 +30,10 @@ def avatar_generator(input_string: str):
         File: image file io stream
     """
 
-    canvas = Image.new('RGB', (TOTAL_WIDTH, TOTAL_HEIGHT), BACKGROUND_COLOR)
+    canvas = Image.new("RGB", (TOTAL_WIDTH, TOTAL_HEIGHT), BACKGROUND_COLOR)
     draw = ImageDraw.Draw(canvas)
 
-    h = hashlib.md5(input_string.encode('utf-8')).hexdigest()
+    h = hashlib.md5(input_string.encode("utf-8")).hexdigest()
     bin_hash = bin(int(h, 16))[2:].zfill(8)
 
     # create matrix
@@ -43,7 +43,7 @@ def avatar_generator(input_string: str):
     for row in range(1, ROWS + 1):
         for col in range(1, half_cols + 1):
             # fill matrix with `True` if the bit is `1`
-            if bin_hash[(row * col) % len(bin_hash)] == '1':
+            if bin_hash[(row * col) % len(bin_hash)] == "1":
                 matrix[row - 1][col - 1] = True
                 # to create the vertical symetry
                 matrix[row - 1][COLS - col] = True
@@ -75,7 +75,7 @@ def avatar_generator(input_string: str):
     stream = BytesIO()
     canvas.save(stream, EXTENSION)
 
-    avatar_name = '{}.{}'.format(input_string, EXTENSION)
+    avatar_name = "{}.{}".format(input_string, EXTENSION)
     avatar = File(stream, name=avatar_name)
 
     return avatar

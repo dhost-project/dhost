@@ -29,43 +29,43 @@ class TitleMixin:
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update({'title': self.title, **(self.extra_context or {})})
+        context.update({"title": self.title, **(self.extra_context or {})})
         return context
 
 
 class LoginView(auth_views.LoginView):
-    template_name = 'users/login.html'
+    template_name = "users/login.html"
 
 
 class LogoutView(auth_views.LogoutView):
     # TODO logout with POST
-    template_name = 'users/logged_out.html'
+    template_name = "users/logged_out.html"
 
 
 class PasswordResetView(auth_views.PasswordResetView):
-    email_template_name = 'users/emails/password_reset_email.html'
-    subject_template_name = 'users/emails/password_reset_subject.txt'
-    template_name = 'users/password_reset_form.html'
+    email_template_name = "users/emails/password_reset_email.html"
+    subject_template_name = "users/emails/password_reset_subject.txt"
+    template_name = "users/password_reset_form.html"
 
 
 class PasswordResetDoneView(auth_views.PasswordResetDoneView):
-    template_name = 'users/password_reset_done.html'
+    template_name = "users/password_reset_done.html"
 
 
 class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
-    template_name = 'users/password_reset_confirm.html'
+    template_name = "users/password_reset_confirm.html"
 
 
 class PasswordResetCompleteView(auth_views.PasswordResetCompleteView):
-    template_name = 'users/password_reset_complete.html'
+    template_name = "users/password_reset_complete.html"
 
 
 class PasswordChangeView(auth_views.PasswordChangeView):
-    template_name = 'users/password_change_form.html'
+    template_name = "users/password_change_form.html"
 
 
 class PasswordChangeDoneView(auth_views.PasswordChangeDoneView):
-    template_name = 'users/password_change_done.html'
+    template_name = "users/password_change_done.html"
 
 
 class SignupView(TitleMixin, auth_views.SuccessURLAllowedHostsMixin, FormView):
@@ -75,23 +75,26 @@ class SignupView(TitleMixin, auth_views.SuccessURLAllowedHostsMixin, FormView):
     authentication_form = None
     next_page = None
     redirect_field_name = REDIRECT_FIELD_NAME
-    template_name = 'users/signup.html'
+    template_name = "users/signup.html"
     redirect_authenticated_user = False
     extra_context = None
-    title = _('Sign up')
+    title = _("Sign up")
 
     @method_decorator(sensitive_post_parameters())
     @method_decorator(csrf_protect)
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
-        if (self.redirect_authenticated_user and
-                self.request.user.is_authenticated):
+        if (
+            self.redirect_authenticated_user
+            and self.request.user.is_authenticated
+        ):
             redirect_to = self.get_success_url()
             if redirect_to == self.request.path:
                 raise ValueError(
                     "Redirection loop for authenticated user detected. Check "
                     "that your LOGIN_REDIRECT_URL doesn't point to a login "
-                    "page.")
+                    "page."
+                )
             return HttpResponseRedirect(redirect_to)
         return super().dispatch(request, *args, **kwargs)
 
@@ -102,14 +105,14 @@ class SignupView(TitleMixin, auth_views.SuccessURLAllowedHostsMixin, FormView):
         """Return the user-originating redirect URL if it's safe."""
         redirect_to = self.request.POST.get(
             self.redirect_field_name,
-            self.request.GET.get(self.redirect_field_name, ''),
+            self.request.GET.get(self.redirect_field_name, ""),
         )
         url_is_safe = url_has_allowed_host_and_scheme(
             url=redirect_to,
             allowed_hosts=self.get_success_url_allowed_hosts(),
             require_https=self.request.is_secure(),
         )
-        return redirect_to if url_is_safe else ''
+        return redirect_to if url_is_safe else ""
 
     def get_default_redirect_url(self):
         """Return the default redirect URL."""
@@ -121,28 +124,32 @@ class SignupView(TitleMixin, auth_views.SuccessURLAllowedHostsMixin, FormView):
     def form_valid(self, form):
         """Security check complete. Log the user in."""
         form.save()
-        auth_login(self.request,
-                   form.get_user(),
-                   backend='django.contrib.auth.backends.ModelBackend')
+        auth_login(
+            self.request,
+            form.get_user(),
+            backend="django.contrib.auth.backends.ModelBackend",
+        )
         return HttpResponseRedirect(self.get_success_url())
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         current_site = get_current_site(self.request)
-        context.update({
-            self.redirect_field_name: self.get_redirect_url(),
-            'site': current_site,
-            'site_name': current_site.name,
-            **(self.extra_context or {}),
-        })
+        context.update(
+            {
+                self.redirect_field_name: self.get_redirect_url(),
+                "site": current_site,
+                "site_name": current_site.name,
+                **(self.extra_context or {}),
+            }
+        )
         return context
 
 
 class AccountSettingsView(TitleMixin, FormView):
-    template_name = 'users/account_settings.html'
+    template_name = "users/account_settings.html"
     form_class = AccountSettingsForm
-    success_url = reverse_lazy('account_settings')
-    title = _('Account settings')
+    success_url = reverse_lazy("account_settings")
+    title = _("Account settings")
 
     @method_decorator(sensitive_post_parameters())
     @method_decorator(csrf_protect)
@@ -152,7 +159,7 @@ class AccountSettingsView(TitleMixin, FormView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['instance'] = self.request.user
+        kwargs["instance"] = self.request.user
         return kwargs
 
     def form_valid(self, form):
@@ -160,20 +167,23 @@ class AccountSettingsView(TitleMixin, FormView):
         messages.add_message(
             self.request,
             messages.SUCCESS,
-            'Account successfully updated',
+            "Account successfully updated",
         )
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        messages.add_message(self.request, messages.SUCCESS,
-                             'An error occured, please try again later')
+        messages.add_message(
+            self.request,
+            messages.SUCCESS,
+            "An error occured, please try again later",
+        )
         return super().form_invalid(form)
 
 
 class ExportDataView(TitleMixin, TemplateView):
-    template_name = 'users/export_data.html'
-    success_url = reverse_lazy('export_data')
-    title = _('Export data')
+    template_name = "users/export_data.html"
+    success_url = reverse_lazy("export_data")
+    title = _("Export data")
 
     @method_decorator(csrf_protect)
     @method_decorator(login_required)
@@ -183,17 +193,18 @@ class ExportDataView(TitleMixin, TemplateView):
     def post(self, request, *args, **kwargs):
         """Download the user's data has a JSON file."""
         user = request.user
-        data = serializers.serialize('json', [user])
-        response = HttpResponse(data, content_type='application/json')
+        data = serializers.serialize("json", [user])
+        response = HttpResponse(data, content_type="application/json")
         response[
-            'Content-Disposition'] = 'attachment; filename="exported_data.json"'
+            "Content-Disposition"
+        ] = 'attachment; filename="exported_data.json"'
         return response
 
 
 class AccountDeleteView(TitleMixin, TemplateView):
-    template_name = 'users/account_delete.html'
-    success_url = reverse_lazy('account_delete_done')
-    title = _('Delete account')
+    template_name = "users/account_delete.html"
+    success_url = reverse_lazy("account_delete_done")
+    title = _("Delete account")
 
     @method_decorator(csrf_protect)
     @method_decorator(login_required)
@@ -204,11 +215,12 @@ class AccountDeleteView(TitleMixin, TemplateView):
         """Delete the user's account on a POST."""
         user = request.user
         user.delete()
-        messages.add_message(request, messages.SUCCESS,
-                             'Account successfully deleted')
+        messages.add_message(
+            request, messages.SUCCESS, "Account successfully deleted"
+        )
         return HttpResponseRedirect(str(self.success_url))
 
 
 class AccountDeleteDoneView(TitleMixin, TemplateView):
-    template_name = 'users/account_delete_done.html'
-    title = _('Delete account successful')
+    template_name = "users/account_delete_done.html"
+    title = _("Delete account successful")

@@ -9,17 +9,11 @@ repos:
       - id: check-yaml
       - id: trailing-whitespace
       - id: requirements-txt-fixer
-        args: ['--autofix', '--no-sort-keys']
 
   - repo: https://github.com/PyCQA/isort
     rev: 5.7.0
     hooks:
       - id: isort
-
-  - repo: https://github.com/pre-commit/mirrors-yapf
-    rev: v0.31.0
-    hooks:
-      - id: yapf
 
   - repo: https://gitlab.com/pycqa/flake8
     rev: 3.8.4

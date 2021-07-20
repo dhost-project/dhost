@@ -17,7 +17,7 @@ def user_has_github_account(user):
     Returns:
         bool: If the user has a Github account linked.
     """
-    return len(user.social_auth.filter(provider='github')) > 0
+    return len(user.social_auth.filter(provider="github")) > 0
 
 
 def get_user_github_account(user):
@@ -33,7 +33,7 @@ def get_user_github_account(user):
         GithubNotLinkedError: Raised if the user's account is not linked.
     """
     try:
-        return user.social_auth.get(provider='github')
+        return user.social_auth.get(provider="github")
     except ObjectDoesNotExist:
         raise GithubNotLinkedError()
 
@@ -52,9 +52,11 @@ def get_token_from_github_account(github_account):
             account extra_data. This should never happen but it can if for some
             reason the fields was edited.
     """
-    if 'access_token' not in github_account.extra_data:
+    if "access_token" not in github_account.extra_data:
         raise Exception(
             "'access_token' missing from github_account.extra_data for "
-            "github_account '{}' (id: '{}')".format(github_account,
-                                                    github_account.id))
-    return github_account.extra_data['access_token']
+            "github_account '{}' (id: '{}')".format(
+                github_account, github_account.id
+            )
+        )
+    return github_account.extra_data["access_token"]

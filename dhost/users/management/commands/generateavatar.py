@@ -6,27 +6,28 @@ UserModel = get_user_model()
 
 
 class Command(BaseCommand):
-    help = 'Generate an avatar for a user'
+    help = "Generate an avatar for a user"
     requires_migrations_checks = True
 
     def add_arguments(self, parser):
         parser.add_argument(
-            'username',
-            help='Username to generate the avatar for.',
+            "username",
+            help="Username to generate the avatar for.",
         )
         parser.add_argument(
-            '--database',
+            "--database",
             default=DEFAULT_DB_ALIAS,
             help='Specifies the database to use. Default is "default".',
         )
 
     def handle(self, *args, **options):
-        if options['username']:
-            username = options['username']
+        if options["username"]:
+            username = options["username"]
 
         try:
-            u = UserModel._default_manager.using(
-                options['database']).get(**{UserModel.USERNAME_FIELD: username})
+            u = UserModel._default_manager.using(options["database"]).get(
+                **{UserModel.USERNAME_FIELD: username}
+            )
         except UserModel.DoesNotExist:
             raise CommandError("User '%s' does not exist." % username)
 

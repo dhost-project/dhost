@@ -20,10 +20,10 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Bundle',
+            name="Bundle",
             fields=[
                 (
-                    'id',
+                    "id",
                     models.UUIDField(
                         default=uuid.uuid4,
                         editable=False,
@@ -32,89 +32,89 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    'folder',
+                    "folder",
                     models.FilePathField(
                         allow_folders=True,
                         blank=True,
                         null=True,
                         path=dhost.dapps.models.bundle_path,
-                        verbose_name='folder',
+                        verbose_name="folder",
                     ),
                 ),
                 (
-                    'created_at',
+                    "created_at",
                     models.DateTimeField(default=django.utils.timezone.now),
                 ),
             ],
             options={
-                'verbose_name': 'bundle',
-                'verbose_name_plural': 'bundles',
+                "verbose_name": "bundle",
+                "verbose_name_plural": "bundles",
             },
         ),
         migrations.CreateModel(
-            name='Dapp',
+            name="Dapp",
             fields=[
                 (
-                    'slug',
+                    "slug",
                     models.SlugField(
                         max_length=256,
                         primary_key=True,
                         serialize=False,
-                        verbose_name='dapp name',
+                        verbose_name="dapp name",
                     ),
                 ),
                 (
-                    'url',
-                    models.CharField(blank=True,
-                                     max_length=2048,
-                                     verbose_name='URL'),
+                    "url",
+                    models.CharField(
+                        blank=True, max_length=2048, verbose_name="URL"
+                    ),
                 ),
                 (
-                    'status',
+                    "status",
                     models.CharField(
                         choices=[
-                            ('SO', 'Stoped'),
-                            ('BI', 'Building'),
-                            ('BT', 'Builed'),
-                            ('DP', 'Deploying'),
-                            ('SA', 'Starting'),
-                            ('UP', 'Running'),
-                            ('UA', 'Unavailable'),
-                            ('ER', 'Error'),
+                            ("SO", "Stoped"),
+                            ("BI", "Building"),
+                            ("BT", "Builed"),
+                            ("DP", "Deploying"),
+                            ("SA", "Starting"),
+                            ("UP", "Running"),
+                            ("UA", "Unavailable"),
+                            ("ER", "Error"),
                         ],
-                        default='SO',
+                        default="SO",
                         max_length=2,
-                        verbose_name='status',
+                        verbose_name="status",
                     ),
                 ),
                 (
-                    'created_at',
+                    "created_at",
                     models.DateTimeField(
                         default=django.utils.timezone.now,
-                        verbose_name='created',
+                        verbose_name="created",
                     ),
                 ),
                 (
-                    'owner',
+                    "owner",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name='dapps_dapp',
-                        related_query_name='dapps_dapp',
+                        related_name="dapps_dapp",
+                        related_query_name="dapps_dapp",
                         to=settings.AUTH_USER_MODEL,
-                        verbose_name='owner',
+                        verbose_name="owner",
                     ),
                 ),
             ],
             options={
-                'verbose_name': 'dapp',
-                'verbose_name_plural': 'dapps',
+                "verbose_name": "dapp",
+                "verbose_name_plural": "dapps",
             },
         ),
         migrations.CreateModel(
-            name='Deployment',
+            name="Deployment",
             fields=[
                 (
-                    'id',
+                    "id",
                     models.UUIDField(
                         default=uuid.uuid4,
                         editable=False,
@@ -123,60 +123,60 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    'status',
+                    "status",
                     models.CharField(
                         choices=[
-                            ('SO', 'Stoped'),
-                            ('DP', 'Deploying'),
-                            ('SA', 'Starting'),
-                            ('UP', 'Running'),
-                            ('UA', 'Unavailable'),
+                            ("SO", "Stoped"),
+                            ("DP", "Deploying"),
+                            ("SA", "Starting"),
+                            ("UP", "Running"),
+                            ("UA", "Unavailable"),
                         ],
-                        default='SO',
+                        default="SO",
                         max_length=2,
                     ),
                 ),
                 (
-                    'start',
+                    "start",
                     models.DateTimeField(default=django.utils.timezone.now),
                 ),
-                ('end', models.DateTimeField(blank=True, null=True)),
+                ("end", models.DateTimeField(blank=True, null=True)),
                 (
-                    'bundle',
+                    "bundle",
                     models.ForeignKey(
                         null=True,
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name='deployments',
-                        related_query_name='deployments',
-                        to='dapps.bundle',
+                        related_name="deployments",
+                        related_query_name="deployments",
+                        to="dapps.bundle",
                     ),
                 ),
                 (
-                    'dapp',
+                    "dapp",
                     models.ForeignKey(
                         null=True,
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name='deployments',
-                        related_query_name='deployments',
-                        to='dapps.dapp',
+                        related_name="deployments",
+                        related_query_name="deployments",
+                        to="dapps.dapp",
                     ),
                 ),
             ],
             options={
-                'verbose_name': 'deployment',
-                'verbose_name_plural': 'deployments',
+                "verbose_name": "deployment",
+                "verbose_name_plural": "deployments",
             },
         ),
         migrations.AddField(
-            model_name='bundle',
-            name='dapp',
+            model_name="bundle",
+            name="dapp",
             field=models.ForeignKey(
                 blank=True,
                 null=True,
                 on_delete=django.db.models.deletion.CASCADE,
-                related_name='bundles',
-                related_query_name='bundles',
-                to='dapps.dapp',
+                related_name="bundles",
+                related_query_name="bundles",
+                to="dapps.dapp",
             ),
         ),
     ]

@@ -9,17 +9,15 @@ User = get_user_model()
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
 class APILogTestCase(TestCase):
-
     @classmethod
     def setUpTestData(cls):
-        cls.u1 = User.objects.create(username='john', password='john')
-        cls.notif_unread = Notification.objects.create(user=cls.u1,
-                                                       subject='unread',
-                                                       content='content...')
-        cls.notif_read = Notification.objects.create(user=cls.u1,
-                                                     subject='read',
-                                                     content='content...',
-                                                     read=True)
+        cls.u1 = User.objects.create(username="john", password="john")
+        cls.notif_unread = Notification.objects.create(
+            user=cls.u1, subject="unread", content="content..."
+        )
+        cls.notif_read = Notification.objects.create(
+            user=cls.u1, subject="read", content="content...", read=True
+        )
 
     def test__str__(self):
         self.assertEqual(str, type(self.notif_unread.__str__()))

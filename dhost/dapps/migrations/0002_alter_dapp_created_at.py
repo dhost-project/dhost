@@ -7,14 +7,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('dapps', '0001_initial'),
+        ("dapps", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='dapp',
-            name='created_at',
-            field=models.DateTimeField(default=django.utils.timezone.now,
-                                       verbose_name='created at'),
+            model_name="dapp",
+            name="created_at",
+            field=models.DateTimeField(
+                default=django.utils.timezone.now, verbose_name="created at"
+            ),
         ),
     ]

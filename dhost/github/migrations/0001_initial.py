@@ -11,181 +11,183 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('dapps', '0001_initial'),
+        ("dapps", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Branch',
+            name="Branch",
             fields=[
                 (
-                    'id',
+                    "id",
                     models.BigAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
-                        verbose_name='ID',
+                        verbose_name="ID",
                     ),
                 ),
-                ('name', models.CharField(max_length=255)),
-                ('extra_data', models.JSONField(blank=True, default=dict)),
+                ("name", models.CharField(max_length=255)),
+                ("extra_data", models.JSONField(blank=True, default=dict)),
                 (
-                    'updated_at',
+                    "updated_at",
                     models.DateTimeField(
                         default=django.utils.timezone.now,
-                        help_text='Last updated from the Github API.',
+                        help_text="Last updated from the Github API.",
                     ),
                 ),
             ],
             options={
-                'verbose_name': 'Branch',
-                'verbose_name_plural': 'Branches',
+                "verbose_name": "Branch",
+                "verbose_name_plural": "Branches",
             },
         ),
         migrations.CreateModel(
-            name='Repository',
+            name="Repository",
             fields=[
                 (
-                    'id',
+                    "id",
                     models.IntegerField(
-                        help_text='Github repository unique ID.',
+                        help_text="Github repository unique ID.",
                         primary_key=True,
                         serialize=False,
                         unique=True,
-                        verbose_name='Github ID',
+                        verbose_name="Github ID",
                     ),
                 ),
-                ('github_owner', models.CharField(max_length=256)),
-                ('github_repo', models.CharField(max_length=256)),
-                ('extra_data', models.JSONField(blank=True, default=dict)),
+                ("github_owner", models.CharField(max_length=256)),
+                ("github_repo", models.CharField(max_length=256)),
+                ("extra_data", models.JSONField(blank=True, default=dict)),
                 (
-                    'added_at',
-                    models.DateTimeField(auto_now_add=True,
-                                         help_text='Added at.'),
+                    "added_at",
+                    models.DateTimeField(
+                        auto_now_add=True, help_text="Added at."
+                    ),
                 ),
                 (
-                    'updated_at',
+                    "updated_at",
                     models.DateTimeField(
                         default=django.utils.timezone.now,
-                        help_text='Last updated from the Github API.',
+                        help_text="Last updated from the Github API.",
                     ),
                 ),
-                ('users', models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
+                ("users", models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
             ],
             options={
-                'verbose_name': 'Github repository',
-                'verbose_name_plural': 'Github repositories',
+                "verbose_name": "Github repository",
+                "verbose_name_plural": "Github repositories",
             },
         ),
         migrations.CreateModel(
-            name='Webhook',
+            name="Webhook",
             fields=[
                 (
-                    'id',
+                    "id",
                     models.IntegerField(
-                        help_text='Github webhook unique ID.',
+                        help_text="Github webhook unique ID.",
                         primary_key=True,
                         serialize=False,
                         unique=True,
-                        verbose_name='Github ID',
+                        verbose_name="Github ID",
                     ),
                 ),
-                ('name', models.CharField(default='web', max_length=255)),
-                ('active', models.BooleanField(default=True)),
-                ('extra_data', models.JSONField(blank=True, default=dict)),
+                ("name", models.CharField(default="web", max_length=255)),
+                ("active", models.BooleanField(default=True)),
+                ("extra_data", models.JSONField(blank=True, default=dict)),
                 (
-                    'added_at',
-                    models.DateTimeField(auto_now_add=True,
-                                         help_text='Added at.'),
+                    "added_at",
+                    models.DateTimeField(
+                        auto_now_add=True, help_text="Added at."
+                    ),
                 ),
                 (
-                    'updated_at',
+                    "updated_at",
                     models.DateTimeField(
                         default=django.utils.timezone.now,
-                        help_text='Last updated from the Github API.',
+                        help_text="Last updated from the Github API.",
                     ),
                 ),
                 (
-                    'last_called_at',
+                    "last_called_at",
                     models.DateTimeField(
                         blank=True,
-                        help_text='Last called by Github.',
+                        help_text="Last called by Github.",
                         null=True,
                     ),
                 ),
                 (
-                    'repo',
+                    "repo",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name='webhooks',
-                        related_query_name='webhooks',
-                        to='github.repository',
+                        related_name="webhooks",
+                        related_query_name="webhooks",
+                        to="github.repository",
                     ),
                 ),
             ],
             options={
-                'verbose_name': 'Github webhook',
-                'verbose_name_plural': 'Github webhooks',
+                "verbose_name": "Github webhook",
+                "verbose_name_plural": "Github webhooks",
             },
         ),
         migrations.CreateModel(
-            name='GithubOptions',
+            name="GithubOptions",
             fields=[
                 (
-                    'dapp',
+                    "dapp",
                     models.OneToOneField(
                         on_delete=django.db.models.deletion.CASCADE,
                         primary_key=True,
                         serialize=False,
-                        to='dapps.dapp',
+                        to="dapps.dapp",
                     ),
                 ),
                 (
-                    'auto_deploy',
+                    "auto_deploy",
                     models.BooleanField(
                         default=False,
-                        help_text='Automatically deploy the dapp when a push '
-                        'is made on the selected branch.',
+                        help_text="Automatically deploy the dapp when a push "
+                        "is made on the selected branch.",
                     ),
                 ),
                 (
-                    'confirm_ci',
+                    "confirm_ci",
                     models.BooleanField(
                         default=False,
-                        help_text='Wait for CI to pass before automatically '
-                        'deploying the dapp.',
+                        help_text="Wait for CI to pass before automatically "
+                        "deploying the dapp.",
                     ),
                 ),
                 (
-                    'branch',
+                    "branch",
                     models.ForeignKey(
                         null=True,
                         on_delete=django.db.models.deletion.SET_NULL,
-                        to='github.branch',
+                        to="github.branch",
                     ),
                 ),
                 (
-                    'repo',
+                    "repo",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        to='github.repository',
+                        to="github.repository",
                     ),
                 ),
             ],
             options={
-                'verbose_name': 'Dapp Github options',
-                'verbose_name_plural': 'Dapps Github options',
+                "verbose_name": "Dapp Github options",
+                "verbose_name_plural": "Dapps Github options",
             },
         ),
         migrations.AddField(
-            model_name='branch',
-            name='repo',
+            model_name="branch",
+            name="repo",
             field=models.ForeignKey(
                 on_delete=django.db.models.deletion.CASCADE,
-                related_name='branches',
-                related_query_name='branches',
-                to='github.repository',
+                related_name="branches",
+                related_query_name="branches",
+                to="github.repository",
             ),
         ),
     ]

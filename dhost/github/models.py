@@ -1,17 +1,22 @@
 import os
 
 from django.conf import settings
-from django.urls import reverse
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from dhost.dapps.models import Dapp
 
 from .github_api import DjangoGithubAPI
-from .managers import (BranchManager, RepositoryManager, WebhookManager,
-                       serialize_branch, serialize_repository,
-                       serialize_webhook)
+from .managers import (
+    BranchManager,
+    RepositoryManager,
+    WebhookManager,
+    serialize_branch,
+    serialize_repository,
+    serialize_webhook,
+)
 
 
 class Repository(models.Model):
@@ -21,26 +26,26 @@ class Repository(models.Model):
     """
 
     id = models.IntegerField(
-        _('Github ID'),
+        _("Github ID"),
         primary_key=True,
         unique=True,
-        help_text=_('Github repository unique ID.'),
+        help_text=_("Github repository unique ID."),
     )
     users = models.ManyToManyField(settings.AUTH_USER_MODEL)
     github_owner = models.CharField(max_length=256)
     github_repo = models.CharField(max_length=256)
     # full raw output from the Github API
     extra_data = models.JSONField(default=dict, blank=True)
-    added_at = models.DateTimeField(auto_now_add=True, help_text=_('Added at.'))
+    added_at = models.DateTimeField(auto_now_add=True, help_text=_("Added at."))
     updated_at = models.DateTimeField(
         default=timezone.now,
-        help_text=_('Last updated from the Github API.'),
+        help_text=_("Last updated from the Github API."),
     )
     objects = RepositoryManager()
 
     class Meta:
-        verbose_name = _('Github repository')
-        verbose_name_plural = _('Github repositories')
+        verbose_name = _("Github repository")
+        verbose_name_plural = _("Github repositories")
 
     def remove_user(self, user):
         self.users.remove(user)
@@ -60,12 +65,12 @@ class Repository(models.Model):
         # In this cass we should probably delete the current repo has it's not
         # of use anymore (because it either has moved or has been deleted) and
         # create a new one from the repo_json.
-        if data['id'] != self.id:
-            raise Exception('The Github ID changed.')
+        if data["id"] != self.id:
+            raise Exception("The Github ID changed.")
 
-        self.github_owner = data['github_owner']
-        self.github_repo = data['github_repo']
-        self.extra_data = data['extra_data']
+        self.github_owner = data["github_owner"]
+        self.github_repo = data["github_repo"]
+        self.extra_data = data["extra_data"]
         if user not in self.users.all():
             self.users.add(user)
         self.updated_at = timezone.now()
@@ -87,7 +92,7 @@ class Repository(models.Model):
 
     def create_webhook(self, **kwargs):
         """Create a webhook object linked to this Github repo."""
-        kwargs.update({'repo': self.id})
+        kwargs.update({"repo": self.id})
         return Webhook.objects.create_webhook(**kwargs)
 
 
@@ -95,59 +100,59 @@ class Branch(models.Model):
     repo = models.ForeignKey(
         Repository,
         on_delete=models.CASCADE,
-        related_name='branches',
-        related_query_name='branches',
+        related_name="branches",
+        related_query_name="branches",
     )
     name = models.CharField(max_length=255)
     extra_data = models.JSONField(default=dict, blank=True)
     updated_at = models.DateTimeField(
         default=timezone.now,
-        help_text=_('Last updated from the Github API.'),
+        help_text=_("Last updated from the Github API."),
     )
     objects = BranchManager()
 
     class Meta:
-        verbose_name = _('Branch')
+        verbose_name = _("Branch")
         verbose_name_plural = _("Branches")
 
     def update_from_json(self, branch_json):
         data = serialize_branch(branch_json)
-        self.extra_data = data['extra_data']
+        self.extra_data = data["extra_data"]
         self.updated_at = timezone.now()
         self.save()
 
 
 class Webhook(models.Model):
     id = models.IntegerField(
-        _('Github ID'),
+        _("Github ID"),
         primary_key=True,
         unique=True,
-        help_text=_('Github webhook unique ID.'),
+        help_text=_("Github webhook unique ID."),
     )
     repo = models.ForeignKey(
         Repository,
         on_delete=models.CASCADE,
-        related_name='webhooks',
-        related_query_name='webhooks',
+        related_name="webhooks",
+        related_query_name="webhooks",
     )
-    name = models.CharField(max_length=255, default='web')
+    name = models.CharField(max_length=255, default="web")
     active = models.BooleanField(default=True)
     extra_data = models.JSONField(default=dict, blank=True)
-    added_at = models.DateTimeField(auto_now_add=True, help_text=_('Added at.'))
+    added_at = models.DateTimeField(auto_now_add=True, help_text=_("Added at."))
     updated_at = models.DateTimeField(
         default=timezone.now,
-        help_text=_('Last updated from the Github API.'),
+        help_text=_("Last updated from the Github API."),
     )
     last_called_at = models.DateTimeField(
         null=True,
         blank=True,
-        help_text=_('Last called by Github.'),
+        help_text=_("Last called by Github."),
     )
     objects = WebhookManager()
 
     class Meta:
-        verbose_name = _('Github webhook')
-        verbose_name_plural = _('Github webhooks')
+        verbose_name = _("Github webhook")
+        verbose_name_plural = _("Github webhooks")
 
     def delete(self, *args, **kwargs):
         # TODO: signal Github to remove webhooks
@@ -155,9 +160,9 @@ class Webhook(models.Model):
 
     def update_from_json(self, branch_json):
         data = serialize_webhook(branch_json)
-        self.name = data['name']
-        self.active = data['active']
-        self.extra_data = data['extra_data']
+        self.name = data["name"]
+        self.active = data["active"]
+        self.extra_data = data["extra_data"]
         self.updated_at = timezone.now()
         self.save()
 
@@ -173,7 +178,7 @@ class Webhook(models.Model):
         pass
 
     def get_reverse_payload_url(self):
-        return reverse('api:github_webhook-payload', args={'pk': self.pk})
+        return reverse("api:github_webhook-payload", args={"pk": self.pk})
 
 
 class GithubOptions(models.Model):
@@ -194,8 +199,8 @@ class GithubOptions(models.Model):
     auto_deploy = models.BooleanField(
         default=False,
         help_text=_(
-            'Automatically deploy the dapp when a push is made on the '
-            'selected branch.'
+            "Automatically deploy the dapp when a push is made on the "
+            "selected branch."
         ),
     )
     # If auto_deploy is True and confirm_ci is True it will auto deploy but
@@ -203,13 +208,13 @@ class GithubOptions(models.Model):
     confirm_ci = models.BooleanField(
         default=False,
         help_text=_(
-            'Wait for CI to pass before automatically deploying the dapp.'
+            "Wait for CI to pass before automatically deploying the dapp."
         ),
     )
 
     class Meta:
-        verbose_name = _('Dapp Github options')
-        verbose_name_plural = _('Dapps Github options')
+        verbose_name = _("Dapp Github options")
+        verbose_name_plural = _("Dapps Github options")
 
     def download_repo(self):
         # we make this call in the name of the owner, because it's automatic if

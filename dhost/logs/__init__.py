@@ -1,1 +1,1 @@
-default_app_config = 'dhost.logs.apps.LogsConfig'
+default_app_config = "dhost.logs.apps.LogsConfig"

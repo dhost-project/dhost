@@ -3,13 +3,12 @@ from django.core.management.commands.test import Command as TestCommand
 
 
 class Command(TestCommand):
-
     def add_arguments(self, parser):
         parser.add_argument(
-            '--keepdata',
-            '--keep-data',
-            action='store_true',
-            help='Tells Django to NOT delete the test dir.',
+            "--keepdata",
+            "--keep-data",
+            action="store_true",
+            help="Tells Django to NOT delete the test dir.",
         )
 
         super().add_arguments(parser)
@@ -17,5 +16,5 @@ class Command(TestCommand):
     def handle(self, *test_labels, **options):
         super().handle(*test_labels, **options)
 
-        if not options.get('keepdata', False):
-            call_command('deltestdir', '--noinput')
+        if not options.get("keepdata", False):
+            call_command("deltestdir", "--noinput")

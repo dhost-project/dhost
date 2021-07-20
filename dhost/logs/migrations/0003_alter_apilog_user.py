@@ -9,17 +9,18 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('logs', '0002_alter_apilog_action_flag'),
+        ("logs", "0002_alter_apilog_action_flag"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='apilog',
-            name='user',
+            model_name="apilog",
+            name="user",
             field=models.ForeignKey(
                 blank=True,
                 null=True,
                 on_delete=django.db.models.deletion.SET_NULL,
-                to=settings.AUTH_USER_MODEL),
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

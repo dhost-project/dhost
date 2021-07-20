@@ -25,13 +25,13 @@ class RepositoryViewSet(viewsets.ReadOnlyModelViewSet):
         queryset = super().get_queryset()
         return queryset.filter(users=self.request.user)
 
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=["get"])
     def fetch_all(self, request):
         """Update every Github repos for user from the Github API."""
         try:
             Repository.objects.fetch_all(user=request.user)
         except GithubAPIError:
-            content = {'detail': _('Error trying to fetch all repositories.')}
+            content = {"detail": _("Error trying to fetch all repositories.")}
             return Response(
                 content,
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -40,14 +40,14 @@ class RepositoryViewSet(viewsets.ReadOnlyModelViewSet):
         serializer = self.get_serializer(repos, many=True)
         return Response(serializer.data)
 
-    @action(detail=True, methods=['get'])
+    @action(detail=True, methods=["get"])
     def fetch(self, request, pk=None):
         """Update a single repo from Github API."""
         repo = self.get_object()
         try:
             repo.fetch_repo(user=request.user)
         except GithubAPIError:
-            content = {'detail': _('Error trying to fetch repository.')}
+            content = {"detail": _("Error trying to fetch repository.")}
             return Response(
                 content,
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -55,14 +55,14 @@ class RepositoryViewSet(viewsets.ReadOnlyModelViewSet):
         serializer = self.get_serializer(repo)
         return Response(serializer.data)
 
-    @action(detail=True, methods=['get'])
+    @action(detail=True, methods=["get"])
     def fetch_branches(self, request, pk=None):
         """Update a single repo branches from the Github API."""
         repo = self.get_object()
         try:
             repo.fetch_branches(user=request.user)
         except GithubAPIError:
-            content = {'detail': _('Error trying to fetch branches.')}
+            content = {"detail": _("Error trying to fetch branches.")}
             return Response(
                 content,
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -97,7 +97,7 @@ class WebhookViewSet(viewsets.ViewSet):
             payload=payload,
         )
 
-    @action(detail=True, methods=['post'])
+    @action(detail=True, methods=["post"])
     def payload(self, request, pk=None):
         """Receive a webhook payload from Github.
 

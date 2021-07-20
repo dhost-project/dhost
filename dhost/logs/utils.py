@@ -5,10 +5,9 @@ from .models import APILog
 
 def log_action(instance, action_flag, dapp, user=None):
     """Log an action on a dapp."""
-    APILog.objects.log_action(user=user,
-                              obj=instance,
-                              action_flag=action_flag,
-                              dapp=dapp)
+    APILog.objects.log_action(
+        user=user, obj=instance, action_flag=action_flag, dapp=dapp
+    )
 
 
 def log_with_user(instance, action_flag, dapp):

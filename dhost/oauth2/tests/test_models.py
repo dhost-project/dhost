@@ -9,11 +9,11 @@ User = get_user_model()
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
 class OAuth2ApplicationTestCase(TestCase):
-
     @classmethod
     def setUpTestData(cls):
-        cls.user = User.objects.create_user("test_user", "test@example.com",
-                                            "123456")
+        cls.user = User.objects.create_user(
+            "test_user", "test@example.com", "123456"
+        )
         cls.application = OAuth2Application.objects.create(
             name="Test Application",
             redirect_uris="",

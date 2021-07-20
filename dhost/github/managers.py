@@ -7,31 +7,30 @@ from .github_api import DjangoGithubAPI
 def serialize_repository(repo_json):
     """Serialize from the Github API to a dict."""
     return {
-        'id': repo_json['id'],
-        'github_owner': repo_json['owner']['login'],
-        'github_repo': repo_json['name'],
-        'extra_data': repo_json,
+        "id": repo_json["id"],
+        "github_owner": repo_json["owner"]["login"],
+        "github_repo": repo_json["name"],
+        "extra_data": repo_json,
     }
 
 
 def serialize_branch(branch_json):
     return {
-        'name': branch_json['name'],
-        'extra_data': branch_json,
+        "name": branch_json["name"],
+        "extra_data": branch_json,
     }
 
 
 def serialize_webhook(webhook_json):
     return {
-        'id': webhook_json['id'],
-        'name': webhook_json['name'],
-        'active': webhook_json['active'],
-        'extra_data': webhook_json,
+        "id": webhook_json["id"],
+        "name": webhook_json["name"],
+        "active": webhook_json["active"],
+        "extra_data": webhook_json,
     }
 
 
 class RepositoryManager(models.Manager):
-
     def fetch_all(self, user):
         """Update every user's repositories.
 
@@ -54,10 +53,10 @@ class RepositoryManager(models.Manager):
             user (User): the user to remove from inavailable repos.
         """
         # Create a list of ID gathered during the Github API call
-        repo_id_list = [r['id'] for r in repo_list]
+        repo_id_list = [r["id"] for r in repo_list]
 
         # Get all the user's repos
-        Repository = apps.get_model('github.Repository')
+        Repository = apps.get_model("github.Repository")
         repo_obj_list = Repository.objects.filter(users=user)
 
         for repo_obj in repo_obj_list:
@@ -83,9 +82,9 @@ class RepositoryManager(models.Manager):
 
         Uupdate instead of just getting the object when it exist.
         """
-        Repository = apps.get_model('github.Repository')
+        Repository = apps.get_model("github.Repository")
         try:
-            github_repo = self.get(id=repo_json['id'])
+            github_repo = self.get(id=repo_json["id"])
             github_repo.update_from_json(repo_json, user)
             return github_repo
         except Repository.DoesNotExist:
@@ -96,11 +95,11 @@ class RepositoryManager(models.Manager):
 
 
 class BranchManager(models.Manager):
-
     def fetch_repo_branches(self, repo, user):
         g = DjangoGithubAPI(user=user)
-        branch_list = g.list_branches(owner=repo.github_owner,
-                                      repo=repo.github_repo)
+        branch_list = g.list_branches(
+            owner=repo.github_owner, repo=repo.github_repo
+        )
         for branch in branch_list:
             self.update_or_create_from_json(repo, branch)
         self.remove_unavailable_list(branch_list, repo)
@@ -116,7 +115,7 @@ class BranchManager(models.Manager):
             repo (Repository): a repo object.
         """
         # create a list of branches name gathered during the Github API call
-        branch_name_list = [r['name'] for r in branch_list]
+        branch_name_list = [r["name"] for r in branch_list]
 
         branch_obj_list = repo.branches.all()
         for branch_obj in branch_obj_list:
@@ -130,12 +129,12 @@ class BranchManager(models.Manager):
 
     def create_from_json(self, repo, branch_json):
         data = self.serialize(branch_json)
-        data.update({'repo': repo})
+        data.update({"repo": repo})
         return self.create(**data)
 
     def update_or_create_from_json(self, repo, branch_json):
-        Branch = apps.get_model('github.Branch')
-        name = branch_json['name']
+        Branch = apps.get_model("github.Branch")
+        name = branch_json["name"]
         try:
             branch = self.get(name=name, repo=repo)
             branch.update_from_json(branch_json)
@@ -148,8 +147,7 @@ class BranchManager(models.Manager):
 
 
 class WebhookManager(models.Manager):
-
-    def create_webhook(self, repo, user, name='web', active=True):
+    def create_webhook(self, repo, user, name="web", active=True):
         """Create a Github Webhook on Django and Github.
 
         Args:
@@ -164,23 +162,25 @@ class WebhookManager(models.Manager):
         webhook = self.create(repo=repo, name=name)
         webhook_url = webhook.get_reverse_payload_url()
         g = DjangoGithubAPI(user=user)
-        webhook_json = g.create_hook(owner=repo.github_owner,
-                                     repo=repo.github_repo,
-                                     name=name,
-                                     webhook_url=webhook_url,
-                                     active=active)
+        webhook_json = g.create_hook(
+            owner=repo.github_owner,
+            repo=repo.github_repo,
+            name=name,
+            webhook_url=webhook_url,
+            active=active,
+        )
         webhook.update_from_json(webhook_json)
         return webhook
 
     def create_from_json(self, webhook_json, repo):
         data = self.serialize(webhook_json)
-        data.update({'repo': repo})
+        data.update({"repo": repo})
         return self.create(**data)
 
     def update_or_create_from_json(self, webhook_json, repo):
-        Webhook = apps.get_model('github.Webhook')
+        Webhook = apps.get_model("github.Webhook")
         try:
-            webhook = self.get(id=webhook_json['id'], repo=repo)
+            webhook = self.get(id=webhook_json["id"], repo=repo)
             webhook.update_from_json(webhook_json)
             return webhook
         except Webhook.DoesNotExist:

@@ -1,1 +1,1 @@
-default_app_config = 'dhost.ipfs.apps.IPFSConfig'
+default_app_config = "dhost.ipfs.apps.IPFSConfig"

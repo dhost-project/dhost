@@ -9,22 +9,21 @@ User = get_user_model()
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
 class DappModelTest(TestCase):
-
     def create_dapp(
         self,
-        slug='test_dapp',
-        url='http://example.com/',
+        slug="test_dapp",
+        url="http://example.com/",
         owner=None,
     ):
         return Dapp.objects.create(slug=slug, url=url, owner=owner)
 
-    @tag('fast')
+    @tag("fast")
     def test_str(self):
         # test Dapp's `__str__` function
         user = User.objects.create(
-            username='johnny',
-            password='john',
-            avatar='-',
+            username="johnny",
+            password="john",
+            avatar="-",
         )
         d = self.create_dapp(owner=user)
         dapp_str = str(d)

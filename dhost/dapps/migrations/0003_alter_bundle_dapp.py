@@ -7,16 +7,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('dapps', '0002_alter_dapp_created_at'),
+        ("dapps", "0002_alter_dapp_created_at"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='bundle',
-            name='dapp',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
-                                    related_name='bundles',
-                                    related_query_name='bundles',
-                                    to='dapps.dapp'),
+            model_name="bundle",
+            name="dapp",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="bundles",
+                related_query_name="bundles",
+                to="dapps.dapp",
+            ),
         ),
     ]
