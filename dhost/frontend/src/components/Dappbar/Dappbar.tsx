@@ -10,9 +10,9 @@ function Dappbar(): React.ReactElement {
           <h5>dhost-project/dhost-v2</h5>
         </Container>
       </div>
-      <div className="bg-light py-1 border-bottom">
+      <div className="bg-light border-bottom">
         <Container>
-          <Nav className="justify-content-center" activeKey="/home">
+          <Nav className="justify-content-evenly" activeKey="/home">
             <Nav.Item>
               <Nav.Link href="/home">Overview</Nav.Link>
             </Nav.Item>

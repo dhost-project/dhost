@@ -1,3 +1,4 @@
+import Container from "react-bootstrap/Container"
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,6 +13,28 @@ import {
   DappIndex as IPFSDappIndex,
   DappEdit as IPFSDappEdit,
 } from "../Dapp"
+import Dappbar from "./../../components/Dappbar"
+import NotFound from "./../NotFound"
+
+function IPFSDappDetail(): React.ReactElement {
+  const { path } = useRouteMatch()
+
+  return (
+    <Router>
+      <Dappbar />
+      <Container>
+        <Switch>
+          <Route exact path={`${path}/`} component={IPFSDappIndex} />
+          <Route path={`${path}/deploy`} component={IPFSDappDeploy} />
+          <Route path={`${path}/logs`} component={IPFSDappLogs} />
+          <Route path={`${path}/settings`} component={IPFSDappEdit} />
+          <Route path={`${path}/files`} component={IPFSDappFiles} />
+          <Route path="*" component={NotFound} />
+        </Switch>
+      </Container>
+    </Router>
+  )
+}
 
 function IPFSDapp(): React.ReactElement {
   const { path } = useRouteMatch()
@@ -19,17 +42,9 @@ function IPFSDapp(): React.ReactElement {
   return (
     <Router>
       <Switch>
-        <Route exact path={path}>
-          <h2>Dapp home.</h2>
-        </Route>
-        <Route exact path={`${path}/:dapp_slug/`} component={IPFSDappIndex} />
-        <Route path={`${path}/:dapp_slug/deploy`} component={IPFSDappDeploy} />
-        <Route path={`${path}/:dapp_slug/logs`} component={IPFSDappLogs} />
-        <Route path={`${path}/:dapp_slug/settings`} component={IPFSDappEdit} />
-        <Route path={`${path}/:dapp_slug/files`} component={IPFSDappFiles} />
-        <Route path="*">
-          <h2>Dapp not found</h2>
-        </Route>
+        <Route exact path={`${path}/`} component={IPFSDappIndex} />
+        <Route path={`${path}/:dapp_slug`} component={IPFSDappDetail} />
+        <Route path="*" component={NotFound} />
       </Switch>
     </Router>
   )
