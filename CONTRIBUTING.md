@@ -63,7 +63,7 @@ pre-commit run --all-file
 
 ### Tox
 
-[tox](https://pypi.org/project/tox/) is a command line driven CI frontend and development task automation tool. It will launch multiple commands, format and lint the code and also run tests.
+[tox](https://pypi.org/project/tox/) is a command line driven CI frontend and development task automation tool. It will launch multiple commands, check for format and lint the code and also run tests.
 
 Run it with:
 
