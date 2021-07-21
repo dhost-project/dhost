@@ -38,24 +38,25 @@ Lint the code with eslint.
 
 ### Folders
 
-* `components` all generic components.
-* `contexts` all contexts.
-* `locale` i18n translations.
-* `pages` pages or routers.
+- `api` all API calls components.
+- `components` all generic components.
+- `contexts` all contexts.
+- `locale` i18n translations.
+- `pages` pages or routers.
 
 ### Guidelines
 
-* When adding features write unit tests.
-* Limit API calls.
-* Use formater `prettier` with: `yarn prettier`.
-* Define a function with keyword `function`.
-* Limit custom style to a strict minimum, use Bootstrap instead.
-* Style must be in the same folder has component or page.
+- When adding features write unit tests.
+- Limit API calls.
+- Use formater `prettier` with: `yarn prettier`.
+- Define a function with keyword `function`.
+- Limit custom style to a strict minimum, use Bootstrap instead.
+- Style must be in the same folder has component or page.
 
 ### Function names
 
 | Name             | Description                       |
-| ---              | ---                               |
+| ---------------- | --------------------------------- |
 | `list`           | `GET` List objects.               |
 | `create`         | `POST` Create object.             |
 | `retrieve`       | `GET` Retrieve object.            |
