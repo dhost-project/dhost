@@ -26,22 +26,39 @@ When the app is built this allow Django to serve it from the `build` folder, the
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### Code Splitting
+### `yarn prettier`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Format the code with prettier, you can also run `yarn prettier-check` to disable the modification of files.
 
-### Analyzing the Bundle Size
+### `yarn lint`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Lint the code with eslint.
 
-### Making a Progressive Web App
+## Dev guidelines
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Folders
 
-### Advanced Configuration
+* `components` all generic components.
+* `contexts` all contexts.
+* `locale` i18n translations.
+* `pages` pages or routers.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Guidelines
 
-### Deployment
+* When adding features write unit tests.
+* Limit API calls.
+* Use formater `prettier` with: `yarn prettier`.
+* Define a function with keyword `function`.
+* Limit custom style to a strict minimum, use Bootstrap instead.
+* Style must be in the same folder has component or page.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Function names
+
+| Name             | Description                       |
+| ---              | ---                               |
+| `list`           | `GET` List objects.               |
+| `create`         | `POST` Create object.             |
+| `retrieve`       | `GET` Retrieve object.            |
+| `update`         | `PUT` Update an object.           |
+| `partial_update` | `PATCH` Partial update an object. |
+| `destroy`        | `DEL` Destroy an object.          |
