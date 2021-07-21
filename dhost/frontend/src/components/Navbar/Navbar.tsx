@@ -3,6 +3,8 @@ import Nav from "react-bootstrap/Nav"
 import NavDropdown from "react-bootstrap/NavDropdown"
 import Navbar from "react-bootstrap/Navbar"
 
+import logo from "../../assets/logo.svg"
+
 function TopNavbar(): React.ReactElement {
   return (
     <Navbar bg="dark" expand="lg" variant="dark">
@@ -10,7 +12,7 @@ function TopNavbar(): React.ReactElement {
         <Navbar.Brand href="/">
           <img
             alt=""
-            src="/logo.svg"
+            src={logo}
             width="30"
             height="30"
             className="d-inline-block align-top"
