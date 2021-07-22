@@ -12,8 +12,7 @@ urlpatterns = [
     path(
         "robots.txt",
         TemplateView.as_view(
-            template_name="robots.txt",
-            content_type="text/plain",
+            template_name="robots.txt", content_type="text/plain"
         ),
     ),
 ]
@@ -35,4 +34,4 @@ if settings.SETTINGS_MODULE == "dhost.settings.development":  # pragma: no cover
 
 # added last to redirect any URL not previously handled by Django to the react
 # dashboard wich will route the URL itself in the browser
-urlpatterns += [re_path(".*", include("dhost.frontend.urls"))]
+urlpatterns.append(re_path(".*", include("dhost.frontend.urls")))
