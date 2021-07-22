@@ -19,12 +19,12 @@ There is also an [editorconfig]((https://editorconfig.org/)) file [.editorconfig
 * [Vim plugin](https://github.com/editorconfig/editorconfig-vim)
 * [Emacs plugin](https://github.com/editorconfig/editorconfig-emacs)
 
-### Yapf
+### Black
 
-[Yapf](https://pypi.org/project/yapf/) is a Python code formater.
+[Black](https://github.com/psf/black) is a Python code formatter.
 
 ```bash
-yapf -i -r dhost
+black .
 ```
 
 ### Flake8
@@ -32,7 +32,7 @@ yapf -i -r dhost
 [flake8](https://flake8.pycqa.org/en/latest/) is a Python code linter, it's used to verify coding errors and check style.
 
 ```bash
-flake8 dhost
+flake8 .
 ```
 
 ### isort
@@ -41,14 +41,6 @@ flake8 dhost
 
 ```bash
 isort .
-```
-
-### pydocstyle
-
-[pydocstyle](https://pycodestyle.pycqa.org/en/latest/) is a tool to check your Python code against some of the style conventions in PEP 8.
-
-```bash
-pydocstyle dhost
 ```
 
 ## Tools
@@ -71,7 +63,7 @@ pre-commit run --all-file
 
 ### Tox
 
-[tox](https://pypi.org/project/tox/) is a command line driven CI frontend and development task automation tool. It will launch multiple commands, format and lint the code and also run tests.
+[tox](https://pypi.org/project/tox/) is a command line driven CI frontend and development task automation tool. It will launch multiple commands, check for format and lint the code and also run tests.
 
 Run it with:
 

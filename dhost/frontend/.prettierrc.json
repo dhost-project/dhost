@@ -4,6 +4,12 @@
   "tabWidth": 2,
   "semi": false,
   "singleQuote": false,
-  "importOrder": ["^./contexts/(.*)$", "^./pages/(.*)$", "^./components/(.*)$", "^[./]"],
+  "importOrder": [
+    "^./api/(.*)$",
+    "^./contexts/(.*)$",
+    "^./pages/(.*)$",
+    "^./components/(.*)$",
+    "^[./]"
+  ],
   "importOrderSeparation": true
 }

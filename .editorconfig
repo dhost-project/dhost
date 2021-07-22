@@ -38,6 +38,6 @@ indent_size = 2
 [*.po]
 max_line_length = 79
 
-[*.{ts,tsx}]
+[*.{css,scss,js,jsx,ts,tsx}]
 max_line_length = 80
 indent_size = 2
