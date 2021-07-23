@@ -1,6 +1,7 @@
 export { default as DappDeploy } from "./DappDeploy"
+export { default as DappEdit } from "./DappEdit"
 export { default as DappFiles } from "./DappFiles"
 export { default as DappIndex } from "./DappIndex"
+export { default as DappList } from "./DappList"
 export { default as DappLogs } from "./DappLogs"
 export { default as DappReadOnlyList } from "./DappReadOnlyList"
-export { default as DappEdit } from "./DappEdit"
