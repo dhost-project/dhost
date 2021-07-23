@@ -10,7 +10,6 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
 develop-eggs/
 dist/
 downloads/
@@ -128,7 +127,6 @@ dmypy.json
 /.vscode
 
 node_modules/
-dhost/static/
 
 # misc
 .DS_Store
@@ -144,3 +142,10 @@ yarn-error.log*
 staticfiles
 db.sqlite3
 media
+
+# everything inside dhost/frontend/build except public files
+dhost/frontend/build/index.html
+dhost/frontend/build/asset-manifest.json
+dhost/frontend/build/static/css
+dhost/frontend/build/static/js
+dhost/frontend/build/static/media
