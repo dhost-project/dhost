@@ -11,8 +11,6 @@ DEBUG = False
 
 SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
-CORS_ALLOW_ALL_ORIGINS = False
-
 if env("ENABLE_SSL", "1") == "1":  # noqa
 
     SECURE_SSL_REDIRECT = True
