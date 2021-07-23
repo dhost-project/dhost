@@ -1,9 +1,9 @@
 export { default } from "./IPFSDapp"
 export {
   DappDeploy as IPFSDappDeploy,
+  DappDetails as IPFSDappDetails,
   DappEdit as IPFSDappEdit,
   DappFiles as IPFSDappFiles,
-  DappIndex as IPFSDappIndex,
   DappList as IPFSDappList,
   DappLogs as IPFSDappLogs,
 } from "../Dapp"
