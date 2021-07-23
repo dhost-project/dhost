@@ -17,7 +17,7 @@ function TopNavbar(): React.ReactElement {
             height="30"
             className="d-inline-block align-top"
           />{" "}
-          DHost
+          <span className="text-primary">D</span>Host
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
