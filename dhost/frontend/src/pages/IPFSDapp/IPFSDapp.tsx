@@ -7,12 +7,13 @@ import {
 } from "react-router-dom"
 
 import {
-  DappDeploy as IPFSDappDeploy,
-  DappFiles as IPFSDappFiles,
-  DappLogs as IPFSDappLogs,
-  DappIndex as IPFSDappIndex,
-  DappEdit as IPFSDappEdit,
-} from "../Dapp"
+  IPFSDappDeploy,
+  IPFSDappDetails,
+  IPFSDappFiles,
+  IPFSDappList,
+  IPFSDappLogs,
+  IPFSDappEdit,
+} from "../IPFSDapp"
 import Dappbar from "./../../components/Dappbar"
 import NotFound from "./../NotFound"
 
@@ -24,7 +25,7 @@ function IPFSDappDetail(): React.ReactElement {
       <Dappbar />
       <Container>
         <Switch>
-          <Route exact path={`${path}/`} component={IPFSDappIndex} />
+          <Route exact path={`${path}/`} component={IPFSDappDetails} />
           <Route path={`${path}/deploy`} component={IPFSDappDeploy} />
           <Route path={`${path}/logs`} component={IPFSDappLogs} />
           <Route path={`${path}/settings`} component={IPFSDappEdit} />
@@ -42,7 +43,7 @@ function IPFSDapp(): React.ReactElement {
   return (
     <Router>
       <Switch>
-        <Route exact path={`${path}/`} component={IPFSDappIndex} />
+        <Route exact path={`${path}/`} component={IPFSDappList} />
         <Route path={`${path}/:dapp_slug`} component={IPFSDappDetail} />
         <Route path="*" component={NotFound} />
       </Switch>

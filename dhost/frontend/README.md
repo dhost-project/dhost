@@ -55,11 +55,16 @@ Lint the code with eslint.
 
 ### Function names
 
-| Name             | Description                       |
-| ---------------- | --------------------------------- |
-| `list`           | `GET` List objects.               |
-| `create`         | `POST` Create object.             |
-| `retrieve`       | `GET` Retrieve object.            |
-| `update`         | `PUT` Update an object.           |
-| `partial_update` | `PATCH` Partial update an object. |
-| `destroy`        | `DEL` Destroy an object.          |
+| Name             | Description                              |
+| ---------------- | ---------------------------------        |
+| `List`           | Objects list page/component.             |
+| `Add`            | Add a new object page/component.         |
+| `Details`        | Object's details page/component.         |
+| `Edit`           | Edit object page/component.              |
+| `Delete`         | Delete object page/component.            |
+| `list`           | API `GET` to list objects.               |
+| `create`         | API `POST` to create object.             |
+| `retrieve`       | API `GET` to retrieve object.            |
+| `update`         | API `PUT` to update an object.           |
+| `partial_update` | API `PATCH` to partial update an object. |
+| `destroy`        | API `DEL` to destroy an object.          |

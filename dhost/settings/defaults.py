@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     "dhost.users",
     "dhost.oauth2",
     # External apps
-    "corsheaders",
     "crispy_forms",
     "crispy_bootstrap5",
     "django_otp",
@@ -62,7 +61,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "oauth2_provider.middleware.OAuth2TokenMiddleware",
@@ -182,10 +180,6 @@ REST_FRAMEWORK = {
     "DEFAULT_VERSION": "1.0",
     "ALLOWED_VERSIONS": ("1.0",),
 }
-
-# CORS
-# https://github.com/adamchainz/django-cors-headers
-CORS_ALLOWED_ORIGINS = env_list("CORS_ALLOWED_ORIGINS", "http://localhost:8000")
 
 # OAuth2 provider
 # https://django-oauth-toolkit.readthedocs.io/en/latest/
