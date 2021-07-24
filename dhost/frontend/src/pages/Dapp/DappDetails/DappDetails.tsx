@@ -3,7 +3,9 @@ import { RouteComponentProps } from "react-router-dom"
 
 type TParams = { dapp_slug: string }
 
-function DappDetails({ match }: RouteComponentProps<TParams>): React.ReactElement {
+function DappDetails({
+  match,
+}: RouteComponentProps<TParams>): React.ReactElement {
   const { t } = useTranslation()
 
   return (

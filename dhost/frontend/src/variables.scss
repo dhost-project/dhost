@@ -1,0 +1,27 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+$primary: $green-300;
+$secondary: $gray-300;
+$success: $green-300;
+$info: $blue-300;
+$warning: $yellow-300;
+$danger: $red-300;
+$light: $light;
+$dark: $dark;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark,
+);
+
+// nav-link gray instead of blue
+$nav-link-color: $gray-800;
+$nav-link-hover-color: $gray-600;
+$nav-link-disabled-color: $gray-500;

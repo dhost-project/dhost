@@ -1,0 +1,17 @@
+@import "../../variables";
+
+.nav-item .active {
+  position: relative;
+}
+
+.nav-item .active::after {
+  content: " ";
+  display: block;
+  background: $primary;
+  height: 1px;
+  width: 100%;
+
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+}
