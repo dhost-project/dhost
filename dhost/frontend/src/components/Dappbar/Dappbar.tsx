@@ -1,3 +1,6 @@
+import { faGithub } from "@fortawesome/free-brands-svg-icons"
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Button from "react-bootstrap/Button"
 import Container from "react-bootstrap/Container"
 import Nav from "react-bootstrap/Nav"
@@ -10,13 +13,15 @@ function Dappbar(): React.ReactElement {
       <div id="bg-dappbar" className="py-4 border-bottom">
         <Container className="position-relative">
           <h2>Dhost v2.0</h2>
-          <h5>dhost-project/dhost-v2</h5>
+          <h5>
+            <FontAwesomeIcon icon={faGithub} /> dhost-project/dhost-v2
+          </h5>
           <Button
             id="btn-visit"
             className="position-absolute top-0 end-0"
             href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
           >
-            Visit
+            Visit <FontAwesomeIcon icon={faExternalLinkAlt} />
           </Button>
         </Container>
       </div>
