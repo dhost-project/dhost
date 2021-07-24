@@ -1,5 +1,5 @@
-import Container from "react-bootstrap/Container"
 import Button from "react-bootstrap/Button"
+import Container from "react-bootstrap/Container"
 import Nav from "react-bootstrap/Nav"
 
 import "./style.scss"
@@ -7,14 +7,20 @@ import "./style.scss"
 function Dappbar(): React.ReactElement {
   return (
     <div>
-      <div className="bg-dappbar py-4">
+      <div id="bg-dappbar" className="py-4 border-bottom">
         <Container className="position-relative">
           <h2>Dhost v2.0</h2>
           <h5>dhost-project/dhost-v2</h5>
-          <Button className="position-absolute top-0 end-0 me-3">Visit</Button>
+          <Button
+            id="btn-visit"
+            className="position-absolute top-0 end-0"
+            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+          >
+            Visit
+          </Button>
         </Container>
       </div>
-      <div className="bg-light border-bottom">
+      <div className="bg-light border-bottom border-2">
         <Container>
           <Nav className="justify-content-evenly" activeKey="/home">
             <Nav.Item>

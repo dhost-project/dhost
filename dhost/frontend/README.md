@@ -52,6 +52,7 @@ Lint the code with eslint.
 - Define a function with keyword `function`.
 - Limit custom style to a strict minimum, use Bootstrap instead.
 - Style must be in the same folder has component or page.
+- Use `id` to style a single element, `class` to style multiple elements.
 
 ### Function names
 
