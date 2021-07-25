@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 import FormControl from "react-bootstrap/FormControl"
+import InputGroup from "react-bootstrap/InputGroup"
 import Nav from "react-bootstrap/Nav"
 import NavDropdown from "react-bootstrap/NavDropdown"
 import Navbar from "react-bootstrap/Navbar"
@@ -29,7 +30,7 @@ function TopNavbar(): React.ReactElement {
           <Nav.Link href="/dapps/">Dapps</Nav.Link>
         </Nav>
         <Nav className="me-auto">
-          <Form className="d-flex">
+          <InputGroup>
             <FormControl
               type="search"
               placeholder="Search for dapps"
@@ -39,7 +40,7 @@ function TopNavbar(): React.ReactElement {
             <Button id="navbar-search-button" variant="outline-dark">
               <FontAwesomeIcon icon={faSearch} />
             </Button>
-          </Form>
+          </InputGroup>
         </Nav>
         <Nav>
           <NavDropdown title="Account" id="basic-nav-dropdown">
