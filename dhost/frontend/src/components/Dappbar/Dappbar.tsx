@@ -12,14 +12,28 @@ function Dappbar(): React.ReactElement {
     <div>
       <div id="bg-dappbar" className="py-4 border-bottom">
         <Container className="position-relative">
-          <h2>Dhost v2.0</h2>
+          <h2>
+            <a
+              className="text-reset text-decoration-none"
+              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            >
+              Dhost v2.0
+            </a>
+          </h2>
           <h5>
-            <FontAwesomeIcon icon={faGithub} /> dhost-project/dhost-v2
+            <a
+              className="text-reset text-decoration-none"
+              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+              target="_blank"
+            >
+              <FontAwesomeIcon icon={faGithub} /> dhost-project/dhost-v2
+            </a>
           </h5>
           <Button
             id="btn-visit"
             className="position-absolute top-0 end-0"
             href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            target="_blank"
           >
             Visit <FontAwesomeIcon icon={faExternalLinkAlt} />
           </Button>
