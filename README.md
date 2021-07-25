@@ -1,4 +1,4 @@
-# DHost API
+# DHost
 
 ![infra](docs/dhost_infra.png)
 
