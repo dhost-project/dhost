@@ -1,11 +1,9 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Button from "react-bootstrap/Button"
-import Form from "react-bootstrap/Form"
 import FormControl from "react-bootstrap/FormControl"
 import InputGroup from "react-bootstrap/InputGroup"
 import Nav from "react-bootstrap/Nav"
-import NavDropdown from "react-bootstrap/NavDropdown"
 import Navbar from "react-bootstrap/Navbar"
 
 import logo from "../../assets/logo.svg"
@@ -43,12 +41,15 @@ function TopNavbar(): React.ReactElement {
           </InputGroup>
         </Nav>
         <Nav>
-          <NavDropdown title="Account" id="basic-nav-dropdown">
-            <NavDropdown.Item href="">Settings</NavDropdown.Item>
-            <NavDropdown.Item href="">Security</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="">Logout</NavDropdown.Item>
-          </NavDropdown>
+          <Navbar.Text>
+            <img
+              alt=""
+              src="https://www.gravatar.com/avatar/"
+              width="30"
+              height="30"
+              className="d-inline-block align-top rounded-circle"
+            />
+          </Navbar.Text>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
