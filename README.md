@@ -1,5 +1,7 @@
 # DHost API
 
+![infra](docs/dhost_infra.png)
+
 ## Setup
 
 For a complete setup guide go to [docs/setup.md](./docs/setup.md) or use Docker:
