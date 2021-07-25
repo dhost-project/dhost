@@ -13,7 +13,7 @@ import {
   IPFSDappList,
   IPFSDappLogs,
   IPFSDappEdit,
-} from "../IPFSDapp"
+} from "."
 import Dappbar from "./../../components/Dappbar"
 import NotFound from "./../NotFound"
 
