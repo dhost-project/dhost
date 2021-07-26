@@ -1,0 +1,11 @@
+@import "../../variables";
+
+#footer-nav {
+  height: 120px; // just for testing
+  background-color: $gray-200;
+}
+
+#footer-bottom {
+  background-color: $gray-900;
+  color: $gray-300;
+}
