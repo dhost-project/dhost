@@ -7,15 +7,9 @@ import Home from "./pages/Home"
 import IPFSDapp from "./pages/IPFSDapp"
 import NotFound from "./pages/NotFound"
 
-import Footer from "./components/Footer"
-import Header from "./components/Header"
-import Navbar from "./components/Navbar"
-
 function RouterOutlet(): React.ReactElement {
   return (
     <BrowserRouter>
-      <Header />
-      <Navbar />
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/about" exact component={About} />
@@ -23,7 +17,6 @@ function RouterOutlet(): React.ReactElement {
         <Route path="/ipfs" component={IPFSDapp} />
         <Route path="*" component={NotFound} />
       </Switch>
-      <Footer />
     </BrowserRouter>
   )
 }
