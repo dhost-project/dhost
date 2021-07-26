@@ -31,7 +31,7 @@ function Dappbar(): React.ReactElement {
           </h5>
           <Button
             id="btn-visit"
-            className="position-absolute top-0 end-0"
+            className="position-absolute top-0 end-0 text-light"
             href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
             target="_blank"
           >

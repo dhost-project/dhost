@@ -1,5 +1,3 @@
-import Container from "react-bootstrap/Container"
-
 import "./style.scss"
 
 function Footer(): React.ReactElement {
