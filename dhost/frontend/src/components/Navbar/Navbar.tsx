@@ -42,13 +42,15 @@ function TopNavbar(): React.ReactElement {
         </Nav>
         <Nav>
           <Navbar.Text>
-            <img
-              alt=""
-              src="https://www.gravatar.com/avatar/"
-              width="30"
-              height="30"
-              className="d-inline-block align-top rounded-circle border border-2 border-primary"
-            />
+            <a href="/account/settings">
+              <img
+                alt=""
+                src="https://www.gravatar.com/avatar/"
+                width="30"
+                height="30"
+                className="d-inline-block align-top rounded-circle border border-2 border-primary"
+              />
+            </a>
           </Navbar.Text>
         </Nav>
       </Navbar.Collapse>

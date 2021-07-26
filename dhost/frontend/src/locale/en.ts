@@ -13,7 +13,7 @@ export const en = {
     IMPORT_FILES_URL_BTN: "Import via URL",
     DRAG_DROP: "Drag & Drop your files here",
 
-    HOME_TITLE: "Dhost dashboard",
+    HOME_TITLE: "DHost dashboard",
 
     DAPP_DETAILS_TITLE: "Overview",
     DEPLOY_TITLE: "Deploy",
@@ -22,5 +22,10 @@ export const en = {
     SETTINGS_TITLE: "Settings",
 
     DAPP_READ_ONLY_LIST_TITLE: "Dapps list",
+
+    ACCOUNT_SETTINGS_TITLE: "Account settings",
+    ACCOUNT_DELETE_CONFIRM_TITLE: "Account delete confirm",
+
+    ABOUT_TITLE: "About",
   },
 }
