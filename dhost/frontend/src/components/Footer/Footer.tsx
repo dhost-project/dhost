@@ -3,8 +3,8 @@ import "./style.scss"
 function Footer(): React.ReactElement {
   return (
     <footer>
-      <div className="d-flex border-top bg-light fw-light py-2 px-2">
-        <div className="me-auto">
+      <div className="d-flex justify-content-between flex-wrap border-top bg-light fw-light py-2 px-2">
+        <div>
           <a href="https://github.com/dhost-project/dhost-doc" target="_blank">
             Documentation
           </a>
