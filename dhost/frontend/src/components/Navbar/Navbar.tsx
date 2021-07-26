@@ -47,7 +47,7 @@ function TopNavbar(): React.ReactElement {
               src="https://www.gravatar.com/avatar/"
               width="30"
               height="30"
-              className="d-inline-block align-top rounded-circle"
+              className="d-inline-block align-top rounded-circle border border-2 border-primary"
             />
           </Navbar.Text>
         </Nav>
