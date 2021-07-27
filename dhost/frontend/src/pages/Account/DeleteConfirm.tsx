@@ -1,14 +1,11 @@
-import Container from "react-bootstrap/Container"
 import { useTranslation } from "react-i18next"
 
-function DeleteConfirm(): React.ReactElement {
+export default function DeleteConfirm(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <Container>
+    <div className="container mx-auto">
       <h2>{t("ACCOUNT_DELETE_CONFIRM_TITLE")}</h2>
-    </Container>
+    </div>
   )
 }
-
-export default DeleteConfirm

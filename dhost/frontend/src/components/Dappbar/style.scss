@@ -1,22 +1,16 @@
-@import "../../variables";
-
 #bg-dappbar {
   background: linear-gradient(to right, #b2dfdb, #c5cae9);
 }
 
-#btn-visit {
-  margin-right: 12px !important;
-}
-
-.nav-item .active {
+#nav-dappbar .active {
   position: relative;
 }
 
 // add the active indicator under the nav-item
-.nav-item .active::after {
+#nav-dappbar .active::after {
   content: " ";
   display: block;
-  background: $primary;
+  background: green;
   height: 2px;
   width: 100%;
 

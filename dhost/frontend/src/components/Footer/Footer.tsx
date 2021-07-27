@@ -1,9 +1,9 @@
 import "./style.scss"
 
-function Footer(): React.ReactElement {
+export default function Footer(): React.ReactElement {
   return (
     <footer>
-      <div className="d-flex justify-content-between flex-wrap border-top bg-light fw-light py-2 px-2">
+      <div className="flex justify-between border-t border-gray-200 font-light py-2 px-2">
         <div>
           <a href="https://github.com/dhost-project/dhost-doc" target="_blank">
             Documentation
@@ -40,5 +40,3 @@ function Footer(): React.ReactElement {
     </footer>
   )
 }
-
-export default Footer

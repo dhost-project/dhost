@@ -2,12 +2,11 @@ import Footer from "./components/Footer"
 import Header from "./components/Header"
 import Navbar from "./components/Navbar"
 
-import "./App.css"
 import RouterOutlet from "./Router"
 
-function App(): React.ReactElement {
+export default function App(): React.ReactElement {
   return (
-    <div id="footer-flex-wrapper">
+    <div className="flex flex-col min-h-screen justify-between">
       <div>
         <Header />
         <Navbar />
@@ -17,5 +16,3 @@ function App(): React.ReactElement {
     </div>
   )
 }
-
-export default App

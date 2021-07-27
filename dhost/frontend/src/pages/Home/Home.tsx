@@ -1,14 +1,11 @@
-import Container from "react-bootstrap/Container"
 import { useTranslation } from "react-i18next"
 
-function Home(): React.ReactElement {
+export default function Home(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <Container>
+    <div className="container mx-auto">
       <h2>{t("HOME_TITLE")}</h2>
-    </Container>
+    </div>
   )
 }
-
-export default Home

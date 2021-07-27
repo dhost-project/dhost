@@ -8,7 +8,7 @@ import {
 import { AccountSettings, AccountDeleteConfirm } from "."
 import NotFound from "./../NotFound"
 
-function Account(): React.ReactElement {
+export default function Account(): React.ReactElement {
   const { path } = useRouteMatch()
 
   return (
@@ -24,5 +24,3 @@ function Account(): React.ReactElement {
     </Router>
   )
 }
-
-export default Account

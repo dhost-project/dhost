@@ -3,16 +3,16 @@ import { RouteComponentProps } from "react-router-dom"
 
 type TParams = { dapp_slug: string }
 
-function Files({ match }: RouteComponentProps<TParams>): React.ReactElement {
+export default function Files({
+  match,
+}: RouteComponentProps<TParams>): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div>
+    <div className="container mx-auto">
       <h2>
         {t("FILES_TITLE")} {match.params.dapp_slug}
       </h2>
     </div>
   )
 }
-
-export default Files

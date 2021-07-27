@@ -1,5 +1,3 @@
-function Header(): React.ReactElement {
+export default function Header(): React.ReactElement {
   return <header></header>
 }
-
-export default Header
