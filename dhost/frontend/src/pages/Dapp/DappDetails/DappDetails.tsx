@@ -3,18 +3,16 @@ import { RouteComponentProps } from "react-router-dom"
 
 type TParams = { dapp_slug: string }
 
-function DappDetails({
+export default function DappDetails({
   match,
 }: RouteComponentProps<TParams>): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div>
-      <h2>
+    <div className="container mx-auto">
+      <h2 className="text-3xl pt-2">
         {t("DAPP_DETAILS_TITLE")} {match.params.dapp_slug}
       </h2>
     </div>
   )
 }
-
-export default DappDetails
