@@ -215,7 +215,7 @@ export default function Navbar(): React.ReactElement {
                 Dapps
               </a>
               <a
-                href="#"
+                href="/"
                 className="text-base font-medium text-gray-500 hover:text-gray-900"
               >
                 Docs
@@ -298,7 +298,7 @@ export default function Navbar(): React.ReactElement {
                             </div>
                             <div className="mt-5 text-sm">
                               <a
-                                href="#"
+                                href="/"
                                 className="font-medium text-indigo-600 hover:text-indigo-500"
                               >
                                 {" "}
@@ -316,7 +316,7 @@ export default function Navbar(): React.ReactElement {
             </Popover.Group>
             <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
               <a
-                href="#"
+                href="/"
                 className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
               >
                 Sign up
@@ -380,7 +380,7 @@ export default function Navbar(): React.ReactElement {
                       Dapps
                     </a>
                     <a
-                      href="#"
+                      href="/"
                       className="text-base font-medium text-gray-900 hover:text-gray-700"
                     >
                       Docs
@@ -397,7 +397,7 @@ export default function Navbar(): React.ReactElement {
                   </div>
                   <div>
                     <a
-                      href="#"
+                      href="/"
                       className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
                     >
                       Sign up
@@ -405,7 +405,7 @@ export default function Navbar(): React.ReactElement {
                     <p className="mt-6 text-center text-base font-medium text-gray-500">
                       Existing customer?{" "}
                       <a
-                        href="#"
+                        href="/"
                         className="text-indigo-600 hover:text-indigo-500"
                       >
                         Login

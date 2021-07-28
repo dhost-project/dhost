@@ -1,4 +1,4 @@
-import "./style.scss"
+import "./style.css"
 
 export default function Dappbar(): React.ReactElement {
   return (
@@ -17,6 +17,7 @@ export default function Dappbar(): React.ReactElement {
             <a
               className="text-reset text-decoration-none"
               href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+              rel="noreferrer"
               target="_blank"
             >
               dhost-project/dhost-v2
@@ -25,6 +26,7 @@ export default function Dappbar(): React.ReactElement {
           <a
             className="absolute top-0 right-0"
             href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            rel="noreferrer"
             target="_blank"
           >
             Visit
