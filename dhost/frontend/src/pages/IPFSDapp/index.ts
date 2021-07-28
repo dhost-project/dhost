@@ -6,4 +6,4 @@ export {
   DappFiles as IPFSDappFiles,
   DappList as IPFSDappList,
   DappLogs as IPFSDappLogs,
-} from "../Dapp"
+} from "pages/Dapp"

@@ -5,6 +5,10 @@ import {
   useRouteMatch,
 } from "react-router-dom"
 
+import Dappbar from "components/Dappbar"
+
+import NotFound from "pages/NotFound"
+
 import {
   IPFSDappDeploy,
   IPFSDappDetails,
@@ -13,8 +17,6 @@ import {
   IPFSDappLogs,
   IPFSDappEdit,
 } from "."
-import Dappbar from "./../../components/Dappbar"
-import NotFound from "./../NotFound"
 
 function IPFSDappDetail(): React.ReactElement {
   const { path } = useRouteMatch()

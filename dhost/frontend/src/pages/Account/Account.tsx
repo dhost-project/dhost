@@ -5,8 +5,9 @@ import {
   useRouteMatch,
 } from "react-router-dom"
 
+import NotFound from "pages/NotFound"
+
 import { AccountSettings, AccountDeleteConfirm } from "."
-import NotFound from "./../NotFound"
 
 export default function Account(): React.ReactElement {
   const { path } = useRouteMatch()
