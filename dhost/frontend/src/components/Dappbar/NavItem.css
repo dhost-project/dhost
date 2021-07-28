@@ -1,7 +1,7 @@
 #nav-dappbar .active::after {
   content: " ";
   display: block;
-  background: green;
+  background: #8ab48a;
   height: 2px;
   width: 100%;
 
