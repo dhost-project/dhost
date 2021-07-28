@@ -1,9 +1,11 @@
+import Nav from "./Nav"
+import NavItem from "./NavItem"
 import "./style.css"
 
 export default function Dappbar(): React.ReactElement {
   return (
     <div>
-      <div id="bg-dappbar" className="py-4 border-b">
+      <div className="py-6 border-b bg-gradient-to-r from-green-200 to-blue-200">
         <div className="container mx-auto relative">
           <h1 className="text-4xl">
             <a
@@ -33,27 +35,15 @@ export default function Dappbar(): React.ReactElement {
           </a>
         </div>
       </div>
-      <div className="border-b-2">
-        <div className="container mx-auto relative">
-          <div id="nav-dappbar" className="flex justify-around">
-            <a href="/home" className="active p-2">
-              Overview
-            </a>
-            <a href="link-1" className="p-2">
-              Deploy
-            </a>
-            <a href="link-2" className="p-2">
-              Source
-            </a>
-            <a href="link-2" className="p-2">
-              Logs
-            </a>
-            <a href="link-2" className="p-2">
-              Settings
-            </a>
-          </div>
-        </div>
-      </div>
+      <Nav>
+        <NavItem href="/" isActive>
+          Overview
+        </NavItem>
+        <NavItem href="/">Deploy</NavItem>
+        <NavItem href="/">Source</NavItem>
+        <NavItem href="/">Logs</NavItem>
+        <NavItem href="/">Settings</NavItem>
+      </Nav>
     </div>
   )
 }
