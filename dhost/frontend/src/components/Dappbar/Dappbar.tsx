@@ -1,11 +1,10 @@
 import Nav from "./Nav"
 import NavItem from "./NavItem"
-import "./style.css"
 
 export default function Dappbar(): React.ReactElement {
   return (
     <div>
-      <div className="py-6 border-b bg-gradient-to-r from-green-200 to-blue-200">
+      <div className="py-6 border-b bg-gradient-to-r from-green-100 to-blue-100">
         <div className="container mx-auto relative">
           <h1 className="text-4xl">
             <a

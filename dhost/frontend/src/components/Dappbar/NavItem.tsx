@@ -1,3 +1,5 @@
+import "./NavItem.css"
+
 export default function NavItem({
   href,
   isActive = false,
