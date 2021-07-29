@@ -9,6 +9,7 @@
     "^assets/(.*)$",
     "^components/(.*)$",
     "^contexts/(.*)$",
+    "^interfaces/(.*)$",
     "^locale/(.*)$",
     "^pages/(.*)$",
     "^[./]"

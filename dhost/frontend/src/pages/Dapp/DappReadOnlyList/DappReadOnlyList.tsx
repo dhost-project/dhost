@@ -1,22 +1,26 @@
 import { useTranslation } from "react-i18next"
 
+import ListDapp from "components/ListDapp"
+
+const dapps = [
+  {
+    slug: "dhost_v2",
+  },
+  {
+    slug: "dhost_v3",
+  },
+  {
+    slug: "dhost_v4",
+  },
+]
+
 export default function DappReadOnlyList(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
     <div className="container mx-auto">
       <h2>{t("DAPP_READ_ONLY_LIST_TITLE")}</h2>
-      <ul>
-        <li>
-          <a href="/ipfs/dhost_v2">Dhost_v2</a>
-        </li>
-        <li>
-          <a href="/ipfs/dhost_v3">Dhost_v3</a>
-        </li>
-        <li>
-          <a href="/ipfs/dhost_v4">Dhost_v4</a>
-        </li>
-      </ul>
+      <ListDapp dapps={dapps} />
     </div>
   )
 }

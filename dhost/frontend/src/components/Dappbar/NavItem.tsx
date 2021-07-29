@@ -10,7 +10,10 @@ export default function NavItem({
   children: any
 }): React.ReactElement {
   return (
-    <a href={href} className={`p-2 ${isActive ? "active relative" : ""}`}>
+    <a
+      href={href}
+      className={`p-2 ${isActive ? "active relative" : "hover:text-gray-600"}`}
+    >
       {children}
     </a>
   )
