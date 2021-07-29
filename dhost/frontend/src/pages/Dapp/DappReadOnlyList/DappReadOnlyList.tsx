@@ -5,12 +5,15 @@ import ListDapp from "components/ListDapp"
 const dapps = [
   {
     slug: "dhost_v2",
+    owner: "dumbo",
   },
   {
     slug: "dhost_v3",
+    owner: "dumbo",
   },
   {
     slug: "dhost_v4",
+    owner: "dumbo",
   },
 ]
 
