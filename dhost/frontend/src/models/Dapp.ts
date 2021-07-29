@@ -1,3 +1,6 @@
 export default interface Dapp {
-  slug: string
+  slug: string,
+  url?: string,
+  owner: string,
+  status?: string,
 }
