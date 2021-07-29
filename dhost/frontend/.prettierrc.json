@@ -9,8 +9,8 @@
     "^assets/(.*)$",
     "^components/(.*)$",
     "^contexts/(.*)$",
-    "^interfaces/(.*)$",
     "^locale/(.*)$",
+    "^models/(.*)$",
     "^pages/(.*)$",
     "^[./]"
   ],

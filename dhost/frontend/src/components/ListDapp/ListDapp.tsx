@@ -1,4 +1,4 @@
-import Dapp from "interfaces/Dapp"
+import Dapp from "models/Dapp"
 
 import List from "./List"
 import ListItem from "./ListItem"
