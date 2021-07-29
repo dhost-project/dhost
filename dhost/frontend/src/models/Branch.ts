@@ -1,3 +1,3 @@
 export default interface Branch {
-  name: string,
+  name: string
 }

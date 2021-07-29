@@ -1,4 +1,4 @@
 export default interface BuildOptions {
-  command?: string,
-  docker?: string,
+  command?: string
+  docker?: string
 }

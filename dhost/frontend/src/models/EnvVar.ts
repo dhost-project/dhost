@@ -1,4 +1,4 @@
 export default interface EnvVar {
-  variable: string,
-  value: string,
+  variable: string
+  value: string
 }

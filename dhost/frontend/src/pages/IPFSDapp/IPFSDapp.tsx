@@ -12,25 +12,30 @@ import NotFound from "pages/NotFound"
 import {
   IPFSDappDeploy,
   IPFSDappDetails,
-  IPFSDappFiles,
+  IPFSDappSource,
   IPFSDappList,
   IPFSDappLogs,
   IPFSDappEdit,
 } from "."
+
+const dapp = {
+  slug: "dhost_v2",
+  owner: "john",
+}
 
 function IPFSDappDetail(): React.ReactElement {
   const { path } = useRouteMatch()
 
   return (
     <Router>
-      <Dappbar />
+      <Dappbar dapp={dapp} />
       <div className="container mx-auto">
         <Switch>
           <Route exact path={`${path}/`} component={IPFSDappDetails} />
           <Route path={`${path}/deploy`} component={IPFSDappDeploy} />
           <Route path={`${path}/logs`} component={IPFSDappLogs} />
           <Route path={`${path}/settings`} component={IPFSDappEdit} />
-          <Route path={`${path}/files`} component={IPFSDappFiles} />
+          <Route path={`${path}/source`} component={IPFSDappSource} />
           <Route path="*" component={NotFound} />
         </Switch>
       </div>
