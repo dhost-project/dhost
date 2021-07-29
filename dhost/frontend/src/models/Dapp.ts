@@ -3,4 +3,5 @@ export default interface Dapp {
   url?: string,
   owner: string,
   status?: string,
+  created_at?: string,
 }
