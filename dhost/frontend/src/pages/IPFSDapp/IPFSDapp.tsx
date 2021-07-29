@@ -1,10 +1,13 @@
-import Container from "react-bootstrap/Container"
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   useRouteMatch,
 } from "react-router-dom"
+
+import Dappbar from "components/Dappbar"
+
+import NotFound from "pages/NotFound"
 
 import {
   IPFSDappDeploy,
@@ -14,8 +17,6 @@ import {
   IPFSDappLogs,
   IPFSDappEdit,
 } from "."
-import Dappbar from "./../../components/Dappbar"
-import NotFound from "./../NotFound"
 
 function IPFSDappDetail(): React.ReactElement {
   const { path } = useRouteMatch()
@@ -23,7 +24,7 @@ function IPFSDappDetail(): React.ReactElement {
   return (
     <Router>
       <Dappbar />
-      <Container>
+      <div className="container mx-auto">
         <Switch>
           <Route exact path={`${path}/`} component={IPFSDappDetails} />
           <Route path={`${path}/deploy`} component={IPFSDappDeploy} />
@@ -32,7 +33,7 @@ function IPFSDappDetail(): React.ReactElement {
           <Route path={`${path}/files`} component={IPFSDappFiles} />
           <Route path="*" component={NotFound} />
         </Switch>
-      </Container>
+      </div>
     </Router>
   )
 }

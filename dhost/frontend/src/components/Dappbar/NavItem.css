@@ -1,0 +1,11 @@
+#nav-dappbar .active::after {
+  content: " ";
+  display: block;
+  background: #8ab48a;
+  height: 2px;
+  width: 100%;
+
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+}

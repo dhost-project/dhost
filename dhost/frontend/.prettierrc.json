@@ -5,10 +5,13 @@
   "semi": false,
   "singleQuote": false,
   "importOrder": [
-    "^./api/(.*)$",
-    "^./contexts/(.*)$",
-    "^./pages/(.*)$",
-    "^./components/(.*)$",
+    "^api/(.*)$",
+    "^assets/(.*)$",
+    "^components/(.*)$",
+    "^contexts/(.*)$",
+    "^interfaces/(.*)$",
+    "^locale/(.*)$",
+    "^pages/(.*)$",
     "^[./]"
   ],
   "importOrderSeparation": true
