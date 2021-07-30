@@ -4,9 +4,9 @@ export default function Nav({
   children: React.ReactElement[]
 }): React.ReactElement {
   return (
-    <div className="border-b-2">
+    <div className="border-b">
       <div className="container mx-auto relative">
-        <nav id="nav-dappbar" className="flex justify-around">
+        <nav className="flex justify-around">
           {children}
         </nav>
       </div>
