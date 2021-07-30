@@ -8,7 +8,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from dhost.utils.avatar import avatar_generator
+from dhost.utils.gravatar import gravatar_hash
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -33,12 +33,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(_("first name"), max_length=150, blank=True)
     last_name = models.CharField(_("last name"), max_length=150, blank=True)
     email = models.EmailField(_("email address"), blank=True)
-    avatar = models.ImageField(
-        _("avatar"),
-        upload_to="avatars/",
-        null=True,
-        blank=True,
-    )
+    gravatar_hash = models.CharField(max_length=32, blank=True)
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
@@ -64,12 +59,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = _("users")
 
     def save(self, *args, **kwargs):
-        if not self.avatar:
-            # if the avatar doesn't exist it will be generated from a hash of
-            # the user's `USERNAME_FIELD`
-            # to 're-generate' the avatar simply remove it and save the user or
-            # call the function `generate_avatar` and don't forget to `save`
-            self.generate_avatar()
+        if not self.gravatar_hash:
+            # if the gavatar doesn't exist it will be generated.
+            self.gravatar_hash = gravatar_hash(self.email)
         return super().save(*args, **kwargs)
 
     def clean(self):
@@ -79,6 +71,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     def email_user(self, subject, message, from_email=None, **kwargs):
         """Send an email to this user."""
         send_mail(subject, message, from_email, [self.email], **kwargs)
-
-    def generate_avatar(self):
-        self.avatar = avatar_generator(self.username)

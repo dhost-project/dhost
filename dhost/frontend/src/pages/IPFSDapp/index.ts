@@ -3,7 +3,7 @@ export {
   DappDeploy as IPFSDappDeploy,
   DappDetails as IPFSDappDetails,
   DappEdit as IPFSDappEdit,
-  DappFiles as IPFSDappFiles,
+  DappSource as IPFSDappSource,
   DappList as IPFSDappList,
   DappLogs as IPFSDappLogs,
 } from "pages/Dapp"

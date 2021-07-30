@@ -16,7 +16,7 @@ class UserAdmin(auth_admin.UserAdmin):
                     "first_name",
                     "last_name",
                     "email",
-                    "avatar",
+                    "gravatar_hash",
                 )
             },
         ),

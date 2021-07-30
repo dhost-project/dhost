@@ -8,7 +8,10 @@ export default function ListItem({
   children: any
 }): React.ReactElement {
   return (
-    <a className="px-4 py-2" href={href}>
+    <a
+      className="px-4 py-2 hover:bg-gray-50 hover:text-gray-700 rounded"
+      href={href}
+    >
       {children}
     </a>
   )

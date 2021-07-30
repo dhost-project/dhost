@@ -1,7 +1,9 @@
+import Dapp from "models/Dapp"
+
 import Nav from "./Nav"
 import NavItem from "./NavItem"
 
-export default function Dappbar(): React.ReactElement {
+export default function Dappbar({ dapp }: { dapp: Dapp }): React.ReactElement {
   return (
     <div>
       <div className="py-6 border-b bg-gradient-to-r from-green-100 to-blue-100">
@@ -11,7 +13,7 @@ export default function Dappbar(): React.ReactElement {
               className="text-reset text-decoration-none"
               href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
             >
-              Dhost v2.0
+              {dapp.slug}
             </a>
           </h1>
           <h2 className="text-xl">
@@ -35,13 +37,13 @@ export default function Dappbar(): React.ReactElement {
         </div>
       </div>
       <Nav>
-        <NavItem href="/" isActive>
+        <NavItem href={`/ipfs/${dapp.slug}/`} isActive>
           Overview
         </NavItem>
-        <NavItem href="/">Deploy</NavItem>
-        <NavItem href="/">Source</NavItem>
-        <NavItem href="/">Logs</NavItem>
-        <NavItem href="/">Settings</NavItem>
+        <NavItem href={`/ipfs/${dapp.slug}/deploy`}>Deploy</NavItem>
+        <NavItem href={`/ipfs/${dapp.slug}/source`}>Source</NavItem>
+        <NavItem href={`/ipfs/${dapp.slug}/logs`}>Logs</NavItem>
+        <NavItem href={`/ipfs/${dapp.slug}/settings`}>Settings</NavItem>
       </Nav>
     </div>
   )

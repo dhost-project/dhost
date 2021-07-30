@@ -39,10 +39,13 @@ Lint the code with eslint.
 ### Folders
 
 - `api` all API calls components.
+- `assets` images and other assets.
 - `components` all generic components.
 - `contexts` all contexts.
 - `locale` i18n translations.
+- `models` models interfaces.
 - `pages` pages or routers.
+- `utils` common functions.
 
 ### Guidelines
 

@@ -16,7 +16,12 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/solid"
 import { Fragment } from "react"
 
-import logo from "../../assets/logo.svg"
+import logo from "assets/logo.svg"
+
+import gravatar_url from "utils/gravatar"
+
+// TODO remove, for test only
+const gravatar = gravatar_url("7bc5dd72ce835d2a2868785729c0f176")
 
 const solutions = [
   {
@@ -315,12 +320,13 @@ export default function Navbar(): React.ReactElement {
               </Popover>
             </Popover.Group>
             <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-              <a
-                href="/"
-                className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-              >
-                Sign up
-              </a>
+              <img
+                className="rounded-full border-2 border-primary"
+                src={gravatar}
+                height="40"
+                width="40"
+                alt="gravatar"
+              />
             </div>
           </div>
           <Transition
