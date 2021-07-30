@@ -12,6 +12,7 @@
     "^locale/(.*)$",
     "^models/(.*)$",
     "^pages/(.*)$",
+    "^utils/(.*)$",
     "^[./]"
   ],
   "importOrderSeparation": true
