@@ -18,7 +18,7 @@ const dapps = [
 ]
 
 export default function DappList(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = jest ? {t:(s: any)=>s} : useTranslation()
 
   return (
     <div className="container mx-auto">
