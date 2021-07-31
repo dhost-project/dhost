@@ -149,3 +149,9 @@ dhost/frontend/build/asset-manifest.json
 dhost/frontend/build/static/css
 dhost/frontend/build/static/js
 dhost/frontend/build/static/media
+
+# Terraform
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+*.key
