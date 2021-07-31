@@ -1,3 +1,6 @@
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.min.css'
+
 import Footer from "components/Footer"
 import Header from "components/Header"
 import Navbar from "components/Navbar"
@@ -11,6 +14,7 @@ export default function App(): React.ReactElement {
         <Header />
         <Navbar />
         <RouterOutlet />
+        <ToastContainer />
       </div>
       <Footer />
     </div>
