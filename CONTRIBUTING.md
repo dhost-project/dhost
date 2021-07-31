@@ -43,6 +43,36 @@ flake8 .
 isort .
 ```
 
+
+## Pull requests & commits
+
+Every pull request must contains only one commits, if not every commits must be squashed into a single one before potential merge.
+
+All commits must use the imperative mood and respect the following format :
+
+```
+[lowercased imperative verb] [subject (what you did)] ([PR?if_it_fixes_a_PR]#[issue-number])
+```
+
+### Examples
+
+```bash
+add HTTP error handling (#1392)
+```
+
+If it resolves multiples issues, the commit must contain every issues number inside the parentheses, only related issues must be included in the same commit/pull-request.
+
+```
+add IPFS deploy & logs view (#942, #943)
+```
+
+If it fixes something related to another pull request, the PR number inside the parentheses must be prefixed with "PR".
+
+```
+fix IPFS upload responsive view (PR#132)
+```
+
+
 ## Tools
 
 ### Pre-commit
@@ -75,7 +105,7 @@ tox
 
 Create / update `.po` files.
 
-```bash
+```
 django-admin makemessages -l fr -i=venv
 ```
 
