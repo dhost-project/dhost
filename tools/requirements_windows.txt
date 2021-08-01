@@ -1,0 +1,16 @@
+crispy-bootstrap5
+dj-database-url
+django
+django-crispy-forms
+django-crum
+django-oauth-toolkit
+django-otp
+django-redis
+django-storages
+djangorestframework
+drf-nested-routers
+pillow
+qrcode
+sentry-sdk
+social-auth-app-django
+whitenoise
