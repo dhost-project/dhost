@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 
 export default function NotFound(): React.ReactElement {
-  const { t } = jest ? {t:(s: any)=>s} : useTranslation()
+  const { t } = useTranslation()
 
   const style404 = {
     fontSize: "10rem",

@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 
 export default function Home(): React.ReactElement {
-  const { t } = jest ? {t:(s: any)=>s} : useTranslation()
+  const { t } = useTranslation()
 
   return (
     <div className="container mx-auto">

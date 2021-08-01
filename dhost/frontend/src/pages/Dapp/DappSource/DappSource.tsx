@@ -6,7 +6,7 @@ type TParams = { dapp_slug: string }
 export default function Files({
   match,
 }: RouteComponentProps<TParams>): React.ReactElement {
-  const { t } = jest ? {t:(s: any)=>s} : useTranslation()
+  const { t } = useTranslation()
 
   return (
     <div className="container mx-auto">
