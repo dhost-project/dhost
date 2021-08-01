@@ -6,9 +6,7 @@ export default function Nav({
   return (
     <div className="border-b">
       <div className="container mx-auto relative">
-        <nav className="flex justify-around">
-          {children}
-        </nav>
+        <nav className="flex justify-around">{children}</nav>
       </div>
     </div>
   )
