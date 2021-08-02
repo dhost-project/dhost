@@ -5,6 +5,7 @@ import {
   XIcon,
   CogIcon,
   BeakerIcon,
+  SearchIcon,
   UserGroupIcon,
   LogoutIcon,
 } from "@heroicons/react/outline"
@@ -59,7 +60,7 @@ export default function Navbar(): React.ReactElement {
           <div
             className="
             flex justify-between items-center px-3 md:justify-start
-            md:space-x-10 bg-white border-b"
+            bg-white border-b"
           >
             <div className="flex justify-start lg:w-0 lg:flex-1">
               <a href="/">
@@ -69,14 +70,17 @@ export default function Navbar(): React.ReactElement {
             </div>
             <div className="-mr-2 -my-2 md:hidden">
               <Popover.Button
-                className="
-                bg-white rounded-md p-2 inline-flex items-center justify-center
-                text-gray-400 hover:text-gray-500 hover:bg-gray-100
-                focus:outline-none"
+                className="bg-white rounded-md p-2 inline-flex items-center
+                justify-center text-gray-400 hover:text-gray-500
+                hover:bg-gray-100 focus:outline-none"
               >
                 <span className="sr-only">Open menu</span>
                 <MenuIcon className="h-6 w-6" aria-hidden="true" />
               </Popover.Button>
+            </div>
+            <div className="hidden md:flex md:flex-1 px-16">
+              <input type="text" className="flex-grow px-2 rounded-l border" placeholder="Search dapps" />
+              <button className="flex-none px-2 rounded-r border-r border-b border-t"><SearchIcon className="h-5" /></button>
             </div>
             <div className="hidden md:flex justify-end md:flex-1 lg:w-0">
               <div>

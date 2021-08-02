@@ -6,7 +6,13 @@ export default function Home(): React.ReactElement {
 
   return (
     <div className="container mx-auto">
-      <button onClick={() => toast("test")}>test</button>
+      <button
+        onClick={() =>
+          toast.error("Error 404", { position: toast.POSITION.BOTTOM_RIGHT })
+        }
+      >
+        Notification test
+      </button>
       <h2>{t("HOME_TITLE")}</h2>
     </div>
   )
