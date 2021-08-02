@@ -57,8 +57,8 @@ export default function Navbar(): React.ReactElement {
           >
             <div className="flex justify-start lg:w-0 lg:flex-1">
               <a href="/">
-                <span className="sr-only">Workflow</span>
-                <img className="my-2 mx-1 h-8 w-auto" src={logo} alt="" />
+                <span className="sr-only">DHost</span>
+                <img className="my-2 mx-1 h-8 w-auto" src={logo} alt="DHost" />
               </a>
             </div>
             <div className="-mr-2 -my-2 md:hidden">
@@ -66,8 +66,7 @@ export default function Navbar(): React.ReactElement {
                 className="
                 bg-white rounded-md p-2 inline-flex items-center justify-center
                 text-gray-400 hover:text-gray-500 hover:bg-gray-100
-                focus:outline-none focus:ring-2 focus:ring-inset
-                focus:ring-indigo-500"
+                focus:outline-none"
               >
                 <span className="sr-only">Open menu</span>
                 <MenuIcon className="h-6 w-6" aria-hidden="true" />
@@ -86,19 +85,19 @@ export default function Navbar(): React.ReactElement {
                   />
                   <Transition
                     as={Fragment}
-                    enter="transition ease-out duration-100 -translate-y-full"
-                    enterFrom="transform opacity-0 -translate-y-full duration-100"
-                    enterTo="transform opacity-100"
-                    leave="transition ease-in duration-100"
+                    enter="transition ease-out -translate-y-full"
+                    enterFrom="transform -translate-y-full"
+                    enterTo="transform duration-150"
+                    leave="transition ease-in"
                     leaveFrom="transform"
                     leaveTo="transform -translate-y-full"
                   >
                     <Menu.Items
                       className="
-                      absolute right-0 overflow-hidden w-56 origin-top-right bg-white
-                      border-b border-l border-r border-gray-200
-                      divide-y divide-gray-100 rounded-b-lg shadow-lg focus:outline-none
-                    "
+                      absolute right-0 overflow-hidden w-56 origin-top-right
+                      bg-white border-b border-l border-r border-gray-200
+                      divide-y divide-gray-100 rounded-b-lg shadow-lg
+                      focus:outline-none"
                       style={{ zIndex: -1 }}
                     >
                       <div className="py-1">
@@ -208,10 +207,15 @@ export default function Navbar(): React.ReactElement {
                 <div className="pt-5 pb-6 px-5">
                   <div className="flex items-center justify-between">
                     <div>
-                      <img className="h-8 w-auto" src={logo} alt="Workflow" />
+                      <img className="h-8 w-auto" src={logo} alt="DHost" />
                     </div>
                     <div className="-mr-2">
-                      <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                      <Popover.Button
+                        className="
+                        bg-white rounded-md p-2 inline-flex items-center
+                        justify-center text-gray-400 hover:text-gray-500
+                        hover:bg-gray-100 focus:outline-none"
+                      >
                         <span className="sr-only">Close menu</span>
                         <XIcon className="h-6 w-6" aria-hidden="true" />
                       </Popover.Button>
