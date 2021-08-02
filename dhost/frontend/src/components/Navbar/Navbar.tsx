@@ -22,12 +22,12 @@ const account_sections = [
   [
     {
       name: "Settings",
-      href: "/",
+      href: "/account/settings/",
       icon: CogIcon,
     },
     {
       name: "Security",
-      href: "/",
+      href: "/account/settings/",
       icon: ShieldCheckIcon,
     },
   ],
@@ -39,14 +39,14 @@ const account_sections = [
     },
     {
       name: "Teams",
-      href: "/",
+      href: "/404",
       icon: UserGroupIcon,
     },
   ],
   [
     {
       name: "Logout",
-      href: "/",
+      href: "/404",
       icon: LogoutIcon,
     },
   ],
@@ -79,8 +79,17 @@ export default function Navbar(): React.ReactElement {
               </Popover.Button>
             </div>
             <div className="hidden md:flex md:flex-1 px-16">
-              <input type="text" className="flex-grow px-2 rounded-l border" placeholder="Search dapps" />
-              <button className="flex-none px-2 text-gray-500 rounded-r border-r border-b border-t"><SearchIcon className="h-5" /></button>
+              <input
+                type="text"
+                className="flex-grow px-2 rounded-l border text-gray-700"
+                placeholder="Search dapps"
+              />
+              <button
+                className="flex-none px-2 text-gray-500 rounded-r border-r
+                border-b border-t hover:bg-gray-100"
+              >
+                <SearchIcon className="h-5" />
+              </button>
             </div>
             <div className="hidden md:flex justify-end md:flex-1 lg:w-0">
               <div>

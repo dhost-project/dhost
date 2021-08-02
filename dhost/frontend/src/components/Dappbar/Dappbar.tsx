@@ -6,7 +6,7 @@ import NavItem from "./NavItem"
 export default function Dappbar({ dapp }: { dapp: Dapp }): React.ReactElement {
   return (
     <div>
-      <div className="py-6 border-b bg-gradient-to-r from-green-100 to-blue-100">
+      <div className="py-4 border-b bg-gradient-to-r from-green-100 to-blue-100">
         <div className="container mx-auto relative">
           <h1 className="text-4xl">
             <a
