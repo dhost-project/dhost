@@ -17,32 +17,38 @@ import gravatar_url from "utils/gravatar"
 // TODO remove, for test only
 const gravatar = gravatar_url("7bc5dd72ce835d2a2868785729c0f176")
 
-const account = [
-  {
-    name: "Settings",
-    href: "/",
-    icon: CogIcon,
-  },
-  {
-    name: "Security",
-    href: "/",
-    icon: ShieldCheckIcon,
-  },
-  {
-    name: "Dapps",
-    href: "/dapps",
-    icon: BeakerIcon,
-  },
-  {
-    name: "Teams",
-    href: "/",
-    icon: UserGroupIcon,
-  },
-  {
-    name: "Logout",
-    href: "/",
-    icon: LogoutIcon,
-  },
+const account_sections = [
+  [
+    {
+      name: "Settings",
+      href: "/",
+      icon: CogIcon,
+    },
+    {
+      name: "Security",
+      href: "/",
+      icon: ShieldCheckIcon,
+    },
+  ],
+  [
+    {
+      name: "Dapps",
+      href: "/dapps",
+      icon: BeakerIcon,
+    },
+    {
+      name: "Teams",
+      href: "/",
+      icon: UserGroupIcon,
+    },
+  ],
+  [
+    {
+      name: "Logout",
+      href: "/",
+      icon: LogoutIcon,
+    },
+  ],
 ]
 
 export default function Navbar(): React.ReactElement {
@@ -100,88 +106,28 @@ export default function Navbar(): React.ReactElement {
                       focus:outline-none"
                       style={{ zIndex: -1 }}
                     >
-                      <div className="py-1">
-                        <Menu.Item>
-                          {({ active }) => (
-                            <button
-                              className={`${
-                                active ? "bg-gray-50" : "text-gray-900"
-                              } group flex items-center w-full px-4 py-2 text-sm`}
-                            >
-                              <CogIcon
-                                className="h-5 w-5 mr-2"
-                                aria-hidden="true"
-                              />
-                              Settings
-                            </button>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <button
-                              className={`${
-                                active ? "bg-gray-50" : "text-gray-900"
-                              } group flex items-center w-full px-4 py-2 text-sm`}
-                            >
-                              <ShieldCheckIcon
-                                className="h-5 w-5 mr-2"
-                                aria-hidden="true"
-                              />
-                              Security
-                            </button>
-                          )}
-                        </Menu.Item>
-                      </div>
-                      <div className="py-1">
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="/dapps"
-                              className={`${
-                                active ? "bg-gray-50" : "text-gray-900"
-                              } group flex items-center w-full px-4 py-2 text-sm`}
-                            >
-                              <BeakerIcon
-                                className="h-5 w-5 mr-2"
-                                aria-hidden="true"
-                              />
-                              Dapps
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <button
-                              className={`${
-                                active ? "bg-gray-50" : "text-gray-900"
-                              } group flex items-center w-full px-4 py-2 text-sm`}
-                            >
-                              <UserGroupIcon
-                                className="h-5 w-5 mr-2"
-                                aria-hidden="true"
-                              />
-                              Teams
-                            </button>
-                          )}
-                        </Menu.Item>
-                      </div>
-                      <div className="py-1">
-                        <Menu.Item>
-                          {({ active }) => (
-                            <button
-                              className={`${
-                                active ? "bg-gray-50" : "text-gray-900"
-                              } group flex items-center w-full px-4 py-2 text-sm`}
-                            >
-                              <LogoutIcon
-                                className="h-5 w-5 mr-2"
-                                aria-hidden="true"
-                              />
-                              Logout
-                            </button>
-                          )}
-                        </Menu.Item>
-                      </div>
+                      {account_sections.map((account_section) => (
+                        <div className="py-1">
+                          {account_section.map((item) => (
+                            <Menu.Item>
+                              {({ active }) => (
+                                <a
+                                  className={`${
+                                    active ? "bg-gray-50" : "text-gray-900"
+                                  } group flex items-center w-full px-4 py-2 text-sm`}
+                                  href={item.href}
+                                >
+                                  <item.icon
+                                    className="h-5 w-5 mr-2"
+                                    aria-hidden="true"
+                                  />
+                                  {item.name}
+                                </a>
+                              )}
+                            </Menu.Item>
+                          ))}
+                        </div>
+                      ))}
                     </Menu.Items>
                   </Transition>
                 </Menu>
@@ -224,14 +170,18 @@ export default function Navbar(): React.ReactElement {
                 </div>
                 <div className="py-6 px-5 space-y-6">
                   <div className="grid grid-cols-2 gap-y-4 gap-x-8">
-                    {account.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className="text-base font-medium text-gray-900 hover:text-gray-700"
-                      >
-                        {item.name}
-                      </a>
+                    {account_sections.map((account_section) => (
+                      <>
+                        {account_section.map((item) => (
+                          <a
+                            key={item.name}
+                            href={item.href}
+                            className="text-base font-medium text-gray-900 hover:text-gray-700"
+                          >
+                            {item.name}
+                          </a>
+                        ))}
+                      </>
                     ))}
                   </div>
                 </div>
