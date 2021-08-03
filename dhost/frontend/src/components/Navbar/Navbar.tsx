@@ -1,13 +1,14 @@
 import { Menu, Popover, Transition } from "@headlessui/react"
 import {
-  MenuIcon,
-  ShieldCheckIcon,
-  XIcon,
-  CogIcon,
   BeakerIcon,
-  SearchIcon,
-  UserGroupIcon,
+  BellIcon,
+  CogIcon,
   LogoutIcon,
+  MenuIcon,
+  SearchIcon,
+  ShieldCheckIcon,
+  UserGroupIcon,
+  XIcon,
 } from "@heroicons/react/outline"
 import { Fragment } from "react"
 
@@ -91,12 +92,28 @@ export default function Navbar(): React.ReactElement {
                 <SearchIcon className="h-5" />
               </button>
             </div>
-            <div className="hidden md:flex justify-end md:flex-1 lg:w-0">
+            <div
+              className="hidden md:flex justify-end md:flex-1 lg:w-0
+              items-center"
+            >
+              <a href="/notifications/" className="mr-4 p-1 rounded-full group">
+                <div className="relative">
+                  <BellIcon
+                    className="h-6 w-6 text-gray-400 group-hover:text-gray-500"
+                    aria-hidden="true"
+                  />
+                  <div
+                    className="absolute top-0 right-0 h-3 w-3 rounded-full
+                    bg-gradient-to-b from-pink-300 to-red-400"
+                  />
+                </div>
+              </a>
               <div>
                 <Menu as="div" className="relative">
                   <Menu.Button
                     as="img"
-                    className="my-2 mx-1 cursor-pointer rounded-full border-2 border-primary"
+                    className="my-2 mx-1 cursor-pointer rounded-full border-2
+                    border-green-400 hover:border-green-500"
                     src={gravatar}
                     height="32"
                     width="32"
