@@ -53,6 +53,23 @@ const account_sections = [
   ],
 ]
 
+function BellNotifications(): React.ReactElement {
+  return (
+    <a href="/notifications/" className="mr-4 p-1 rounded-full group">
+      <div className="relative">
+        <BellIcon
+          className="h-6 w-6 text-gray-400 group-hover:text-gray-500"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute top-0 right-0 h-3 w-3 rounded-full bg-gradient-to-b
+          from-pink-300 to-red-400"
+        />
+      </div>
+    </a>
+  )
+}
+
 export default function Navbar(): React.ReactElement {
   return (
     <Popover className="relative bg-white z-40">
@@ -96,18 +113,7 @@ export default function Navbar(): React.ReactElement {
               className="hidden md:flex justify-end md:flex-1 lg:w-0
               items-center"
             >
-              <a href="/notifications/" className="mr-4 p-1 rounded-full group">
-                <div className="relative">
-                  <BellIcon
-                    className="h-6 w-6 text-gray-400 group-hover:text-gray-500"
-                    aria-hidden="true"
-                  />
-                  <div
-                    className="absolute top-0 right-0 h-3 w-3 rounded-full
-                    bg-gradient-to-b from-pink-300 to-red-400"
-                  />
-                </div>
-              </a>
+              <BellNotifications />
               <div>
                 <Menu as="div" className="relative">
                   <Menu.Button
