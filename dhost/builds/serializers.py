@@ -13,14 +13,20 @@ class BuildSerializer(serializers.ModelSerializer):
 class EnvVarSerializer(serializers.ModelSerializer):
     class Meta:
         model = EnvVar
-        fields = ["variable", "value"]
-        # read_only_fields = ['options']
+        fields = ["id", "variable", "value", "sensitive"]
         validators = [
             UniqueTogetherValidator(
                 queryset=EnvVar.objects.all(),
                 fields=["buildoptions", "variable"],
             )
         ]
+
+    def to_representation(self, obj):
+        """Hide the value if it's a sensitive variable."""
+        rep = super().to_representation(obj)
+        if obj.sensitive:
+            rep["value"] = None
+        return rep
 
 
 class BuildOptionsSerializer(serializers.ModelSerializer):
