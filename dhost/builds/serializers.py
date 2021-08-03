@@ -20,7 +20,8 @@ class BuildSerializer(serializers.ModelSerializer):
 class EnvVarSerializer(serializers.ModelSerializer):
     class Meta:
         model = EnvVar
-        fields = ["id", "variable", "value", "sensitive"]
+        fields = ("id", "variable", "value", "sensitive")
+        read_only_fields = ("sensitive",)
         # validators = [
         #     UniqueTogetherValidator(
         #         queryset=EnvVar.objects.all(),
@@ -34,3 +35,8 @@ class EnvVarSerializer(serializers.ModelSerializer):
         if obj.sensitive:
             rep["value"] = None
         return rep
+
+
+class CreateEnvVarSerializer(EnvVarSerializer):
+    class Meta(EnvVarSerializer.Meta):
+        read_only_fields = ()
