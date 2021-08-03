@@ -189,4 +189,6 @@ class EnvVar(models.Model):
         ]
 
     def __str__(self):
-        return "{}={}".format(self.variable, self.value)
+        if not self.sensitive:
+            return "{}={}".format(self.variable, self.value)
+        return self.variable
