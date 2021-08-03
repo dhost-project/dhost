@@ -23,7 +23,6 @@ class DappModelTest(TestCase):
         user = User.objects.create(
             username="johnny",
             password="john",
-            avatar="-",
         )
         d = self.create_dapp(owner=user)
         dapp_str = str(d)
