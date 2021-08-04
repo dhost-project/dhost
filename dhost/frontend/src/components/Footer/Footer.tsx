@@ -1,58 +1,70 @@
-import "./style.css"
+const footer_nav_left = [
+  {
+    name: "Documentation",
+    href: "https://github.com/dhost-project/dhost-doc",
+    target_blank: true,
+  },
+  {
+    name: "Examples",
+    href: "https://github.com/dhost-project/dhost-examples",
+    target_blank: true,
+  },
+  {
+    name: "Source code",
+    href: "https://github.com/dhost-project/dhost",
+    target_blank: true,
+  },
+  {
+    name: "Issues",
+    href: "https://github.com/dhost-project/dhost/issues/new",
+    target_blank: true,
+  },
+  {
+    name: "Support",
+    href: "/support",
+    target_blank: true,
+  },
+]
+
+const DHostFooter = (): React.ReactElement => (
+  <><span className="text-green-500">D</span>Host 2020-2021</>
+)
+
+const footer_nav_right = [
+  {
+    name: "Privacy",
+    href: "/privacy",
+    target_blank: false,
+  },
+  {
+    name: "Legal",
+    href: "/legal",
+    target_blank: false,
+  },
+  {
+    name: <DHostFooter />,
+    href: "/",
+    target_blank: false,
+  },
+]
 
 export default function Footer(): React.ReactElement {
   return (
     <footer>
       <div className="flex justify-between border-t border-gray-200 font-light py-2 px-2">
         <div>
-          <a
-            href="https://github.com/dhost-project/dhost-doc"
-            rel="noreferrer"
-            target="_blank"
-          >
-            Documentation
-          </a>
-          <a
-            href="https://github.com/dhost-project/dhost-examples"
-            rel="noreferrer"
-            target="_blank"
-          >
-            Examples
-          </a>
-          <a
-            href="https://github.com/dhost-project/dhost"
-            rel="noreferrer"
-            target="_blank"
-          >
-            Source code
-          </a>
-          <a
-            href="https://github.com/dhost-project/dhost/issues/new"
-            rel="noreferrer"
-            target="_blank"
-          >
-            Issues
-          </a>
-          <a href="/">Support</a>
+          {footer_nav_left.map((item) => (
+            <a href={item.href} rel="noreferrer" target="_blank" className="mx-2 text-gray-500">
+              {item.name}
+            </a>
+          ))}
         </div>
         <div>
-          <a
-            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            rel="noreferrer"
-            target="_blank"
-          >
-            Privacy
-          </a>
-          <a
-            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            rel="noreferrer"
-            target="_blank"
-          >
-            Legal
-          </a>
-          <a href="/">
-            <span className="text-primary">D</span>Host 2020-2021
-          </a>
+          {footer_nav_right.map((item) => (
+            <a href={item.href} rel="noreferrer" target="_blank" className="mx-2 text-gray-500">
+              {item.name}
+            </a>
+          ))}
         </div>
       </div>
     </footer>

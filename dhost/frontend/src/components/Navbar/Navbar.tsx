@@ -5,8 +5,10 @@ import {
   CogIcon,
   LogoutIcon,
   MenuIcon,
+  PuzzleIcon,
   SearchIcon,
   ShieldCheckIcon,
+  SupportIcon,
   UserGroupIcon,
   XIcon,
 } from "@heroicons/react/outline"
@@ -22,6 +24,18 @@ const gravatar = gravatar_url("7bc5dd72ce835d2a2868785729c0f176")
 const account_sections = [
   [
     {
+      name: "Dapps",
+      href: "/dapps",
+      icon: BeakerIcon,
+    },
+    {
+      name: "Teams",
+      href: "/404",
+      icon: UserGroupIcon,
+    },
+  ],
+  [
+    {
       name: "Settings",
       href: "/account/settings/",
       icon: CogIcon,
@@ -31,17 +45,15 @@ const account_sections = [
       href: "/account/settings/",
       icon: ShieldCheckIcon,
     },
-  ],
-  [
     {
-      name: "Dapps",
-      href: "/dapps",
-      icon: BeakerIcon,
+      name: "Preview",
+      href: "/preview/",
+      icon: PuzzleIcon,
     },
     {
-      name: "Teams",
-      href: "/404",
-      icon: UserGroupIcon,
+      name: "Support",
+      href: "/support/",
+      icon: SupportIcon,
     },
   ],
   [
@@ -136,7 +148,7 @@ export default function Navbar(): React.ReactElement {
                   >
                     <Menu.Items
                       className="
-                      absolute right-0 overflow-hidden w-56 origin-top-right
+                      absolute right-0 overflow-hidden origin-top-right
                       bg-white border-b border-l border-r border-gray-200
                       divide-y divide-gray-100 rounded-b-lg shadow-lg
                       focus:outline-none"
@@ -150,7 +162,7 @@ export default function Navbar(): React.ReactElement {
                                 <a
                                   className={`${
                                     active ? "bg-gray-50" : "text-gray-900"
-                                  } group flex items-center w-full px-4 py-2 text-sm`}
+                                  } group flex items-center w-full pl-4 pr-24 py-2 text-sm`}
                                   href={item.href}
                                 >
                                   <item.icon
