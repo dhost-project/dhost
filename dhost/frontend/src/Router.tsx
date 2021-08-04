@@ -6,6 +6,7 @@ import Account from "pages/Account"
 import { DappReadOnlyList } from "pages/Dapp"
 import Home from "pages/Home"
 import IPFSDapp from "pages/IPFSDapp"
+import Login from "pages/Login"
 import NotFound from "pages/NotFound"
 import Notification from "pages/Notification"
 
@@ -19,6 +20,7 @@ function RouterOutlet(): React.ReactElement {
         <Route path="/dapps" component={DappReadOnlyList} />
         <Route path="/ipfs" component={IPFSDapp} />
         <Route path="/notifications" component={Notification} />
+        <Route path="/login" component={Login} />
         <Route path="*" component={NotFound} />
       </Switch>
     </BrowserRouter>

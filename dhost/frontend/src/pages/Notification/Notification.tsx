@@ -54,7 +54,7 @@ function Notification(): React.ReactElement {
   return (
     <Router>
       <Switch>
-        <Route exact path={`${path}/`}>
+        <Route exact path={`${path}`}>
           <NotificationList notifications={notifications} />
         </Route>
         <Route path={`${path}/:notification_id`}>

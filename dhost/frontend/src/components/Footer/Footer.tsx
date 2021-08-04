@@ -60,10 +60,11 @@ export default function Footer(): React.ReactElement {
       >
         <div>
           {footer_nav_left.map((item) => (
+            /* eslint-disable react/jsx-no-target-blank */
             <a
               href={item.href}
-              rel={`${item.target_blank ? "noreferrer" : ""}`}
-              target={`${item.target_blank ? "_blank" : ""}`}
+              rel={item.target_blank ? "noreferrer" : ""}
+              target={item.target_blank ? "_blank" : ""}
               className="mx-2 text-gray-500 hover:text-gray-700"
             >
               {item.name}
@@ -74,8 +75,8 @@ export default function Footer(): React.ReactElement {
           {footer_nav_right.map((item) => (
             <a
               href={item.href}
-              rel={`${item.target_blank ? "noreferrer" : ""}`}
-              target={`${item.target_blank ? "_blank" : ""}`}
+              rel={item.target_blank ? "noreferrer" : ""}
+              target={item.target_blank ? "_blank" : ""}
               className="mx-2 text-gray-500 hover:text-gray-700"
             >
               {item.name}
