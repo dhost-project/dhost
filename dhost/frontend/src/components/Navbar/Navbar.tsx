@@ -82,6 +82,58 @@ function BellNotifications(): React.ReactElement {
   )
 }
 
+function AccountMenu(): React.ReactElement {
+  return (
+    <Menu as="div" className="relative">
+      <Menu.Button
+        as="img"
+        className="my-2 mx-1 cursor-pointer rounded-full border-2
+        border-green-400 hover:border-green-500"
+        src={gravatar}
+        height="32"
+        width="32"
+        alt="gravatar"
+      />
+      <Transition
+        as={Fragment}
+        enter="transition ease-out -translate-y-full"
+        enterFrom="transform -translate-y-full"
+        enterTo="transform duration-150"
+        leave="transition ease-in"
+        leaveFrom="transform"
+        leaveTo="transform -translate-y-full"
+      >
+        <Menu.Items
+          className="absolute right-0 overflow-hidden origin-top-right bg-white
+          border-b border-l border-r border-gray-200 divide-y divide-gray-100
+          rounded-b-lg shadow-lg focus:outline-none"
+          style={{ zIndex: -1 }}
+        >
+          {account_sections.map((account_section) => (
+            <div className="py-1">
+              {account_section.map((item) => (
+                <Menu.Item>
+                  {({ active }) => (
+                    <a
+                      className={`${
+                        active ? "bg-gray-50" : "text-gray-900"
+                      } group flex items-center w-full pl-4 pr-24 py-2 text-sm`}
+                      href={item.href}
+                    >
+                      <item.icon className="h-5 w-5 mr-2" aria-hidden="true" />
+                      {item.name}
+                    </a>
+                  )}
+                </Menu.Item>
+              ))}
+            </div>
+          ))}
+        </Menu.Items>
+      </Transition>
+    </Menu>
+  )
+}
+
 export default function Navbar(): React.ReactElement {
   return (
     <Popover className="relative bg-white z-40">
@@ -126,60 +178,7 @@ export default function Navbar(): React.ReactElement {
               items-center"
             >
               <BellNotifications />
-              <div>
-                <Menu as="div" className="relative">
-                  <Menu.Button
-                    as="img"
-                    className="my-2 mx-1 cursor-pointer rounded-full border-2
-                    border-green-400 hover:border-green-500"
-                    src={gravatar}
-                    height="32"
-                    width="32"
-                    alt="gravatar"
-                  />
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out -translate-y-full"
-                    enterFrom="transform -translate-y-full"
-                    enterTo="transform duration-150"
-                    leave="transition ease-in"
-                    leaveFrom="transform"
-                    leaveTo="transform -translate-y-full"
-                  >
-                    <Menu.Items
-                      className="
-                      absolute right-0 overflow-hidden origin-top-right
-                      bg-white border-b border-l border-r border-gray-200
-                      divide-y divide-gray-100 rounded-b-lg shadow-lg
-                      focus:outline-none"
-                      style={{ zIndex: -1 }}
-                    >
-                      {account_sections.map((account_section) => (
-                        <div className="py-1">
-                          {account_section.map((item) => (
-                            <Menu.Item>
-                              {({ active }) => (
-                                <a
-                                  className={`${
-                                    active ? "bg-gray-50" : "text-gray-900"
-                                  } group flex items-center w-full pl-4 pr-24 py-2 text-sm`}
-                                  href={item.href}
-                                >
-                                  <item.icon
-                                    className="h-5 w-5 mr-2"
-                                    aria-hidden="true"
-                                  />
-                                  {item.name}
-                                </a>
-                              )}
-                            </Menu.Item>
-                          ))}
-                        </div>
-                      ))}
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
-              </div>
+              <AccountMenu />
             </div>
           </div>
           <Transition
@@ -195,9 +194,13 @@ export default function Navbar(): React.ReactElement {
             <Popover.Panel
               focus
               static
-              className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+              className="absolute top-0 inset-x-0 p-2 transition transform
+              origin-top-right md:hidden"
             >
-              <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
+              <div
+                className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5
+                bg-white divide-y-2 divide-gray-50"
+              >
                 <div className="pt-5 pb-6 px-5">
                   <div className="flex items-center justify-between">
                     <div>
@@ -224,7 +227,8 @@ export default function Navbar(): React.ReactElement {
                           <a
                             key={item.name}
                             href={item.href}
-                            className="text-base font-medium text-gray-900 hover:text-gray-700"
+                            className="text-base font-medium text-gray-900
+                            hover:text-gray-700"
                           >
                             {item.name}
                           </a>

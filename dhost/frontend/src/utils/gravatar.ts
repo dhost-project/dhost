@@ -1,3 +1,4 @@
+// https://en.gravatar.com/
 export default function gravatar_url(
   gravatar_hash: string = "",
   size: number = 40

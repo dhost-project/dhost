@@ -29,8 +29,8 @@ function NotificationList({
         </button>
       </form>
       <div className="flex py-2">
-        <Button size="sm">Mark all has read</Button>
-        <Button size="sm">Mark all has un-read</Button>
+        <Button size="sm">{t("Mark all as read")}</Button>
+        <Button size="sm">{t("Mark all as un-read")}</Button>
       </div>
       <ListNotification notifications={notifications} />
     </div>
