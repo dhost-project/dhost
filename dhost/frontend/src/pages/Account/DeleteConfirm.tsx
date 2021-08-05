@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next"
 
-export default function DeleteConfirm(): React.ReactElement {
+export function DeleteConfirm(): React.ReactElement {
   const { t } = useTranslation()
 
   return (

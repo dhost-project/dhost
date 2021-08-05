@@ -1,4 +1,4 @@
-export default function Nav({
+export function Nav({
   children,
 }: {
   children: React.ReactElement[]

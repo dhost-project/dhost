@@ -1,4 +1,4 @@
-export default interface Notification {
+export interface Notification {
   id: string
   subject: string
   content: string

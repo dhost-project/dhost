@@ -9,7 +9,7 @@ export interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
   target?: any
 }
 
-export default function Button({
+export function Button({
   active = false,
   disabled = false,
   ...props

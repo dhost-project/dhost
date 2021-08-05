@@ -1,4 +1,4 @@
-export default interface Bundle {
+export interface Bundle {
   id: string
   created_at?: string
 }

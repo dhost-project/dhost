@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
-export default function Home(): React.ReactElement {
+export function Home(): React.ReactElement {
   const { t } = useTranslation()
 
   return (

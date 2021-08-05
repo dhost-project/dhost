@@ -1,4 +1,4 @@
-export default interface EnvVar {
+export interface EnvVar {
   variable: string
   value?: string
   sensitive?: boolean

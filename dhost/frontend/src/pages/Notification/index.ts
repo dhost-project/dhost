@@ -1,3 +1,3 @@
-export { default } from "./Notification"
-export { default as NotificationList } from "./NotificationList"
-export { default as NotificationDetail } from "./NotificationDetail"
+export * from "./Notification"
+export * from "./NotificationList"
+export * from "./NotificationDetail"

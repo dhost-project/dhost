@@ -1,5 +1,5 @@
-import Deployment from "models/Deployment"
+import { Deployment } from "models/Deployment"
 
-export default interface IPFSDeployment extends Deployment {
+export interface IPFSDeployment extends Deployment {
   ipfs_hash?: string
 }

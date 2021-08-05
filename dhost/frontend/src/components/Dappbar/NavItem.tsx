@@ -1,6 +1,6 @@
 import "./NavItem.css"
 
-export default function NavItem({
+export function NavItem({
   href,
   isActive = false,
   children,

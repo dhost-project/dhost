@@ -1,9 +1,9 @@
-import Notification from "models/Notification"
+import { Notification } from "models/Notification"
 
-import List from "./List"
-import ListItem from "./ListItem"
+import { List } from "./List"
+import { ListItem } from "./ListItem"
 
-export default function ListNotification({
+export function ListNotification({
   notifications,
 }: {
   notifications: Notification[]

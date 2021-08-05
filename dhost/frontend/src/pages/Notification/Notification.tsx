@@ -5,7 +5,7 @@ import {
   useRouteMatch,
 } from "react-router-dom"
 
-import NotFound from "pages/NotFound"
+import { NotFound } from "pages/NotFound"
 
 import { NotificationList, NotificationDetail } from "."
 
@@ -48,7 +48,7 @@ const notifications = [
   },
 ]
 
-function Notification(): React.ReactElement {
+export function Notification(): React.ReactElement {
   const { path } = useRouteMatch()
 
   return (
@@ -65,5 +65,3 @@ function Notification(): React.ReactElement {
     </Router>
   )
 }
-
-export default Notification

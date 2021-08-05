@@ -1,16 +1,16 @@
 import React from "react"
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 
-import About from "pages/About"
-import Account from "pages/Account"
+import { About } from "pages/About"
+import { Account } from "pages/Account"
 import { DappReadOnlyList } from "pages/Dapp"
-import Home from "pages/Home"
-import IPFSDapp from "pages/IPFSDapp"
-import Login from "pages/Login"
-import NotFound from "pages/NotFound"
-import Notification from "pages/Notification"
+import { Home } from "pages/Home"
+import { IPFSDapp } from "pages/IPFSDapp"
+import { Login } from "pages/Login"
+import { NotFound } from "pages/NotFound"
+import { Notification } from "pages/Notification"
 
-function RouterOutlet(): React.ReactElement {
+export function RouterOutlet(): React.ReactElement {
   return (
     <BrowserRouter>
       <Switch>
@@ -26,5 +26,3 @@ function RouterOutlet(): React.ReactElement {
     </BrowserRouter>
   )
 }
-
-export default RouterOutlet

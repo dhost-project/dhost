@@ -51,7 +51,7 @@ const footer_nav_right = [
   },
 ]
 
-export default function Footer(): React.ReactElement {
+export function Footer(): React.ReactElement {
   return (
     <footer>
       <div

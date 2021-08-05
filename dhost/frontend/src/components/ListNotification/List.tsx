@@ -1,4 +1,4 @@
-export default function List({
+export function List({
   children,
 }: {
   children: React.ReactElement[]

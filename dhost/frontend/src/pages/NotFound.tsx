@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next"
 
-export default function NotFound(): React.ReactElement {
+export function NotFound(): React.ReactElement {
   const { t } = useTranslation()
 
   const style404 = {

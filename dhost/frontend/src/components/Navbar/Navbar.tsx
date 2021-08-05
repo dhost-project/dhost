@@ -16,7 +16,7 @@ import { Fragment } from "react"
 
 import logo from "assets/logo.svg"
 
-import gravatar_url from "utils/gravatar"
+import { gravatar_url } from "utils/gravatar"
 
 // TODO remove, for test only
 const gravatar = gravatar_url("7bc5dd72ce835d2a2868785729c0f176")
@@ -134,7 +134,7 @@ function AccountMenu(): React.ReactElement {
   )
 }
 
-export default function Navbar(): React.ReactElement {
+export function Navbar(): React.ReactElement {
   return (
     <Popover className="relative bg-white z-40">
       {({ open }) => (

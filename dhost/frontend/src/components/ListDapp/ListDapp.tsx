@@ -1,13 +1,9 @@
-import Dapp from "models/Dapp"
+import { Dapp } from "models/Dapp"
 
-import List from "./List"
-import ListItem from "./ListItem"
+import { List } from "./List"
+import { ListItem } from "./ListItem"
 
-export default function DappList({
-  dapps,
-}: {
-  dapps: Dapp[]
-}): React.ReactElement {
+export function ListDapp({ dapps }: { dapps: Dapp[] }): React.ReactElement {
   return (
     <List>
       {dapps.map((dapp) => (

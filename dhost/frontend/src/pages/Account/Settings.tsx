@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next"
 
-export default function AccountSettings(): React.ReactElement {
+export function AccountSettings(): React.ReactElement {
   const { t } = useTranslation()
 
   return (

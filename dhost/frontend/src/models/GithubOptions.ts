@@ -1,4 +1,4 @@
-export default interface GithubOptions {
+export interface GithubOptions {
   repo: string
   branch?: number
   auto_deploy: boolean

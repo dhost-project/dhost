@@ -1,12 +1,12 @@
 import { SearchIcon } from "@heroicons/react/outline"
 import { useTranslation } from "react-i18next"
 
-import Button from "components/Button"
-import ListNotification from "components/ListNotification"
+import { Button } from "components/Button"
+import { ListNotification } from "components/ListNotification"
 
-import Notification from "models/Notification"
+import { Notification } from "models/Notification"
 
-function NotificationList({
+export function NotificationList({
   notifications,
 }: {
   notifications: Notification[]
@@ -36,5 +36,3 @@ function NotificationList({
     </div>
   )
 }
-
-export default NotificationList

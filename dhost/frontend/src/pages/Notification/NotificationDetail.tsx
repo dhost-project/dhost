@@ -1,10 +1,10 @@
 import { useTranslation } from "react-i18next"
 
-import Button from "components/Button"
+import { Button } from "components/Button"
 
-import Notification from "models/Notification"
+import { Notification } from "models/Notification"
 
-function NotificationDetail({
+export function NotificationDetail({
   notification,
 }: {
   notification: Notification
@@ -20,5 +20,3 @@ function NotificationDetail({
     </div>
   )
 }
-
-export default NotificationDetail

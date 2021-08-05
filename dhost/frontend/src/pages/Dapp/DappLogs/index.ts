@@ -1,1 +1,1 @@
-export { default } from "./DappLogs"
+export * from "./DappLogs"

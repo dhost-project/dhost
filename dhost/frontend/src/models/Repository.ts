@@ -1,4 +1,4 @@
-export default interface Repository {
+export interface Repository {
   id: string
   github_owner: string
   github_repo: string

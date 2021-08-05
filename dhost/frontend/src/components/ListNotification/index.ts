@@ -1,1 +1,1 @@
-export { default } from "./ListNotification"
+export * from "./ListNotification"
