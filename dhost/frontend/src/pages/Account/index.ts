@@ -1,3 +1,3 @@
-export { default } from "./Account"
-export { default as AccountSettings } from "./Settings"
-export { default as AccountDeleteConfirm } from "./DeleteConfirm"
+export * from "./Account"
+export * from "./Settings"
+export * from "./DeleteConfirm"

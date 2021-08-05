@@ -5,11 +5,11 @@ import {
   useRouteMatch,
 } from "react-router-dom"
 
-import NotFound from "pages/NotFound"
+import { NotFound } from "pages/NotFound"
 
-import { AccountSettings, AccountDeleteConfirm } from "."
+import { AccountSettings, DeleteConfirm } from "."
 
-export default function Account(): React.ReactElement {
+export function Account(): React.ReactElement {
   const { path } = useRouteMatch()
 
   return (
@@ -18,7 +18,7 @@ export default function Account(): React.ReactElement {
         <Route path={`${path}/settings`} component={AccountSettings} />
         <Route
           path={`${path}/delete-confirm`}
-          component={AccountDeleteConfirm}
+          component={DeleteConfirm}
         />
         <Route path="*" component={NotFound} />
       </Switch>

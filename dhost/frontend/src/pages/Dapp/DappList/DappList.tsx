@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next"
 
-import ListDapp from "components/ListDapp"
+import { ListDapp } from "components/ListDapp"
 
 const dapps = [
   {
@@ -17,7 +17,7 @@ const dapps = [
   },
 ]
 
-export default function DappList(): React.ReactElement {
+export function DappList(): React.ReactElement {
   const { t } = useTranslation()
 
   return (

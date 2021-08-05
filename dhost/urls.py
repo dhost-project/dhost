@@ -8,7 +8,7 @@ urlpatterns = [
     path("api/", include("dhost.api.urls")),
     path("oauth2/", include("dhost.oauth2.urls", namespace="oauth2_provider")),
     path("social/", include("social_django.urls", namespace="social")),
-    path("u/", include("dhost.users.urls")),
+    path("api/", include("dhost.users.urls")),
     path(
         "robots.txt",
         TemplateView.as_view(

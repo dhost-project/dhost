@@ -1,1 +1,1 @@
-export { default } from "./ListDapp"
+export * from "./ListDapp"
