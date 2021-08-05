@@ -58,7 +58,7 @@ export default function Footer(): React.ReactElement {
         className="flex justify-between border-t border-gray-200 font-light py-2
         px-2"
       >
-        <div>
+        <div className="flex flex-col sm:flex-row">
           {footer_nav_left.map((item) => (
             /* eslint-disable react/jsx-no-target-blank */
             <a
@@ -71,7 +71,7 @@ export default function Footer(): React.ReactElement {
             </a>
           ))}
         </div>
-        <div>
+        <div className="flex flex-col sm:flex-row">
           {footer_nav_right.map((item) => (
             <a
               href={item.href}
