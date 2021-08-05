@@ -172,6 +172,12 @@ class EnvVar(models.Model):
     )
     variable = models.SlugField(max_length=1024)
     value = models.CharField(max_length=8192)
+    # hide the value if the variable is sensitive, the user can still write to
+    # it, but he shouldn't be able to view it
+    sensitive = models.BooleanField(
+        default=False,
+        help_text=_("Hide the value if set."),
+    )
 
     class Meta:
         verbose_name = _("environment variable")
@@ -183,4 +189,6 @@ class EnvVar(models.Model):
         ]
 
     def __str__(self):
-        return "{}={}".format(self.variable, self.value)
+        if not self.sensitive:
+            return "{}={}".format(self.variable, self.value)
+        return self.variable

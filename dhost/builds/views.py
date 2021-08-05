@@ -9,6 +9,7 @@ from .models import Build, BuildOptions, EnvVar
 from .serializers import (
     BuildOptionsSerializer,
     BuildSerializer,
+    CreateEnvVarSerializer,
     EnvVarSerializer,
 )
 
@@ -52,6 +53,17 @@ class BuildViewSet(BuildViewMixin, viewsets.ReadOnlyModelViewSet):
 class EnvVarViewSet(BuildViewMixin, viewsets.ModelViewSet):
     queryset = EnvVar.objects.all()
     serializer_class = EnvVarSerializer
+    create_serializer_class = CreateEnvVarSerializer
+
+    def get_serializer_class(self):
+        """Add the ability to write sensitive when creating.
+
+        This allow the user to set the value of sensitive when creating the
+        envvar but not edit it when doing an update or partial update.
+        """
+        if self.action == "create":
+            return self.create_serializer_class
+        return self.serializer_class
 
     def perform_create(self, serializer):
         serializer.save(buildoptions=self.get_buildoptions())
