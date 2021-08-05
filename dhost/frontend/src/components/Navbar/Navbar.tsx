@@ -67,7 +67,7 @@ const account_sections = [
 
 function BellNotifications(): React.ReactElement {
   return (
-    <a href="/notifications/" className="mr-4 p-1 rounded-full group">
+    <a href="/notifications" className="mr-4 p-1 rounded-full group">
       <div className="relative">
         <BellIcon
           className="h-6 w-6 text-gray-400 group-hover:text-gray-500"
