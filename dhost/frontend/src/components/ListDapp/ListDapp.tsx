@@ -7,7 +7,9 @@ export function ListDapp({ dapps }: { dapps: Dapp[] }): React.ReactElement {
   return (
     <List>
       {dapps.map((dapp) => (
-        <ListItem href={`/ipfs/${dapp.slug}`}>{dapp.slug}</ListItem>
+        <ListItem key={`${dapp.slug}`} href={`/ipfs/${dapp.slug}`}>
+          {dapp.slug}
+        </ListItem>
       ))}
     </List>
   )

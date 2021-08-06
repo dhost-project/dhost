@@ -62,6 +62,7 @@ export function Footer(): React.ReactElement {
           {footer_nav_left.map((item) => (
             /* eslint-disable react/jsx-no-target-blank */
             <a
+              key={`${item.name}-${item.href}`}
               href={item.href}
               rel={item.target_blank ? "noreferrer" : ""}
               target={item.target_blank ? "_blank" : ""}
@@ -74,6 +75,7 @@ export function Footer(): React.ReactElement {
         <div className="flex flex-col md:flex-row">
           {footer_nav_right.map((item) => (
             <a
+              key={`${item.name}-${item.href}`}
               href={item.href}
               rel={item.target_blank ? "noreferrer" : ""}
               target={item.target_blank ? "_blank" : ""}
