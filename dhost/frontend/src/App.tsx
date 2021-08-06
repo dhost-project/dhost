@@ -1,11 +1,11 @@
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.min.css'
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.min.css"
 
-import Footer from "components/Footer"
-import Header from "components/Header"
-import Navbar from "components/Navbar"
+import { Footer } from "components/Footer"
+import { Header } from "components/Header"
+import { Navbar } from "components/Navbar"
 
-import RouterOutlet from "./Router"
+import { RouterOutlet } from "./Router"
 
 export default function App(): React.ReactElement {
   return (

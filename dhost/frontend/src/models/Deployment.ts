@@ -1,4 +1,4 @@
-export default interface Deployment {
+export interface Deployment {
   id: string
   dapp: string
   bundle?: string

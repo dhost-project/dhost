@@ -5,17 +5,17 @@ import {
   useRouteMatch,
 } from "react-router-dom"
 
-import Dappbar from "components/Dappbar"
+import { Dappbar } from "components/Dappbar"
 
-import NotFound from "pages/NotFound"
+import { NotFound } from "pages/NotFound"
 
 import {
-  IPFSDappDeploy,
-  IPFSDappDetails,
-  IPFSDappSource,
-  IPFSDappList,
-  IPFSDappLogs,
-  IPFSDappEdit,
+  DappDeploy as IPFSDappDeploy,
+  DappDetails as IPFSDappDetails,
+  DappSettings as IPFSDappEdit,
+  DappSource as IPFSDappSource,
+  DappList as IPFSDappList,
+  DappLogs as IPFSDappLogs,
 } from "."
 
 const dapp = {
@@ -43,7 +43,7 @@ function IPFSDappDetail(): React.ReactElement {
   )
 }
 
-function IPFSDapp(): React.ReactElement {
+export function IPFSDapp(): React.ReactElement {
   const { path } = useRouteMatch()
 
   return (
@@ -56,5 +56,3 @@ function IPFSDapp(): React.ReactElement {
     </Router>
   )
 }
-
-export default IPFSDapp

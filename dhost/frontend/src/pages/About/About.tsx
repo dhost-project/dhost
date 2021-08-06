@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next"
 
-function About(): React.ReactElement {
+export function About(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
@@ -9,5 +9,3 @@ function About(): React.ReactElement {
     </div>
   )
 }
-
-export default About

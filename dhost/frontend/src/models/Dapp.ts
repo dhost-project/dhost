@@ -1,4 +1,4 @@
-export default interface Dapp {
+export interface Dapp {
   slug: string
   url?: string
   owner: string

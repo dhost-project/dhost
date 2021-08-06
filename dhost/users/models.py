@@ -59,9 +59,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = _("users")
 
     def save(self, *args, **kwargs):
-        if not self.gravatar_hash:
-            # if the gavatar doesn't exist it will be generated.
-            self.gravatar_hash = gravatar_hash(self.email)
+        # update the gravatar hash every times, in case the email changed
+        self.gravatar_hash = gravatar_hash(self.email)
         return super().save(*args, **kwargs)
 
     def clean(self):

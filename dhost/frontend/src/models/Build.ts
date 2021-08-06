@@ -1,4 +1,4 @@
-export default interface Build {
+export interface Build {
   id: string
   is_success?: boolean
   logs?: string

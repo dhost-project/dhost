@@ -3,7 +3,7 @@ import { RouteComponentProps } from "react-router-dom"
 
 type TParams = { dapp_slug: string }
 
-export default function Files({
+export function DappSource({
   match,
 }: RouteComponentProps<TParams>): React.ReactElement {
   const { t } = useTranslation()

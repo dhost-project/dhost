@@ -27,5 +27,8 @@ export const en = {
     ACCOUNT_DELETE_CONFIRM_TITLE: "Account delete confirm",
 
     ABOUT_TITLE: "About",
+
+    NOTIFICATION_LIST_TITLE: "Notification list",
+    NOTIFICATION_DETAIL_TITLE: "Notification",
   },
 }

@@ -1,4 +1,4 @@
-export default function ListItem({
+export function ListItem({
   href,
   isActive = false,
   children,

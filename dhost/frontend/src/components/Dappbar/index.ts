@@ -1,1 +1,1 @@
-export { default } from "./Dappbar"
+export * from "./Dappbar"
