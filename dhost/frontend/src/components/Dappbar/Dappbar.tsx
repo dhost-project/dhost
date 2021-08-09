@@ -26,7 +26,7 @@ function Dappbar(): React.ReactElement {
               <Nav.Link eventKey="link-2">Logs</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="link-2">Settings</Nav.Link>
+              <Nav.Link href="/settings">Settings</Nav.Link>
             </Nav.Item>
           </Nav>
         </Container>

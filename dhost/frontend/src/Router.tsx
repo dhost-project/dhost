@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound"
 import Footer from "./components/Footer"
 import Header from "./components/Header"
 import Navbar from "./components/Navbar"
+import Settings from './pages/Dapp/DappEdit/DappSettings';
 
 function RouterOutlet(): React.ReactElement {
   return (
@@ -21,6 +22,7 @@ function RouterOutlet(): React.ReactElement {
         <Route path="/about" exact component={About} />
         <Route path="/dapps" component={DappReadOnlyList} />
         <Route path="/ipfs" component={IPFSDapp} />
+        <Route path="/settings" component={Settings} />
         <Route path="*" component={NotFound} />
       </Switch>
       <Footer />
