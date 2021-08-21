@@ -109,10 +109,10 @@ function AccountMenu(): React.ReactElement {
           rounded-b-lg shadow-lg focus:outline-none"
           style={{ zIndex: -1 }}
         >
-          {account_sections.map((account_section) => (
-            <div className="py-1">
+          {account_sections.map((account_section, index) => (
+            <div key={`account_section-${index}`} className="py-1">
               {account_section.map((item) => (
-                <Menu.Item>
+                <Menu.Item key={`${item.name}-${item.href}`}>
                   {({ active }) => (
                     <a
                       className={`${
@@ -221,8 +221,9 @@ export function Navbar(): React.ReactElement {
                 </div>
                 <div className="py-6 px-5 space-y-6">
                   <div className="grid grid-cols-2 gap-y-4 gap-x-8">
-                    {account_sections.map((account_section) => (
-                      <>
+                    {account_sections.map((account_section, index) => (
+                      <Fragment key={`account_section-responsive-${index}`}>
+                        cokcoscds
                         {account_section.map((item) => (
                           <a
                             key={item.name}
@@ -233,7 +234,7 @@ export function Navbar(): React.ReactElement {
                             {item.name}
                           </a>
                         ))}
-                      </>
+                      </Fragment>
                     ))}
                   </div>
                 </div>

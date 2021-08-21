@@ -1,4 +1,5 @@
 import axios from "axios"
+import { env } from "environment"
 import { useState } from "react"
 
 export function LoginForm() {
@@ -7,13 +8,10 @@ export function LoginForm() {
     password: "",
   })
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function login(event: React.FormEvent) {
     event.preventDefault()
-    login()
-  }
 
-  async function login() {
-    const loginUrl = `http://localhost:8000/api/login/`
+    const loginUrl = `${env.API_URL}/api/login/`
     const username = encodeURIComponent(loginForm.username)
     const password = encodeURIComponent(loginForm.password)
     const next = encodeURIComponent("/")
@@ -31,7 +29,7 @@ export function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={login}>
       <div className="relative">
         <input
           id="username"
