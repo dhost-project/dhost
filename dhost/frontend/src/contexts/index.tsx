@@ -1,7 +1,5 @@
 import { FC } from "react"
 
-const AppContext: FC = () => {
+export const AppContext: FC = () => {
   return null
 }
-
-export default AppContext

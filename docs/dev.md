@@ -21,6 +21,8 @@ pip install -r requirements.txt
 pip install -r requirements_dev.txt
 ```
 
+On Windows there is a specific requirements file in `tools/requirements_windows.txt`.
+
 Collect static files.
 
 ```bash

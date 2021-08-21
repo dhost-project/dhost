@@ -39,10 +39,13 @@ Lint the code with eslint.
 ### Folders
 
 - `api` all API calls components.
+- `assets` images and other assets.
 - `components` all generic components.
 - `contexts` all contexts.
 - `locale` i18n translations.
+- `models` models interfaces.
 - `pages` pages or routers.
+- `utils` common functions.
 
 ### Guidelines
 
@@ -50,7 +53,7 @@ Lint the code with eslint.
 - Limit API calls.
 - Use formater `prettier` with: `yarn prettier`.
 - Define a function with keyword `function`.
-- Limit custom style to a strict minimum, use Bootstrap instead.
+- Limit custom style to a strict minimum, use [Tailwind](https://tailwindcss.com/) instead.
 - Style must be in the same folder has component or page.
 - Use `id` to style a single element, `class` to style multiple elements.
 

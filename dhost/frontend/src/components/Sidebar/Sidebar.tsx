@@ -1,5 +1,3 @@
-function Sidebar(): React.ReactElement {
+export function Sidebar(): React.ReactElement {
   return <div></div>
 }
-
-export default Sidebar

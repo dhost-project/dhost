@@ -1,31 +1,28 @@
 import React from "react"
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 
-import About from "./pages/About"
-import { DappReadOnlyList } from "./pages/Dapp"
-import Home from "./pages/Home"
-import IPFSDapp from "./pages/IPFSDapp"
-import NotFound from "./pages/NotFound"
+import { About } from "pages/About"
+import { Account } from "pages/Account"
+import { DappReadOnlyList } from "pages/Dapp"
+import { Home } from "pages/Home"
+import { IPFSDapp } from "pages/IPFSDapp"
+import { Login } from "pages/Login"
+import { NotFound } from "pages/NotFound"
+import { Notification } from "pages/Notification"
 
-import Footer from "./components/Footer"
-import Header from "./components/Header"
-import Navbar from "./components/Navbar"
-
-function RouterOutlet(): React.ReactElement {
+export function RouterOutlet(): React.ReactElement {
   return (
     <BrowserRouter>
-      <Header />
-      <Navbar />
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/about" exact component={About} />
+        <Route path="/account" component={Account} />
         <Route path="/dapps" component={DappReadOnlyList} />
         <Route path="/ipfs" component={IPFSDapp} />
+        <Route path="/notifications" component={Notification} />
+        <Route path="/login" component={Login} />
         <Route path="*" component={NotFound} />
       </Switch>
-      <Footer />
     </BrowserRouter>
   )
 }
-
-export default RouterOutlet

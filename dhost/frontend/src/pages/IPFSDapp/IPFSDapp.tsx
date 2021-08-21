@@ -1,4 +1,3 @@
-import Container from "react-bootstrap/Container"
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,38 +5,45 @@ import {
   useRouteMatch,
 } from "react-router-dom"
 
+import { Dappbar } from "components/Dappbar"
+
+import { NotFound } from "pages/NotFound"
+
 import {
-  IPFSDappDeploy,
-  IPFSDappDetails,
-  IPFSDappFiles,
-  IPFSDappList,
-  IPFSDappLogs,
-  IPFSDappEdit,
+  DappDeploy as IPFSDappDeploy,
+  DappDetails as IPFSDappDetails,
+  DappSettings as IPFSDappEdit,
+  DappSource as IPFSDappSource,
+  DappList as IPFSDappList,
+  DappLogs as IPFSDappLogs,
 } from "."
-import Dappbar from "./../../components/Dappbar"
-import NotFound from "./../NotFound"
+
+const dapp = {
+  slug: "dhost_v2",
+  owner: "john",
+}
 
 function IPFSDappDetail(): React.ReactElement {
   const { path } = useRouteMatch()
 
   return (
     <Router>
-      <Dappbar />
-      <Container>
+      <Dappbar dapp={dapp} />
+      <div className="container mx-auto">
         <Switch>
           <Route exact path={`${path}/`} component={IPFSDappDetails} />
           <Route path={`${path}/deploy`} component={IPFSDappDeploy} />
           <Route path={`${path}/logs`} component={IPFSDappLogs} />
           <Route path={`${path}/settings`} component={IPFSDappEdit} />
-          <Route path={`${path}/files`} component={IPFSDappFiles} />
+          <Route path={`${path}/source`} component={IPFSDappSource} />
           <Route path="*" component={NotFound} />
         </Switch>
-      </Container>
+      </div>
     </Router>
   )
 }
 
-function IPFSDapp(): React.ReactElement {
+export function IPFSDapp(): React.ReactElement {
   const { path } = useRouteMatch()
 
   return (
@@ -50,5 +56,3 @@ function IPFSDapp(): React.ReactElement {
     </Router>
   )
 }
-
-export default IPFSDapp

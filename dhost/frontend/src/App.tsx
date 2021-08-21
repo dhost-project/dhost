@@ -1,7 +1,22 @@
-import RouterOutlet from "./Router"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.min.css"
 
-function App(): React.ReactElement {
-  return <RouterOutlet />
+import { Footer } from "components/Footer"
+import { Header } from "components/Header"
+import { Navbar } from "components/Navbar"
+
+import { RouterOutlet } from "./Router"
+
+export default function App(): React.ReactElement {
+  return (
+    <div className="flex flex-col min-h-screen justify-between">
+      <div>
+        <Header />
+        <Navbar />
+        <RouterOutlet />
+        <ToastContainer />
+      </div>
+      <Footer />
+    </div>
+  )
 }
-
-export default App

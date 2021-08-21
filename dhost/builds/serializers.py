@@ -1,7 +1,14 @@
 from rest_framework import serializers
-from rest_framework.validators import UniqueTogetherValidator
 
 from .models import Build, BuildOptions, EnvVar
+
+# from rest_framework.validators import UniqueTogetherValidator
+
+
+class BuildOptionsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BuildOptions
+        fields = ["command", "docker"]
 
 
 class BuildSerializer(serializers.ModelSerializer):
@@ -13,17 +20,23 @@ class BuildSerializer(serializers.ModelSerializer):
 class EnvVarSerializer(serializers.ModelSerializer):
     class Meta:
         model = EnvVar
-        fields = ["variable", "value"]
-        # read_only_fields = ['options']
-        validators = [
-            UniqueTogetherValidator(
-                queryset=EnvVar.objects.all(),
-                fields=["buildoptions", "variable"],
-            )
-        ]
+        fields = ("id", "variable", "value", "sensitive")
+        read_only_fields = ("sensitive",)
+        # validators = [
+        #     UniqueTogetherValidator(
+        #         queryset=EnvVar.objects.all(),
+        #         fields=["buildoptions", "variable"],
+        #     )
+        # ]
+
+    def to_representation(self, obj):
+        """Hide the value if it's a sensitive variable."""
+        rep = super().to_representation(obj)
+        if obj.sensitive:
+            rep["value"] = None
+        return rep
 
 
-class BuildOptionsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BuildOptions
-        fields = ["command", "docker"]
+class CreateEnvVarSerializer(EnvVarSerializer):
+    class Meta(EnvVarSerializer.Meta):
+        read_only_fields = ()

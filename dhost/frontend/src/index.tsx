@@ -3,9 +3,10 @@ import { StrictMode } from "react"
 import ReactDOM from "react-dom"
 import { initReactI18next } from "react-i18next"
 
+import { en, fr } from "locale/index"
+
 import App from "./App"
-import "./index.scss"
-import { en, fr } from "./locale/index"
+import "./index.css"
 import reportWebVitals from "./reportWebVitals"
 
 void i18n
