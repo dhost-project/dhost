@@ -1,7 +1,7 @@
 openapi: 3.0.2
 info:
   title: 'DHost'
-  version: '1.1.dev'
+  version: '1.2.dev'
   description: 'DHost REST API version 1.1.dev'
 paths:
   /api/:
@@ -178,11 +178,17 @@ paths:
       - api
     post:
       operationId: createIPFSDapp
-      description: Log the action on a create call.
+      description: ''
       parameters: []
       requestBody:
         content:
           application/json:
+            schema:
+              $ref: '#/components/schemas/IPFSDapp'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/IPFSDapp'
+          multipart/form-data:
             schema:
               $ref: '#/components/schemas/IPFSDapp'
       responses:
@@ -216,7 +222,7 @@ paths:
       - api
     put:
       operationId: updateIPFSDapp
-      description: Log the action on an update call.
+      description: ''
       parameters:
       - name: slug
         in: path
@@ -227,6 +233,12 @@ paths:
       requestBody:
         content:
           application/json:
+            schema:
+              $ref: '#/components/schemas/IPFSDapp'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/IPFSDapp'
+          multipart/form-data:
             schema:
               $ref: '#/components/schemas/IPFSDapp'
       responses:
@@ -240,7 +252,7 @@ paths:
       - api
     patch:
       operationId: partialUpdateIPFSDapp
-      description: Log the action on an partial update call.
+      description: ''
       parameters:
       - name: slug
         in: path
@@ -251,6 +263,12 @@ paths:
       requestBody:
         content:
           application/json:
+            schema:
+              $ref: '#/components/schemas/IPFSDapp'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/IPFSDapp'
+          multipart/form-data:
             schema:
               $ref: '#/components/schemas/IPFSDapp'
       responses:
@@ -264,7 +282,7 @@ paths:
       - api
     delete:
       operationId: destroyIPFSDapp
-      description: Log the action on a delete call.
+      description: ''
       parameters:
       - name: slug
         in: path
@@ -321,7 +339,7 @@ paths:
       - api
     post:
       operationId: createBuildOptions
-      description: Log the action on a create call.
+      description: ''
       parameters:
       - name: dapp_slug
         in: path
@@ -332,6 +350,12 @@ paths:
       requestBody:
         content:
           application/json:
+            schema:
+              $ref: '#/components/schemas/BuildOptions'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BuildOptions'
+          multipart/form-data:
             schema:
               $ref: '#/components/schemas/BuildOptions'
       responses:
@@ -371,7 +395,7 @@ paths:
       - api
     put:
       operationId: updateBuildOptions
-      description: Log the action on an update call.
+      description: ''
       parameters:
       - name: dapp_slug
         in: path
@@ -388,6 +412,12 @@ paths:
       requestBody:
         content:
           application/json:
+            schema:
+              $ref: '#/components/schemas/BuildOptions'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BuildOptions'
+          multipart/form-data:
             schema:
               $ref: '#/components/schemas/BuildOptions'
       responses:
@@ -401,7 +431,7 @@ paths:
       - api
     patch:
       operationId: partialUpdateBuildOptions
-      description: Log the action on an partial update call.
+      description: ''
       parameters:
       - name: dapp_slug
         in: path
@@ -420,6 +450,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/BuildOptions'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BuildOptions'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BuildOptions'
       responses:
         '200':
           content:
@@ -431,7 +467,7 @@ paths:
       - api
     delete:
       operationId: destroyBuildOptions
-      description: Log the action on a delete call.
+      description: ''
       parameters:
       - name: dapp_slug
         in: path
@@ -574,7 +610,7 @@ paths:
       - api
   /api/ipfs/{dapp_slug}/logs/:
     get:
-      operationId: listAPILogs
+      operationId: listDappLogs
       description: ''
       parameters:
       - name: dapp_slug
@@ -590,13 +626,13 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/APILog'
+                  $ref: '#/components/schemas/DappLog'
           description: ''
       tags:
       - api
   /api/ipfs/{dapp_slug}/logs/{id}/:
     get:
-      operationId: retrieveAPILog
+      operationId: retrieveDappLog
       description: ''
       parameters:
       - name: dapp_slug
@@ -608,7 +644,7 @@ paths:
       - name: id
         in: path
         required: true
-        description: A UUID string identifying this API log entry.
+        description: A UUID string identifying this Dapp log entry.
         schema:
           type: string
       responses:
@@ -616,7 +652,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/APILog'
+                $ref: '#/components/schemas/DappLog'
           description: ''
       tags:
       - api
@@ -655,6 +691,12 @@ paths:
       requestBody:
         content:
           application/json:
+            schema:
+              $ref: '#/components/schemas/GithubOptions'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GithubOptions'
+          multipart/form-data:
             schema:
               $ref: '#/components/schemas/GithubOptions'
       responses:
@@ -713,6 +755,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/GithubOptions'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GithubOptions'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GithubOptions'
       responses:
         '200':
           content:
@@ -741,6 +789,12 @@ paths:
       requestBody:
         content:
           application/json:
+            schema:
+              $ref: '#/components/schemas/GithubOptions'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GithubOptions'
+          multipart/form-data:
             schema:
               $ref: '#/components/schemas/GithubOptions'
       responses:
@@ -863,7 +917,7 @@ paths:
       - api
     post:
       operationId: createEnvVar
-      description: Log the action on a create call.
+      description: ''
       parameters:
       - name: dapp_slug
         in: path
@@ -881,13 +935,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EnvVar'
+              $ref: '#/components/schemas/CreateEnvVar'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateEnvVar'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateEnvVar'
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvVar'
+                $ref: '#/components/schemas/CreateEnvVar'
           description: ''
       tags:
       - api
@@ -925,7 +985,7 @@ paths:
       - api
     put:
       operationId: updateEnvVar
-      description: Log the action on an update call.
+      description: ''
       parameters:
       - name: dapp_slug
         in: path
@@ -948,6 +1008,12 @@ paths:
       requestBody:
         content:
           application/json:
+            schema:
+              $ref: '#/components/schemas/EnvVar'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EnvVar'
+          multipart/form-data:
             schema:
               $ref: '#/components/schemas/EnvVar'
       responses:
@@ -961,7 +1027,7 @@ paths:
       - api
     patch:
       operationId: partialUpdateEnvVar
-      description: Log the action on an partial update call.
+      description: ''
       parameters:
       - name: dapp_slug
         in: path
@@ -986,6 +1052,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/EnvVar'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EnvVar'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EnvVar'
       responses:
         '200':
           content:
@@ -997,7 +1069,7 @@ paths:
       - api
     delete:
       operationId: destroyEnvVar
-      description: Log the action on a delete call.
+      description: ''
       parameters:
       - name: dapp_slug
         in: path
@@ -1274,6 +1346,10 @@ paths:
         content:
           application/json:
             schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
       responses:
         '201':
           content:
@@ -1442,7 +1518,7 @@ components:
         ipfs_hash:
           type: string
           readOnly: true
-    APILog:
+    DappLog:
       type: object
       properties:
         id:
@@ -1529,6 +1605,9 @@ components:
     EnvVar:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         variable:
           type: string
           maxLength: 1024
@@ -1536,6 +1615,10 @@ components:
         value:
           type: string
           maxLength: 8192
+        sensitive:
+          type: boolean
+          readOnly: true
+          description: Hide the value if set.
       required:
       - variable
       - value
@@ -1666,9 +1749,27 @@ components:
           type: string
           format: email
           maxLength: 254
-        avatar:
+        gravatar_hash:
           type: string
-          format: binary
           readOnly: true
       required:
       - username
+    CreateEnvVar:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        variable:
+          type: string
+          maxLength: 1024
+          pattern: ^[-a-zA-Z0-9_]+$
+        value:
+          type: string
+          maxLength: 8192
+        sensitive:
+          type: boolean
+          description: Hide the value if set.
+      required:
+      - variable
+      - value
