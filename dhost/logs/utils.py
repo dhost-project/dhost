@@ -1,11 +1,11 @@
 from crum import get_current_user
 
-from .models import APILog
+from .models import DappLog
 
 
 def log_action(instance, action_flag, dapp, user=None):
     """Log an action on a dapp."""
-    APILog.objects.log_action(
+    DappLog.objects.log_action(
         user=user, obj=instance, action_flag=action_flag, dapp=dapp
     )
 
