@@ -16,10 +16,7 @@ export function Account(): React.ReactElement {
     <Router>
       <Switch>
         <Route path={`${path}/settings`} component={AccountSettings} />
-        <Route
-          path={`${path}/delete-confirm`}
-          component={DeleteConfirm}
-        />
+        <Route path={`${path}/delete-confirm`} component={DeleteConfirm} />
         <Route path="*" component={NotFound} />
       </Switch>
     </Router>
