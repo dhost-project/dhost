@@ -1,6 +1,6 @@
-import axios from "axios"
-import { env } from "environment"
 import { useState } from "react"
+import { env } from "environment";
+import { http } from "utils/http";
 
 export function LoginForm() {
   const [loginForm, setLoginForm] = useState({
@@ -15,11 +15,6 @@ export function LoginForm() {
     const username = encodeURIComponent(loginForm.username)
     const password = encodeURIComponent(loginForm.password)
     const next = encodeURIComponent("/")
-
-    const http = axios.create({
-      xsrfCookieName: "csrftoken",
-      xsrfHeaderName: "X-CSRFToken",
-    })
 
     const data = `username=${username}&password=${password}&next=${next}`
     const headers = { "Content-Type": "application/x-www-form-urlencoded" }
