@@ -35,7 +35,7 @@ if settings.SETTINGS_MODULE == "dhost.settings.development":  # pragma: no cover
         path(
             "openapi/",
             get_schema_view(
-                title="DHost",
+                title="DHost API",
                 description=f"DHost REST API version {__version__}.",
                 version=__version__,
                 permission_classes=[AllowAny],
