@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.views.generic import TemplateView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.reverse import reverse_lazy
@@ -73,3 +74,9 @@ class APIPingView(APIView):
     def get(self, request, format=None):
         response = {"version": get_version()}
         return Response(response)
+
+
+class APITermsOfServiceView(TemplateView):
+    permission_classes = (AllowAny,)
+    name = "TermsOfService"
+    template_name = "api_tos.html"

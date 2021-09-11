@@ -1,11 +1,11 @@
+from rest_framework.reverse import reverse_lazy
 from rest_framework.schemas import openapi
-from rest_framework.schemas.openapi import AutoSchema
 
 
 class SuperUserSchemaGenerator(openapi.SchemaGenerator):
     def get_schema(self, request=None, public=True):
         schema = super().get_schema(request=request, public=public)
-        schema["info"]["termsOfService"] = "https://example.com/tos.html"
+        schema["info"]["termsOfService"] = str(reverse_lazy("api:tos"))
         return schema
 
     def has_view_permissions(self, path, method, view):
@@ -14,7 +14,7 @@ class SuperUserSchemaGenerator(openapi.SchemaGenerator):
         return True
 
 
-class GroupAutoSchema(AutoSchema):
+class GroupAutoSchema(openapi.AutoSchema):
     def get_tags(self, path, method):
         """Generate the tag from the model name."""
         # by default the tag is generated from the first part of the url wich is
