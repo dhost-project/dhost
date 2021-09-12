@@ -1,5 +1,8 @@
 boto3==1.18.40
+<<<<<<< HEAD
 celery==5.1.2
+=======
+>>>>>>> 9b34dd3 (upgrade requirements versions)
 dj-database-url==0.5.0
 django==3.2.7
 django-crum==0.7.9
@@ -9,7 +12,10 @@ django-redis==5.0.0
 django-storages==1.11.1
 djangorestframework==3.12.4
 drf-nested-routers==0.93.3
+<<<<<<< HEAD
 flower==1.0.0
+=======
+>>>>>>> 9b34dd3 (upgrade requirements versions)
 google-cloud-storage==1.42.1
 gunicorn==20.1.0
 httptools==0.3.0
