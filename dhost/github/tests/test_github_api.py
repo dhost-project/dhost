@@ -192,9 +192,9 @@ class GithubAPITestCase(TestCase):
         mock.assert_called_once_with("/repos/octocat/Hello-World/branches")
 
     @mock.patch("dhost.github.github_api.GithubAPI.get")
-    def test_download_repo(self, mock_get):
+    def test_download_repo_tar(self, mock_get):
         mock_get.return_value = mock.Mock(content=b"data_test")
-        self.g.download_repo(
+        self.g.download_repo_tar(
             owner="octocat",
             repo="Hello-World",
             ref="master",
@@ -206,9 +206,9 @@ class GithubAPITestCase(TestCase):
         )
 
     @mock.patch("dhost.github.github_api.GithubAPI.get")
-    def test_download_repo_with_archive_name(self, mock_get):
+    def test_download_repo_tar_with_archive_name(self, mock_get):
         mock_get.return_value = mock.Mock(content=b"data_test")
-        self.g.download_repo(
+        self.g.download_repo_tar(
             owner="octocat",
             repo="Hello-World",
             ref="master",
@@ -216,6 +216,27 @@ class GithubAPITestCase(TestCase):
             archive_name="foo_bar",
         )
         self.assertTrue(os.path.exists(TMP_PATH + "/repos/foo_bar.tar"))
+
+    @mock.patch("dhost.github.github_api.untar_source")
+    @mock.patch("dhost.github.github_api.GithubAPI.get")
+    def test_download_repo(self, mock_get, mock_untar_source):
+        mock_get.return_value = mock.Mock(content=b"data_test")
+        mock_untar_source.return_valud = "."
+        path = os.path.join(TMP_PATH, "repos")
+        self.g.download_repo(
+            owner="octocat",
+            repo="Hello-World",
+            ref="master",
+            path=path,
+        )
+        mock_get.assert_called_once_with(
+            "/repos/octocat/Hello-World/tarball/master", allow_redirects=True
+        )
+        mock_untar_source.assert_called_once_with(
+            tar_file=os.path.join(TMP_PATH, "repos", "Hello-World.tar"),
+            target_path=path,
+            delete_tarball=True,
+        )
 
     @mock.patch("dhost.github.github_api.GithubAPI.get")
     def test_list_hooks(self, mock):

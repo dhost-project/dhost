@@ -389,12 +389,13 @@ class WebhookTestCase(TestDataMixin, TestCase):
 
 
 class GithubOptionsTestCase(TestDataMixin, TestCase):
+    @mock.patch("dhost.dapps.models.Dapp.create_bundle")
     @mock.patch("dhost.github.models.Repository.download")
-    def test_download_repo(self, download_repo_mock):
-        self.go1.download_repo()
+    def test_download_repo(self, download_repo_mock, mock_create_bundle):
+        source_folder = self.go1.download_repo()
         download_repo_mock.assert_called_once_with(
             user=self.u1,
             ref="master",
-            # TODO change MEDIA_ROOT to something else
-            base_path=settings.MEDIA_ROOT,
+            base_path=settings.GITHUB_REPOS_ROOT,
         )
+        mock_create_bundle.assert_called_once_with(folder=source_folder)

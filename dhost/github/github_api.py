@@ -1,12 +1,26 @@
 """A wrapper for the Github REST API with OAuth."""
 import logging
 import os
+import tarfile
 
 import requests
 
 from .utils import get_token_from_github_account, get_user_github_account
 
 logger = logging.getLogger(__name__)
+
+
+def untar_source(tar_file, target_path, delete_tarball=True):
+    """Extract a Github repository tarball."""
+    tar = tarfile.open(tar_file)
+    folder_name = tar.getnames()[0]
+    tar.extractall(target_path)
+    tar.close()
+
+    if delete_tarball:
+        os.remove(tar_file)
+
+    return str(os.path.join(target_path, folder_name))
 
 
 class GithubAPIError(Exception):
@@ -112,27 +126,45 @@ class GithubAPI:
     def list_branches(self, owner, repo):
         return self.get(f"/repos/{owner}/{repo}/branches").json()
 
-    def download_repo(self, owner, repo, ref, path, archive_name=None):
+    def download_repo_tar(self, owner, repo, ref, path, archive_name=None):
         """Download a repository archive."""
         r = self.get(
-            f"/repos/{owner}/{repo}/tarball/{ref}", allow_redirects=True
+            f"/repos/{owner}/{repo}/tarball/{ref}",
+            allow_redirects=True,
         )
-
         archive_name = repo if archive_name is None else archive_name
 
         # The archive path is: /<path>/<repo>.tar
-        tar_path = os.path.join(path, archive_name + ".tar")
+        tar_file = os.path.join(path, archive_name + ".tar")
 
         # Create the folder if it doesn't exists already
         if not os.path.exists(path):
             os.makedirs(path)
 
         # write to the archive file
-        with open(tar_path, "wb") as source:
+        with open(tar_file, "wb") as source:
             source.write(r.content)
             source.close()
 
-        return tar_path
+        return tar_file
+
+    def download_repo(
+        self, owner, repo, ref, path, archive_name=None, delete_tarball=True
+    ):
+        """Download a repository, untar it and delete the tarball."""
+        tar_file = self.download_repo_tar(
+            owner=owner,
+            repo=repo,
+            ref=ref,
+            path=path,
+            archive_name=archive_name,
+        )
+        source_folder = untar_source(
+            tar_file=tar_file,
+            target_path=path,
+            delete_tarball=delete_tarball,
+        )
+        return source_folder
 
     def list_hooks(self, owner, repo):
         return self.get(f"/repos/{owner}/{repo}/hooks").json()
