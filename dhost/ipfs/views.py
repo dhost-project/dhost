@@ -1,7 +1,7 @@
 from dhost.builds.views import BuildOptionsViewSet, BuildViewSet, EnvVarViewSet
 from dhost.dapps.views import BundleViewSet, DappViewSet, DeploymentViewSet
 from dhost.github.views import GithubOptionsViewSet
-from dhost.logs.views import APILogViewSet
+from dhost.logs.views import DappLogViewSet
 
 from .models import IPFSDapp, IPFSDeployment
 from .serializers import IPFSDappSerializer, IPFSDeploymentSerializer
@@ -37,7 +37,7 @@ class IPFSDappEnvVarViewSet(IPFSDappViewMixin, EnvVarViewSet):
     pass
 
 
-class IPFSDappAPILogViewSet(IPFSDappViewMixin, APILogViewSet):
+class IPFSDappLogViewSet(IPFSDappViewMixin, DappLogViewSet):
     pass
 
 

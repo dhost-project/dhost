@@ -1,5 +1,5 @@
 {% extends "users/base.html" %}
-{% load i18n static crispy_forms_tags %}
+{% load i18n static %}
 
 {% block content %}
 <div class="bg-light vh-100">
@@ -27,7 +27,7 @@
           <form action="{{ app_path }}" method="post" id="login-form">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ next }}">
-            {{ form | crispy }}
+            {{ form }}
             <button type="submit" class="btn btn-primary">{% translate "Login" %}</button>
           </form>
           {% url 'password_reset' as password_reset_url %}

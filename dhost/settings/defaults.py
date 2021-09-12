@@ -46,8 +46,6 @@ INSTALLED_APPS = [
     "dhost.users",
     "dhost.oauth2",
     # External apps
-    "crispy_forms",
-    "crispy_bootstrap5",
     "django_otp",
     "django_otp.plugins.otp_static",
     "django_otp.plugins.otp_totp",
@@ -179,6 +177,7 @@ REST_FRAMEWORK = {
     "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.AcceptHeaderVersioning",
     "DEFAULT_VERSION": "1.0",
     "ALLOWED_VERSIONS": ("1.0",),
+    "DEFAULT_SCHEMA_CLASS": "dhost.api.schema.GroupAutoSchema",
 }
 
 # OAuth2 provider
@@ -207,12 +206,6 @@ SOCIAL_AUTH_GITHUB_SCOPE = [
     # 'read:repo_hook',
     # 'user:email',
 ]
-
-# Crispy forms
-# https://django-crispy-forms.readthedocs.io/en/latest/
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-
-CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 # putting the `TEST_DIR` inside the `.cache` folder protect from loosing data
 # that musn't be deleted
