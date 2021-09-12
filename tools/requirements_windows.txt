@@ -1,7 +1,5 @@
-crispy-bootstrap5
 dj-database-url
 django
-django-crispy-forms
 django-crum
 django-oauth-toolkit
 django-otp
