@@ -209,6 +209,8 @@ SOCIAL_AUTH_GITHUB_SCOPE = [
     # 'user:email',
 ]
 
+GITHUB_REPOS_ROOT = env("GITHUB_REPOS_ROOT", os.path.join(MEDIA_ROOT, "github"))
+
 # Crispy forms
 # https://django-crispy-forms.readthedocs.io/en/latest/
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

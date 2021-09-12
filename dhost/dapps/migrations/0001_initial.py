@@ -7,7 +7,9 @@ import django.utils.timezone
 from django.conf import settings
 from django.db import migrations, models
 
-import dhost.dapps.models
+
+def bundle_path():
+    return settings.MEDIA_ROOT
 
 
 class Migration(migrations.Migration):
@@ -37,7 +39,7 @@ class Migration(migrations.Migration):
                         allow_folders=True,
                         blank=True,
                         null=True,
-                        path=dhost.dapps.models.bundle_path,
+                        path=bundle_path,
                         verbose_name="folder",
                     ),
                 ),

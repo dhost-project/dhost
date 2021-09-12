@@ -1,4 +1,4 @@
-import os
+import logging
 import uuid
 
 import django.dispatch
@@ -14,9 +14,7 @@ post_deploy_start = django.dispatch.Signal()
 deploy_success = django.dispatch.Signal()
 deploy_fail = django.dispatch.Signal()
 
-
-def bundle_path():
-    return os.path.join(settings.MEDIA_ROOT, "bundle")
+logger = logging.getLogger(__name__)
 
 
 class Dapp(models.Model):
@@ -99,6 +97,9 @@ class Dapp(models.Model):
     def get_dapp_type(self):
         return get_dapp_type(self)
 
+    def create_bundle(self, folder):
+        return Bundle.objects.create(dapp=self, folder=folder)
+
 
 class Bundle(models.Model):
     """Bundled web app raidy for deployment."""
@@ -110,13 +111,11 @@ class Bundle(models.Model):
         related_name="bundles",
         related_query_name="bundles",
     )
-    folder = models.FilePathField(
-        _("folder"),
+    folder = models.CharField(
+        _("folder path"),
+        max_length=300,
         null=True,
         blank=True,
-        path=bundle_path,
-        allow_files=True,
-        allow_folders=True,
     )
     created_at = models.DateTimeField(default=timezone.now)
 
