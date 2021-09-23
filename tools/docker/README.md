@@ -53,11 +53,3 @@ Visit:
 * Redis on port: `6379`
 
 You can also use the CLI to communicate with the API.
-
-## Light dev
-
-There is a light version of the docker-compose file available.
-
-```shell
-docker-compose -f docker-compose_light.yml up -d --build
-```

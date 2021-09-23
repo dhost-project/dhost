@@ -4,6 +4,11 @@ import sys
 
 from dhost.utils import generate_version
 
+from .celery import app as celery_app
+
+__all__ = ("celery_app",)
+
+
 # used to generate the version, get git hash with: git rev-parse --short HEAD
 __git_hash__ = "0ecf1c6"
 
@@ -23,7 +28,7 @@ def prepare_env():
 
     os.environ.setdefault(
         "DJANGO_SETTINGS_MODULE",
-        "dhost.settings.{DJANGO_ENV}".format(DJANGO_ENV=DJANGO_ENV),
+        f"dhost.settings.{DJANGO_ENV}",
     )
 
 
