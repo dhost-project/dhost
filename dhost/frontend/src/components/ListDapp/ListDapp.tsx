@@ -1,3 +1,4 @@
+import { IDapp } from "contexts/DappContext/DappContext"
 import { Dapp } from "models/Dapp"
 
 import { List } from "./List"

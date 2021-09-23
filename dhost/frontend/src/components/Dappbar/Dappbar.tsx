@@ -1,3 +1,4 @@
+import { DappProvider } from "contexts/DappContext/DappContext"
 import { Dapp } from "models/Dapp"
 
 import { Nav } from "./Nav"
@@ -43,7 +44,9 @@ export function Dappbar({ dapp }: { dapp: Dapp }): React.ReactElement {
         <NavItem href={`/ipfs/${dapp.slug}/deploy`}>Deploy</NavItem>
         <NavItem href={`/ipfs/${dapp.slug}/source`}>Source</NavItem>
         <NavItem href={`/ipfs/${dapp.slug}/logs`}>Logs</NavItem>
-        <NavItem href={`/ipfs/${dapp.slug}/settings`}>Settings</NavItem>
+        <DappProvider>
+          <NavItem href={`/ipfs/${dapp.slug}/settings`}>Settings</NavItem>
+        </DappProvider>
       </Nav>
     </div>
   )
