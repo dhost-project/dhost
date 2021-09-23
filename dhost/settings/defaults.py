@@ -207,6 +207,12 @@ SOCIAL_AUTH_GITHUB_SCOPE = [
     # 'user:email',
 ]
 
+# Celery
+CELERY_BROKER_URL = env("CELERY_BROKER_URL", "redis://127.0.0.1:6379/0")
+CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND", "redis://127.0.0.1:6379/0")
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+
 # putting the `TEST_DIR` inside the `.cache` folder protect from loosing data
 # that musn't be deleted
 TEST_DIR = os.path.join(env("TEST_DIR", ".cache"), ".test_dir")

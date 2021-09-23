@@ -6,6 +6,8 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from dhost.builds.tasks import build as build_task
+from .utils import get_envvars_dict
 
 from dhost.dapps.models import Bundle, Dapp
 
@@ -133,12 +135,11 @@ class Build(models.Model):
         self.start = timezone.now()
         self.save()
 
-        # Generate dict of the environment variables
-        envvars = {}
-        for var_object in self.buildoptions.envvars.all():
-            envvars[var_object.variable] = var_object.value
+        # generate dict of the environment variables
+        envvars = get_envvars_dict(self.buildoptions.envvars.all())
 
-        start_build_service(
+        # start build task
+        build_task.delay(
             container=self.buildoptions.docker,
             source_path=self.source_path,
             command=self.buildoptions.command,
