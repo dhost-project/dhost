@@ -208,10 +208,13 @@ SOCIAL_AUTH_GITHUB_SCOPE = [
 ]
 
 # Celery
-CELERY_BROKER_URL = env("CELERY_BROKER_URL", "redis://127.0.0.1:6379/0")
-CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND", "redis://127.0.0.1:6379/0")
+CELERY_BROKER_URL = env("CELERY_BROKER_URL", "redis://localhost:6379/0")
+
+CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND", "redis://localhost:6379/0")
+
 CELERY_TASK_TRACK_STARTED = True
-CELERY_TASK_TIME_LIMIT = 30 * 60
+
+CELERY_TASK_TIME_LIMIT = int(env("CELERY_TASK_TIME_LIMIT", 1800))
 
 GITHUB_REPOS_ROOT = env("GITHUB_REPOS_ROOT", os.path.join(MEDIA_ROOT, "github"))
 
@@ -223,18 +226,12 @@ TEST_MEDIA_ROOT = env("TEST_MEDIA_ROOT", os.path.join(TEST_DIR, "media"))
 
 LOG_ROOT = env("LOG_ROOT", ROOT_DIR)
 
+LOG_LEVEL = env("LOG_LEVEL", "INFO")
+
 # https://docs.djangoproject.com/en/dev/topics/logging/#configuring-logging
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "filters": {
-        "require_debug_false": {
-            "()": "django.utils.log.RequireDebugFalse",
-        },
-        "require_debug_true": {
-            "()": "django.utils.log.RequireDebugTrue",
-        },
-    },
     "formatters": {
         "django.server": {
             "()": "django.utils.log.ServerFormatter",
@@ -244,22 +241,16 @@ LOGGING = {
     },
     "handlers": {
         "console": {
-            "level": "INFO",
-            "filters": ["require_debug_true"],
             "class": "logging.StreamHandler",
         },
         "django.server": {
-            "level": "INFO",
             "class": "logging.StreamHandler",
             "formatter": "django.server",
         },
         "mail_admins": {
-            "level": "ERROR",
-            "filters": ["require_debug_false"],
             "class": "django.utils.log.AdminEmailHandler",
         },
         "github_api": {
-            "level": "WARNING",
             "class": "logging.FileHandler",
             "filename": os.path.join(LOG_ROOT, "github_api.log"),
             "formatter": "django.server",
@@ -268,16 +259,16 @@ LOGGING = {
     "loggers": {
         "django": {
             "handlers": ["console", "mail_admins"],
-            "level": "INFO",
+            "level": LOG_LEVEL,
         },
         "django.server": {
             "handlers": ["django.server"],
-            "level": "INFO",
+            "level": LOG_LEVEL,
             "propagate": False,
         },
         "dhost.github.github_api": {
             "handlers": ["console", "github_api"],
-            "level": "WARNING",
+            "level": LOG_LEVEL,
             "propagate": False,
         },
     },
