@@ -30,28 +30,24 @@ export function createGithubOptions(
 /**
  *
  * @param dappSlug string
- * @param dapp A unique value identifying this Dapp Github options.
  */
 export function retrieveGithubOptions(
   dappSlug: string,
-  dapp: string
 ): HttpResponse<GithubOptions> {
-  return http.get(`${env.API_URL}/api/ipfs/${dappSlug}/githuboptions/${dapp}/`)
+  return http.get(`${env.API_URL}/api/ipfs/${dappSlug}/githuboptions/${dappSlug}/`)
 }
 
 /**
  *
  * @param dappSlug string
- * @param dapp A unique value identifying this Dapp Github options.
  * @param githubOptions GithubOptions
  */
 export function updateGithubOptions(
   dappSlug: string,
-  dapp: string,
   githubOptions: GithubOptions
 ): HttpResponse<GithubOptions> {
   return http.put(
-    `${env.API_URL}/api/ipfs/${dappSlug}/githuboptions/${dapp}/`,
+    `${env.API_URL}/api/ipfs/${dappSlug}/githuboptions/${dappSlug}/`,
     githubOptions
   )
 }
@@ -59,16 +55,14 @@ export function updateGithubOptions(
 /**
  *
  * @param dappSlug string
- * @param dapp A unique value identifying this Dapp Github options.
  * @param githubOptions GithubOptions
  */
 export function partialUpdateGithubOptions(
   dappSlug: string,
-  dapp: string,
   githubOptions: GithubOptions
 ): HttpResponse<GithubOptions> {
   return http.patch(
-    `${env.API_URL}/api/ipfs/${dappSlug}/githuboptions/${dapp}/`,
+    `${env.API_URL}/api/ipfs/${dappSlug}/githuboptions/${dappSlug}/`,
     githubOptions
   )
 }
@@ -76,13 +70,11 @@ export function partialUpdateGithubOptions(
 /**
  *
  * @param dappSlug string
- * @param dapp A unique value identifying this Dapp Github options.
  */
 export function destroyGithubOptions(
   dappSlug: string,
-  dapp: string
 ): HttpResponse<void> {
   return http.delete(
-    `${env.API_URL}/api/ipfs/${dappSlug}/githuboptions/${dapp}/`
+    `${env.API_URL}/api/ipfs/${dappSlug}/githuboptions/${dappSlug}/`
   )
 }
