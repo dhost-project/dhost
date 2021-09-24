@@ -3,7 +3,7 @@
 ## Requirements
 
 - Docker
-- Docker compose
+- Docker-compose
 
 ## Setup
 

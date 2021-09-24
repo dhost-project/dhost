@@ -4,17 +4,37 @@
 
 ## Setup
 
-For a complete setup guide go to [docs/setup.md](./docs/setup.md) or use Docker:
+For a complete setup guide go to [docs/setup.md](./docs/setup.md) or use Docker [tools/docker/README.md](./tools/docker/README.md).
 
-```
-docker build . -t 'api' -f Dockerfile_dev
-```
-
-```
-docker run -p 8000:8000 api
+```ssh
+cd tools/docker
 ```
 
-Visit the browsable API: [http://localhost:8000/api/](http://localhost:8000/api/).
+To start the project.
+
+```shell
+docker-compose up -d --build
+```
+
+Apply migrations.
+
+```shell
+docker-compose run --rm api python manage.py migrate
+```
+
+Load fixture (demo data).
+
+```shell
+docker-compose run --rm api python manage.py loaddata dhost/demo/fixture.json
+```
+
+Collect static files.
+
+```shell
+docker-compose run --rm api python manage.py collectstatic
+```
+
+Visit the site: [http://localhost:8000/](http://localhost:8000/).
 
 Login with `admin` `admin` to make requests.
 
