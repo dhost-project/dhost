@@ -73,6 +73,14 @@ celery -A dhost worker -l INFO
 
 Note that you'll need to start Redis first.
 
+### Flower
+
+To start Celery Flower manually
+
+```ssh
+celery -A dhost flower
+```
+
 ## Tests
 
 There is specific test settings available, this greatly improve speed, to use them simply specify the file when starting them.
