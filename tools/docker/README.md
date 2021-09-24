@@ -46,18 +46,11 @@ docker-compose down
 Visit:
 
 * [Dahsboard](http://localhost:3000/) on port: `3000`
-* [API and OAuth server](http://127.0.0.1:8000/) on port: `8000`
-* [Mailhog](http://localhost:8025/) on port: `8025`
-* [Adminer](http://localhost:8080/) on port: `8080`
-* PostgreSQL on port: `5432`
-* Redis on port: `6379`
+* [API and OAuth server](http://localhost:8000/api/) on port: `8000`
+* [Task Monitor (Flower)](http://localhost:5555/) on port: `5555`
+* [Mail interface (Mailhog)](http://localhost:8025/) on port: `8025`
+* [DB explorer (Adminer)](http://localhost:8080/) on port: `8080`
+* Database (PostgreSQL) on port: `5432`
+* Message Broker (Redis) on port: `6379`
 
 You can also use the CLI to communicate with the API.
-
-## Light dev
-
-There is a light version of the docker-compose file available.
-
-```shell
-docker-compose -f docker-compose_light.yml up -d --build
-```

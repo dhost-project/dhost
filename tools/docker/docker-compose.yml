@@ -12,15 +12,36 @@ services:
       - 8000:8000
     depends_on:
       - db
-      - redis
+      - broker
     environment:
       - ALLOWED_HOSTS=localhost,127.0.0.1,api
       - DJANGO_ENV=development  # can be set to `production`
       - DJANGO_SECRET_KEY=secret
       - ENABLE_SSL=False
       - DATABASE_URL=postgres://dhost:dhost@db:5432/dhost
-      - REDIS_URL=redis://redis:6379/1
       - EMAIL_HOST=mailhog
+      - CELERY_BROKER_URL=redis://broker:6379/1
+      - CELERY_RESULT_BACKEND=redis://broker:6379/1
+
+  worker:
+    build:
+      context: ./../../
+      dockerfile: ./tools/docker/api/Dockerfile_dev
+    command: celery -A dhost worker --loglevel=info -n worker
+    restart: unless-stopped
+    volumes:
+      - ./../../:/app
+    depends_on:
+      - api
+      - broker
+    environment:
+      - ALLOWED_HOSTS=localhost,127.0.0.1,worker
+      - DJANGO_ENV=development  # can be set to `production`
+      - DJANGO_SECRET_KEY=secret
+      - ENABLE_SSL=False
+      - EMAIL_HOST=mailhog
+      - CELERY_BROKER_URL=redis://broker:6379/1
+      - CELERY_RESULT_BACKEND=redis://broker:6379/1
 
   dashboard:
     build:
@@ -32,26 +53,6 @@ services:
     ports:
       - 3000:3000
 
-#  build-microservice:
-#    build:
-#      context: ./build-microservice
-#    restart: unless-stopped
-#    ports:
-#      - 5000:5000
-#    environment:
-#      - FLASK_ENV=development
-#      - HOST=0.0.0.0
-
-#  docusaurus:
-#    build:
-#      context: ./dhost-doc
-#    restart: unless-stopped
-#    volumes:
-#      - ./dhost-doc/:/app
-#      - /app/node_modules/
-#    ports:
-#      - 3003:3000
-
   db:
     image: postgres
     restart: unless-stopped
@@ -59,11 +60,20 @@ services:
       - POSTGRES_USER=dhost
       - POSTGRES_PASSWORD=dhost
 
-  redis:
+  broker:
     image: redis
     restart: unless-stopped
     ports:
       - 6379:6379
+
+  monitor:
+    image: mher/flower
+    restart: unless-stopped
+    ports:
+      - 5555:5555
+    environment:
+      - CELERY_BROKER_URL=redis://broker:6379/1
+      - CELERY_RESULT_BACKEND=redis://broker:6379/1
 
   adminer:
     image: adminer
@@ -73,9 +83,9 @@ services:
     depends_on:
       - db
 
-  mailhog:
+  mail:
     image: mailhog/mailhog
+    restart: unless-stopped
     ports:
       - 1025:1025
       - 8025:8025
-    restart: unless-stopped

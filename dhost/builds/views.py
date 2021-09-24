@@ -25,7 +25,7 @@ class BuildOptionsViewSet(DappViewMixin, viewsets.ModelViewSet):
     @action(detail=True, methods=["get"])
     def build(self, request, pk=None, dapp_slug=None):
         build_options = self.get_object()
-        build_options.build()
+        build_options.start_build()
         return Response({"status": "build started."})
 
 

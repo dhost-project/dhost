@@ -53,6 +53,34 @@ If you don't want to load the data in the database but still want to use the fix
 ./manage.py testserver dhost/demo/fixture.json
 ```
 
+### Redis
+
+Redis is used by Celery to execute tasks.
+
+To start it manually
+
+```ssh
+docker run -p 6379:6379 redis
+```
+
+### Celery
+
+To start Celery manually
+
+```ssh
+celery -A dhost worker -l INFO
+```
+
+Note that you'll need to start Redis first.
+
+### Flower
+
+To start Celery Flower manually
+
+```ssh
+celery -A dhost flower
+```
+
 ## Tests
 
 There is specific test settings available, this greatly improve speed, to use them simply specify the file when starting them.
