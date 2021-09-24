@@ -1,4 +1,4 @@
-import { Dapp } from "models/Dapp"
+import { Dapp } from "models/api/Dapp"
 
 import { Nav } from "./Nav"
 import { NavItem } from "./NavItem"
