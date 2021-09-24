@@ -15,5 +15,5 @@
     "^utils/(.*)$",
     "^[./]"
   ],
-  "importOrderSeparation": true
+  "importOrderSeparation": false
 }

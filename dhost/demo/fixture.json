@@ -809,7 +809,7 @@
     "fields": {
       "name": "Can add dashboard log entry",
       "content_type": 19,
-      "codename": "add_apilog"
+      "codename": "add_dapplog"
     }
   },
   {
@@ -818,7 +818,7 @@
     "fields": {
       "name": "Can change dashboard log entry",
       "content_type": 19,
-      "codename": "change_apilog"
+      "codename": "change_dapplog"
     }
   },
   {
@@ -827,7 +827,7 @@
     "fields": {
       "name": "Can delete dashboard log entry",
       "content_type": 19,
-      "codename": "delete_apilog"
+      "codename": "delete_dapplog"
     }
   },
   {
@@ -836,7 +836,7 @@
     "fields": {
       "name": "Can view dashboard log entry",
       "content_type": 19,
-      "codename": "view_apilog"
+      "codename": "view_dapplog"
     }
   },
   {
@@ -1528,7 +1528,7 @@
     "pk": 19,
     "fields": {
       "app_label": "logs",
-      "model": "apilog"
+      "model": "dapplog"
     }
   },
   {
@@ -1678,7 +1678,7 @@
     }
   },
   {
-    "model": "logs.apilog",
+    "model": "logs.dapplog",
     "pk": "03125ae8-ff08-4618-8678-a6fe7b2323fd",
     "fields": {
       "user": "19bf9882-7033-456d-995b-66c2b88bec35",

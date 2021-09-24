@@ -1,4 +1,6 @@
-import axios from "axios"
+import axios, { AxiosResponse } from "axios"
+
+export interface HttpResponse<T> extends Promise<AxiosResponse<T>> {};
 
 const http = axios.create({
   xsrfCookieName: "csrftoken",

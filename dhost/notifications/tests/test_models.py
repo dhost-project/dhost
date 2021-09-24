@@ -8,7 +8,7 @@ User = get_user_model()
 
 
 @override_settings(MEDIA_ROOT=settings.TEST_MEDIA_ROOT)
-class APILogTestCase(TestCase):
+class NotificationTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.u1 = User.objects.create(username="john", password="john")

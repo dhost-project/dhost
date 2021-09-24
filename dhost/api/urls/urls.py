@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.urls import include, path
 
-from dhost.api.views import APIPingView, APIRootView
+from dhost.api.views import APIPingView, APIRootView, APITermsOfServiceView
 
 from .dapps import urlpatterns as dapps_urls
 from .github import urlpatterns as github_urls
@@ -15,6 +15,7 @@ app_name = "api"
 urlpatterns = [
     path("", APIRootView.as_view()),
     path("ping/", APIPingView.as_view(), name="ping"),
+    path("tos/", APITermsOfServiceView.as_view(), name="tos"),
     path("dapps/", include(dapps_urls)),
     path("github/", include(github_urls)),
     path("ipfs/", include(ipfs_urls)),
@@ -35,7 +36,7 @@ if settings.SETTINGS_MODULE == "dhost.settings.development":  # pragma: no cover
         path(
             "openapi/",
             get_schema_view(
-                title="DHost",
+                title="DHost API",
                 description=f"DHost REST API version {__version__}.",
                 version=__version__,
                 permission_classes=[AllowAny],
