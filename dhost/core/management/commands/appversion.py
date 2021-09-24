@@ -1,6 +1,3 @@
-import os
-import shutil
-
 from django.core.management.base import BaseCommand
 
 from dhost.utils import get_version

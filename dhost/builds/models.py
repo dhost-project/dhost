@@ -6,12 +6,11 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from dhost.builds.tasks import build as build_task
-from .utils import get_envvars_dict
 
+from dhost.builds.tasks import build as build_task
 from dhost.dapps.models import Bundle, Dapp
 
-from .build_service import start_build_service
+from .utils import get_envvars_dict
 
 pre_build_start = django.dispatch.Signal()
 post_build_start = django.dispatch.Signal()
