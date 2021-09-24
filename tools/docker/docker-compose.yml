@@ -66,7 +66,7 @@ services:
     ports:
       - 6379:6379
 
-  monitor:
+  flower:
     image: mher/flower
     restart: unless-stopped
     ports:
