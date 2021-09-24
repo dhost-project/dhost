@@ -58,7 +58,7 @@ class BuildOptions(models.Model):
     def __str__(self):
         return "{} ({})".format(self.docker, self.command)
 
-    def build(self):
+    def start_build(self):
         """Create a `Build` object and start the building process.
 
         From the source in the Docker container specified in `docker_container`
