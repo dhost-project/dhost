@@ -47,6 +47,7 @@ Visit:
 
 * [Dahsboard](http://localhost:3000/) on port: `3000`
 * [API and OAuth server](http://127.0.0.1:8000/) on port: `8000`
+* [Flower](http://localhost:5555/) on port: `5555`
 * [Mailhog](http://localhost:8025/) on port: `8025`
 * [Adminer](http://localhost:8080/) on port: `8080`
 * PostgreSQL on port: `5432`
