@@ -242,6 +242,7 @@ LOGGING = {
     "handlers": {
         "console": {
             "class": "logging.StreamHandler",
+            "formatter": "django.server",
         },
         "django.server": {
             "class": "logging.StreamHandler",
