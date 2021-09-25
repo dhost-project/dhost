@@ -16,7 +16,7 @@ export function Login(): React.ReactElement {
         </h2>
         <a
           href={githublLoginUrl}
-          className="px-4 py-2 mt-6 text-center rounded bg-gray-300 w-full hover:bg-gray-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="px-4 py-2 mt-6 text-center rounded bg-gray-300 w-full hover:bg-gray-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-gray-500"
           type="submit"
         >
           Github
