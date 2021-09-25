@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "craco start",
+    "start": "TAILWIND_MODE=watch craco start",
     "build": "REACT_APP_ENV=production && craco build",
     "test": "craco test",
     "eject": "react-scripts eject",

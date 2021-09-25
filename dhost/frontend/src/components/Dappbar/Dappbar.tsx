@@ -1,4 +1,4 @@
-import { Dapp } from "models/Dapp"
+import { Dapp } from "models/api/Dapp"
 
 import { Nav } from "./Nav"
 import { NavItem } from "./NavItem"
@@ -37,7 +37,7 @@ export function Dappbar({ dapp }: { dapp: Dapp }): React.ReactElement {
         </div>
       </div>
       <Nav>
-        <NavItem href={`/ipfs/${dapp.slug}/`} isActive>
+        <NavItem href={`/ipfs/${dapp.slug}/`}>
           Overview
         </NavItem>
         <NavItem href={`/ipfs/${dapp.slug}/deploy`}>Deploy</NavItem>
