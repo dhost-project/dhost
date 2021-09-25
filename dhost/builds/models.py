@@ -7,9 +7,10 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from dhost.builds.tasks import build as build_task
 from dhost.dapps.models import Bundle, Dapp
 
-from .build_service import start_build_service
+from .utils import get_envvars_dict
 
 pre_build_start = django.dispatch.Signal()
 post_build_start = django.dispatch.Signal()
@@ -56,7 +57,7 @@ class BuildOptions(models.Model):
     def __str__(self):
         return "{} ({})".format(self.docker, self.command)
 
-    def build(self):
+    def start_build(self):
         """Create a `Build` object and start the building process.
 
         From the source in the Docker container specified in `docker_container`
@@ -133,12 +134,11 @@ class Build(models.Model):
         self.start = timezone.now()
         self.save()
 
-        # Generate dict of the environment variables
-        envvars = {}
-        for var_object in self.buildoptions.envvars.all():
-            envvars[var_object.variable] = var_object.value
+        # generate dict of the environment variables
+        envvars = get_envvars_dict(self.buildoptions.envvars.all())
 
-        start_build_service(
+        # start build task
+        build_task.delay(
             container=self.buildoptions.docker,
             source_path=self.source_path,
             command=self.buildoptions.command,

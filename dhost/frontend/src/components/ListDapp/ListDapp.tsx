@@ -1,4 +1,4 @@
-import { Dapp } from "models/Dapp"
+import { Dapp } from "models/api/Dapp"
 
 import { List } from "./List"
 import { ListItem } from "./ListItem"
