@@ -207,6 +207,8 @@ SOCIAL_AUTH_GITHUB_SCOPE = [
     # 'user:email',
 ]
 
+GITHUB_REPOS_ROOT = env("GITHUB_REPOS_ROOT", os.path.join(MEDIA_ROOT, "github"))
+
 # Celery
 CELERY_BROKER_URL = env("CELERY_BROKER_URL", "redis://localhost:6379/0")
 

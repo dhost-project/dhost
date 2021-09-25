@@ -34,8 +34,11 @@ class Repository(models.Model):
     users = models.ManyToManyField(settings.AUTH_USER_MODEL)
     github_owner = models.CharField(max_length=256)
     github_repo = models.CharField(max_length=256)
-    # full raw output from the Github API
-    extra_data = models.JSONField(default=dict, blank=True)
+    extra_data = models.JSONField(
+        default=dict,
+        blank=True,
+        help_text=_("Raw response from the Github API."),
+    )
     added_at = models.DateTimeField(auto_now_add=True, help_text=_("Added at."))
     updated_at = models.DateTimeField(
         default=timezone.now,
@@ -59,10 +62,10 @@ class Repository(models.Model):
     def update_from_json(self, repo_json, user=None):
         data = serialize_repository(repo_json)
 
-        # This should never happen, if it does it probably because a repo has
+        # This should never happen, if it does it's probably because a repo has
         # been renamed or deleted and another has been created with the same
         # name and owner, and it's not handled properly in the code.
-        # In this cass we should probably delete the current repo has it's not
+        # In this case we should probably delete the current repo as it's not
         # of use anymore (because it either has moved or has been deleted) and
         # create a new one from the repo_json.
         if data["id"] != self.id:
@@ -104,7 +107,11 @@ class Branch(models.Model):
         related_query_name="branches",
     )
     name = models.CharField(max_length=255)
-    extra_data = models.JSONField(default=dict, blank=True)
+    extra_data = models.JSONField(
+        default=dict,
+        blank=True,
+        help_text=_("Raw response from the Github API."),
+    )
     updated_at = models.DateTimeField(
         default=timezone.now,
         help_text=_("Last updated from the Github API."),
@@ -137,7 +144,11 @@ class Webhook(models.Model):
     )
     name = models.CharField(max_length=255, default="web")
     active = models.BooleanField(default=True)
-    extra_data = models.JSONField(default=dict, blank=True)
+    extra_data = models.JSONField(
+        default=dict,
+        blank=True,
+        help_text=_("Raw response from the Github API."),
+    )
     added_at = models.DateTimeField(auto_now_add=True, help_text=_("Added at."))
     updated_at = models.DateTimeField(
         default=timezone.now,
@@ -217,12 +228,15 @@ class GithubOptions(models.Model):
         verbose_name_plural = _("Dapps Github options")
 
     def download_repo(self):
-        # we make this call in the name of the owner, because it's automatic if
-        # for example the auto_deploy is True then the download_repo is not
-        # comming from an API call
+        # we make this call in the name of the owner, because it can be called
+        # automaticaly if for example the auto_deploy is True then the
+        # download_repo is not comming from an API call
         user = self.dapp.owner
         ref = self.branch.name
-        # TODO replace with another storage (something like `ARCHIVE_ROOT`)
-        base_path = settings.MEDIA_ROOT
-        tar_path = self.repo.download(user=user, ref=ref, base_path=base_path)
-        return tar_path
+        base_path = settings.GITHUB_REPOS_ROOT
+        source_folder = self.repo.download(
+            user=user, ref=ref, base_path=base_path
+        )
+        # TODO maybe this is not the perfect place to create the bundle
+        self.dapp.create_bundle(folder=source_folder)
+        return source_folder
