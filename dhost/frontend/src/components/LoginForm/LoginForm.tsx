@@ -69,7 +69,7 @@ export function LoginForm() {
         </label>
       </div>
       <input
-        className="px-4 py-1 mt-12 rounded bg-green-200 w-full hover:bg-gray-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500"
+        className="px-4 py-2 mt-12 rounded bg-green-300 w-full hover:bg-green-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500"
         type="submit"
         value="Login"
       />
