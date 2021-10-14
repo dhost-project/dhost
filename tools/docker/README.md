@@ -22,7 +22,7 @@ docker-compose run --rm api python manage.py migrate
 Load fixture (demo data).
 
 ```shell
-docker-compose run --rm api python manage.py loaddata dhost/demo/fixture.json
+docker-compose run --rm api python manage.py loaddata demo
 ```
 
 Collect static files.

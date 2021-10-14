@@ -2,10 +2,22 @@ global:
   scrape_interval:     15s
   evaluation_interval: 15s
 
+rule_files:
+  - ./celery_alerts.yml
+
 scrape_configs:
   - job_name: prometheus
     static_configs:
       - targets: ['prometheus:9090']
+
   - job_name: flower
     static_configs:
       - targets: ['flower:5555']
+
+  - job_name: api
+    metrics_path: /api/metrics
+    static_configs:
+      - targets: ['api:8000']
+    basic_auth:
+      username: admin
+      password: admin

@@ -1,0 +1,125 @@
+version: "3.7"
+
+services:
+  api: &api
+    build:
+      context: .
+      dockerfile: ./tools/docker/Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      - ALLOWED_HOSTS=localhost,127.0.0.1,api
+      - DJANGO_ENV=development
+      - DJANGO_SECRET_KEY=secret
+      - ENABLE_SSL=false
+      - DATABASE_URL=postgres://dhost:dhost@db:5432/dhost
+      - REDIS_URL=redis://cache:6379/1
+      - CELERY_BROKER_URL=redis://broker:6379/1
+      - CELERY_RESULT_BACKEND=redis://broker:6379/1
+      - EMAIL_HOST=mailhog
+      - EMAIL_PORT=1025
+    networks:
+      - backends
+
+  worker:
+    <<: *api
+    command: celery -A dhost worker --loglevel=info -n worker
+    ports: []
+
+  scheduler:
+    <<: *api
+    command: celery -A dhost beat --loglevel=info
+    ports: []
+
+  db:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=dhost
+      - POSTGRES_PASSWORD=dhost
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - backends
+
+  broker:
+    image: redis
+    restart: unless-stopped
+    ports:
+      - 6479:6379
+    networks:
+      - backends
+
+  cache:
+    image: redis
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    networks:
+      - backends
+
+  flower:
+    image: mher/flower
+    restart: unless-stopped
+    ports:
+      - 5555:5555
+    environment:
+      - CELERY_BROKER_URL=redis://broker:6479/1
+      - CELERY_RESULT_BACKEND=redis://broker:6479/1
+    networks:
+      - backends
+
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    networks:
+      - backends
+
+  mailhog:
+    image: mailhog/mailhog
+    restart: unless-stopped
+    ports:
+      - 1025:1025
+      - 8025:8025
+    networks:
+      - backends
+
+  prometheus:
+    image: prom/prometheus
+    restart: unless-stopped
+    ports:
+      - 9090:9090
+    volumes:
+      - ./tools/prometheus:/etc/prometheus
+      - prometheus:/prometheus
+    networks:
+      - backends
+
+  grafana:
+    image: grafana/grafana
+    restart: unless-stopped
+    ports:
+      - 3030:3000
+    volumes:
+      - ./tools/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./tools/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - grafana:/var/lib/grafana
+    networks:
+      - backends
+
+volumes:
+  db:
+    driver: local
+  prometheus:
+  grafana:
+
+networks:
+  backends:
+    driver: bridge

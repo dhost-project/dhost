@@ -2,16 +2,8 @@ import os
 
 import dj_database_url
 
-
-def env(var, default=None):
-    return os.environ.get(var, default)
-
-
-def env_list(var, default=None, separator=","):
-    """Return a python list of value from env vars."""
-    text_list = env(var, default)
-    return [item.strip() for item in text_list.split(separator)]
-
+from dhost.utils import get_version
+from dhost.utils.env import env, env_bool, env_float, env_int, env_list
 
 # dhost folder (apps dir)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -19,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # git root
 ROOT_DIR = os.path.dirname(BASE_DIR)
 
-SITE_ID = env("SITE_ID", 1)
+SITE_ID = env_int("SITE_ID", 1)
 
 ALLOWED_HOSTS = env_list("ALLOWED_HOSTS", "localhost,127.0.0.1")
 
@@ -100,6 +92,32 @@ DATABASES = {
     )
 }
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+    }
+}
+
+REDIS_URL = env("REDIS_URL")
+
+if REDIS_URL:
+    CACHES.update(
+        {
+            "redis": {
+                "BACKEND": "django_redis.cache.RedisCache",
+                "LOCATION": REDIS_URL,
+                "OPTIONS": {
+                    "CLIENT_CLASS": "django_redis.client.DefaultClient",
+                    "IGNORE_EXCEPTIONS": True,
+                },
+            }
+        }
+    )
+
+    SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+
+    SESSION_CACHE_ALIAS = "redis"
+
 AUTH_USER_MODEL = "users.User"
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -133,11 +151,6 @@ USE_TZ = True
 
 LOCALE_PATHS = (os.path.join(os.path.dirname(ROOT_DIR), "locale"),)
 
-LANGUAGES = [
-    ("en", "English"),
-    ("fr", "Français"),
-]
-
 STATIC_URL = "/static/"
 
 STATIC_ROOT = os.path.join(ROOT_DIR, "staticfiles")
@@ -147,6 +160,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "frontend", "build", "static")]
 MEDIA_URL = "/media/"
 
 MEDIA_ROOT = env("MEDIA_ROOT", os.path.join(ROOT_DIR, "media"))
+
+FIXTURE_DIRS = [os.path.join(ROOT_DIR, "tools", "fixtures")]
 
 EMAIL_HOST = env("EMAIL_HOST", "localhost")
 
@@ -216,7 +231,9 @@ CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND", "redis://localhost:6379/0")
 
 CELERY_TASK_TRACK_STARTED = True
 
-CELERY_TASK_TIME_LIMIT = int(env("CELERY_TASK_TIME_LIMIT", 1800))
+CELERY_TASK_TIME_LIMIT = env_int("CELERY_TASK_TIME_LIMIT", 1800)
+
+CELERY_TASK_SOFT_TIME_LIMIT = env_int("CELERY_TASK_SOFT_TIME_LIMIT", 1700)
 
 # putting the `TEST_DIR` inside the `.cache` folder protect from loosing data
 # that musn't be deleted
@@ -274,3 +291,23 @@ LOGGING = {
         },
     },
 }
+
+# Sentry
+# https://docs.sentry.io/platforms/python/guides/django/
+SENTRY_DSN = env("SENTRY_DSN")
+
+if SENTRY_DSN:
+    import sentry_sdk
+    from sentry_sdk.integrations.celery import CeleryIntegration
+    from sentry_sdk.integrations.django import DjangoIntegration
+
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[
+            DjangoIntegration(),
+            CeleryIntegration(),
+        ],
+        traces_sample_rate=env_float("SENTRY_TRACES_SAMPLE_RATE", 1.0),
+        send_default_pii=env_bool("SENTRY_SEND_DEFAULT_PII", True),
+        release=get_version(),
+    )

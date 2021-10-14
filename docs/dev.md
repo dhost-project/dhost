@@ -44,7 +44,7 @@ You can now run the development server. Next time you want to start the server, 
 Additionnaly you can [load a fixture](https://docs.djangoproject.com/en/dev/ref/django-admin/#loaddata) located in [dhost/demo/fixture.json](./../dhost/demo/fixture.json). More informations in [dhost/demo/README.md](./../dhost/demo/README.md).
 
 ```bash
-./manage.py loaddata dhost/demo/fixture.json
+./manage.py loaddata demo
 ```
 
 If you don't want to load the data in the database but still want to use the fixture, you can use the [testserver](https://docs.djangoproject.com/en/dev/ref/django-admin/#testserver).
