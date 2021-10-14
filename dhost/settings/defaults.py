@@ -235,6 +235,9 @@ CELERY_TASK_TIME_LIMIT = env_int("CELERY_TASK_TIME_LIMIT", 1800)
 
 CELERY_TASK_SOFT_TIME_LIMIT = env_int("CELERY_TASK_SOFT_TIME_LIMIT", 1700)
 
+# IFS
+IPFS_HTTP_API_URL = env("IPFS_HTTP_API_URL", "http://127.0.0.1:5001/api/")
+
 # putting the `TEST_DIR` inside the `.cache` folder protect from loosing data
 # that musn't be deleted
 TEST_DIR = os.path.join(env("TEST_DIR", ".cache"), ".test_dir")

@@ -23,6 +23,7 @@ services:
       - CELERY_RESULT_BACKEND=redis://broker:6379/1
       - EMAIL_HOST=mailhog
       - EMAIL_PORT=1025
+      - IPFS_HTTP_API_URL=http://ipfs:5001/api/
     networks:
       - backends
 
@@ -45,8 +46,8 @@ services:
       - 127.0.0.1:8080:8080
       - 127.0.0.1:5001:5001
     volumes:
-      - ./ipfs/export:/export
-      - ./ipfs/data:/data/ipfs
+      - ./media/ipfs:/export
+      - ./docker-ipfs/data:/data/ipfs
     networks:
       - backends
 
