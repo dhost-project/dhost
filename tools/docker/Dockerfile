@@ -10,6 +10,6 @@ RUN pip install -r requirements/base.txt
 RUN pip install -r requirements/development.txt
 RUN pip install -r requirements/production.txt
 
-ADD . /app/
+COPY . ./
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

@@ -36,6 +36,20 @@ services:
     command: celery -A dhost beat --loglevel=info
     ports: []
 
+  ipfs:
+    image: ipfs/go-ipfs:latest
+    restart: unless-stopped
+    ports:
+      - 4001:4001
+      - 4001:4001/udp
+      - 127.0.0.1:8080:8080
+      - 127.0.0.1:5001:5001
+    volumes:
+      - ./ipfs/export:/export
+      - ./ipfs/data:/data/ipfs
+    networks:
+      - backends
+
   db:
     image: postgres
     restart: unless-stopped
@@ -78,7 +92,7 @@ services:
     image: adminer
     restart: unless-stopped
     ports:
-      - 8080:8080
+      - 8081:8080
     networks:
       - backends
 
@@ -117,6 +131,8 @@ services:
 volumes:
   db:
     driver: local
+  ipfs_export:
+  ipfs_data:
   prometheus:
   grafana:
 
