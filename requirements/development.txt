@@ -3,8 +3,9 @@ coverage
 flake8
 flake8-docstrings
 isort
-pip-upgrader
 pre-commit
+pyinstrument
+pytype
 pyyaml
 tox
 uritemplate

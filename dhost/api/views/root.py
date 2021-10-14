@@ -1,11 +1,8 @@
 from django.conf import settings
-from django.views.generic import TemplateView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.reverse import reverse_lazy
 from rest_framework.views import APIView
-
-from dhost.utils import get_version
 
 
 class APIRootView(APIView):
@@ -16,6 +13,10 @@ class APIRootView(APIView):
     def get(self, request, format=None):
         """REST API root."""
         response = {
+            "metrics": reverse_lazy(
+                "api:metrics",
+                request=request,
+            ),
             "ping": reverse_lazy(
                 "api:ping",
                 request=request,
@@ -65,18 +66,3 @@ class APIRootView(APIView):
             )
 
         return Response(response)
-
-
-class APIPingView(APIView):
-    permission_classes = (AllowAny,)
-    name = "Ping"
-
-    def get(self, request, format=None):
-        response = {"version": get_version()}
-        return Response(response)
-
-
-class APITermsOfServiceView(TemplateView):
-    permission_classes = (AllowAny,)
-    name = "TermsOfService"
-    template_name = "api_tos.html"

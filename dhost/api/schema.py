@@ -17,8 +17,8 @@ class SuperUserSchemaGenerator(openapi.SchemaGenerator):
 class GroupAutoSchema(openapi.AutoSchema):
     def get_tags(self, path, method):
         """Generate the tag from the model name."""
-        # by default the tag is generated from the first part of the url wich is
-        # a problem in our case because it's always `api`
+        # by default the tag is generated from the first part of the url wich
+        # is a problem in our case because it's always `api`
         # https://www.django-rest-framework.org/api-guide/schemas/#get_tags
         model = getattr(getattr(self.view, "queryset", None), "model", None)
         if model is not None:

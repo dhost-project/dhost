@@ -20,7 +20,7 @@ urlpatterns = [
 admin.site.site_header = "DHost"
 admin.site.site_title = "dhost"
 
-if settings.SETTINGS_MODULE == "dhost.settings.development":  # pragma: no cover
+if settings.DEBUG:  # pragma: no cover
     from django.conf.urls.static import static
 
     urlpatterns.append(
