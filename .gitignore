@@ -155,3 +155,5 @@ dhost/frontend/build/static/media
 terraform.tfstate
 terraform.tfstate.backup
 *.key
+
+ipfs/
