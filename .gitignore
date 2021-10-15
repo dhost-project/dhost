@@ -156,4 +156,4 @@ terraform.tfstate
 terraform.tfstate.backup
 *.key
 
-docker-ipfs/
+tools/docker/ipfs/data/

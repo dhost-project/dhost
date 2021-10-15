@@ -47,7 +47,7 @@ services:
       - 127.0.0.1:5001:5001
     volumes:
       - ./media/ipfs:/export
-      - ./docker-ipfs/data:/data/ipfs
+      - ./tools/docker/ipfs/data:/data/ipfs
     networks:
       - backends
 
