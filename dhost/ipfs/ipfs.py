@@ -1,5 +1,5 @@
-from typing import Any, Dict, List, Optional
 import json
+from typing import Any, Dict, List, Optional
 
 import requests
 from django.conf import settings
@@ -98,7 +98,6 @@ class IPFSAPI:
 
     def _add(
         self,
-        file_path="LICENSE",
         quiet=None,
         quieter=None,
         silent=None,
@@ -118,8 +117,6 @@ class IPFSAPI:
         inline_limit=None,
         **kwargs,
     ):
-        files = {'file': (file_path, open(file_path, 'rb'))}
-
         return self._post(
             "v0/add",
             params={
@@ -141,12 +138,12 @@ class IPFSAPI:
                 "inline": inline,
                 "inline-limit": inline_limit,
             },
-            files=files,
             **kwargs,
         )
 
-    def add_form_data(self, form_data):
-        return self._add(path=None, files={"file": form_data})
+    def add(self, file_path="LICENSE"):
+        files = {"file": (file_path, open(file_path, "rb"))}
+        return self._add(files=files)
 
     def cat(self, arg, offset=None, length=None):
         return self._post(
@@ -155,6 +152,40 @@ class IPFSAPI:
                 "arg": arg,
                 "offset": offset,
                 "length": length,
+            },
+        )
+
+    def pin_add(self, arg, recursive=None, progress=None):
+        """Pin objects to local storage."""
+        return self._post(
+            "v0/pin/add",
+            params={
+                "arg": arg,
+                "recursive": recursive,
+                "progress": progress,
+            },
+        )
+
+    def pin_ls(self, arg=None, type=None, all=None, quiet=None, stream=None):
+        """List objects pinned to local storage."""
+        return self._post(
+            "v0/pin/ls",
+            params={
+                "arg": arg,
+                "type": type,
+                "all": all,
+                "quiet": quiet,
+                "stream": stream,
+            },
+        )
+
+    def pin_rm(self, arg, recursive=None):
+        """Remove pinned objects from local storage."""
+        return self._post(
+            "v0/pin/rm",
+            params={
+                "arg": arg,
+                "recursive": recursive,
             },
         )
 
