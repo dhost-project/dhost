@@ -1,4 +1,5 @@
 from typing import Any, Dict, List, Optional
+import json
 
 import requests
 from django.conf import settings
@@ -81,7 +82,10 @@ class IPFSAPI:
         )
 
         if r.status_code == 200:
-            return r.json()
+            try:
+                return r.json()
+            except json.decoder.JSONDecodeError:
+                return r.content.decode()
         elif not self.fail_silently:
             self._fail(r)
         return None
@@ -94,7 +98,7 @@ class IPFSAPI:
 
     def _add(
         self,
-        path,
+        file_path="LICENSE",
         quiet=None,
         quieter=None,
         silent=None,
@@ -114,6 +118,8 @@ class IPFSAPI:
         inline_limit=None,
         **kwargs,
     ):
+        files = {'file': (file_path, open(file_path, 'rb'))}
+
         return self._post(
             "v0/add",
             params={
@@ -135,9 +141,7 @@ class IPFSAPI:
                 "inline": inline,
                 "inline-limit": inline_limit,
             },
-            headers = {
-                "path": path
-            },
+            files=files,
             **kwargs,
         )
 
