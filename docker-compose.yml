@@ -84,8 +84,8 @@ services:
     ports:
       - 5555:5555
     environment:
-      - CELERY_BROKER_URL=redis://broker:6479/1
-      - CELERY_RESULT_BACKEND=redis://broker:6479/1
+      - CELERY_BROKER_URL=redis://broker:6379/1
+      - CELERY_RESULT_BACKEND=redis://broker:6379/1
     networks:
       - backends
 
