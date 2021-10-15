@@ -15,3 +15,4 @@ qrcode
 sentry-sdk
 social-auth-app-django
 whitenoise
+django-tailwind

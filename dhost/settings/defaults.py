@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "dhost.ipfs",
     "dhost.logs",
     "dhost.notifications",
+    "dhost.theme",
     "dhost.users",
     "dhost.oauth2",
     # External apps
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "social_django",
     "storages",
+    "tailwind",
 ]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
@@ -234,6 +236,9 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = env_int("CELERY_TASK_TIME_LIMIT", 1800)
 
 CELERY_TASK_SOFT_TIME_LIMIT = env_int("CELERY_TASK_SOFT_TIME_LIMIT", 1700)
+
+# Tailwind
+TAILWIND_APP_NAME = "dhost.theme"
 
 # IPFS
 IPFS_STORAGE_API_URL = env("IPFS_STORAGE_API_URL", "http://localhost:5001/api/v0/")
