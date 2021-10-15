@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 from dhost.dapps.models import Dapp, Deployment
@@ -26,10 +27,10 @@ class IPFSDapp(Dapp):
     ipfs_hash = models.CharField(_("IPFS hash"), max_length=128, blank=True)
     ipfs_gateway = models.URLField(
         _("IPFS public gateway"),
-        default="https://ipfs.io/ipfs/",
-        null=True,
-        blank=True,
+        default=settings.IPFS_GATEWAY_API_URL,
     )
+    file_stored_on_ipfs = models.FileField()
+
     deployment_class = IPFSDeployment
 
     class Meta:

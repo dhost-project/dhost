@@ -56,7 +56,7 @@ class Notification(models.Model):
     def __str__(self):
         return f"{self.user} {self.subject} {self.timesince()} ago"
 
-    def timesince(self, now=None):
+    def timesince(self, now=timezone.now()):
         return timesince(self.timestamp, now)
 
     def mark_as_read(self):

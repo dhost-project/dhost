@@ -235,8 +235,10 @@ CELERY_TASK_TIME_LIMIT = env_int("CELERY_TASK_TIME_LIMIT", 1800)
 
 CELERY_TASK_SOFT_TIME_LIMIT = env_int("CELERY_TASK_SOFT_TIME_LIMIT", 1700)
 
-# IFS
-IPFS_HTTP_API_URL = env("IPFS_HTTP_API_URL", "http://127.0.0.1:5001/api/")
+# IPFS
+IPFS_STORAGE_API_URL = env("IPFS_STORAGE_API_URL", "http://localhost:5001/api/v0/")
+
+IPFS_GATEWAY_API_URL = env("IPFS_GATEWAY_API_URL", "https://ipfs.io/ipfs/")
 
 # putting the `TEST_DIR` inside the `.cache` folder protect from loosing data
 # that musn't be deleted

@@ -42,7 +42,7 @@ def clean_params(params):
 
 
 class IPFSAPI:
-    BASE_URL = settings.IPFS_HTTP_API_URL
+    BASE_URL = settings.IPFS_STORAGE_API_URL
 
     def __init__(self, fail_silently: bool = False) -> None:
         self.fail_silently = fail_silently
