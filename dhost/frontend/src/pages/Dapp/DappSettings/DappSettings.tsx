@@ -68,8 +68,8 @@ export function DappSettings({
     <div className="container mx-auto">
       <div>
         <div className="content-center divide-y">
-          {settings_sections.map((_section) => (
-            <div className="md:flex p-8">
+          {settings_sections.map((_section, i) => (
+            <div className="md:flex p-8" key={`${_section.name}-${i}`}>
               <div className="ml-0 w-1/3">
                 <h1 className="text-lg">{_section.name}</h1>
                 <a className="text-gray-500">{_section.description}</a>
@@ -79,9 +79,9 @@ export function DappSettings({
               </div>
               <div className="flex justify-center w-1/3">
                 <div className="flex items-center">
-                  <button 
+                  <button
                   id={_section.short}
-                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" 
+                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                   type="submit"
                   name={_section.name}
                   onClick={displayData}>

@@ -5,25 +5,21 @@ import React from "react";
 
 function DappSettingsGithub({ dapp, setDapp }: DappContextType): React.ReactElement {
 
-  // var _dapp = dapp;
 
   function changeRepo(e: React.ChangeEvent<HTMLInputElement>) {
-    var _dapp = dapp
-    _dapp.github.repo = e.target.value
-    setDapp({ ..._dapp })
+    dapp.github.repo = e.target.value
+    setDapp({ ...dapp })
 
   }
 
   function changeBranch(e: React.ChangeEvent<HTMLInputElement>) {
-    var _dapp = dapp
-    _dapp.github.branch = parseInt(e.target.value, 10)
-    setDapp({ ..._dapp })
+    dapp.github.branch = parseInt(e.target.value, 10)
+    setDapp({ ...dapp })
   }
 
   function changeAutodep(e: React.MouseEvent<HTMLInputElement, MouseEvent>) {
-    var _dapp = dapp
-    //_dapp.github.auto_deploy = (e.target. === 'true')
-    setDapp({ ..._dapp })
+    //dapp.github.auto_deploy = (e.target. === 'true')
+    setDapp({ ...dapp })
   }
 
   function changeConfirmCI() {
@@ -57,7 +53,7 @@ function DappSettingsGithub({ dapp, setDapp }: DappContextType): React.ReactElem
       <div>
         <label className="inline-flex items-center">
           <span className="block uppercase tracking-wide text-gray-700 text-xs font-medium mb-2 mr-2 w-2/3">Auto deploy</span>
-          <input type="checkbox" className="form-checkbox mb-2" onClick={(e) => changeAutodep(e)} />
+          <input type="checkbox" className="form-checkbox mb-2" onClick={(e) => changeAutodep(e)}/>
         </label>
       </div>
       <div>
