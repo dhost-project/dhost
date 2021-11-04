@@ -1,4 +1,4 @@
-import { Notification } from "models/Notification"
+import { Notification } from "models/api/Notification"
 
 import { List } from "./List"
 import { ListItem } from "./ListItem"
@@ -11,7 +11,10 @@ export function ListNotification({
   return (
     <List>
       {notifications.map((notification) => (
-        <ListItem notification={notification} />
+        <ListItem
+          key={`${notification.id}-${notification.url}`}
+          notification={notification}
+        />
       ))}
     </List>
   )

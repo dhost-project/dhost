@@ -2,12 +2,12 @@ from django.urls import include, path
 from rest_framework_nested import routers
 
 from dhost.ipfs.views import (
-    IPFSDappAPILogViewSet,
     IPFSDappBuildOptionsViewSet,
     IPFSDappBuildViewSet,
     IPFSDappBundleViewSet,
     IPFSDappEnvVarViewSet,
     IPFSDappGithubOptionsViewSet,
+    IPFSDappLogViewSet,
     IPFSDappViewSet,
     IPFSDeploymentViewSet,
 )
@@ -20,7 +20,7 @@ ipfs_router = routers.NestedSimpleRouter(router, "", lookup="dapp")
 ipfs_router.register("buildoptions", IPFSDappBuildOptionsViewSet)
 ipfs_router.register("bundles", IPFSDappBundleViewSet)
 ipfs_router.register("deployments", IPFSDeploymentViewSet)
-ipfs_router.register("logs", IPFSDappAPILogViewSet)
+ipfs_router.register("logs", IPFSDappLogViewSet)
 ipfs_router.register("githuboptions", IPFSDappGithubOptionsViewSet)
 
 ipfs_build_router = routers.NestedSimpleRouter(

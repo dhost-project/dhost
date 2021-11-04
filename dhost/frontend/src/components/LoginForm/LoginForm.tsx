@@ -1,5 +1,6 @@
-import axios from "axios"
 import { useState } from "react"
+import { env } from "environment";
+import { http } from "utils/http";
 
 export function LoginForm() {
   const [loginForm, setLoginForm] = useState({
@@ -7,21 +8,13 @@ export function LoginForm() {
     password: "",
   })
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function login(event: React.FormEvent) {
     event.preventDefault()
-    login()
-  }
 
-  async function login() {
-    const loginUrl = `http://localhost:8000/api/login/`
+    const loginUrl = `${env.API_URL}/api/login/`
     const username = encodeURIComponent(loginForm.username)
     const password = encodeURIComponent(loginForm.password)
     const next = encodeURIComponent("/")
-
-    const http = axios.create({
-      xsrfCookieName: "csrftoken",
-      xsrfHeaderName: "X-CSRFToken",
-    })
 
     const data = `username=${username}&password=${password}&next=${next}`
     const headers = { "Content-Type": "application/x-www-form-urlencoded" }
@@ -31,7 +24,7 @@ export function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={login}>
       <div className="relative">
         <input
           id="username"

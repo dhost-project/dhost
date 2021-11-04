@@ -1,5 +1,5 @@
 import { IDapp } from "contexts/DappContext/DappContext"
-import { Dapp } from "models/Dapp"
+import { Dapp } from "models/api/Dapp"
 
 import { List } from "./List"
 import { ListItem } from "./ListItem"
@@ -8,7 +8,9 @@ export function ListDapp({ dapps }: { dapps: Dapp[] }): React.ReactElement {
   return (
     <List>
       {dapps.map((dapp) => (
-        <ListItem href={`/ipfs/${dapp.slug}`}>{dapp.slug}</ListItem>
+        <ListItem key={`${dapp.slug}`} href={`/ipfs/${dapp.slug}`}>
+          {dapp.slug}
+        </ListItem>
       ))}
     </List>
   )

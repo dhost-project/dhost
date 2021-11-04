@@ -14,7 +14,7 @@ def get_obj_model(obj):
     return ContentType.objects.get_for_model(obj)
 
 
-class APILogManager(models.Manager):
+class DappLogManager(models.Manager):
     def log_action(self, obj, dapp, action_flag, user=None):
         return self.create(
             user=user,
@@ -50,7 +50,7 @@ class ActionFlags(models.TextChoices):
     GITHUB_OPTIONS_DELETION = "github_opt_del", _("Github options removed")
 
 
-class APILog(models.Model):
+class DappLog(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -78,7 +78,7 @@ class APILog(models.Model):
     )
     change_message = models.TextField(blank=True)
     action_time = models.DateTimeField(default=timezone.now, editable=False)
-    objects = APILogManager()
+    objects = DappLogManager()
 
     class Meta:
         verbose_name = _("Dapp log entry")
