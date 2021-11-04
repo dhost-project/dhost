@@ -21,11 +21,12 @@ function DappSettingsGithub({ dapp, setDapp }: DappContextType): React.ReactElem
     console.log(dapp.github.confirm_ci);
   }
 
+  function WithoutRepo() {
+    return <h2>Connection to Gihub</h2>;
+  }
 
-  return (
-    <div>
-      <h2>Connection to Gihub</h2>
-
+  function WithRepo() {
+    return <div>
       <div className="pb-4 w-1/2">
         <h2 className="block uppercase tracking-wide text-gray-700 text-xs font-medium mb-2">Repository</h2>
 
@@ -55,6 +56,21 @@ function DappSettingsGithub({ dapp, setDapp }: DappContextType): React.ReactElem
           <input type="checkbox" className="form-checkbox mb-2" onClick={changeConfirmCI} />
         </label>
       </div>
+    </div>;
+  }
+
+  function Core(){
+    if (dapp.github.repo == "N/A") {
+      return <WithoutRepo />;
+    } else {
+      return <WithRepo/>;
+    }
+  }
+
+
+  return (
+    <div>
+      <Core/>
     </div>
   )
 }

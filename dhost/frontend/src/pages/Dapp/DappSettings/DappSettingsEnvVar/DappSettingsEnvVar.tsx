@@ -4,10 +4,10 @@ import tick from "assets/tick.png";
 
 function DappSettingsEnvVar({ dapp, setDapp }: DappContextType): React.ReactElement {
 
-
+// <img className="my-2 mx-1 h-8 w-auto" src={tick} alt="True" />
   function renderSensitive(sensistive: boolean | undefined) {
     if (sensistive) {
-      return <img className="my-2 mx-1 h-8 w-auto" src={tick} alt="True" />
+      return <span>✓</span>
     }
     else {
       return 
@@ -15,12 +15,12 @@ function DappSettingsEnvVar({ dapp, setDapp }: DappContextType): React.ReactElem
   }
 
   return (
-      <table className="table-fixed w-full">
+      <table className="table-fixed w-full text-align">
         <thead>
           <tr>
-            <th className="w-1/3">Variable</th>
-            <th className="w-1/3">Value</th>
-            <th className="w-1/3">Sensitive</th>
+            <th className="w-1/3 uppercase tracking-wide text-gray-700 text-xs font-medium mb-2 mr-2 pb-5">Variable</th>
+            <th className="w-1/3 uppercase tracking-wide text-gray-700 text-xs font-medium mb-2 mr-2 pb-5">Value</th>
+            <th className="w-1/3 uppercase tracking-wide text-gray-700 text-xs font-medium mb-2 mr-2 pb-5">Sensitive</th>
           </tr>
         </thead>
         <tbody>
