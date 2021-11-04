@@ -4,12 +4,16 @@ import { DappContextType } from "contexts/DappContext/DappContext"
 
 function DappSettingsBuild({ dapp, setDapp }: DappContextType): React.ReactElement {
 
-  function changeCommand() {
-
+  function changeCommand(e: React.ChangeEvent<HTMLInputElement>) {
+    var _dapp = dapp
+    _dapp.build.command = e.target.value
+    setDapp({ ..._dapp })
   }
 
-  function changeDocker() {
-    
+  function changeDocker(e: React.ChangeEvent<HTMLInputElement>) {
+    var _dapp = dapp
+    _dapp.build.docker = e.target.value
+    setDapp({ ..._dapp})
   }
 
   return (

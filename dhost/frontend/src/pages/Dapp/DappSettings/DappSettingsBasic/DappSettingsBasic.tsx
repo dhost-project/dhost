@@ -25,29 +25,18 @@ function DappSettingsBasic({ dapp, setDapp }: DappContextType): React.ReactEleme
 //  }
 
 function changeName(e: React.ChangeEvent<HTMLInputElement>) {
-  console.log(dapp.basic.slug);
-  dapp.basic.slug = e.target.value;
-  console.log(dapp.basic.slug);
   var _dapp = dapp;
   _dapp.basic.slug = e.target.value;
-  // setDapp(() => ({
-  //     dapp :_dapp
-  // })
+  setDapp({ ..._dapp})
 }
-//   setDapp(() => ({
-//     slug: e.target.value
-//   }
-//     // dapp: {
-//     //   basic: {
-//     //     slug : e.target.value
-//     //   }
-//     // }
-//   ));
-// }
+
 
 
 function changeGateway(e: React.ChangeEvent<HTMLSelectElement>) {
   // setGateway(e.target.value);
+  var _dapp = dapp
+  _dapp.basic.url = e.target.value
+  setDapp({ ..._dapp})
 }
   return (
     <div>
