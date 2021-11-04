@@ -1,24 +1,34 @@
 import { DappContextType } from "contexts/DappContext/DappContext"
+import React from "react";
 
 
 
 function DappSettingsGithub({ dapp, setDapp }: DappContextType): React.ReactElement {
 
-  function changeRepo() {
+  // var _dapp = dapp;
+
+  function changeRepo(e: React.ChangeEvent<HTMLInputElement>) {
+    var _dapp = dapp
+    _dapp.github.repo = e.target.value
+    setDapp({ ..._dapp })
 
   }
 
-  function changeBranch() {
-
+  function changeBranch(e: React.ChangeEvent<HTMLInputElement>) {
+    var _dapp = dapp
+    _dapp.github.branch = parseInt(e.target.value, 10)
+    setDapp({ ..._dapp })
   }
 
-  function changeAutodep() {
-    dapp.github.auto_deploy = !dapp.github.auto_deploy;
+  function changeAutodep(e: React.MouseEvent<HTMLInputElement, MouseEvent>) {
+    var _dapp = dapp
+    //_dapp.github.auto_deploy = (e.target. === 'true')
+    setDapp({ ..._dapp })
   }
 
   function changeConfirmCI() {
     dapp.github.confirm_ci = !dapp.github.confirm_ci;
-    console.log(dapp.github.confirm_ci);
+    setDapp({ ...dapp })
   }
 
   function WithoutRepo() {
@@ -46,31 +56,31 @@ function DappSettingsGithub({ dapp, setDapp }: DappContextType): React.ReactElem
       </div>
       <div>
         <label className="inline-flex items-center">
-          <span className="block uppercase tracking-wide text-gray-700 text-xs font-medium mb-2 mr-2">Auto deploy</span>
-          <input type="checkbox" className="form-checkbox mb-2" onClick={changeAutodep} />
+          <span className="block uppercase tracking-wide text-gray-700 text-xs font-medium mb-2 mr-2 w-2/3">Auto deploy</span>
+          <input type="checkbox" className="form-checkbox mb-2" onClick={(e) => changeAutodep(e)} />
         </label>
       </div>
       <div>
         <label className="inline-flex items-center">
-          <span className="block uppercase tracking-wide text-gray-700 text-xs font-medium mb-2 mr-2">Confirm CI</span>
+          <span className="block uppercase tracking-wide text-gray-700 text-xs font-medium mb-2 mr-2 w-4/3">Confirm CI</span>
           <input type="checkbox" className="form-checkbox mb-2" onClick={changeConfirmCI} />
         </label>
       </div>
     </div>;
   }
 
-  function Core(){
+  function Core() {
     if (dapp.github.repo == "N/A") {
       return <WithoutRepo />;
     } else {
-      return <WithRepo/>;
+      return <WithRepo />;
     }
   }
 
 
   return (
     <div>
-      <Core/>
+      <Core />
     </div>
   )
 }

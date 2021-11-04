@@ -1,9 +1,9 @@
-import { Dapp } from "models/Dapp";
-import { EnvVar } from "models/EnvVar";
-import { GithubOptions } from "models/GithubOptions";
+import { Dapp } from "models/api/Dapp";
+import { EnvVar } from "models/api/EnvVar";
+import { GithubOptions } from "models/api/GithubOptions";
 import { SetStateAction, Dispatch } from "react";
 import { createContext, FC, Context, useState, useContext } from "react";
-import { BuildOptions } from "models/BuildOptions";
+import { BuildOptions } from "models/api/BuildOptions";
 
 // type StateSetter<T> = (value: T | ((value: T) => T)) => void;
 export interface IDapp {
