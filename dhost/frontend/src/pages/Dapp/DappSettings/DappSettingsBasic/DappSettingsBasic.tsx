@@ -28,6 +28,11 @@ function changeName(e: React.ChangeEvent<HTMLInputElement>) {
   console.log(dapp.basic.slug);
   dapp.basic.slug = e.target.value;
   console.log(dapp.basic.slug);
+  var _dapp = dapp;
+  _dapp.basic.slug = e.target.value;
+  // setDapp(() => ({
+  //     dapp :_dapp
+  // })
 }
 //   setDapp(() => ({
 //     slug: e.target.value
@@ -55,7 +60,7 @@ function changeGateway(e: React.ChangeEvent<HTMLSelectElement>) {
           onChange={changeName} />
       </div>
 
-      <div className="w-full md:w-1/3  mb-6 md:mb-0">
+      <div className="w-full md:w-1/2  mb-6 md:mb-0">
         <label className="block uppercase tracking-wide text-gray-700 text-xs font-medium mb-2" htmlFor="grid-state">
           Gateway
         </label>
