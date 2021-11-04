@@ -1,4 +1,5 @@
 from celery import shared_task
+
 from dhost.ipfs.ipfs import IPFSAPI
 
 ipfs = IPFSAPI()

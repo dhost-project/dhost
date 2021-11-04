@@ -241,7 +241,9 @@ CELERY_TASK_SOFT_TIME_LIMIT = env_int("CELERY_TASK_SOFT_TIME_LIMIT", 1700)
 TAILWIND_APP_NAME = "dhost.theme"
 
 # IPFS
-IPFS_STORAGE_API_URL = env("IPFS_STORAGE_API_URL", "http://localhost:5001/api/v0/")
+IPFS_STORAGE_API_URL = env(
+    "IPFS_STORAGE_API_URL", "http://localhost:5001/api/v0/"
+)
 
 IPFS_GATEWAY_API_URL = env("IPFS_GATEWAY_API_URL", "https://ipfs.io/ipfs/")
 
