@@ -17,6 +17,7 @@ import { Fragment } from "react"
 import logo from "assets/logo.svg"
 
 import { gravatar_url } from "utils/gravatar"
+import { Link } from "react-router-dom";
 
 // TODO remove, for test only
 const gravatar = gravatar_url("7bc5dd72ce835d2a2868785729c0f176")
@@ -67,7 +68,7 @@ const account_sections = [
 
 function BellNotifications(): React.ReactElement {
   return (
-    <a href="/notifications" className="mr-4 p-1 rounded-full group">
+    <Link to="/notifications" className="mr-4 p-1 rounded-full group">
       <div className="relative">
         <BellIcon
           className="h-6 w-6 text-gray-400 group-hover:text-gray-500"
@@ -78,7 +79,7 @@ function BellNotifications(): React.ReactElement {
           from-pink-300 to-red-400"
         />
       </div>
-    </a>
+    </Link>
   )
 }
 
@@ -145,10 +146,10 @@ export function Navbar(): React.ReactElement {
             bg-white border-b"
           >
             <div className="flex justify-start lg:w-0 lg:flex-1">
-              <a href="/">
+              <Link to="/">
                 <span className="sr-only">DHost</span>
                 <img className="my-2 mx-1 h-8 w-auto" src={logo} alt="DHost" />
-              </a>
+              </Link>
             </div>
             <div className="-mr-2 -my-2 md:hidden">
               <Popover.Button
