@@ -19,7 +19,7 @@ def clean_dict_values(dic):
 
         elif type(value) == list:
             # convert a list to a string
-            # ["k", "itchenette", "1", 3] ->  "k,itchenette,1,3"
+            # ["d", "host", "1", 3] ->  "d,host,1,3"
             dic[key] = ",".join([str(i) for i in value])
 
     return dic
