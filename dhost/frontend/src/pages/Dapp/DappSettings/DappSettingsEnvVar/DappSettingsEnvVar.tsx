@@ -24,8 +24,8 @@ function DappSettingsEnvVar({ dapp, setDapp }: DappContextType): React.ReactElem
           </tr>
         </thead>
         <tbody>
-          {dapp.env_vars.map((_env_var) =>
-            <tr>
+          {dapp.env_vars.map((_env_var,i) =>
+            <tr key={`${_env_var.variable}-${i}`}>
               <td>{_env_var.variable}</td>
               <td>{_env_var.value}</td>
               <td>{renderSensitive(_env_var.sensitive)}</td>

@@ -55,14 +55,6 @@ export const DappProvider: FC = ({ children }) => {
   ]
   } as IDapp;
 
-function updateDapp(_dapp: IDapp) {
-
-}
-
-function setSlug(_slug: string) {
-  dapp.basic.slug = _slug;
-}
-
 const [dapp, setDapp] = useState<IDapp>(_dapp);
 const props = {
   dapp, setDapp

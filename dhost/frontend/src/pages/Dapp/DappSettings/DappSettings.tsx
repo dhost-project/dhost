@@ -9,6 +9,8 @@ import DappSettingsEnvVar from "./DappSettingsEnvVar/DappSettingsEnvVar";
 import { ButtonHTMLAttributes, ReactEventHandler } from "react";
 import { ButtonProps } from "components/Button";
 import { toast } from "react-toastify";
+import DappSettingsSectionTitle from "./DappSettingsSectionTitle/DappSettingsSectionTitle";
+import { DappSettingsSectionWithValidation } from "components/DappSettings/WithValidation";
 
 type TParams = { dapp_slug: string }
 
@@ -28,7 +30,7 @@ export function DappSettings({
     env_vars: ["toto", "tata"]
   }
 
-  const {dapp, setDapp} = useDapp();
+  const { dapp, setDapp } = useDapp();
 
 
   function displayData(e: React.MouseEvent<HTMLButtonElement>) {
@@ -38,12 +40,16 @@ export function DappSettings({
   }
 
   const settings_sections = [
-    {
-      name: "Basic",
-      short: "basic",
-      description: "Change major informations of your application.",
-      component: <DappSettingsBasic dapp={dapp} setDapp={setDapp}></DappSettingsBasic>
-    },
+    /*{
+      component: <DappSettingsSectionWithValidation
+        _component={<DappSettingsBasic dapp={dapp} setDapp={setDapp}
+        ></DappSettingsBasic>}
+        _short="basic"
+        _name="Basic"
+        _description="Change major informations of your application.">
+      </DappSettingsSectionWithValidation>
+
+    },*/
     {
       name: "Build",
       short: "build",
@@ -70,21 +76,18 @@ export function DappSettings({
         <div className="content-center divide-y">
           {settings_sections.map((_section, i) => (
             <div className="md:flex p-8" key={`${_section.name}-${i}`}>
-              <div className="ml-0 w-1/3">
-                <h1 className="text-lg">{_section.name}</h1>
-                <a className="text-gray-500">{_section.description}</a>
-              </div>
+              <DappSettingsSectionTitle _name={_section.name} _description={_section.description}></DappSettingsSectionTitle>
               <div className="w-1/3">
                 {_section.component}
               </div>
               <div className="flex justify-center w-1/3">
                 <div className="flex items-center">
                   <button
-                  id={_section.short}
-                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                  type="submit"
-                  name={_section.name}
-                  onClick={displayData}>
+                    id={_section.short}
+                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                    type="submit"
+                    name={_section.name}
+                    onClick={displayData}>
                     Validate
                   </button>
                 </div>
