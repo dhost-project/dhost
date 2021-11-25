@@ -1,6 +1,7 @@
 import { DappContextType } from "contexts/DappContext/DappContext"
 
 import tick from "assets/tick.png";
+import { ModalEnvVar } from "components/DappSettings/ModalEnvVar";
 
 function DappSettingsEnvVar({ dapp, setDapp }: DappContextType): React.ReactElement {
 
@@ -15,6 +16,7 @@ function DappSettingsEnvVar({ dapp, setDapp }: DappContextType): React.ReactElem
   }
 
   return (
+    <>
       <table className="table-fixed w-full text-align">
         <thead>
           <tr>
@@ -33,6 +35,8 @@ function DappSettingsEnvVar({ dapp, setDapp }: DappContextType): React.ReactElem
           )}
         </tbody>
       </table>
+      <ModalEnvVar></ModalEnvVar>
+      </>
   )
 }
 
