@@ -1,18 +1,6 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-import axios from "axios"
 import { env } from "environment"
 import { useState } from "react"
-=======
-import { useState } from "react"
-import { env } from "environment";
-import { http } from "utils/http";
->>>>>>> 17629ff (add custom axios instance to inject csrf token & interceptor for futur uses (#149))
-=======
-import { useState } from "react"
-import { env } from "environment";
-import { http } from "utils/http";
->>>>>>> aa01e7be49802c2e59f915b7fbf62070fb91cfcd
+import { http } from "utils/http"
 
 export function LoginForm() {
   const [loginForm, setLoginForm] = useState({
