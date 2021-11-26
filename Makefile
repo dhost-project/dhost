@@ -39,11 +39,11 @@ clean_db:
 clean: clean_db
 
 test:
-	$(MANAGE) makemigrations --dry-run; \
+	$(MANAGE) makemigrations --dry-run
 	$(MANAGE) test --settings dhost.settings.tests
 
 coverage:
-	$(ENV_PYTHON) -m coverage run manage.py test --settings dhost.settings.tests; \
+	$(ENV_PYTHON) -m coverage run manage.py test --settings dhost.settings.tests
 	$(ENV_PYTHON) -m coverage report -m
 
 coverage_html:
@@ -78,15 +78,15 @@ prepare-dashboard:
 	fi
 
 build-dashboard: prepare-dashboard
-	cd dhost/frontend; \
+	cd dhost/frontend
 	yarn build
 
 start-dashboard: prepare-dashboard
-	cd dhost/frontend; \
+	cd dhost/frontend
 	yarn start
 
 test-dashboard: prepare-dashboard
-	cd dhost/frontend; \
+	cd dhost/frontend
 	yarn test
 
 dashboard-develop: build-dashboard start-dashboard
