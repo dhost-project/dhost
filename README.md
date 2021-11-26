@@ -7,6 +7,7 @@
 For a complete setup guide go to [docs/setup.md](./docs/setup.md) or use Docker [tools/docker/README.md](./tools/docker/README.md).
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ```ssh
 cd tools/docker
 ```
@@ -53,6 +54,23 @@ Load fixture (demo data).
 >>>>>>> d13dd1a (ipfs docker)
 
 ```shell
+=======
+To start the project.
+
+```shell
+docker-compose up -d --build
+```
+
+Apply migrations.
+
+```shell
+docker-compose run --rm api python manage.py migrate
+```
+
+Load fixture (demo data).
+
+```shell
+>>>>>>> aa01e7be49802c2e59f915b7fbf62070fb91cfcd
 docker-compose run --rm api python manage.py loaddata demo
 ```
 

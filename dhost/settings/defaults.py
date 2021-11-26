@@ -222,6 +222,8 @@ SOCIAL_AUTH_GITHUB_SCOPE = [
     # 'user:email',
 ]
 
+GITHUB_REPOS_ROOT = env("GITHUB_REPOS_ROOT", os.path.join(MEDIA_ROOT, "github"))
+
 # Celery
 CELERY_BROKER_URL = env("CELERY_BROKER_URL", "redis://localhost:6379/0")
 
@@ -233,8 +235,11 @@ CELERY_TASK_TIME_LIMIT = env_int("CELERY_TASK_TIME_LIMIT", 1800)
 
 CELERY_TASK_SOFT_TIME_LIMIT = env_int("CELERY_TASK_SOFT_TIME_LIMIT", 1700)
 
+<<<<<<< HEAD
 GITHUB_REPOS_ROOT = env("GITHUB_REPOS_ROOT", os.path.join(MEDIA_ROOT, "github"))
 
+=======
+>>>>>>> aa01e7be49802c2e59f915b7fbf62070fb91cfcd
 # IFS
 IPFS_HTTP_API_URL = env("IPFS_HTTP_API_URL", "http://127.0.0.1:5001/api/")
 
