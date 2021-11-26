@@ -2,13 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+<<<<<<< HEAD
 .Toastify__progress-bar,
 .Toastify__progress-bar--animated,
 .Toastify__progress-bar-theme--light,
 .Toastify__progress-bar--default {
+=======
+table td {
+    text-align: center;
+    justify-content: center;
+    .Toastify__progress-bar,
+    .Toastify__progress-bar--animated,
+    .Toastify__progress-bar-theme--light,
+    .Toastify__progress-bar--default {
+>>>>>>> 8c176debd82d508de7a0cf9928b20aee00fd5f45
     background: rgba(255, 255, 255, 0.75) !important; /* To override default toast fancy progress-bar */
 }
 
 :root {
     --toastify-toast-width: auto; /* toast width can be modified here */
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 8c176debd82d508de7a0cf9928b20aee00fd5f45
