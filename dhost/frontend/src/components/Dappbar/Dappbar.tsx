@@ -1,9 +1,5 @@
 import { DappProvider } from "contexts/DappContext/DappContext"
-<<<<<<< HEAD
-import { Dapp } from "models/Dapp"
-=======
 import { Dapp } from "models/api/Dapp"
->>>>>>> 8c176debd82d508de7a0cf9928b20aee00fd5f45
 
 import { Nav } from "./Nav"
 import { NavItem } from "./NavItem"
