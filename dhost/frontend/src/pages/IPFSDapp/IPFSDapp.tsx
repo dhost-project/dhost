@@ -17,6 +17,7 @@ import {
   DappList as IPFSDappList,
   DappLogs as IPFSDappLogs,
 } from "."
+import { DappProvider } from "contexts/DappContext/DappContext"
 
 const dapp = {
   slug: "dhost_v2",
@@ -34,7 +35,9 @@ function IPFSDappDetail(): React.ReactElement {
           <Route exact path={`${path}/`} component={IPFSDappDetails} />
           <Route path={`${path}/deploy`} component={IPFSDappDeploy} />
           <Route path={`${path}/logs`} component={IPFSDappLogs} />
-          <Route path={`${path}/settings`} component={IPFSDappEdit} />
+          <DappProvider>
+            <Route path={`${path}/settings`} component={IPFSDappEdit} />
+          </DappProvider>
           <Route path={`${path}/source`} component={IPFSDappSource} />
           <Route path="*" component={NotFound} />
         </Switch>
