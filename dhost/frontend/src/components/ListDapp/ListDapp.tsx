@@ -1,6 +1,4 @@
-import { IDapp } from "contexts/DappContext/DappContext"
 import { Dapp } from "models/api/Dapp"
-
 import { List } from "./List"
 import { ListItem } from "./ListItem"
 

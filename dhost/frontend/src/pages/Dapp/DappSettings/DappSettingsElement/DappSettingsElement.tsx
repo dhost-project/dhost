@@ -1,11 +1,10 @@
-import { useDapp } from "contexts/DappContext/DappContext";
+import { useDapp } from "contexts/DappContext/DappContext"
 
-
-function DappSettingsElement({desc}: any): React.ReactElement {
+function DappSettingsElement({ desc }: any): React.ReactElement {
   // const [{slug, setSlug}] = useDapp();
 
   function increment() {
-     // setSlug((current: string) => current + 1);
+    // setSlug((current: string) => current + 1);
   }
   // const title : string = '';
   return (

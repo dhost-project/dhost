@@ -13,11 +13,11 @@ import {
   XIcon,
 } from "@heroicons/react/outline"
 import { Fragment } from "react"
-
+import { Button } from "react-bootstrap"
+import { Link } from "react-router-dom"
 import logo from "assets/logo.svg"
-
+import { useModals } from "contexts/ModalsContext/ModalsContext"
 import { gravatar_url } from "utils/gravatar"
-import { Link } from "react-router-dom";
 
 // TODO remove, for test only
 const gravatar = gravatar_url("7bc5dd72ce835d2a2868785729c0f176")
@@ -136,6 +136,8 @@ function AccountMenu(): React.ReactElement {
 }
 
 export function Navbar(): React.ReactElement {
+  const { setShowCreateDappModal } = useModals()
+
   return (
     <Popover className="relative bg-white z-40">
       {({ open }) => (
@@ -178,6 +180,13 @@ export function Navbar(): React.ReactElement {
               className="hidden md:flex justify-end md:flex-1 lg:w-0
               items-center"
             >
+              <Button
+                onClick={() => {
+                  setShowCreateDappModal(true)
+                }}
+              >
+                Create Dapp
+              </Button>
               <BellNotifications />
               <AccountMenu />
             </div>

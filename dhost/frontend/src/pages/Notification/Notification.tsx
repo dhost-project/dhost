@@ -4,9 +4,7 @@ import {
   Route,
   useRouteMatch,
 } from "react-router-dom"
-
 import { NotFound } from "pages/NotFound"
-
 import { NotificationList, NotificationDetail } from "."
 
 const notifications = [

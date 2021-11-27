@@ -1,3 +1,3 @@
 export interface ApiPing {
-    [key: string]: string
+  [key: string]: string
 }

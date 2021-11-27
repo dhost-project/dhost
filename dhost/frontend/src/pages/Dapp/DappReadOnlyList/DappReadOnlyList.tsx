@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next"
-
 import { ListDapp } from "components/ListDapp"
 
 const dapps = [

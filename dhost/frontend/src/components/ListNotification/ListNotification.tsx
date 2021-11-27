@@ -1,5 +1,4 @@
 import { Notification } from "models/api/Notification"
-
 import { List } from "./List"
 import { ListItem } from "./ListItem"
 

@@ -4,11 +4,9 @@ import {
   Route,
   useRouteMatch,
 } from "react-router-dom"
-
 import { Dappbar } from "components/Dappbar"
-
+import { DappProvider } from "contexts/DappContext/DappContext"
 import { NotFound } from "pages/NotFound"
-
 import {
   DappDeploy as IPFSDappDeploy,
   DappDetails as IPFSDappDetails,
@@ -17,7 +15,6 @@ import {
   DappList as IPFSDappList,
   DappLogs as IPFSDappLogs,
 } from "."
-import { DappProvider } from "contexts/DappContext/DappContext"
 
 const dapp = {
   slug: "dhost_v2",

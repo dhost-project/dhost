@@ -1,3 +1,5 @@
+import "bootstrap/dist/css/bootstrap.min.css"
+import { AppContext } from "contexts"
 import { BrowserRouter } from "react-router-dom"
 import { toast, ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.min.css"
@@ -19,23 +21,25 @@ export default function App(): React.ReactElement {
 
   return (
     <BrowserRouter>
-      <div className="flex flex-col min-h-screen justify-between">
-        <div>
-          <Header />
-          <Navbar />
-          <RouterOutlet />
-          <ToastContainer
-            position={toast.POSITION.BOTTOM_RIGHT}
-            autoClose={5000}
-            icon={false}
-            toastClassName={(options) =>
-              contextClass[options?.type || "default"] +
-              " relative flex p-1 m-2 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer"
-            }
-          />
+      <AppContext>
+        <div className="flex flex-col min-h-screen justify-between">
+          <div>
+            <Header />
+            <Navbar />
+            <RouterOutlet />
+            <ToastContainer
+              position={toast.POSITION.BOTTOM_RIGHT}
+              autoClose={5000}
+              icon={false}
+              toastClassName={(options) =>
+                contextClass[options?.type || "default"] +
+                " relative flex p-1 m-2 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer"
+              }
+            />
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
+      </AppContext>
     </BrowserRouter>
   )
 }
