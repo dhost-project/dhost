@@ -181,6 +181,7 @@ export function Navbar(): React.ReactElement {
               items-center"
             >
               <Button
+                className="flex justify-center items-center h-8 mr-4"
                 onClick={() => {
                   setShowCreateDappModal(true)
                 }}

@@ -21,6 +21,7 @@ const dapp = {
   owner: "john",
 }
 
+// TODO : check if dapp slug actually exist & prevent access to other people dapps
 function IPFSDappDetail(): React.ReactElement {
   const { path } = useRouteMatch()
 

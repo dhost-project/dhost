@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom"
 import { createIPFSDapp } from "api/IPFSDapps"
 import { Button } from "components/Button"
 import { IPFSDappParams } from "models/api/IPFSDapp"
+import { useModals } from "contexts/ModalsContext/ModalsContext";
 
 const initialDapp: IPFSDappParams = {
   slug: "",
@@ -12,13 +13,15 @@ const initialDapp: IPFSDappParams = {
 
 export function DappCreateForm() {
   const history = useHistory()
+  const { setShowCreateDappModal } = useModals()
   const [dappForm, setDappForm] = useState<IPFSDappParams>({ ...initialDapp })
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     try {
       const res = await createIPFSDapp(dappForm)
-      history.push(`/ipfs/${res.data.slug}`)
+      history.push(`/ipfs/${res.data.slug}/deploy`)
+      setShowCreateDappModal(false)
     } catch (error) {
       console.warn(error)
     }
