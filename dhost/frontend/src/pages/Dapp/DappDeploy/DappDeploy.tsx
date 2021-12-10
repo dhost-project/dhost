@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction, useState } from "react"
-import { GithubDeploy, HerokuDeploy } from "components/DappDeploy";
 import { useTranslation } from "react-i18next"
 import { RouteComponentProps } from "react-router-dom"
+import { GithubDeploy, DhostDeploy } from "components/DappDeploy"
 
 export enum EDeployMethodIds {
-  Heroku = "heroku",
   Github = "github",
+  Dhost = "dhost",
 }
 
 export type TParams = { dapp_slug: string }
@@ -29,23 +29,23 @@ export type TDeploymentProcesses = {
 
 const deployMethods: TDeployMethods[] = [
   {
-    id: "heroku",
-    title: "Heroku Git",
-    description: "Use Heroku CLI",
-  },
-  {
     id: "github",
     title: "Github",
     description: "Connect to Github",
+  },
+  {
+    id: "dhost",
+    title: "Dhost CLI",
+    description: "Use Dhost CLI",
   },
 ]
 
 const deploymentProcessMap: TDeploymentProcesses = {
   github: {
-    component: <GithubDeploy />
+    component: <GithubDeploy />,
   },
-  heroku: {
-    component: <HerokuDeploy />
+  dhost: {
+    component: <DhostDeploy />,
   },
 }
 
@@ -76,7 +76,7 @@ export function DappDeploy({
 }: RouteComponentProps<TParams>): React.ReactElement {
   const { t } = useTranslation()
   const [selectedDeployMethod, setSelectedDeployMethod] = useState<string>(
-    deployMethods[0].id   // default to heroku
+    deployMethods[0].id // default to heroku
     // ""                 // no default selection
   )
 

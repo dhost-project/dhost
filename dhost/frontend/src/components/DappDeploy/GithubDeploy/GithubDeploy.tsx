@@ -1,5 +1,7 @@
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
+import { listRepositorys } from "api/Repositories"
+import { env } from "environment";
 
 export function NotConnectedGithubDeploy({
   setIsConnected,
@@ -7,6 +9,13 @@ export function NotConnectedGithubDeploy({
   setIsConnected: Dispatch<SetStateAction<boolean>>
 }) {
   const { t } = useTranslation()
+
+  async function handleConnectToGithub() {
+    console.log('handleConnectToGithub')
+    window.open(`${env.API_URL}/api/social/login/github/`)
+    // window.location.href = `${env.API_URL}/api/social/login/github/`
+    // setIsConnected(true)
+  }
 
   return (
     <>
@@ -37,7 +46,7 @@ export function NotConnectedGithubDeploy({
 
           <button
             className="bg-green-500 w-44 p-1 pt-2 pb-2 text-white rounded hover:bg-green-400"
-            onClick={() => setIsConnected(true)}
+            onClick={handleConnectToGithub}
           >
             Connect to Github
           </button>
@@ -196,12 +205,18 @@ export function ConnectedGithubDeploy({
         </div>
 
         <div className="flex flex-col text-sm">
-          <h4 className="font-medium mb-2 text-gray-500">Deploy a Github branch</h4>
+          <h4 className="font-medium mb-2 text-gray-500">
+            Deploy a Github branch
+          </h4>
           <p className="mb-2 text-gray-400">
             This will deploy the current state of the branch you specify below.{" "}
-            <a href="https://github.com" className="text-blue-500 underline">Learn more</a>
+            <a href="https://github.com" className="text-blue-500 underline">
+              Learn more
+            </a>
           </p>
-          <h4 className="font-medium mb-2 text-gray-500">Choose a branch to deploy</h4>
+          <h4 className="font-medium mb-2 text-gray-500">
+            Choose a branch to deploy
+          </h4>
           <div className="flex justify-between">
             <select className="mr-2 border-1 border-gray-400 w-full p-1 rounded">
               <option value="master">🖇 master</option>
@@ -209,7 +224,9 @@ export function ConnectedGithubDeploy({
               <option value="dev">🖇 dev</option>
               <option value="feature">🖇 feature</option>
             </select>
-            <button className="w-40 text-medium border-1 border-gray-700 bg-gray-700 hover:text-gray-700 hover:bg-white rounded text-white">Deploy Branch</button>
+            <button className="w-40 text-medium border-1 border-gray-700 bg-gray-700 hover:text-gray-700 hover:bg-white rounded text-white">
+              Deploy Branch
+            </button>
           </div>
         </div>
       </section>
@@ -219,6 +236,17 @@ export function ConnectedGithubDeploy({
 
 export function GithubDeploy() {
   const [isConnected, setIsConnected] = useState(false)
+
+  useEffect(() => {
+    ;(async () => {
+      try {
+        const res = await listRepositorys()
+        console.log("listRepositorys", res)
+      } catch (error: any) {
+        setIsConnected(false)
+      }
+    })()
+  }, [])
 
   return isConnected ? (
     <ConnectedGithubDeploy setIsConnected={setIsConnected} />

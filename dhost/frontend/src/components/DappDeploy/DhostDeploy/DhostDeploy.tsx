@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next"
 
-export function HerokuDeploy() {
+export function DhostDeploy() {
   const { t } = useTranslation()
 
   return (
@@ -9,7 +9,7 @@ export function HerokuDeploy() {
         <div>
           <h2 className="font-normal text-green-500">{t("CONNECT_TO_GITHUB")}</h2>
         </div>
-        <div className="flex">Heroku</div>
+        <div className="flex">Dhost</div>
       </section>
     </>
   )

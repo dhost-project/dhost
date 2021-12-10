@@ -1,2 +1,2 @@
 export * from './GithubDeploy'
-export * from './HerokuDeploy'
+export * from './DhostDeploy'
