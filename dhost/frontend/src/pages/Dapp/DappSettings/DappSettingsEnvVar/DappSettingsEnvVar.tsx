@@ -35,7 +35,6 @@ function DappSettingsEnvVar({ dapp, setDapp }: DappContextType): React.ReactElem
           )}
         </tbody>
       </table>
-      <ModalEnvVar></ModalEnvVar>
       </>
   )
 }

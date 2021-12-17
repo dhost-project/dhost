@@ -51,6 +51,12 @@ export function DappSettings({
 
     },*/
     {
+      name: "Basic",
+      short: "basic",
+      description: "Change major informations of your application.",
+      component: <DappSettingsBasic dapp={dapp} setDapp={setDapp}></DappSettingsBasic>
+    },
+    {
       name: "Build",
       short: "build",
       description: "Adapt your build options to your needs.",
