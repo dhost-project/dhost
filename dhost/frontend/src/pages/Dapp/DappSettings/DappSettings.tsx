@@ -1,6 +1,7 @@
 import { RouteComponentProps } from "react-router-dom"
 import { toast } from "react-toastify"
 import { useDapp } from "contexts/DappContext/DappContext"
+import DappSettingsBasic from "./DappSettingsBasic/DappSettingsBasic"
 import DappSettingsBuild from "./DappSettingsBuild/DappSettingsBuild"
 import DappSettingsEnvVar from "./DappSettingsEnvVar/DappSettingsEnvVar"
 import DappSettingsGithub from "./DappSettingsGithub/DappSettingsGithub"
