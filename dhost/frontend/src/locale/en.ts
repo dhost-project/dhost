@@ -2,6 +2,7 @@ export const en = {
   translation: {
     // DEPLOY
     DEPLOY_METHOD: "Deployement method",
+    CONNECT_TO_GITHUB: "Connect to GitHub",
     DEPLOY_APP_CONNECTED: "App connected to Github",
     DEPLOY_AUTO: "Automatic deploys",
     DEPLOY_MANUAL_ONE: "Manual deploy",

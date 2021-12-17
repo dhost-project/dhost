@@ -1,41 +1,21 @@
-import { useTranslation } from "react-i18next"
 import { RouteComponentProps } from "react-router-dom"
-import { DappProvider, useDapp } from "contexts/DappContext/DappContext";
-import DappSettingsElement from "./DappSettingsElement/DappSettingsElement";
-import DappSettingsBasic from "./DappSettingsBasic/DappSettingsBasic";
-import DappSettingsGithub from "./DappSettingsGithub/DappSettingsGithub";
-import DappSettingsBuild from "./DappSettingsBuild/DappSettingsBuild";
-import DappSettingsEnvVar from "./DappSettingsEnvVar/DappSettingsEnvVar";
-import { ButtonHTMLAttributes, ReactEventHandler } from "react";
-import { ButtonProps } from "components/Button";
-import { toast } from "react-toastify";
-import DappSettingsSectionTitle from "./DappSettingsSectionTitle/DappSettingsSectionTitle";
-import { DappSettingsSectionWithValidation } from "components/DappSettings/WithValidation";
+import { toast } from "react-toastify"
+import { useDapp } from "contexts/DappContext/DappContext"
+import DappSettingsBuild from "./DappSettingsBuild/DappSettingsBuild"
+import DappSettingsEnvVar from "./DappSettingsEnvVar/DappSettingsEnvVar"
+import DappSettingsGithub from "./DappSettingsGithub/DappSettingsGithub"
+import DappSettingsSectionTitle from "./DappSettingsSectionTitle/DappSettingsSectionTitle"
 
 type TParams = { dapp_slug: string }
 
 export function DappSettings({
   match,
 }: RouteComponentProps<TParams>): React.ReactElement {
-  const { t } = useTranslation()
-
-  const informations = {
-    name: match.params.dapp_slug,
-    gateway: "gateway.com",
-    command: "npm install",
-    docker: "none",
-    github_username: "patrick",
-    github_repo: "cabane",
-    github_auto_deploy: false,
-    env_vars: ["toto", "tata"]
-  }
-
-  const { dapp, setDapp } = useDapp();
-
+  const { dapp, setDapp } = useDapp()
 
   function displayData(e: React.MouseEvent<HTMLButtonElement>) {
-    console.log(e.target);
-    console.log(dapp);
+    console.log(e.target)
+    console.log(dapp)
     toast.info("Change done.", { position: toast.POSITION.BOTTOM_RIGHT })
   }
 
@@ -60,20 +40,26 @@ export function DappSettings({
       name: "Build",
       short: "build",
       description: "Adapt your build options to your needs.",
-      component: <DappSettingsBuild dapp={dapp} setDapp={setDapp}></DappSettingsBuild>
+      component: (
+        <DappSettingsBuild dapp={dapp} setDapp={setDapp}></DappSettingsBuild>
+      ),
     },
     {
       name: "Github",
       short: "github",
       description: "Connect to your repository.",
-      component: <DappSettingsGithub dapp={dapp} setDapp={setDapp}></DappSettingsGithub>
+      component: (
+        <DappSettingsGithub dapp={dapp} setDapp={setDapp}></DappSettingsGithub>
+      ),
     },
     {
       name: "Environment variables",
       short: "var",
       description: "Add, modify and delete your environment variables.",
-      component: <DappSettingsEnvVar dapp={dapp} setDapp={setDapp}></DappSettingsEnvVar>
-    }
+      component: (
+        <DappSettingsEnvVar dapp={dapp} setDapp={setDapp}></DappSettingsEnvVar>
+      ),
+    },
   ]
 
   return (
@@ -82,10 +68,11 @@ export function DappSettings({
         <div className="content-center divide-y">
           {settings_sections.map((_section, i) => (
             <div className="md:flex p-8" key={`${_section.name}-${i}`}>
-              <DappSettingsSectionTitle _name={_section.name} _description={_section.description}></DappSettingsSectionTitle>
-              <div className="w-1/3">
-                {_section.component}
-              </div>
+              <DappSettingsSectionTitle
+                _name={_section.name}
+                _description={_section.description}
+              ></DappSettingsSectionTitle>
+              <div className="w-1/3">{_section.component}</div>
               <div className="flex justify-center w-1/3">
                 <div className="flex items-center">
                   <button
@@ -93,7 +80,8 @@ export function DappSettings({
                     className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                     type="submit"
                     name={_section.name}
-                    onClick={displayData}>
+                    onClick={displayData}
+                  >
                     Validate
                   </button>
                 </div>

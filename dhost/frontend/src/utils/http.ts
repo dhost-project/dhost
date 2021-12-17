@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios"
 
-export interface HttpResponse<T> extends Promise<AxiosResponse<T>> {};
+export interface HttpResponse<T> extends Promise<AxiosResponse<T>> {}
 
 const http = axios.create({
   xsrfCookieName: "csrftoken",
@@ -10,7 +10,6 @@ const http = axios.create({
 // response interceptor
 http.interceptors.request.use(
   function (config) {
-
     return config
   },
   function (error) {
@@ -20,11 +19,13 @@ http.interceptors.request.use(
 
 // response interceptor
 http.interceptors.response.use(
-  function (response) { // For every status code == 2xx
+  function (response) {
+    // For every status code == 2xx
 
     return response
   },
-  function (error) {    // For every status code != 2xx
+  function (error) {
+    // For every status code != 2xx
     return Promise.reject(error)
   }
 )

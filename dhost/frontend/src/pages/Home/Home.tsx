@@ -9,12 +9,13 @@ export function Home(): React.ReactElement {
   async function startToasting(seconds: number = 3) {
     const toastId = toast.loading(`⏳ Please hold on ${seconds} seconds ⏳`)
 
-    await new Promise((resolve) => { // Too simulate long stuff happening
+    await new Promise((resolve) => {
+      // Too simulate long stuff happening
       let _seconds = seconds
 
       const intervalRef = setInterval(() => {
         toast.update(toastId, {
-          render: `⏳ Please hold on ${--_seconds || '🎉'} seconds ⏳`,
+          render: `⏳ Please hold on ${--_seconds || "🎉"} seconds ⏳`,
         })
 
         if (_seconds <= 0) {
@@ -25,7 +26,9 @@ export function Home(): React.ReactElement {
     })
 
     toast.dismiss(toastId)
-    toast(<RetryToast callback={() => startToasting(seconds + 1)} />, { type: "info" })
+    toast(<RetryToast callback={() => startToasting(seconds + 1)} />, {
+      type: "info",
+    })
   }
 
   return (
@@ -63,10 +66,7 @@ export function Home(): React.ReactElement {
         >
           Notification error test
         </button>
-        <button
-          className="bg-gray-300 p-1 m-1"
-          onClick={() => startToasting()}
-        >
+        <button className="bg-gray-300 p-1 m-1" onClick={() => startToasting()}>
           Retry test
         </button>
       </div>

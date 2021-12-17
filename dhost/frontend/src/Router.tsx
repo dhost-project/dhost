@@ -1,6 +1,5 @@
 import React from "react"
 import { Switch, Route } from "react-router-dom"
-
 import { About } from "pages/About"
 import { Account } from "pages/Account"
 import { DappReadOnlyList } from "pages/Dapp"

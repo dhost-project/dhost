@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next"
-
 import { ListDapp } from "components/ListDapp"
 import { useDapp } from "contexts/DappContext/DappContext"
 import { useEffect } from "react"

@@ -1,9 +1,7 @@
 import { SearchIcon } from "@heroicons/react/outline"
 import { useTranslation } from "react-i18next"
-
 import { Button } from "components/Button"
 import { ListNotification } from "components/ListNotification"
-
 import { Notification } from "models/api/Notification"
 
 export function NotificationList({

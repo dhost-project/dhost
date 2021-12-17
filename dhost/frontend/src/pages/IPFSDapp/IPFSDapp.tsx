@@ -4,11 +4,9 @@ import {
   Route,
   useRouteMatch,
 } from "react-router-dom"
-
 import { Dappbar } from "components/Dappbar"
-
+import { DappProvider } from "contexts/DappContext/DappContext"
 import { NotFound } from "pages/NotFound"
-
 import {
   DappDeploy as IPFSDappDeploy,
   DappDetails as IPFSDappDetails,
@@ -17,13 +15,13 @@ import {
   DappList as IPFSDappList,
   DappLogs as IPFSDappLogs,
 } from "."
-import { DappProvider } from "contexts/DappContext/DappContext"
 
 const dapp = {
   slug: "dhost_v2",
   owner: "john",
 }
 
+// TODO : check if dapp slug actually exist & prevent access to other people dapps
 function IPFSDappDetail(): React.ReactElement {
   const { path } = useRouteMatch()
 

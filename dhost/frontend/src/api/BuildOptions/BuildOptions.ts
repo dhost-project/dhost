@@ -6,7 +6,9 @@ import { http, HttpResponse } from "utils/http"
  *
  * @param dapp_slug string
  */
-export function listBuildOptions(dapp_slug: string): HttpResponse<BuildOptions[]> {
+export function listBuildOptions(
+  dapp_slug: string
+): HttpResponse<BuildOptions[]> {
   return http.get(`${env.API_URL}/api/ipfs/${dapp_slug}/buildoptions/`)
 }
 
@@ -29,8 +31,12 @@ export function createBuildOptions(
  *
  * @param dapp_slug A unique value identifying this build options
  */
-export function retrieveBuildOptions(dapp_slug: string): HttpResponse<BuildOptions> {
-  return http.get(`${env.API_URL}/api/ipfs/${dapp_slug}/buildoptions/${dapp_slug}/`)
+export function retrieveBuildOptions(
+  dapp_slug: string
+): HttpResponse<BuildOptions> {
+  return http.get(
+    `${env.API_URL}/api/ipfs/${dapp_slug}/buildoptions/${dapp_slug}/`
+  )
 }
 
 /**
@@ -68,13 +74,19 @@ export function partialUpdateBuildOptions(
  * @param dapp_slug A unique value identifying this build options
  */
 export function destroyBuildOptions(dapp_slug: string): HttpResponse<void> {
-  return http.delete(`${env.API_URL}/api/ipfs/${dapp_slug}/buildoptions/${dapp_slug}/`)
+  return http.delete(
+    `${env.API_URL}/api/ipfs/${dapp_slug}/buildoptions/${dapp_slug}/`
+  )
 }
 
 /**
  *
  * @param dapp_slug A unique value identifying this build options
  */
-export function buildBuildOptions(dapp_slug: string):HttpResponse<BuildOptions> {
-  return http.get(`${env.API_URL}/api/ipfs/${dapp_slug}/buildoptions/${dapp_slug}/build/`)
+export function buildBuildOptions(
+  dapp_slug: string
+): HttpResponse<BuildOptions> {
+  return http.get(
+    `${env.API_URL}/api/ipfs/${dapp_slug}/buildoptions/${dapp_slug}/build/`
+  )
 }
