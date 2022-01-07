@@ -1,9 +1,13 @@
-import { DappContextType } from "contexts/DappContext/DappContext"
+import { IDapp } from "contexts/DappContext/DappContext"
+import { Dispatch, SetStateAction } from "react";
 
 export function DappSettingsGithub({
   dapp,
   setDapp,
-}: DappContextType): React.ReactElement {
+}: {
+  dapp: IDapp
+  setDapp: Dispatch<SetStateAction<IDapp>>
+}): React.ReactElement {
   function changeRepo(e: React.ChangeEvent<HTMLInputElement>) {
     dapp.github.repo = e.target.value
     setDapp({ ...dapp })

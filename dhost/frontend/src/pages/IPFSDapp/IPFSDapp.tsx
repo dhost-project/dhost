@@ -5,7 +5,6 @@ import {
   useRouteMatch,
 } from "react-router-dom"
 import { Dappbar } from "components/Dappbar"
-import { DappProvider } from "contexts/DappContext/DappContext"
 import { NotFound } from "pages/NotFound"
 import {
   DappDeploy as IPFSDappDeploy,
@@ -33,9 +32,7 @@ function IPFSDappDetail(): React.ReactElement {
           <Route exact path={`${path}/`} component={IPFSDappDetails} />
           <Route path={`${path}/deploy`} component={IPFSDappDeploy} />
           <Route path={`${path}/logs`} component={IPFSDappLogs} />
-          <DappProvider>
-            <Route path={`${path}/settings`} component={IPFSDappEdit} />
-          </DappProvider>
+          <Route path={`${path}/settings`} component={IPFSDappEdit} />
           <Route path={`${path}/source`} component={IPFSDappSource} />
           <Route path="*" component={NotFound} />
         </Switch>

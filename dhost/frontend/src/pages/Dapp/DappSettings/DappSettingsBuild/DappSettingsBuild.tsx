@@ -1,9 +1,13 @@
-import { DappContextType } from "contexts/DappContext/DappContext"
+import { Dispatch, SetStateAction } from "react"
+import { IDapp } from "contexts/DappContext/DappContext"
 
 function DappSettingsBuild({
   dapp,
   setDapp,
-}: DappContextType): React.ReactElement {
+}: {
+  dapp: IDapp
+  setDapp: Dispatch<SetStateAction<IDapp>>
+}): React.ReactElement {
   function changeCommand(e: React.ChangeEvent<HTMLInputElement>) {
     var _dapp = dapp
     _dapp.build.command = e.target.value
