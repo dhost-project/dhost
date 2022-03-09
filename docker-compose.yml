@@ -24,6 +24,8 @@ services:
       - EMAIL_HOST=mailhog
       - EMAIL_PORT=1025
       - IPFS_HTTP_API_URL=http://ipfs:5001/api/
+      - SOCIAL_AUTH_GITHUB_KEY=dc0a656e0c456be2a953
+      - SOCIAL_AUTH_GITHUB_SECRET=b6b1dfcd6b091559d292fde601ef081bded93c4f
     networks:
       - backends
 

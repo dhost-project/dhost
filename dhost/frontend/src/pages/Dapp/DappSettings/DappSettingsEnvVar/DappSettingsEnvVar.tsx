@@ -1,10 +1,14 @@
+import { Dispatch, SetStateAction } from "react"
 import { ModalEnvVar } from "components/DappSettings/ModalEnvVar"
-import { DappContextType } from "contexts/DappContext/DappContext"
+import { DappContextType, IDapp } from "contexts/DappContext/DappContext"
 
 function DappSettingsEnvVar({
   dapp,
   setDapp,
-}: DappContextType): React.ReactElement {
+}: {
+  dapp: IDapp
+  setDapp: Dispatch<SetStateAction<IDapp>>
+}): React.ReactElement {
   // <img className="my-2 mx-1 h-8 w-auto" src={tick} alt="True" />
   function renderSensitive(sensistive: boolean | undefined) {
     if (sensistive) {

@@ -1,9 +1,11 @@
 import { SetStateAction, Dispatch } from "react"
 import { createContext, FC, Context, useState, useContext } from "react"
+import { fetchAllRepository } from "api/Repositories"
 import { BuildOptions } from "models/api/BuildOptions"
 import { Dapp } from "models/api/Dapp"
 import { EnvVar } from "models/api/EnvVar"
 import { GithubOptions } from "models/api/GithubOptions"
+import { Repository } from "models/api/Repository"
 
 // type StateSetter<T> = (value: T | ((value: T) => T)) => void;
 export interface IDapp {
@@ -13,14 +15,15 @@ export interface IDapp {
   env_vars: EnvVar[]
 }
 
-export type DappContextType = {
+export interface DappContextType {
   dapp: IDapp
   setDapp: Dispatch<SetStateAction<IDapp>> // StateSetter<number>
+  userRepo: Repository[]
+  setUserRepo: Dispatch<SetStateAction<Repository[]>>
+  updateRemoteUserRepo(): Promise<void>
 }
 
-export const DappContext: Context<Partial<DappContextType>> = createContext<
-  Partial<DappContextType>
->({})
+export const DappContext = createContext({} as DappContextType)
 
 export const DappProvider: FC = ({ children }) => {
   const _dapp: IDapp = {
@@ -56,12 +59,30 @@ export const DappProvider: FC = ({ children }) => {
   } as IDapp
 
   const [dapp, setDapp] = useState<IDapp>(_dapp)
-  const props = {
-    dapp,
-    setDapp,
-  } as DappContextType
+  const [userRepo, setUserRepo] = useState<Repository[]>([] as Repository[])
 
-  return <DappContext.Provider value={props}>{children}</DappContext.Provider>
+  const updateRemoteUserRepo = async () => {
+    try {
+      const res = await fetchAllRepository()
+      console.warn("updateRemoteUserRepo", res)
+    } catch (e) {
+      console.warn("updateRemoteUserRepo error", e)
+    }
+  }
+
+  return (
+    <DappContext.Provider
+      value={{
+        dapp,
+        setDapp,
+        userRepo,
+        setUserRepo,
+        updateRemoteUserRepo,
+      }}
+    >
+      {children}
+    </DappContext.Provider>
+  )
 }
 
 export const useDapp = (): DappContextType =>

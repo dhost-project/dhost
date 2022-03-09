@@ -1,9 +1,5 @@
 import { toast } from "react-toastify"
-import {
-  DappContextType,
-  DappProvider,
-  useDapp,
-} from "contexts/DappContext/DappContext"
+import { DappContextType } from "contexts/DappContext/DappContext"
 
 type TParams = { dapp_slug: string }
 
