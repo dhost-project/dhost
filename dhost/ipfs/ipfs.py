@@ -1,5 +1,6 @@
+"""IPFS HTTP API wrapper."""
 import json
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 import requests
 from django.conf import settings
@@ -18,8 +19,7 @@ def clean_dict_values(dic):
             dic[key] = str(value).lower()
 
         elif type(value) == list:
-            # convert a list to a string
-            # ["k", "itchenette", "1", 3] ->  "k,itchenette,1,3"
+            # convert a list to a comma separated list as a string
             dic[key] = ",".join([str(i) for i in value])
 
     return dic
@@ -41,8 +41,8 @@ def clean_params(params):
     return params
 
 
-class IPFSAPI:
-    BASE_URL = settings.IPFS_HTTP_API_URL
+class CLUSTERIPFSAPI:
+    BASE_URL = settings.IPFS_CLUSTER_API_URL
 
     def __init__(self, fail_silently: bool = False) -> None:
         self.fail_silently = fail_silently
@@ -80,7 +80,28 @@ class IPFSAPI:
             headers=clean_params(headers),
             **kwargs,
         )
+        if r.status_code == 200:
+            try:
+                return r.json()
+            except json.decoder.JSONDecodeError:
+                return r.content.decode()
+        elif not self.fail_silently:
+            self._fail(r)
+        return None
 
+    def _delete(
+        self,
+        path: str,
+        params: Optional[Dict[str, Any]] = None,
+        headers: Optional[Dict[str, Any]] = None,
+        **kwargs,
+    ) -> Any:
+        r = requests.delete(
+            url=self.BASE_URL + path,
+            params=clean_params(params),
+            headers=clean_params(headers),
+            **kwargs,
+        )
         if r.status_code == 200:
             try:
                 return r.json()
@@ -92,9 +113,26 @@ class IPFSAPI:
 
     def _fail(self, r):
         raise Exception(f"{r.status_code} {r.content.decode()}")
+    
+    """Cluster version"""
+    def getVersion(self, number=None, commit=None, repo=None, all=None):
+        return self._post(
+            "version",
+            params={
+                "number": number,
+                "commit": commit,
+                "repo": repo,
+                "all": all,
+            },
+        )
 
-    def get_swarm_peers(self):
-        return self._post("v0/swarm/peers")
+    """"Cluster peers"""
+    def getPeers(self):
+        return self._get("peers")
+    
+    """Cluster peer information"""
+    def getPeerInformation(self):
+        return self._get("id")
 
     def _add(
         self,
@@ -118,7 +156,7 @@ class IPFSAPI:
         **kwargs,
     ):
         return self._post(
-            "v0/add",
+            "add",
             params={
                 "quiet": quiet,
                 "quieter": quieter,
@@ -140,62 +178,34 @@ class IPFSAPI:
             },
             **kwargs,
         )
-
+    
+    """Add content to the cluster"""
     def add(self, file_path="LICENSE"):
         files = {"file": (file_path, open(file_path, "rb"))}
         return self._add(files=files)
+    
+    """List of pins and their allocations (pinset)"""
+    def getPinsAndAllocations(self):
+        return self._get("allocations")
 
-    def cat(self, arg, offset=None, length=None):
-        return self._post(
-            "v0/cat",
-            params={
-                "arg": arg,
-                "offset": offset,
-                "length": length,
-            },
+    """Show a single pin and its allocations (from the pinset)"""
+    def getPinsAndAllocationsByCID(self,CID):
+        return self._get("allocations/"+CID)
+    
+    """Local status of all tracked CIDs"""
+    def getlocalStatusAllTrackedCID(self):
+        return self._get(
+            "pins"
         )
 
-    def pin_add(self, arg, recursive=None, progress=None):
-        """Pin objects to local storage."""
-        return self._post(
-            "v0/pin/add",
-            params={
-                "arg": arg,
-                "recursive": recursive,
-                "progress": progress,
-            },
-        )
-
-    def pin_ls(self, arg=None, type=None, all=None, quiet=None, stream=None):
-        """List objects pinned to local storage."""
-        return self._post(
-            "v0/pin/ls",
-            params={
-                "arg": arg,
-                "type": type,
-                "all": all,
-                "quiet": quiet,
-                "stream": stream,
-            },
-        )
-
-    def pin_rm(self, arg, recursive=None):
-        """Remove pinned objects from local storage."""
-        return self._post(
-            "v0/pin/rm",
-            params={
-                "arg": arg,
-                "recursive": recursive,
-            },
-        )
-
-    def version(self, number=None, commit=None, repo=None, all=None):
-        return self._post(
-            "v0/version",
-            params={
-                "number": number,
-                "commit": commit,
-                "repo": repo,
-                "all": all,
-            },
-        )
+    """Local status of single CID"""
+    def getlocalStatusByCID(self,CID):
+        return self._get("pins/"+CID)    
+    
+    """Pin a CID"""
+    def pinCID(self,CID):
+        return self._post("pins/"+CID)    
+    
+    """Unpin a CID"""
+    def unpinCID(self,CID):
+        return self._delete("pins/"+CID)    

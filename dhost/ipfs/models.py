@@ -39,3 +39,19 @@ class IPFSDapp(Dapp):
     def get_public_url(self):
         """Generate public URL based on hash and IPFS gateway."""
         return "{}{}".format(self.ipfs_gateway, self.ipfs_hash)
+
+class IPFSFile(models.Model):
+    name = models.CharField(max_length=50)
+    file = models.FileField(upload_to="ipfs")
+         
+    def upload_to_ipfs(self):
+        file_path = self.file.name
+        print(f"Uploading file {file_path} to the IPFS.")
+        ipfs = CLUSTERIPFSAPI()
+        result = ipfs.add(os.path.join(settings.MEDIA_ROOT, file_path))
+        print('ADD--> ',result)
+        print('VERSION--> ',ipfs.getVersion)
+        print('PEERS--> ',ipfs.getPeers())
+        print('PEER INFORMATION--> ',ipfs.getPeerInformation())
+        print('PINS && ALLOCATIONS--> ',ipfs.getPinsAndAllocations())
+        print('getlocalStatusAllTrackedCID--> ',ipfs.getlocalStatusAllTrackedCID())
