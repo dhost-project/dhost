@@ -1,8 +1,10 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+import os
+from django.conf import settings
 
 from dhost.dapps.models import Dapp, Deployment
-
+from .ipfs import CLUSTERIPFSAPI
 
 class IPFSDeployment(Deployment):
     ipfs_hash = models.CharField(_("IPFS hash"), max_length=128, blank=True)

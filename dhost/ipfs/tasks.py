@@ -1,6 +1,6 @@
 from celery import shared_task
 
-from dhost.ipfs.ipfs import IPFSAPI
+from dhost.ipfs.ipfs import CLUSTERIPFSAPI
 
 ipfs = CLUSTERIPFSAPI()
 
