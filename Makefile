@@ -14,9 +14,7 @@ virtualenv:
 
 requirements: virtualenv
 	$(VENV)/bin/pip install -r requirements.txt
-
-requirements_dev: virtualenv requirements
-	$(VENV)/bin/pip install -r requirements_dev.txt
+	$(VENV)/bin/pip install -r requirements/development.txt
 
 migrate:
 	$(MANAGE) migrate
