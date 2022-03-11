@@ -113,8 +113,9 @@ class CLUSTERIPFSAPI:
 
     def _fail(self, r):
         raise Exception(f"{r.status_code} {r.content.decode()}")
-    
+
     """Cluster version"""
+
     def getVersion(self, number=None, commit=None, repo=None, all=None):
         return self._post(
             "version",
@@ -127,10 +128,12 @@ class CLUSTERIPFSAPI:
         )
 
     """"Cluster peers"""
+
     def getPeers(self):
         return self._get("peers")
-    
+
     """Cluster peer information"""
+
     def getPeerInformation(self):
         return self._get("id")
 
@@ -178,34 +181,39 @@ class CLUSTERIPFSAPI:
             },
             **kwargs,
         )
-    
+
     """Add content to the cluster"""
+
     def add(self, file_path="LICENSE"):
         files = {"file": (file_path, open(file_path, "rb"))}
         return self._add(files=files)
-    
+
     """List of pins and their allocations (pinset)"""
+
     def getPinsAndAllocations(self):
         return self._get("allocations")
 
     """Show a single pin and its allocations (from the pinset)"""
-    def getPinsAndAllocationsByCID(self,CID):
-        return self._get("allocations/"+CID)
-    
+
+    def getPinsAndAllocationsByCID(self, CID):
+        return self._get("allocations/" + CID)
+
     """Local status of all tracked CIDs"""
+
     def getlocalStatusAllTrackedCID(self):
-        return self._get(
-            "pins"
-        )
+        return self._get("pins")
 
     """Local status of single CID"""
-    def getlocalStatusByCID(self,CID):
-        return self._get("pins/"+CID)    
-    
+
+    def getlocalStatusByCID(self, CID):
+        return self._get("pins/" + CID)
+
     """Pin a CID"""
-    def pinCID(self,CID):
-        return self._post("pins/"+CID)    
-    
+
+    def pinCID(self, CID):
+        return self._post("pins/" + CID)
+
     """Unpin a CID"""
-    def unpinCID(self,CID):
-        return self._delete("pins/"+CID)    
+
+    def unpinCID(self, CID):
+        return self._delete("pins/" + CID)

@@ -1,10 +1,13 @@
+import os
+
+from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-import os
-from django.conf import settings
 
 from dhost.dapps.models import Dapp, Deployment
+
 from .ipfs import CLUSTERIPFSAPI
+
 
 class IPFSDeployment(Deployment):
     ipfs_hash = models.CharField(_("IPFS hash"), max_length=128, blank=True)
@@ -42,18 +45,22 @@ class IPFSDapp(Dapp):
         """Generate public URL based on hash and IPFS gateway."""
         return "{}{}".format(self.ipfs_gateway, self.ipfs_hash)
 
+
 class IPFSFile(models.Model):
     name = models.CharField(max_length=50)
     file = models.FileField(upload_to="ipfs")
-         
+
     def upload_to_ipfs(self):
         file_path = self.file.name
         print(f"Uploading file {file_path} to the IPFS.")
         ipfs = CLUSTERIPFSAPI()
         result = ipfs.add(os.path.join(settings.MEDIA_ROOT, file_path))
-        print('ADD--> ',result)
-        print('VERSION--> ',ipfs.getVersion)
-        print('PEERS--> ',ipfs.getPeers())
-        print('PEER INFORMATION--> ',ipfs.getPeerInformation())
-        print('PINS && ALLOCATIONS--> ',ipfs.getPinsAndAllocations())
-        print('getlocalStatusAllTrackedCID--> ',ipfs.getlocalStatusAllTrackedCID())
+        print("ADD--> ", result)
+        print("VERSION--> ", ipfs.getVersion)
+        print("PEERS--> ", ipfs.getPeers())
+        print("PEER INFORMATION--> ", ipfs.getPeerInformation())
+        print("PINS && ALLOCATIONS--> ", ipfs.getPinsAndAllocations())
+        print(
+            "getlocalStatusAllTrackedCID--> ",
+            ipfs.getlocalStatusAllTrackedCID(),
+        )

@@ -31,10 +31,10 @@ services:
       - cluster
 
    # It runs 3 cluster peers (cluster0, cluster1...) attached to go-ipfs daemons
-  
-  # 3 cluster peers (cluster0, cluster1, cluster2) attached to go-ipfs daemons (ipfs0, ipfs1, ipfs2) using the CRDT consensus component. 
+
+  # 3 cluster peers (cluster0, cluster1, cluster2) attached to go-ipfs daemons (ipfs0, ipfs1, ipfs2) using the CRDT consensus component.
   # For persistance, a "data" folder is created and used to store configurations and states
- 
+
   # cluster peer0
   ipfs0:
     container_name: ipfs0
@@ -48,7 +48,7 @@ services:
       - ./media/ipfs:/export
     networks:
       - cluster
-  
+
   cluster0:
     container_name: cluster0
     image: ipfs/ipfs-cluster:latest
@@ -97,7 +97,7 @@ services:
       - ./data/cluster1:/data/ipfs-cluster
     networks:
       - cluster
-  
+
   # cluster peer2
   ipfs2:
     container_name: ipfs2
@@ -122,7 +122,7 @@ services:
       - ./data/cluster2:/data/ipfs-cluster
     networks:
       - cluster
- 
+
   worker:
     <<: *api
     command: celery -A dhost worker --loglevel=info -n worker
