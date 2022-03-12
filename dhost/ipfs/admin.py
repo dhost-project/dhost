@@ -2,22 +2,16 @@ from django.contrib import admin
 
 from dhost.dapps.admin import DappAdmin, DeploymentAdmin
 
-from .models import IPFSDapp, IPFSDeployment, IPFSFile
+from .models import IPFSDapp, IPFSDeployment
 
 
-def send_file_to_ipfs(modeladmin, request, queryset):
+def send_to_ipfs(modeladmin, request, queryset):
     for obj in queryset:
-        obj.upload_to_ipfs()
-
-
-@admin.register(IPFSFile)
-class IPFSFileAdmin(admin.ModelAdmin):
-    actions = [send_file_to_ipfs]
-
+        obj.create_deployment()
 
 @admin.register(IPFSDapp)
 class IPFSDappAdmin(DappAdmin):
-    pass
+    actions = [send_to_ipfs]
 
 
 @admin.register(IPFSDeployment)

@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 
 from .utils import get_dapp_type
 
+
 pre_deploy_start = django.dispatch.Signal()
 post_deploy_start = django.dispatch.Signal()
 deploy_success = django.dispatch.Signal()
@@ -89,10 +90,6 @@ class Dapp(models.Model):
             dapp=self, bundle=bundle, **kwargs
         )
         deployment.start_deploy()
-
-    def create_deployment(self, bundle=None):
-        """Return a specific application deployment instance."""
-        raise NotImplementedError
 
     def get_dapp_type(self):
         return get_dapp_type(self)

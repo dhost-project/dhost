@@ -3,10 +3,13 @@ import os
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import get_user_model
 
 from dhost.dapps.models import Dapp, Deployment
 
 from .ipfs import CLUSTERIPFSAPI
+
+import json
 
 
 class IPFSDeployment(Deployment):
@@ -20,10 +23,15 @@ class IPFSDeployment(Deployment):
         # TODO remove from IPFS
         super().delete(*args, **kwargs)
 
-    def deploy(self):
+    def deploy(self,url):
         # deploying on the IPFS
-        pass
-
+        ipfs = CLUSTERIPFSAPI()
+        result = ipfs.add(url)
+        print("ADD--> ", result, type(result))
+        list_raw_data = str(result).split("\\n")
+        first_json = json.loads(list_raw_data[0].replace("b'",""))
+        self.ipfs_hash=first_json["cid"]["/"]
+        self.save()
 
 class IPFSDapp(Dapp):
     """Dapp raidy to be deployed to the IPFS network."""
@@ -45,22 +53,13 @@ class IPFSDapp(Dapp):
         """Generate public URL based on hash and IPFS gateway."""
         return "{}{}".format(self.ipfs_gateway, self.ipfs_hash)
 
+    def create_deployment(self, bundle=None):
+        new_deploy = IPFSDeployment.objects.create(dapp=self)
+        new_deploy.save()
+        return new_deploy.deploy(self.url)
+        
 
-class IPFSFile(models.Model):
-    name = models.CharField(max_length=50)
-    file = models.FileField(upload_to="ipfs")
+    
 
-    def upload_to_ipfs(self):
-        file_path = self.file.name
-        print(f"Uploading file {file_path} to the IPFS.")
-        ipfs = CLUSTERIPFSAPI()
-        result = ipfs.add(os.path.join(settings.MEDIA_ROOT, file_path))
-        print("ADD--> ", result)
-        print("VERSION--> ", ipfs.getVersion)
-        print("PEERS--> ", ipfs.getPeers())
-        print("PEER INFORMATION--> ", ipfs.getPeerInformation())
-        print("PINS && ALLOCATIONS--> ", ipfs.getPinsAndAllocations())
-        print(
-            "getlocalStatusAllTrackedCID--> ",
-            ipfs.getlocalStatusAllTrackedCID(),
-        )
+
+    

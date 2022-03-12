@@ -84,7 +84,7 @@ class CLUSTERIPFSAPI:
             try:
                 return r.json()
             except json.decoder.JSONDecodeError:
-                return r.content.decode()
+                return r.content
         elif not self.fail_silently:
             self._fail(r)
         return None
@@ -106,7 +106,7 @@ class CLUSTERIPFSAPI:
             try:
                 return r.json()
             except json.decoder.JSONDecodeError:
-                return r.content.decode()
+                return r.content
         elif not self.fail_silently:
             self._fail(r)
         return None
