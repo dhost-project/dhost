@@ -25,7 +25,7 @@ var list = []
 export function DappList(): React.ReactElement {
   const { t } = useTranslation()
   return (
-    <div className="container mx-auto">
+    <div className="mx-auto">
       <h2>{t("DAPP_LIST_TITLE")}</h2>
       <ListDapp dapps={dapps} />
     </div>

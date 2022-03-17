@@ -6,6 +6,9 @@ import DappSettingsBuild from "./DappSettingsBuild/DappSettingsBuild"
 import DappSettingsEnvVar from "./DappSettingsEnvVar/DappSettingsEnvVar"
 import DappSettingsGithub from "./DappSettingsGithub/DappSettingsGithub"
 import DappSettingsSectionTitle from "./DappSettingsSectionTitle/DappSettingsSectionTitle"
+import { retrieveBuildOptions } from "api/BuildOptions"
+import { useEffect } from "react"
+
 
 type TParams = { dapp_slug: string }
 
@@ -18,6 +21,24 @@ export function DappSettings({
     console.log(e.target)
     console.log(dapp)
     toast.info("Change done.", { position: toast.POSITION.BOTTOM_RIGHT })
+  }
+
+  useEffect(() => {
+    fetchingData()
+  })
+
+  const fetchingData = async () => {
+    try {
+      console.log("fetching data from json")
+      console.log(dapp.basic.slug)
+      const response = await retrieveBuildOptions(dapp.basic.slug)
+      const json = (await response).data
+      console.log(json)
+      dapp.build = json
+
+    } catch (error) {
+      console.log("error", error)
+    }
   }
 
   const settings_sections = [
@@ -35,7 +56,7 @@ export function DappSettings({
       name: "Basic",
       short: "basic",
       description: "Change major informations of your application.",
-      component: <DappSettingsBasic dapp={dapp} setDapp={setDapp}></DappSettingsBasic>
+      component: (<DappSettingsBuild dapp={dapp} setDapp={setDapp}></DappSettingsBuild>) // <DappSettingsBasic dapp={dapp} setDapp={setDapp}></DappSettingsBasic>
     },
     {
       name: "Build",

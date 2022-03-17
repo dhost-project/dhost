@@ -35,7 +35,7 @@ export function retrieveBuildOptions(
   dapp_slug: string
 ): HttpResponse<BuildOptions> {
   return http.get(
-    `${env.API_URL}/api/ipfs/${dapp_slug}/buildoptions/${dapp_slug}/`
+    `${env.API_URL}/api/ipfs/${dapp_slug}/buildoptions/`
   )
 }
 

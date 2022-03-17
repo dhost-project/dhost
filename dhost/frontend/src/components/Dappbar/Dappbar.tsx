@@ -1,9 +1,13 @@
 import { DappProvider } from "contexts/DappContext/DappContext"
 import { Dapp } from "models/api/Dapp"
+import { useEffect } from "react"
 import { Nav } from "./Nav"
 import { NavItem } from "./NavItem"
 
+
 export function Dappbar({ dapp }: { dapp: Dapp }): React.ReactElement {
+  dapp.slug = "dapp_1"
+
   return (
     <div>
       <div className="py-4 border-b bg-gradient-to-r from-green-100 to-blue-100">
@@ -36,15 +40,16 @@ export function Dappbar({ dapp }: { dapp: Dapp }): React.ReactElement {
           </a>
         </div>
       </div>
-      <Nav>
-        <NavItem href={`/ipfs/${dapp.slug}/`}>Overview</NavItem>
-        <NavItem href={`/ipfs/${dapp.slug}/deploy`}>Deploy</NavItem>
-        <NavItem href={`/ipfs/${dapp.slug}/source`}>Source</NavItem>
-        <NavItem href={`/ipfs/${dapp.slug}/logs`}>Logs</NavItem>
-        <DappProvider>
+      <DappProvider>
+        <Nav>
+          <NavItem href={`/ipfs/${dapp.slug}/`}>Overview</NavItem>
+          <NavItem href={`/ipfs/${dapp.slug}/deploy`}>Deploy</NavItem>
+          <NavItem href={`/ipfs/${dapp.slug}/source`}>Source</NavItem>
+          <NavItem href={`/ipfs/${dapp.slug}/logs`}>Logs</NavItem>
           <NavItem href={`/ipfs/${dapp.slug}/settings`}>Settings</NavItem>
-        </DappProvider>
-      </Nav>
+        </Nav>
+      </DappProvider>
+
     </div>
   )
 }
