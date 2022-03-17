@@ -23,7 +23,7 @@ const dapp = {
 // TODO : check if dapp slug actually exist & prevent access to other people dapps
 function IPFSDappDetail(): React.ReactElement {
   const { path } = useRouteMatch()
-
+  console.log(path)
   return (
     <Router>
       <Dappbar dapp={dapp} />

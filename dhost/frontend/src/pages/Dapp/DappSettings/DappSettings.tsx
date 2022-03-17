@@ -35,6 +35,7 @@ export function DappSettings({
       const json = (await response).data
       console.log(json)
       dapp.build = json
+      console.log(dapp)
 
     } catch (error) {
       console.log("error", error)
