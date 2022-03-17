@@ -15,9 +15,12 @@ import {
   DappSource as IPFSDappSource,
   DappLogs as IPFSDappLogs,
 } from ".."
-import { useState } from "react"
-import { IDapp } from "contexts/DappContext/DappContext"
+import { useEffect, useState } from "react"
+import { IDapp, useDapp } from "contexts/DappContext/DappContext"
 import { DappDetails } from "../DappDetails"
+import { listIPFSDapps } from "api/IPFSDapps"
+import { listDapps } from "api/Dapps"
+import { Dapp } from "models/api/Dapp"
 
 const dapps = [
   {
@@ -34,10 +37,22 @@ const dapps = [
   },
 ]
 
-function DappDetail(dapp: any): React.ReactElement {
+function DappDetail(): React.ReactElement {
   const { path } = useRouteMatch()
+  const { dapp, setDapp } = useDapp()
 
+  const fetchDapp = async () => {
+    try {
 
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchDapp()
+  }, [path])
 
   return (
     <Router>
@@ -61,76 +76,77 @@ export function DappListContainer(): React.ReactElement {
 
   const { path } = useRouteMatch()
 
-  const [dapps, setDapps] = useState<IDapp[]>([{
-    basic: {
-      slug: "dapp_1",
-      url: "gateway.com",
-      owner: "filipo",
-      status: "down",
-      created_at: "08/08/08",
-    },
-    build: {
-      command: "npm install",
-      docker: "Dockerfile",
-    },
-    github: {
-      repo: "best_repo",
-      branch: 2,
-      auto_deploy: false,
-      confirm_ci: false,
-    },
-    env_vars: [
-      {
-        variable: "first_var",
-        value: "val_var",
-        sensitive: false,
-      },
-      {
-        variable: "sec_var",
-        value: "val_var",
-        sensitive: true,
-      },
-    ],
+  const [dapps, setDapps] = useState<Dapp[]>([{
+    slug: "dapp_1",
+    url: "gateway.com",
+    owner: "filipo",
+    status: "down",
+    created_at: "08/08/08"
   }])
 
-  const [currentDapp, setCurrentDapp] = useState<IDapp>({
-    basic: {
-      slug: "dapp_1",
-      url: "gateway.com",
-      owner: "filipo",
-      status: "down",
-      created_at: "08/08/08",
-    },
-    build: {
-      command: "npm install",
-      docker: "Dockerfile",
-    },
-    github: {
-      repo: "best_repo",
-      branch: 2,
-      auto_deploy: false,
-      confirm_ci: false,
-    },
-    env_vars: [
-      {
-        variable: "first_var",
-        value: "val_var",
-        sensitive: false,
-      },
-      {
-        variable: "sec_var",
-        value: "val_var",
-        sensitive: true,
-      },
-    ],
+  // const [currentDapp, setCurrentDapp] = useState<IDapp>({
+  //   basic: {
+  //     slug: "dapp_1",
+  //     url: "gateway.com",
+  //     owner: "filipo",
+  //     status: "down",
+  //     created_at: "08/08/08",
+  //   },
+  //   build: {
+  //     command: "npm install",
+  //     docker: "Dockerfile",
+  //   },
+  //   github: {
+  //     repo: "best_repo",
+  //     branch: 2,
+  //     auto_deploy: false,
+  //     confirm_ci: false,
+  //   },
+  //   env_vars: [
+  //     {
+  //       variable: "first_var",
+  //       value: "val_var",
+  //       sensitive: false,
+  //     },
+  //     {
+  //       variable: "sec_var",
+  //       value: "val_var",
+  //       sensitive: true,
+  //     },
+  //   ],
+  // })
+
+  const fetchDapps = async () => {
+    try {
+      const response = await listDapps()
+      const data = response.data
+      console.log(data)
+      setDapps(data)
+      for (let d of data) {
+        // dapp.basic.url = d.ipfs_gateway;
+        // dapp.basic.slug = d.slug;
+        // _dapps.push(dapp);
+        // console.log(_dapps.length)
+      }
+      // console.log(dapp)
+      // console.log("dapps :")
+      // console.log(_dapps)
+      // setLocalDapps(_dapps)
+    } catch (error) {
+      console.log("error", error)
+    }
+  }
+
+  useEffect(() => {
+    fetchDapps();
   })
 
   return (
     <Router>
       <Switch>
         <Route exact path={`${path}/`}
-          component={() => <ListDapp dapps={dapps} setDapps={setDapps} setDapp={setCurrentDapp} />} />
-        <Route path={`${path}/:dapp_slug`} component={() => <DappDetail dapp={currentDapp} />} />
+          component={() => <ListDapp dapps={dapps} setDapps={setDapps} />} />
+        <Route path={`${path}/:dapp_slug`} component={() => <DappDetail />} />
         <Route path="*" component={NotFound} />
       </Switch>
     </Router>

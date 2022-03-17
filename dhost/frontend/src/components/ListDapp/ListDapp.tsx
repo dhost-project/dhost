@@ -8,16 +8,15 @@ import { listIPFSDapps } from "api/IPFSDapps"
 import { render } from "@headlessui/react/dist/utils/render"
 
 
-export function ListDapp({ dapps, setDapps, setDapp }: { dapps: IDapp[], setDapps: Dispatch<SetStateAction<IDapp[]>>, setDapp: Dispatch<SetStateAction<IDapp>> }): React.ReactElement {
+export function ListDapp({ dapps, setDapps }: { dapps: Dapp[], setDapps: Dispatch<SetStateAction<Dapp[]>> }): React.ReactElement {
 
   // let _dapps: IDapp[] = []
   // const [localDapps, setLocalDapps] = useState<IDapp[]>([]);
   // const { dapp, setDapp } = useDapp();
   let history = useHistory()
 
-  const handleDapp = (dapp: IDapp) => {
-    setDapp(dapp)
-    history.push(`/dapps/${dapp.basic.slug}`)
+  const handleDapp = (dapp: Dapp) => {
+    history.push(`/dapps/${dapp.slug}`)
   }
 
   function renderWells() {
@@ -31,7 +30,7 @@ export function ListDapp({ dapps, setDapps, setDapp }: { dapps: IDapp[], setDapp
             onClick={() => handleDapp(dapp)}
           >
             <p className="uppercase" style={{ textAlign: "left" }}>
-              {dapp.basic.slug}
+              {dapp.slug}
             </p>
           </button>
         ))}
@@ -44,33 +43,3 @@ export function ListDapp({ dapps, setDapps, setDapp }: { dapps: IDapp[], setDapp
       renderWells() : <span>Data loading...</span>
   )
 }
-
-
-  // const fetchDapps = async () => {
-  //   try {
-  //     // let dapp: IDapp = {
-  //       // basic:{slug:"",owner:""},
-  //       // build:{},
-
-  //     console.log("fetching data from json")
-  //     const response = await listIPFSDapps()
-  //     const json = (await response).data
-  //     console.log(json)
-  //     console.log(json[0])
-  //     for (let d of json) {
-
-  //       console.log(d)
-
-  //       dapp.basic.url = d.ipfs_gateway;
-  //       dapp.basic.slug = d.slug;
-  //       _dapps.push(dapp);
-  //       console.log(_dapps.length)
-  //     }
-  //     console.log(dapp)
-  //     console.log("dapps :")
-  //     console.log(_dapps)
-  //     setLocalDapps(_dapps)
-  //   } catch (error) {
-  //     console.log("error", error)
-  //   }
-  // }

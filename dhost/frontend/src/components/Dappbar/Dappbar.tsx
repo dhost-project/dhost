@@ -1,11 +1,11 @@
-import { DappProvider } from "contexts/DappContext/DappContext"
+import { DappProvider, IDapp } from "contexts/DappContext/DappContext"
 import { Dapp } from "models/api/Dapp"
 import { Nav } from "./Nav"
 import { NavItem } from "./NavItem"
 
 
-export function Dappbar({ dapp }: { dapp: Dapp }): React.ReactElement {
-  dapp.slug = "dapp_1"
+export function Dappbar({ dapp }: { dapp: IDapp }): React.ReactElement {
+  dapp.basic.slug = "dapp_1"
 
   return (
     <div>
@@ -16,7 +16,7 @@ export function Dappbar({ dapp }: { dapp: Dapp }): React.ReactElement {
               className="text-reset text-decoration-none"
               href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
             >
-              {dapp.slug}
+              {dapp.basic.slug}
             </a>
           </h1>
           <h2 className="text-xl">
@@ -41,11 +41,11 @@ export function Dappbar({ dapp }: { dapp: Dapp }): React.ReactElement {
       </div>
       <DappProvider>
         <Nav>
-          <NavItem href={`/dapps/${dapp.slug}/`}>Overview</NavItem>
-          <NavItem href={`/dapps/${dapp.slug}/deploy`}>Deploy</NavItem>
-          <NavItem href={`/dapps/${dapp.slug}/source`}>Source</NavItem>
-          <NavItem href={`/dapps/${dapp.slug}/logs`}>Logs</NavItem>
-          <NavItem href={`/dapps/${dapp.slug}/settings`}>Settings</NavItem>
+          <NavItem href={`/dapps/${dapp.basic.slug}/`}>Overview</NavItem>
+          <NavItem href={`/dapps/${dapp.basic.slug}/deploy`}>Deploy</NavItem>
+          <NavItem href={`/dapps/${dapp.basic.slug}/source`}>Source</NavItem>
+          <NavItem href={`/dapps/${dapp.basic.slug}/logs`}>Logs</NavItem>
+          <NavItem href={`/dapps/${dapp.basic.slug}/settings`}>Settings</NavItem>
         </Nav>
       </DappProvider>
 
