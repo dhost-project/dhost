@@ -1,5 +1,6 @@
 import logging
 import uuid
+import json
 
 import django.dispatch
 from django.conf import settings
@@ -8,6 +9,11 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from .utils import get_dapp_type
+
+from dhost.ipfs.ipfs import CLUSTERIPFSAPI
+#from dhost.ipfs.models import IPFSDapp,IPFSDeployment
+from django.apps import apps
+
 
 pre_deploy_start = django.dispatch.Signal()
 post_deploy_start = django.dispatch.Signal()
@@ -82,10 +88,13 @@ class Dapp(models.Model):
         Create an `IPFSDeployment` object and start the deployment process
         from the bundled files.
         """
+        IPFSDeployment=apps.get_model('ipfs.IPFSDeployment')
+      
+        print("IPFSDeployment",IPFSDeployment,type(IPFSDeployment))
         if bundle is None and len(self.bundles.all()) > 0:
             bundle = self.bundles.all()[0]
-
-        deployment = self.deployment_class.objects.create(
+        #self.deployment_class
+        deployment = IPFSDeployment.objects.create(
             dapp=self, bundle=bundle, **kwargs
         )
         deployment.start_deploy()
@@ -174,11 +183,27 @@ class Deployment(models.Model):
         self.deploy()
         post_deploy_start.send(sender=self.__class__, instance=self)
 
+    
     def deploy(self):
-        raise NotImplementedError
+        # deploying on the IPFS
+        ipfs = CLUSTERIPFSAPI()
+        result = ipfs.add(self.dapp.url)
+        print("ADD--> ", result, type(result))
+        list_raw_data = str(result).split("\\n")
+        first_json = json.loads(list_raw_data[0].replace("b'", ""))
+        ipfs_hash = first_json["cid"]["/"]
+        
+        IPFSDapp=apps.get_model('ipfs.IPFSDapp')
+
+        newIpfsDapp = IPFSDapp.objects.create(slug=self.dapp.slug, owner=self.dapp.owner, ipfs_hash=ipfs_hash)
+        newIpfsDapp.save()
 
     def end_deploy(self, is_success=False):
         if is_success:
             deploy_success.send(sender=self.__class__, instance=self)
         else:
             deploy_fail.send(sender=self.__class__, instance=self)
+
+    """def save(self, *args, **kwargs):
+        self.deploy()
+        super(Deployment, self).save(*args, **kwargs)"""
