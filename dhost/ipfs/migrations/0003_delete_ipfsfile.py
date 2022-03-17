@@ -6,11 +6,11 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ipfs', '0002_ipfsfile'),
+        ("ipfs", "0002_ipfsfile"),
     ]
 
     operations = [
         migrations.DeleteModel(
-            name='IPFSFile',
+            name="IPFSFile",
         ),
     ]

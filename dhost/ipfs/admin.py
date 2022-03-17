@@ -9,6 +9,7 @@ def send_to_ipfs(modeladmin, request, queryset):
     for obj in queryset:
         obj.create_deployment()
 
+
 @admin.register(IPFSDapp)
 class IPFSDappAdmin(DappAdmin):
     actions = [send_to_ipfs]

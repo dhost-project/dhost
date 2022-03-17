@@ -9,7 +9,6 @@ from django.utils.translation import gettext_lazy as _
 
 from .utils import get_dapp_type
 
-
 pre_deploy_start = django.dispatch.Signal()
 post_deploy_start = django.dispatch.Signal()
 deploy_success = django.dispatch.Signal()

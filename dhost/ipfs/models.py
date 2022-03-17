@@ -1,15 +1,11 @@
-import os
+import json
 
-from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth import get_user_model
 
 from dhost.dapps.models import Dapp, Deployment
 
 from .ipfs import CLUSTERIPFSAPI
-
-import json
 
 
 class IPFSDeployment(Deployment):
@@ -23,15 +19,16 @@ class IPFSDeployment(Deployment):
         # TODO remove from IPFS
         super().delete(*args, **kwargs)
 
-    def deploy(self,url):
+    def deploy(self, url):
         # deploying on the IPFS
         ipfs = CLUSTERIPFSAPI()
         result = ipfs.add(url)
         print("ADD--> ", result, type(result))
         list_raw_data = str(result).split("\\n")
-        first_json = json.loads(list_raw_data[0].replace("b'",""))
-        self.ipfs_hash=first_json["cid"]["/"]
+        first_json = json.loads(list_raw_data[0].replace("b'", ""))
+        self.ipfs_hash = first_json["cid"]["/"]
         self.save()
+
 
 class IPFSDapp(Dapp):
     """Dapp raidy to be deployed to the IPFS network."""
@@ -57,9 +54,3 @@ class IPFSDapp(Dapp):
         new_deploy = IPFSDeployment.objects.create(dapp=self)
         new_deploy.save()
         return new_deploy.deploy(self.url)
-        
-
-    
-
-
-    
