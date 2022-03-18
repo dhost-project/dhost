@@ -14,5 +14,5 @@ export function listDapps(): HttpResponse<Dapp[]> {
  * @param slug A unique value identifying dapp
  */
 export function retrieveDapp(slug: string): HttpResponse<Dapp> {
-  return http.get(`${env.API_URL}/api/dapps/${slug}`)
+  return http.get(`${env.API_URL}/api/dapps/${slug}/`)
 }

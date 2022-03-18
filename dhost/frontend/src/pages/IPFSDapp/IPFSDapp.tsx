@@ -26,7 +26,7 @@ function IPFSDappDetail(): React.ReactElement {
   console.log(path)
   return (
     <Router>
-      <Dappbar dapp={dapp} />
+      {/* <Dappbar dapp={dapp}/> */}
       <div className="container mx-auto">
         <Switch>
           <Route exact path={`${path}/`} component={IPFSDappDetails} />

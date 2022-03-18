@@ -19,8 +19,10 @@ import { useEffect, useState } from "react"
 import { IDapp, useDapp } from "contexts/DappContext/DappContext"
 import { DappDetails } from "../DappDetails"
 import { listIPFSDapps } from "api/IPFSDapps"
-import { listDapps } from "api/Dapps"
+import { listDapps, retrieveDapp } from "api/Dapps"
 import { Dapp } from "models/api/Dapp"
+import { retrieveGithubOptions } from "api/GithubOptions"
+import { retrieveBuildOptions } from "api/BuildOptions"
 
 const dapps = [
   {
@@ -40,10 +42,16 @@ const dapps = [
 function DappDetail(): React.ReactElement {
   const { path } = useRouteMatch()
   const { dapp, setDapp } = useDapp()
+  const slug = window.location.pathname.split("/")[2];
 
   const fetchDapp = async () => {
     try {
-
+      console.log(slug)
+      let basic = retrieveDapp(slug)
+      let github = retrieveGithubOptions(slug)
+      let build = retrieveBuildOptions(slug)
+      // let envs = retr
+      console.log(basic, github, build)
     }
     catch (error) {
       console.log(error)
@@ -76,45 +84,22 @@ export function DappListContainer(): React.ReactElement {
 
   const { path } = useRouteMatch()
 
-  const [dapps, setDapps] = useState<Dapp[]>([{
-    slug: "dapp_1",
-    url: "gateway.com",
-    owner: "filipo",
-    status: "down",
-    created_at: "08/08/08"
-  }])
+  const [dapp, setDapp] = useState<Dapp>({
+    slug: "",
+    url: "",
+    owner: "",
+    status: "",
+    created_at: ""
+  })
 
-  // const [currentDapp, setCurrentDapp] = useState<IDapp>({
-  //   basic: {
-  //     slug: "dapp_1",
-  //     url: "gateway.com",
-  //     owner: "filipo",
-  //     status: "down",
-  //     created_at: "08/08/08",
-  //   },
-  //   build: {
-  //     command: "npm install",
-  //     docker: "Dockerfile",
-  //   },
-  //   github: {
-  //     repo: "best_repo",
-  //     branch: 2,
-  //     auto_deploy: false,
-  //     confirm_ci: false,
-  //   },
-  //   env_vars: [
-  //     {
-  //       variable: "first_var",
-  //       value: "val_var",
-  //       sensitive: false,
-  //     },
-  //     {
-  //       variable: "sec_var",
-  //       value: "val_var",
-  //       sensitive: true,
-  //     },
-  //   ],
-  // })
+  const [dapps, setDapps] = useState<Dapp[]>([{
+    slug: "",
+    url: "",
+    owner: "",
+    status: "",
+    created_at: ""
+  }])
+  let dataLoaded = false;
 
   const fetchDapps = async () => {
     try {
@@ -122,24 +107,17 @@ export function DappListContainer(): React.ReactElement {
       const data = response.data
       console.log(data)
       setDapps(data)
-      for (let d of data) {
-        // dapp.basic.url = d.ipfs_gateway;
-        // dapp.basic.slug = d.slug;
-        // _dapps.push(dapp);
-        // console.log(_dapps.length)
-      }
-      // console.log(dapp)
-      // console.log("dapps :")
-      // console.log(_dapps)
-      // setLocalDapps(_dapps)
+      dataLoaded = true;
     } catch (error) {
       console.log("error", error)
     }
   }
 
   useEffect(() => {
-    fetchDapps();
-  })
+    if (!dataLoaded) {
+      fetchDapps();
+    }
+  }, [])
 
   return (
     <Router>
@@ -151,10 +129,4 @@ export function DappListContainer(): React.ReactElement {
       </Switch>
     </Router>
   )
-  // return (
-  //   <div className="container mx-auto">
-  //     <h2>{t("DAPP_READ_ONLY_LIST_TITLE")}</h2>
-  //     <ListDapp dapps={dapps} />
-  //   </div>
-  // )
 }

@@ -29,11 +29,8 @@ export function DappSettings({
 
   const fetchingData = async () => {
     try {
-      console.log("fetching data from json")
-      console.log(dapp.basic.slug)
       const response = await retrieveBuildOptions(dapp.basic.slug)
       const json = (await response).data
-      console.log(json)
       dapp.build = json
       console.log(dapp)
 
