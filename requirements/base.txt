@@ -1,4 +1,3 @@
-celery
 dj-database-url
 celery==5.1.2
 flower==1.0.0
