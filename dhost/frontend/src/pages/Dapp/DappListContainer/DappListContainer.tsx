@@ -21,6 +21,7 @@ import { DappDetails } from "../DappDetails"
 import { listIPFSDapps } from "api/IPFSDapps"
 import { listDapps, retrieveDapp } from "api/Dapps"
 import { Dapp } from "models/api/Dapp"
+import { BuildOptions } from "models/api/BuildOptions"
 import { retrieveGithubOptions } from "api/GithubOptions"
 import { retrieveBuildOptions } from "api/BuildOptions"
 
@@ -46,12 +47,25 @@ function DappDetail(): React.ReactElement {
 
   const fetchDapp = async () => {
     try {
-      console.log(slug)
-      let basic = retrieveDapp(slug)
-      let github = retrieveGithubOptions(slug)
-      let build = retrieveBuildOptions(slug)
+      let basic_resp = await retrieveDapp(slug)
+      let basic: Dapp = basic_resp.data
+      // let github = await retrieveGithubOptions(slug)
+      let build_resp = await retrieveBuildOptions(slug)
+      let build: BuildOptions = build_resp.data
       // let envs = retr
-      console.log(basic, github, build)
+      let _dapp = {
+        basic: basic,
+        build: build,
+        github: {
+          repo: "",
+          branch: 0,
+          auto_deploy: false,
+          confirm_ci: false
+        },
+        env_vars: [
+        ]
+      }
+      setDapp(_dapp)
     }
     catch (error) {
       console.log(error)
@@ -105,7 +119,6 @@ export function DappListContainer(): React.ReactElement {
     try {
       const response = await listDapps()
       const data = response.data
-      console.log(data)
       setDapps(data)
       dataLoaded = true;
     } catch (error) {

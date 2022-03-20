@@ -1,9 +1,11 @@
-import React, { useState } from "react"
+import React, { Dispatch, SetStateAction, useState } from "react"
 import {
   DappContextType,
   DappContext,
   useDapp,
+  IDapp,
 } from "contexts/DappContext/DappContext"
+import { Dapp } from "models/api/Dapp"
 
 type State = {
   text: string
@@ -12,7 +14,7 @@ type State = {
 function DappSettingsBasic({
   dapp,
   setDapp,
-}: DappContextType): React.ReactElement {
+}: { dapp: IDapp, setDapp: Dispatch<SetStateAction<IDapp>> }): React.ReactElement {
   // const [_name, setName] = useState(name);
   // const [_gateway, setGateway] = useState(gateway);
   // const [{slug, setSlug}] = useDapp();
