@@ -1,5 +1,8 @@
 """IPFS HTTP API wrapper."""
 import json
+import os
+from os import walk
+
 from typing import Any, Dict, Optional
 
 import requests
@@ -80,6 +83,7 @@ class CLUSTERIPFSAPI:
             headers=clean_params(headers),
             **kwargs,
         )
+
         if r.status_code == 200:
             try:
                 return r.json()
@@ -184,9 +188,16 @@ class CLUSTERIPFSAPI:
 
     """Add content to the cluster"""
 
-    def add(self, file_path="LICENSE"):
-        files = {"file": (file_path, open(file_path, "rb"))}
-        return self._add(files=files)
+    def add(self, url):
+        multiple_files = {}
+        index = 0
+        
+        for path, subdirs, files in os.walk(url):
+            for name in files:
+                index += 1
+                multiple_files["file" + str(index)] = ((os.path.join(path, name)),(open((os.path.join(path, name)), 'rb')))
+       
+        return self._add(files=multiple_files)
 
     """List of pins and their allocations (pinset)"""
 

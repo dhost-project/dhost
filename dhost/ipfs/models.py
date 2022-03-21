@@ -2,7 +2,9 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from dhost.dapps.models import Dapp, Deployment
+from dhost.ipfs.ipfs import CLUSTERIPFSAPI
 
+import json
 
 class IPFSDeployment(Deployment):
     ipfs_hash = models.CharField(_("IPFS hash"), max_length=128, blank=True)
@@ -14,7 +16,22 @@ class IPFSDeployment(Deployment):
     def delete(self, *args, **kwargs):
         # TODO remove from IPFS
         super().delete(*args, **kwargs)
+    
+    def deploy(self):
+        # deploying on the IPFS
+        ipfs = CLUSTERIPFSAPI()
+        result = ipfs.add(self.bundle.folder)
 
+        list_raw_data = (result.decode('utf-8')).split("\n")
+        if list_raw_data[-1] == "" :
+            list_raw_data.pop()
+
+        principal_directory_json = json.loads(list_raw_data[-1])
+        ipfs_hash = principal_directory_json["cid"]["/"]
+        
+        self.dapp.ipfs_hash=ipfs_hash
+        self.dapp.url='gateway.ipfs.io/ipfs/'+ipfs_hash
+        self.dapp.save()
     
 
 class IPFSDapp(Dapp):
