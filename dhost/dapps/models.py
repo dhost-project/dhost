@@ -1,17 +1,15 @@
+import json
 import logging
 import uuid
-import json
 
 import django.dispatch
+from django.apps import apps
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from .utils import get_dapp_type
-
-from django.apps import apps
-
 
 pre_deploy_start = django.dispatch.Signal()
 post_deploy_start = django.dispatch.Signal()
@@ -86,7 +84,7 @@ class Dapp(models.Model):
         Create an `IPFSDeployment` object and start the deployment process
         from the bundled files.
         """
-      
+
         if bundle is None and len(self.bundles.all()) > 0:
             bundle = self.bundles.all()[0]
         deployment = self.deployment_class.objects.create(
@@ -178,7 +176,6 @@ class Deployment(models.Model):
         self.deploy()
         post_deploy_start.send(sender=self.__class__, instance=self)
 
-    
     def deploy(self):
         pass
 
@@ -187,4 +184,3 @@ class Deployment(models.Model):
             deploy_success.send(sender=self.__class__, instance=self)
         else:
             deploy_fail.send(sender=self.__class__, instance=self)
-
