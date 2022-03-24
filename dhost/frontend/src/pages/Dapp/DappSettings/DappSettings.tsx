@@ -6,8 +6,9 @@ import DappSettingsBuild from "./DappSettingsBuild/DappSettingsBuild"
 import DappSettingsEnvVar from "./DappSettingsEnvVar/DappSettingsEnvVar"
 import DappSettingsGithub from "./DappSettingsGithub/DappSettingsGithub"
 import DappSettingsSectionTitle from "./DappSettingsSectionTitle/DappSettingsSectionTitle"
-import { retrieveBuildOptions } from "api/BuildOptions"
+import { updateBuildOptions } from "api/BuildOptions"
 import { useEffect } from "react"
+import { updateIPFSDapp } from "api/IPFSDapps"
 
 
 type TParams = { dapp_slug: string }
@@ -21,32 +22,13 @@ export function DappSettings({
     toast.info("Change done.", { position: toast.POSITION.BOTTOM_RIGHT })
   }
 
-  useEffect(() => {
-    fetchingData()
-  })
-
-  const fetchingData = async () => {
-    try {
-      const response = await retrieveBuildOptions(dapp.basic.slug)
-      const json = (await response).data
-      dapp.build = json
-
-    } catch (error) {
-      console.log("error", error)
-    }
+  const updateDapp = () => {
+    console.log("dapp_build", dapp.build)
+    updateBuildOptions(dapp.basic.slug, dapp.build);
+    updateIPFSDapp(dapp.basic.slug, { slug: dapp.basic.slug, ipfs_gateway: dapp.basic.url })
   }
 
   const settings_sections = [
-    /*{
-      component: <DappSettingsSectionWithValidation
-        _component={<DappSettingsBasic dapp={dapp} setDapp={setDapp}
-        ></DappSettingsBasic>}
-        _short="basic"
-        _name="Basic"
-        _description="Change major informations of your application.">
-      </DappSettingsSectionWithValidation>
-
-    },*/
     {
       name: "Basic",
       short: "basic",
@@ -92,6 +74,19 @@ export function DappSettings({
               {_section.component}
             </div>
           ))}
+        </div>
+      </div>
+      <div className="flex justify-center w-1/3">
+        <div className="flex items-center">
+          <button
+            id="build"
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+            type="submit"
+            name="build"
+            onClick={updateDapp}
+          >
+            Validate
+          </button>
         </div>
       </div>
     </div>

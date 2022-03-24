@@ -21,17 +21,9 @@ function DappSettingsBuild({
   function changeDocker(e: React.ChangeEvent<HTMLInputElement>) {
     var _dapp = dapp
     _dapp.build.docker = e.target.value
+    console.log(_dapp)
     setDapp({ ..._dapp })
   }
-
-  const _createBuildOptions = () => {
-    console.log(dapp.build)
-    // createBuildOptions(dapp.basic.slug, dapp.build);
-  }
-
-  useEffect(() => {
-    console.log("dapp", dapp)
-  }, [dapp])
 
   return (
     <div>
@@ -46,15 +38,7 @@ function DappSettingsBuild({
             type="text"
             value={dapp.build.command}
             onChange={(e) => {
-              if (timer) {
-                clearTimeout(timer);
-                setTimer(null);
-              }
-              setTimer(
-                setTimeout(async () => {
-                  changeCommand(e)
-                }, 500)
-              );
+              changeCommand(e)
             }}
           />
         </div>
@@ -68,31 +52,9 @@ function DappSettingsBuild({
             type="text"
             value={dapp.build.docker}
             onChange={(e) => {
-              if (timer) {
-                clearTimeout(timer);
-                setTimer(null);
-              }
-              setTimer(
-                setTimeout(async () => {
-                  changeDocker(e)
-                }, 500)
-              );
+              changeDocker(e)
             }}
           />
-        </div>
-      </div>
-
-      <div className="flex justify-center w-1/3">
-        <div className="flex items-center">
-          <button
-            id="build"
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-            type="submit"
-            name="build"
-            onClick={_createBuildOptions}
-          >
-            Validate
-          </button>
         </div>
       </div>
     </div>

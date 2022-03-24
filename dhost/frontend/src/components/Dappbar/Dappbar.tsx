@@ -5,8 +5,6 @@ import { NavItem } from "./NavItem"
 
 
 export function Dappbar({ dapp }: { dapp: IDapp }): React.ReactElement {
-  dapp.basic.slug = "dapp_1"
-
   return (
     <div>
       <div className="py-4 border-b bg-gradient-to-r from-green-100 to-blue-100">
@@ -26,7 +24,7 @@ export function Dappbar({ dapp }: { dapp: IDapp }): React.ReactElement {
               rel="noreferrer"
               target="_blank"
             >
-              dhost-project/dhost-v2
+              {dapp.basic.url}
             </a>
           </h2>
           <a

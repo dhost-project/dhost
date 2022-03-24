@@ -18,7 +18,7 @@ import {
 import { useEffect, useState } from "react"
 import { IDapp, useDapp } from "contexts/DappContext/DappContext"
 import { DappDetails } from "../DappDetails"
-import { listIPFSDapps } from "api/IPFSDapps"
+import { listIPFSDapps, retrieveIPFSDapp } from "api/IPFSDapps"
 import { listDapps, retrieveDapp } from "api/Dapps"
 import { Dapp } from "models/api/Dapp"
 import { BuildOptions } from "models/api/BuildOptions"
@@ -47,11 +47,12 @@ function DappDetail(): React.ReactElement {
 
   const fetchDapp = async () => {
     try {
-      let basic_resp = await retrieveDapp(slug)
+      let basic_resp = await retrieveIPFSDapp(slug)
       let basic: Dapp = basic_resp.data
       // let github = await retrieveGithubOptions(slug)
       let build_resp = await retrieveBuildOptions(slug)
-      let build: BuildOptions = build_resp.data
+      // console.log("build", build_resp.data[0])
+      let build: BuildOptions = build_resp.data[0]
       // let envs = retr
       let _dapp = {
         basic: basic,
@@ -136,7 +137,7 @@ export function DappListContainer(): React.ReactElement {
     <Router>
       <Switch>
         <Route exact path={`${path}/`}
-          component={() => <ListDapp dapps={dapps} setDapps={setDapps} />} />
+          component={() => <ListDapp dapps={dapps} />} />
         <Route path={`${path}/:dapp_slug`} component={() => <DappDetail />} />
         <Route path="*" component={NotFound} />
       </Switch>

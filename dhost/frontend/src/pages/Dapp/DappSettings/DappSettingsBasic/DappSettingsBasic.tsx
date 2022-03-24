@@ -19,7 +19,7 @@ function DappSettingsBasic({
   // const [_gateway, setGateway] = useState(gateway);
   // const [{slug, setSlug}] = useDapp();
 
-  const gateways = ["toto.com", "wshwsh.ipfs", "gateway.com", "blblblb.io"]
+  const gateways = ["https://toto.com", "https://wshwsh.ipfs", "https://gateway.com", "https://blblblb.io"]
 
   // typing on RIGHT hand side of =
   //   const onChange = (e: React.ChangeEvent<HTMLInputElement>)=> {
@@ -49,7 +49,9 @@ function DappSettingsBasic({
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="text"
           value={dapp.basic.slug}
-          onChange={changeName}
+          onChange={(e) => {
+            changeName(e)
+          }}
         />
       </div>
 
@@ -65,7 +67,9 @@ function DappSettingsBasic({
             className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             id="grid-state"
             value={dapp.basic.url}
-            onChange={changeGateway}
+            onChange={(e) => {
+              changeGateway(e)
+            }}
           >
             {gateways.map((_gateway, i) => (
               <option key={`${_gateway}-${i}`}>{_gateway}</option>
