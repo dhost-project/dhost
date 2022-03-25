@@ -13,6 +13,7 @@ export interface IDapp {
   build: BuildOptions
   github: GithubOptions
   env_vars: EnvVar[]
+  current_slug: string
 }
 
 export interface DappContextType {
@@ -58,6 +59,7 @@ export const DappProvider: FC = ({ children }) => {
         sensitive: false,
       },
     ],
+    current_slug: ""
   } as IDapp
 
   const [dapp, setDapp] = useState<IDapp>(_dapp)

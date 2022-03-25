@@ -25,21 +25,6 @@ import { BuildOptions } from "models/api/BuildOptions"
 import { retrieveGithubOptions } from "api/GithubOptions"
 import { retrieveBuildOptions } from "api/BuildOptions"
 
-const dapps = [
-  {
-    slug: "dhost_v2",
-    owner: "dumbo",
-  },
-  {
-    slug: "dhost_v3",
-    owner: "dumbo",
-  },
-  {
-    slug: "dhost_v4",
-    owner: "dumbo",
-  },
-]
-
 function DappDetail(): React.ReactElement {
   const { path } = useRouteMatch()
   const { dapp, setDapp } = useDapp()
@@ -64,7 +49,8 @@ function DappDetail(): React.ReactElement {
           confirm_ci: false
         },
         env_vars: [
-        ]
+        ],
+        current_slug: basic.slug
       }
       setDapp(_dapp)
     }

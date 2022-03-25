@@ -14,7 +14,7 @@ export function Dappbar({ dapp }: { dapp: IDapp }): React.ReactElement {
               className="text-reset text-decoration-none"
               href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
             >
-              {dapp.basic.slug}
+              {dapp.current_slug}
             </a>
           </h1>
           <h2 className="text-xl">
