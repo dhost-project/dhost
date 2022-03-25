@@ -10,8 +10,6 @@ function DappSettingsBuild({
   setDapp: Dispatch<SetStateAction<IDapp>>
 }): React.ReactElement {
 
-  const [timer, setTimer] = useState<any>(null);
-
   function changeCommand(e: React.ChangeEvent<HTMLInputElement>) {
     var _dapp = dapp
     _dapp.build.command = e.target.value

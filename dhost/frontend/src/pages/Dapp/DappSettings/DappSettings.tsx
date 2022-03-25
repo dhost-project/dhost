@@ -45,14 +45,14 @@ export function DappSettings({
         <DappSettingsBuild dapp={dapp} setDapp={setDapp}></DappSettingsBuild>
       ),
     },
-    {
-      name: "Github",
-      short: "github",
-      description: "Connect to your repository.",
-      component: (
-        <DappSettingsGithub dapp={dapp} setDapp={setDapp}></DappSettingsGithub>
-      ),
-    },
+    // {
+    //   name: "Github",
+    //   short: "github",
+    //   description: "Connect to your repository.",
+    //   component: (
+    //     <DappSettingsGithub dapp={dapp} setDapp={setDapp}></DappSettingsGithub>
+    //   ),
+    // },
     {
       name: "Environment variables",
       short: "var",

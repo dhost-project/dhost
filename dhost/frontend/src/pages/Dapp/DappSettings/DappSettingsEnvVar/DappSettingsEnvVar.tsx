@@ -1,6 +1,8 @@
 import { Dispatch, SetStateAction } from "react"
 import { ModalEnvVar } from "components/DappSettings/ModalEnvVar"
 import { DappContextType, IDapp } from "contexts/DappContext/DappContext"
+import { Button } from "react-bootstrap"
+import { useEnvVarModals } from "contexts/EnvVarModalsContext/EnvVarModalsContext"
 
 function DappSettingsEnvVar({
   dapp,
@@ -9,7 +11,10 @@ function DappSettingsEnvVar({
   dapp: IDapp
   setDapp: Dispatch<SetStateAction<IDapp>>
 }): React.ReactElement {
-  // <img className="my-2 mx-1 h-8 w-auto" src={tick} alt="True" />
+
+  const { setShowCreateEnvVarModal } = useEnvVarModals()
+
+
   function renderSensitive(sensistive: boolean | undefined) {
     if (sensistive) {
       return <span>✓</span>
@@ -43,8 +48,16 @@ function DappSettingsEnvVar({
             </tr>
           ))}
         </tbody>
+        <Button
+          className="flex justify-center items-center h-8 mr-4"
+          onClick={() => {
+            setShowCreateEnvVarModal(true)
+          }}
+        >
+          New
+        </Button>
       </table>
-      </>
+    </>
   )
 }
 
