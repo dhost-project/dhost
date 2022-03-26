@@ -1,10 +1,12 @@
-from django.shortcuts import get_object_or_404
-from django.conf import settings
+import os
+import shutil
+from zipfile import ZipFile
 
-from rest_framework import viewsets
+from django.conf import settings
+from django.shortcuts import get_object_or_404
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import status
 
 from .models import Bundle, Dapp, Deployment
 from .permissions import DappPermission
@@ -15,10 +17,6 @@ from .serializers import (
     DeploymentSerializer,
 )
 
-import zipfile
-from zipfile import ZipFile
-import os
-import shutil
 
 class DappViewSet(viewsets.ModelViewSet):
     queryset = Dapp.objects.all()
@@ -86,26 +84,26 @@ class BundleViewSet(DappViewMixin, viewsets.ModelViewSet):
     def get_queryset(self):
         owner = self.request.user
         queryset = super().get_queryset()
-        return queryset.filter(dapp__owner=owner,dapp=self.get_dapp())
-    
-    def create(self, request,dapp_slug):
+        return queryset.filter(dapp__owner=owner, dapp=self.get_dapp())
+
+    def create(self, request, dapp_slug):
         try:
             dapp = self.dapp_model_class.objects.filter(slug=dapp_slug).first()
-            media_name = request.data['media'].name
-            old_media_url = self.IPFS_MEDIAS + media_name.split('.')[0]
+            media_name = request.data["media"].name
+            old_media_url = self.IPFS_MEDIAS + media_name.split(".")[0]
             new_media_url = self.IPFS_MEDIAS + dapp_slug
             if dapp:
-                if media_name.endswith('.zip'):
-                    zf = ZipFile(request.data['media'], 'r')
+                if media_name.endswith(".zip"):
+                    zf = ZipFile(request.data["media"], "r")
                     zf.extractall(self.IPFS_MEDIAS)
                     zf.close()
                     if os.path.exists(new_media_url):
                         shutil.rmtree(new_media_url)
-                    os.rename(old_media_url,new_media_url)
-            bundle = Bundle.objects.create(dapp = dapp, folder = new_media_url)
+                    os.rename(old_media_url, new_media_url)
+            bundle = Bundle.objects.create(dapp=dapp, folder=new_media_url)
             data = BundleSerializer(bundle).data
 
-            return Response(data, status = status.HTTP_201_CREATED)
-        except:
-            content= {'error': 'Invalid dapp or media'}
-            return Response(content , status = status.HTTP_400_BAD_REQUEST)
+            return Response(data, status=status.HTTP_201_CREATED)
+        except Exception:
+            content = {"error": "Invalid dapp or media"}
+            return Response(content, status=status.HTTP_400_BAD_REQUEST)

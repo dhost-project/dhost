@@ -7,6 +7,7 @@ from .models import Bundle, Dapp, Deployment
 class DappAdmin(admin.ModelAdmin):
     pass
 
+
 @admin.register(Bundle)
 class BundleAdmin(admin.ModelAdmin):
     pass

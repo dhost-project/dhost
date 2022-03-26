@@ -24,7 +24,7 @@ class IPFSDeploymentViewSet(IPFSDappViewMixin, DeploymentViewSet):
 class IPFSDappBundleViewSet(IPFSDappViewMixin, BundleViewSet):
     pass
 
-    
+
 class IPFSDappBuildOptionsViewSet(IPFSDappViewMixin, BuildOptionsViewSet):
     pass
 

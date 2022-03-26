@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('dapps', '0006_bundle_media'),
+        ("dapps", "0006_bundle_media"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='bundle',
-            name='media',
+            model_name="bundle",
+            name="media",
         ),
     ]

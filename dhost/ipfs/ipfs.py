@@ -1,7 +1,6 @@
 """IPFS HTTP API wrapper."""
 import json
 import os
-from os import walk
 from typing import Any, Dict, Optional
 
 import requests

@@ -1,9 +1,7 @@
-import json
 import logging
 import uuid
 
 import django.dispatch
-from django.apps import apps
 from django.conf import settings
 from django.db import models
 from django.utils import timezone

@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('dapps', '0005_alter_dapp_owner'),
+        ("dapps", "0005_alter_dapp_owner"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='bundle',
-            name='media',
-            field=models.FileField(blank=True, null=True, upload_to='media/ipfs'),
+            model_name="bundle",
+            name="media",
+            field=models.FileField(
+                blank=True, null=True, upload_to="media/ipfs"
+            ),
         ),
     ]

@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('dapps', '0008_bundle_media'),
+        ("dapps", "0008_bundle_media"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='bundle',
-            name='media',
-            field=models.FileField(blank=True, null=True, upload_to=''),
+            model_name="bundle",
+            name="media",
+            field=models.FileField(blank=True, null=True, upload_to=""),
         ),
     ]
