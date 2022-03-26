@@ -18,26 +18,12 @@ import {
 import { useEffect, useState } from "react"
 import { IDapp, useDapp } from "contexts/DappContext/DappContext"
 import { DappDetails } from "../DappDetails"
-import { listIPFSDapps } from "api/IPFSDapps"
+import { listIPFSDapps, retrieveIPFSDapp } from "api/IPFSDapps"
 import { listDapps, retrieveDapp } from "api/Dapps"
 import { Dapp } from "models/api/Dapp"
+import { BuildOptions } from "models/api/BuildOptions"
 import { retrieveGithubOptions } from "api/GithubOptions"
 import { retrieveBuildOptions } from "api/BuildOptions"
-
-const dapps = [
-  {
-    slug: "dhost_v2",
-    owner: "dumbo",
-  },
-  {
-    slug: "dhost_v3",
-    owner: "dumbo",
-  },
-  {
-    slug: "dhost_v4",
-    owner: "dumbo",
-  },
-]
 
 function DappDetail(): React.ReactElement {
   const { path } = useRouteMatch()
@@ -46,12 +32,27 @@ function DappDetail(): React.ReactElement {
 
   const fetchDapp = async () => {
     try {
-      console.log(slug)
-      let basic = retrieveDapp(slug)
-      let github = retrieveGithubOptions(slug)
-      let build = retrieveBuildOptions(slug)
+      let basic_resp = await retrieveIPFSDapp(slug)
+      let basic: Dapp = basic_resp.data
+      // let github = await retrieveGithubOptions(slug)
+      let build_resp = await retrieveBuildOptions(slug)
+      // console.log("build", build_resp.data[0])
+      let build: BuildOptions = build_resp.data[0]
       // let envs = retr
-      console.log(basic, github, build)
+      let _dapp = {
+        basic: basic,
+        build: build,
+        github: {
+          repo: "",
+          branch: 0,
+          auto_deploy: false,
+          confirm_ci: false
+        },
+        env_vars: [
+        ],
+        current_slug: basic.slug
+      }
+      setDapp(_dapp)
     }
     catch (error) {
       console.log(error)
@@ -105,7 +106,6 @@ export function DappListContainer(): React.ReactElement {
     try {
       const response = await listDapps()
       const data = response.data
-      console.log(data)
       setDapps(data)
       dataLoaded = true;
     } catch (error) {
@@ -123,7 +123,7 @@ export function DappListContainer(): React.ReactElement {
     <Router>
       <Switch>
         <Route exact path={`${path}/`}
-          component={() => <ListDapp dapps={dapps} setDapps={setDapps} />} />
+          component={() => <ListDapp dapps={dapps} />} />
         <Route path={`${path}/:dapp_slug`} component={() => <DappDetail />} />
         <Route path="*" component={NotFound} />
       </Switch>

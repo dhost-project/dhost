@@ -9,19 +9,24 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ("oauth2", "0001_initial"),
+        ("dapps", "0004_alter_bundle_folder"),
     ]
 
     operations = [
+        migrations.AddField(
+            model_name="bundle",
+            name="media",
+            field=models.FileField(blank=True, null=True, upload_to=""),
+        ),
         migrations.AlterField(
-            model_name="oauth2application",
-            name="user",
+            model_name="dapp",
+            name="owner",
             field=models.ForeignKey(
-                blank=True,
-                null=True,
                 on_delete=django.db.models.deletion.CASCADE,
                 related_name="%(app_label)s_%(class)s",
+                related_query_name="%(app_label)s_%(class)s",
                 to=settings.AUTH_USER_MODEL,
+                verbose_name="owner",
             ),
         ),
     ]

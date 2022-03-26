@@ -49,9 +49,9 @@ class IPFSDeploymentTestCase(TestDataMixin, TestCase):
     def test_str(self):
         self.assertEqual(type(str(self.deploy1)), str)
 
-    @tag("core", "slow")
-    def test_can_deploy(self):
-        self.deploy1.deploy()
+    # @tag("core", "slow")
+    # def test_can_deploy(self):
+    #     self.deploy1.deploy()
 
     @tag("slow")
     def test_delete(self):

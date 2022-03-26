@@ -9,17 +9,17 @@ export function GithubDeploy() {
   const [isConnected, setIsConnected] = useState(false)
 
   useEffect(() => {
-    getListRepositorys()
+    getListRepositories()
   }, [])
 
   useEffect(() => {
     console.log("isConnected", isConnected)
   }, [isConnected])
 
-  async function getListRepositorys() {
+  async function getListRepositories() {
     try {
       const res = await listRepositorys()
-      console.log("listRepositorys", res)
+      console.log("listRepositories", res)
 
       if (res.status >= 200) {
         console.log("setconnected true", res.data)
@@ -27,7 +27,7 @@ export function GithubDeploy() {
         setUserRepo([])
       }
     } catch (error: any) {
-      console.warn("getListRepositorys", error)
+      console.warn("getListRepositories", error)
       setIsConnected(false)
     }
   }

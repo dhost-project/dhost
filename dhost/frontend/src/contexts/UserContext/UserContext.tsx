@@ -13,7 +13,6 @@ export const UserProvider: FC = ({ children }) => {
 
   async function retrieveListDapps() {
     const _listDapps = (await listDapps()).data
-    console.log("_listDapps", _listDapps)
     setUserDapps(_listDapps)
   }
 
