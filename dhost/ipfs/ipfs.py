@@ -42,7 +42,7 @@ def clean_params(params):
     return params
 
 
-class CLUSTERIPFSAPI:
+class ClusterIPFSAPI:
     BASE_URL = settings.IPFS_CLUSTER_API_URL
 
     def __init__(self, fail_silently: bool = False) -> None:
@@ -116,9 +116,8 @@ class CLUSTERIPFSAPI:
     def _fail(self, r):
         raise Exception(f"{r.status_code} {r.content.decode()}")
 
-    """Cluster version"""
-
-    def getVersion(self, number=None, commit=None, repo=None, all=None):
+    def get_version(self, number=None, commit=None, repo=None, all=None):
+        """Cluster version"""
         return self._post(
             "version",
             params={
@@ -129,14 +128,12 @@ class CLUSTERIPFSAPI:
             },
         )
 
-    """"Cluster peers"""
-
-    def getPeers(self):
+    def get_peers(self):
+        """ "Cluster peers"""
         return self._get("peers")
 
-    """Cluster peer information"""
-
-    def getPeerInformation(self):
+    def get_peer_info(self):
+        """Cluster peer information"""
         return self._get("id")
 
     def _add(
@@ -184,9 +181,8 @@ class CLUSTERIPFSAPI:
             **kwargs,
         )
 
-    """Add content to the cluster"""
-
     def add(self, url):
+        """Add content to the cluster"""
         multiple_files = {}
         index = 0
 
@@ -200,32 +196,26 @@ class CLUSTERIPFSAPI:
 
         return self._add(files=multiple_files)
 
-    """List of pins and their allocations (pinset)"""
-
-    def getPinsAndAllocations(self):
+    def get_pins_and_allocations(self):
+        """List of pins and their allocations (pinset)"""
         return self._get("allocations")
 
-    """Show a single pin and its allocations (from the pinset)"""
-
-    def getPinsAndAllocationsByCID(self, CID):
+    def get_pins_and_allocations_by_cid(self, CID):
+        """Show a single pin and its allocations (from the pinset)"""
         return self._get("allocations/" + CID)
 
-    """Local status of all tracked CIDs"""
-
-    def getlocalStatusAllTrackedCID(self):
+    def get_local_status_all_tracked_cid(self):
+        """Local status of all tracked CIDs"""
         return self._get("pins")
 
-    """Local status of single CID"""
-
-    def getlocalStatusByCID(self, CID):
+    def get_local_status_by_cid(self, CID):
+        """Local status of single CID"""
         return self._get("pins/" + CID)
 
-    """Pin a CID"""
-
-    def pinCID(self, CID):
+    def pin_cid(self, CID):
+        """Pin a CID"""
         return self._post("pins/" + CID)
 
-    """Unpin a CID"""
-
-    def unpinCID(self, CID):
+    def unpin_cid(self, CID):
+        """Unpin a CID"""
         return self._delete("pins/" + CID)

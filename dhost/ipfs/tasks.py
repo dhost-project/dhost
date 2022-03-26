@@ -1,8 +1,8 @@
 from celery import shared_task
 
-from dhost.ipfs.ipfs import CLUSTERIPFSAPI
+from dhost.ipfs.ipfs import ClusterIPFSAPI
 
-ipfs = CLUSTERIPFSAPI()
+ipfs = ClusterIPFSAPI()
 
 
 @shared_task
@@ -13,4 +13,4 @@ def task_add_file(file_path):
 
 @shared_task
 def task_remove_file(CID):
-    ipfs.unpinCID(CID)
+    ipfs.unpin_cid(CID)

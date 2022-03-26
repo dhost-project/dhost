@@ -4,7 +4,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from dhost.dapps.models import Dapp, Deployment
-from dhost.ipfs.ipfs import CLUSTERIPFSAPI
+from dhost.ipfs.ipfs import ClusterIPFSAPI
 
 
 class IPFSDeployment(Deployment):
@@ -20,7 +20,7 @@ class IPFSDeployment(Deployment):
 
     def deploy(self):
         # deploying on the IPFS
-        ipfs = CLUSTERIPFSAPI()
+        ipfs = ClusterIPFSAPI()
         result = ipfs.add(self.bundle.folder)
 
         list_raw_data = (result.decode("utf-8")).split("\n")

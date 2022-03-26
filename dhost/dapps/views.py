@@ -16,6 +16,9 @@ from .serializers import (
     DappSerializer,
     DeploymentSerializer,
 )
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class DappViewSet(viewsets.ModelViewSet):
@@ -88,22 +91,31 @@ class BundleViewSet(DappViewMixin, viewsets.ModelViewSet):
 
     def create(self, request, dapp_slug):
         try:
-            dapp = self.dapp_model_class.objects.filter(slug=dapp_slug).first()
+            # self.dapp_model_class.objects.filter(slug=dapp_slug).first()
+            dapp = self.get_dapp()
             media_name = request.data["media"].name
             old_media_url = self.IPFS_MEDIAS + media_name.split(".")[0]
             new_media_url = self.IPFS_MEDIAS + dapp_slug
+
             if dapp:
                 if media_name.endswith(".zip"):
                     zf = ZipFile(request.data["media"], "r")
                     zf.extractall(self.IPFS_MEDIAS)
                     zf.close()
+
                     if os.path.exists(new_media_url):
                         shutil.rmtree(new_media_url)
+
                     os.rename(old_media_url, new_media_url)
+
             bundle = Bundle.objects.create(dapp=dapp, folder=new_media_url)
             data = BundleSerializer(bundle).data
 
             return Response(data, status=status.HTTP_201_CREATED)
-        except Exception:
+
+        except Exception as e:
+            logger.error(f"error trying to create bundle: {e}")
+
             content = {"error": "Invalid dapp or media"}
+
             return Response(content, status=status.HTTP_400_BAD_REQUEST)
