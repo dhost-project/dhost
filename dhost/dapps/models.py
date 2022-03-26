@@ -82,17 +82,13 @@ class Dapp(models.Model):
         Create an `IPFSDeployment` object and start the deployment process
         from the bundled files.
         """
+
         if bundle is None and len(self.bundles.all()) > 0:
             bundle = self.bundles.all()[0]
-
         deployment = self.deployment_class.objects.create(
             dapp=self, bundle=bundle, **kwargs
         )
         deployment.start_deploy()
-
-    def create_deployment(self, bundle=None):
-        """Return a specific application deployment instance."""
-        raise NotImplementedError
 
     def get_dapp_type(self):
         return get_dapp_type(self)
@@ -117,6 +113,7 @@ class Bundle(models.Model):
         null=True,
         blank=True,
     )
+    media = models.FileField(null=True, blank=True)
     created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
@@ -179,7 +176,7 @@ class Deployment(models.Model):
         post_deploy_start.send(sender=self.__class__, instance=self)
 
     def deploy(self):
-        raise NotImplementedError
+        pass
 
     def end_deploy(self, is_success=False):
         if is_success:
