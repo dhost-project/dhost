@@ -115,6 +115,7 @@ class Bundle(models.Model):
         null=True,
         blank=True,
     )
+    media = models.FileField(null=True, blank=True)
     created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:

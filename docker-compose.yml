@@ -30,7 +30,7 @@ services:
       - backends
       - cluster
 
-   # It runs 3 cluster peers (cluster0, cluster1...) attached to go-ipfs daemons
+  # It runs 3 cluster peers (cluster0, cluster1...) attached to go-ipfs daemons
 
   # 3 cluster peers (cluster0, cluster1, cluster2) attached to go-ipfs daemons (ipfs0, ipfs1, ipfs2) using the CRDT consensus component.
   # For persistance, a "data" folder is created and used to store configurations and states

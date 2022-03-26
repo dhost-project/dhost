@@ -6,7 +6,8 @@ from .models import Bundle, Dapp, Deployment
 class BundleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bundle
-        fields = ["id", "created_at"]
+        fields = ["id", "dapp", "media", "folder","created_at"]
+        read_only_fields = ["dapp", "folder", "created_at"]
 
 
 class DeploymentSerializer(serializers.ModelSerializer):
