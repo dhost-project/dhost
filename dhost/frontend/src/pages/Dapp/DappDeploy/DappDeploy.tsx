@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { RouteComponentProps } from "react-router-dom"
-import { GithubDeploy, DhostDeploy } from "components/DappDeploy"
+import { GithubDeploy, DhostDeploy, BundleDeploy } from "components/DappDeploy"
 
 export enum EDeployMethodIds {
   Github = "github",
@@ -23,7 +23,7 @@ export type TDeployMethods = {
 
 export type TDeploymentProcesses = {
   [deployMethodsId: string]: {
-    component: JSX.Element
+    component: JSX.Element | null
   }
 }
 
@@ -32,6 +32,11 @@ const deployMethods: TDeployMethods[] = [
     id: "github",
     title: "Github",
     description: "Connect to Github",
+  },
+  {
+    id: "bundle",
+    title: "Bundle",
+    description: "Deploy a zipped bundle",
   },
   {
     id: "dhost",
@@ -43,6 +48,9 @@ const deployMethods: TDeployMethods[] = [
 const deploymentProcessMap: TDeploymentProcesses = {
   github: {
     component: <GithubDeploy />,
+  },
+  bundle: {
+    component: <BundleDeploy />,
   },
   dhost: {
     component: <DhostDeploy />,
