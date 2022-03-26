@@ -1,9 +1,11 @@
-import React, { useState } from "react"
+import React, { Dispatch, SetStateAction, useState } from "react"
 import {
   DappContextType,
   DappContext,
   useDapp,
+  IDapp,
 } from "contexts/DappContext/DappContext"
+import { Dapp } from "models/api/Dapp"
 
 type State = {
   text: string
@@ -12,12 +14,12 @@ type State = {
 function DappSettingsBasic({
   dapp,
   setDapp,
-}: DappContextType): React.ReactElement {
+}: { dapp: IDapp, setDapp: Dispatch<SetStateAction<IDapp>> }): React.ReactElement {
   // const [_name, setName] = useState(name);
   // const [_gateway, setGateway] = useState(gateway);
   // const [{slug, setSlug}] = useDapp();
 
-  const gateways = ["toto.com", "wshwsh.ipfs", "gateway.com", "blblblb.io"]
+  const gateways = ["https://toto.com", "https://wshwsh.ipfs", "https://gateway.com", "https://blblblb.io"]
 
   // typing on RIGHT hand side of =
   //   const onChange = (e: React.ChangeEvent<HTMLInputElement>)=> {
@@ -30,40 +32,29 @@ function DappSettingsBasic({
     setDapp({ ..._dapp })
   }
 
-  function changeGateway(e: React.ChangeEvent<HTMLSelectElement>) {
+  function changeIPFSGateway(e: React.ChangeEvent<HTMLSelectElement>) {
     // setGateway(e.target.value);
     var _dapp = dapp
-    _dapp.basic.url = e.target.value
+    _dapp.basic.ipfs_gateway = e.target.value
     setDapp({ ..._dapp })
   }
   return (
     <div>
-      <div className="pb-4 w-1/2">
-        <h2 className="block uppercase tracking-wide text-gray-700 text-xs font-medium mb-2">
-          Name
-        </h2>
-
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          type="text"
-          value={dapp.basic.slug}
-          onChange={changeName}
-        />
-      </div>
-
       <div className="w-full md:w-1/2  mb-6 md:mb-0">
         <label
           className="block uppercase tracking-wide text-gray-700 text-xs font-medium mb-2"
           htmlFor="grid-state"
         >
-          Gateway
+          IPFSGateway
         </label>
         <div className="relative">
           <select
             className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             id="grid-state"
-            value={dapp.basic.url}
-            onChange={changeGateway}
+            value={dapp.basic.ipfs_gateway}
+            onChange={(e) => {
+              changeIPFSGateway(e)
+            }}
           >
             {gateways.map((_gateway, i) => (
               <option key={`${_gateway}-${i}`}>{_gateway}</option>

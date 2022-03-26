@@ -1,3 +1,4 @@
+import { List } from "cypress/types/lodash"
 import { env } from "environment"
 import { BuildOptions } from "models/api/BuildOptions"
 import { http, HttpResponse } from "utils/http"
@@ -33,7 +34,7 @@ export function createBuildOptions(
  */
 export function retrieveBuildOptions(
   dapp_slug: string
-): HttpResponse<BuildOptions> {
+): HttpResponse<List<BuildOptions>> {
   return http.get(
     `${env.API_URL}/api/ipfs/${dapp_slug}/buildoptions/`
   )

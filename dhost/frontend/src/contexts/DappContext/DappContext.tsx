@@ -2,17 +2,18 @@ import { SetStateAction, Dispatch } from "react"
 import { createContext, FC, Context, useState, useContext } from "react"
 import { fetchAllRepository } from "api/Repositories"
 import { BuildOptions } from "models/api/BuildOptions"
-import { Dapp } from "models/api/Dapp"
 import { EnvVar } from "models/api/EnvVar"
 import { GithubOptions } from "models/api/GithubOptions"
 import { Repository } from "models/api/Repository"
+import { IPFSDapp } from "models/api/IPFSDapp"
 
 // type StateSetter<T> = (value: T | ((value: T) => T)) => void;
 export interface IDapp {
-  basic: Dapp
+  basic: IPFSDapp
   build: BuildOptions
   github: GithubOptions
   env_vars: EnvVar[]
+  current_slug: string
 }
 
 export interface DappContextType {
@@ -28,34 +29,37 @@ export const DappContext = createContext({} as DappContextType)
 export const DappProvider: FC = ({ children }) => {
   const _dapp: IDapp = {
     basic: {
-      slug: "dapp_1",
-      url: "gateway.com",
-      owner: "filipo",
-      status: "down",
-      created_at: "08/08/08",
+      slug: "",
+      url: "",
+      owner: "",
+      status: "",
+      created_at: "",
+      ipfs_gateway: "",
+      ipfs_hash: ""
     },
     build: {
-      command: "npm install",
-      docker: "Dockerfile",
+      command: "",
+      docker: "",
     },
     github: {
-      repo: "best_repo",
-      branch: 2,
+      repo: "",
+      branch: 0,
       auto_deploy: false,
       confirm_ci: false,
     },
     env_vars: [
       {
-        variable: "first_var",
-        value: "val_var",
+        variable: "",
+        value: "",
         sensitive: false,
       },
       {
-        variable: "sec_var",
-        value: "val_var",
-        sensitive: true,
+        variable: "",
+        value: "",
+        sensitive: false,
       },
     ],
+    current_slug: ""
   } as IDapp
 
   const [dapp, setDapp] = useState<IDapp>(_dapp)

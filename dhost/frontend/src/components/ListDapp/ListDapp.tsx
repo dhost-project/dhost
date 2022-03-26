@@ -8,7 +8,7 @@ import { listIPFSDapps } from "api/IPFSDapps"
 import { render } from "@headlessui/react/dist/utils/render"
 
 
-export function ListDapp({ dapps, setDapps }: { dapps: Dapp[], setDapps: Dispatch<SetStateAction<Dapp[]>> }): React.ReactElement {
+export function ListDapp({ dapps }: { dapps: Dapp[] }): React.ReactElement {
 
   // let _dapps: IDapp[] = []
   // const [localDapps, setLocalDapps] = useState<IDapp[]>([]);
