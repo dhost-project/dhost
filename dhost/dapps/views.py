@@ -9,6 +9,8 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from dhost.api.viewsets import CreateListRetrieveViewSet
+
 from .models import Bundle, Dapp, Deployment
 from .permissions import DappPermission
 from .serializers import (
@@ -79,7 +81,7 @@ class DeploymentViewSet(DappViewMixin, viewsets.ReadOnlyModelViewSet):
     serializer_class = DeploymentSerializer
 
 
-class BundleViewSet(DappViewMixin, viewsets.ModelViewSet):
+class BundleViewSet(DappViewMixin, CreateListRetrieveViewSet):
     IPFS_MEDIAS = settings.IPFS_MEDIAS
     queryset = Bundle.objects.all()
     serializer_class = BundleSerializer
