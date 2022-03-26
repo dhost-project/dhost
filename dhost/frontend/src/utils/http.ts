@@ -25,7 +25,15 @@ http.interceptors.response.use(
     return response
   },
   function (error) {
-    // For every status code != 2xx
+    // For every status code != 4xx
+    console.log("window.location", window.location)
+    console.log("HTTP ERROR", error.response.status)
+    if (
+      error.response.status === 401 &&
+      window.location.pathname !== "/login"
+    ) {
+      window.location.href = "/login"
+    }
     return Promise.reject(error)
   }
 )
