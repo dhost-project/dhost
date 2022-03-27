@@ -31,7 +31,7 @@ export const Dappbar = () => {
             </a>
           </h2>
           <a
-            className="absolute top-0 right-0 bg-primary border-solid border border-secondary-light rounded-md px-5 py-2"
+            className="absolute top-0 right-0 bg-primary border-solid border border-secondary-light rounded-md px-5 py-2 text-white"
             href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
             rel="noreferrer"
             target="_blank"

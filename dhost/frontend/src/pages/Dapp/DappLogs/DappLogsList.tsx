@@ -18,11 +18,7 @@ export function DappLogsList({
 
     return (
         <div className="container mx-auto py-4">
-            <div className="flex py-2">
-                <Button size="sm">{t("Mark all as read")}</Button>
-                <Button size="sm">{t("Mark all as un-read")}</Button>
-            </div>
-            <ListDappLogs dappLogsList={dappLogs} />
+            <ListDappLogs dappLogsList={dappLogs} viewAllLogs={true} />
         </div>
     )
 }

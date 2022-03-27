@@ -7,14 +7,16 @@ import { User } from "models/api/User"
 
 export function ListDappLogs({
     dappLogsList,
+    viewAllLogs
 }: {
-    dappLogsList: DappLogs[]
+    dappLogsList: DappLogs[],
+    viewAllLogs: boolean
 }): React.ReactElement {
 
     let { dapp } = useDapp()
+    let dappLogsListOverview = dappLogsList.slice(0, 10)
 
     // let users: User[] = [];
-    let messages = [];
 
     // const fetchData = () => {
     //     try {
@@ -35,12 +37,22 @@ export function ListDappLogs({
 
     return (
         <List>
-            {dappLogsList.map((dappLogs) => (
-                <ListItem
-                    // key={`${dapp.basic.slug}-${dappLogs.id}`}
-                    dappLogs={dappLogs}
-                />
-            ))}
+            {viewAllLogs ?
+                dappLogsList.map((dappLogs, i) => (
+                    <ListItem
+                        key={i}
+                        dappLogs={dappLogs}
+                    />
+                ))
+                :
+                dappLogsListOverview.map((dappLogs, i) => (
+                    <ListItem
+                        key={i}
+                        dappLogs={dappLogs}
+                    />
+                ))
+
+            }
         </List>
     )
 }

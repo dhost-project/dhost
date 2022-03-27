@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next"
 export function ListItem({
     dappLogs,
 }: {
-    dappLogs: DappLogs
+    dappLogs: DappLogs,
 }): React.ReactElement {
     const { t } = useTranslation()
     var colors;
