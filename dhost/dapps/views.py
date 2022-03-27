@@ -93,6 +93,8 @@ class BundleViewSet(DappViewMixin, CreateListRetrieveViewSet):
 
     def create(self, request, dapp_slug):
         try:
+            # TODO doesn't work if zip file contains only one file
+            # TODO doesn't work if zip file name contain a dot (.)
             # self.dapp_model_class.objects.filter(slug=dapp_slug).first()
             dapp = self.get_dapp()
             media_name = request.data["media"].name
@@ -101,6 +103,7 @@ class BundleViewSet(DappViewMixin, CreateListRetrieveViewSet):
 
             if dapp:
                 if media_name.endswith(".zip"):
+                    # TODO work the security around it
                     zf = ZipFile(request.data["media"], "r")
                     zf.extractall(self.IPFS_MEDIAS)
                     zf.close()

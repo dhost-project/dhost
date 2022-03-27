@@ -5,4 +5,4 @@ from .models import DappLog
 
 @admin.register(DappLog)
 class DappLogAdmin(admin.ModelAdmin):
-    pass
+    readonly_fields = ["action_time"]
