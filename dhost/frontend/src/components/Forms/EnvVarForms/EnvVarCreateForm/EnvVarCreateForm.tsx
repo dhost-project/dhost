@@ -7,6 +7,10 @@ import { IPFSDappParams } from "models/api/IPFSDapp"
 import { useModals } from "contexts/ModalsContext/ModalsContext";
 import { EnvVar } from "models/api/EnvVar"
 import { useEnvVarModals } from "contexts/EnvVarModalsContext/EnvVarModalsContext"
+import { env } from "environment"
+import { IDapp, useDapp } from "contexts/DappContext/DappContext"
+import { createEnvVar } from "api/EnvVars"
+
 
 const initialEnvVar: EnvVar = {
     variable: "",
@@ -17,11 +21,18 @@ const initialEnvVar: EnvVar = {
 export function EnvVarCreateForm() {
     const { setShowCreateEnvVarModal } = useEnvVarModals()
     const [envVarForm, setEnvVarForm] = useState<EnvVar>({ ...initialEnvVar })
+    const { dapp, setDapp } = useDapp();
 
     async function handleSubmit(e: FormEvent) {
         e.preventDefault()
         try {
-            // const res = await createEnvVar(dappForm)
+            const res = await createEnvVar(dapp.basic.slug, envVarForm)
+            if (res.statusText == "Created") {
+                let envVars = dapp.env_vars
+                envVars.push(envVarForm)
+                setDapp({ ...dapp, env_vars: envVars })
+            }
+            console.log(res)
             setShowCreateEnvVarModal(false)
         } catch (error) {
             console.warn(error)
@@ -56,12 +67,12 @@ export function EnvVarCreateForm() {
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Sensitive</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder=""
-                    value={"titi"}
+                <Form.Check
+                    type="checkbox"
+                    // value={envVarForm.sensitive}
+                    checked={envVarForm.sensitive}
                     onChange={(e) =>
-                        setEnvVarForm({ ...envVarForm, sensitive: true })
+                        setEnvVarForm({ ...envVarForm, sensitive: !envVarForm.sensitive })
                     }
                 />
             </Form.Group>

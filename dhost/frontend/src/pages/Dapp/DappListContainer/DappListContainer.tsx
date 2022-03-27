@@ -17,7 +17,6 @@ import {
 } from ".."
 import { useEffect, useState } from "react"
 import { IDapp, useDapp } from "contexts/DappContext/DappContext"
-import { DappDetails } from "../DappDetails"
 import { listIPFSDapps, retrieveIPFSDapp } from "api/IPFSDapps"
 import { listDapps, retrieveDapp } from "api/Dapps"
 import { Dapp } from "models/api/Dapp"
@@ -25,6 +24,8 @@ import { BuildOptions } from "models/api/BuildOptions"
 import { retrieveGithubOptions } from "api/GithubOptions"
 import { retrieveBuildOptions } from "api/BuildOptions"
 import { IPFSDapp } from "models/api/IPFSDapp"
+import { retrieveEnvVars } from "api/EnvVars"
+import { EnvVar } from "models/api/EnvVar"
 
 function DappDetail(): React.ReactElement {
   const { path } = useRouteMatch()
@@ -40,7 +41,11 @@ function DappDetail(): React.ReactElement {
       // console.log("build", build_resp.data[0])
       let build: BuildOptions = build_resp.data[0]
       build = (build == undefined ? { command: "", docker: "" } : build)
-      // let envs = retr
+      let envs_resp = (await retrieveEnvVars(dapp.basic.slug))
+      let envs: EnvVar[] = envs_resp.data;
+      console.log("envs_resp", envs_resp.data)
+      console.log("envs", envs)
+
       let _dapp = {
         basic: basic,
         build: build,
@@ -50,8 +55,7 @@ function DappDetail(): React.ReactElement {
           auto_deploy: false,
           confirm_ci: false
         },
-        env_vars: [
-        ],
+        env_vars: [],
         current_slug: basic.slug
       }
       setDapp(_dapp)
