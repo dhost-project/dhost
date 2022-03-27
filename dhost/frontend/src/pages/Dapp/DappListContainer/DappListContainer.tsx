@@ -24,6 +24,7 @@ import { Dapp } from "models/api/Dapp"
 import { BuildOptions } from "models/api/BuildOptions"
 import { retrieveGithubOptions } from "api/GithubOptions"
 import { retrieveBuildOptions } from "api/BuildOptions"
+import { IPFSDapp } from "models/api/IPFSDapp"
 
 function DappDetail(): React.ReactElement {
   const { path } = useRouteMatch()
@@ -33,11 +34,12 @@ function DappDetail(): React.ReactElement {
   const fetchDapp = async () => {
     try {
       let basic_resp = await retrieveIPFSDapp(slug)
-      let basic: Dapp = basic_resp.data
+      let basic: IPFSDapp = basic_resp.data
       // let github = await retrieveGithubOptions(slug)
       let build_resp = await retrieveBuildOptions(slug)
       // console.log("build", build_resp.data[0])
       let build: BuildOptions = build_resp.data[0]
+      build = (build == undefined ? { command: "", docker: "" } : build)
       // let envs = retr
       let _dapp = {
         basic: basic,
