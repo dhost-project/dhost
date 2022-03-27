@@ -1,4 +1,4 @@
-import { SetStateAction, Dispatch } from "react"
+import { SetStateAction, Dispatch, useEffect } from "react"
 import { createContext, FC, Context, useState, useContext } from "react"
 import { fetchAllRepository } from "api/Repositories"
 import { BuildOptions } from "models/api/BuildOptions"
@@ -6,6 +6,7 @@ import { EnvVar } from "models/api/EnvVar"
 import { GithubOptions } from "models/api/GithubOptions"
 import { Repository } from "models/api/Repository"
 import { IPFSDapp } from "models/api/IPFSDapp"
+import { DappLogs } from "models/api/DappLogs"
 
 // type StateSetter<T> = (value: T | ((value: T) => T)) => void;
 export interface IDapp {
@@ -13,7 +14,7 @@ export interface IDapp {
   build: BuildOptions
   github: GithubOptions
   env_vars: EnvVar[]
-  current_slug: string
+  dappLogsList: DappLogs[]
 }
 
 export interface DappContextType {
@@ -52,14 +53,9 @@ export const DappProvider: FC = ({ children }) => {
         variable: "",
         value: "",
         sensitive: false,
-      },
-      {
-        variable: "",
-        value: "",
-        sensitive: false,
-      },
+      }
     ],
-    current_slug: ""
+    dappLogsList: []
   } as IDapp
 
   const [dapp, setDapp] = useState<IDapp>(_dapp)

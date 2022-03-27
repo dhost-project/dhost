@@ -32,7 +32,6 @@ export function EnvVarCreateForm() {
                 envVars.push(envVarForm)
                 setDapp({ ...dapp, env_vars: envVars })
             }
-            console.log(res)
             setShowCreateEnvVarModal(false)
         } catch (error) {
             console.warn(error)

@@ -31,5 +31,12 @@ export const en = {
 
     NOTIFICATION_LIST_TITLE: "Notification list",
     NOTIFICATION_DETAIL_TITLE: "Notification",
+
+    env_var_add: "Add environnement variable",
+    env_var_delete: "Delete environnement variable",
+    dapp_add: "Create application",
+    dapp_change: "Edit application",
+    build_opt_add: "Add build option",
+    build_opt_change: "Edit build option"
   },
 }

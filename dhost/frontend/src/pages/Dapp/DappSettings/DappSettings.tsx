@@ -23,9 +23,8 @@ export function DappSettings({
   }
 
   const updateDapp = () => {
-    console.log("dapp_build", dapp.build)
     updateBuildOptions(dapp.basic.slug, dapp.build);
-    updateIPFSDapp(dapp.current_slug, { slug: dapp.current_slug, ipfs_gateway: dapp.basic.ipfs_gateway })
+    updateIPFSDapp(dapp.basic.slug, { slug: dapp.basic.slug, ipfs_gateway: dapp.basic.ipfs_gateway })
     // updateDapp()
     setDapp({ ...dapp })
   }
@@ -63,9 +62,6 @@ export function DappSettings({
     },
   ]
 
-  useEffect(() => {
-    console.log(dapp)
-  }, [dapp])
 
   return (
     <div className="container mx-auto">

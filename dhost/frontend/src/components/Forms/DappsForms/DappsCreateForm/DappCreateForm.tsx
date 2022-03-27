@@ -5,6 +5,7 @@ import { createIPFSDapp } from "api/IPFSDapps"
 import { Button } from "components/Button"
 import { IPFSDappParams } from "models/api/IPFSDapp"
 import { useModals } from "contexts/ModalsContext/ModalsContext";
+import { createBuildOptions } from "api/BuildOptions"
 
 const initialDapp: IPFSDappParams = {
   slug: "",
@@ -20,6 +21,7 @@ export function DappCreateForm() {
     e.preventDefault()
     try {
       const res = await createIPFSDapp(dappForm)
+      await createBuildOptions(dappForm.slug, { command: "", docker: "" })
       history.push(`/ipfs/${res.data.slug}/deploy`)
       setShowCreateDappModal(false)
     } catch (error) {

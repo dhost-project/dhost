@@ -26,6 +26,8 @@ import { retrieveBuildOptions } from "api/BuildOptions"
 import { IPFSDapp } from "models/api/IPFSDapp"
 import { retrieveEnvVars } from "api/EnvVars"
 import { EnvVar } from "models/api/EnvVar"
+import { listDappsLogs } from "api/DappLogs"
+import { DappLogs } from "models/api/DappLogs"
 
 function DappDetail(): React.ReactElement {
   const { path } = useRouteMatch()
@@ -33,18 +35,35 @@ function DappDetail(): React.ReactElement {
   const slug = window.location.pathname.split("/")[2];
 
   const fetchDapp = async () => {
+    let envs: EnvVar[]
+    let envs_resp
+    // let envs_resp = (await retrieveEnvVars(slug))
+    // envs = (envs_resp.data == undefined ? [] : envs_resp.data)
+    try {
+      let envs_resp = (await retrieveEnvVars(slug))
+      envs = (envs_resp.data ?? [])
+      console.log("envs_resp", envs_resp.data)
+    }
+    catch (error) {
+      envs = []
+      // console.log(error)
+    }
+    console.log("envs", envs)
     try {
       let basic_resp = await retrieveIPFSDapp(slug)
       let basic: IPFSDapp = basic_resp.data
-      // let github = await retrieveGithubOptions(slug)
+      console.log("slug", basic.slug)
+
       let build_resp = await retrieveBuildOptions(slug)
       // console.log("build", build_resp.data[0])
       let build: BuildOptions = build_resp.data[0]
       build = (build == undefined ? { command: "", docker: "" } : build)
-      let envs_resp = (await retrieveEnvVars(dapp.basic.slug))
-      let envs: EnvVar[] = envs_resp.data;
-      console.log("envs_resp", envs_resp.data)
-      console.log("envs", envs)
+
+      let dappLogsList: DappLogs[] = []
+      let dappLogsList_resp = await listDappsLogs(basic.slug)
+
+      dappLogsList = dappLogsList_resp.data
+      console.log(dappLogsList)
 
       let _dapp = {
         basic: basic,
@@ -55,8 +74,8 @@ function DappDetail(): React.ReactElement {
           auto_deploy: false,
           confirm_ci: false
         },
-        env_vars: [],
-        current_slug: basic.slug
+        env_vars: envs,
+        dappLogsList: dappLogsList
       }
       setDapp(_dapp)
     }
@@ -71,7 +90,7 @@ function DappDetail(): React.ReactElement {
 
   return (
     <Router>
-      <Dappbar dapp={dapp} />
+      <Dappbar />
       <div className="container mx-auto">
         <Switch>
           <Route exact path={`${path}/`} component={IPFSDappDetails} />
