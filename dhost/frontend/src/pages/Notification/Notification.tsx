@@ -6,6 +6,8 @@ import {
 } from "react-router-dom"
 import { NotFound } from "pages/NotFound"
 import { NotificationList, NotificationDetail } from "."
+import { listNotifications } from "api/Notifications"
+import { useEffect, useState } from "react"
 
 const notifications = [
   {
@@ -48,6 +50,22 @@ const notifications = [
 
 export function Notification(): React.ReactElement {
   const { path } = useRouteMatch()
+  const [state, setState] = useState<Notification[]>()
+
+  const fetchData = async () => {
+    try {
+      const res = await listNotifications()
+      let _notifications = res.data
+      console.log(res.data)
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   return (
     <Router>

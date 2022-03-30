@@ -12,10 +12,6 @@ export function DappLogsList({
 }): React.ReactElement {
     const { t } = useTranslation()
 
-    useEffect(() => {
-        console.log("CHOUILLABOUILLAA", dappLogs)
-    }, [dappLogs])
-
     return (
         <div className="container mx-auto py-4">
             <ListDappLogs dappLogsList={dappLogs} viewAllLogs={true} />

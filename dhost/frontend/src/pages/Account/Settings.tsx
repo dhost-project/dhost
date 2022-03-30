@@ -1,48 +1,34 @@
 import { meUser } from "api/Users"
+import { useUserContext } from "contexts/UserContext/UserContext"
 import { User } from "models/api/User"
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 export function AccountSettings(): React.ReactElement {
   const { t } = useTranslation()
-  const [state, setState] = useState<User>({
-    id: "",
-    username: "",
-    email: "",
-    avatar: ""
-  })
 
-  const fetchData = async () => {
-    try {
-      let res = await meUser()
-      console.log(res.data)
-      setState({ ...res.data })
-    }
-    catch (error) {
-      console.log(error)
-    }
-  }
+  const { userInfo, setUserInfo } = useUserContext()
 
   const updateSettings = () => {
-    console.log(state)
+    console.log(userInfo.user)
     // updateDapp()
     // setDapp({ ...dapp })
   }
 
   const changeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
-    var _user = state
-    _user.username = e.target.value;
-    setState({ ..._user })
+    var _user = userInfo
+    _user.user.username = e.target.value;
+    setUserInfo({ ..._user })
   }
 
   const changeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    var _user = state
-    _user.email = e.target.value;
-    setState({ ..._user })
+    var _user = userInfo
+    _user.user.email = e.target.value;
+    setUserInfo({ ..._user })
   }
 
   useEffect(() => {
-    fetchData()
+    // fetchData()
   }, [])
 
   return (
@@ -57,7 +43,7 @@ export function AccountSettings(): React.ReactElement {
         <input
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="text"
-          value={state.username}
+          value={userInfo.user.username}
           onChange={(e) => {
             changeUsername(e)
           }}
@@ -72,7 +58,7 @@ export function AccountSettings(): React.ReactElement {
         <input
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="text"
-          value={state.email}
+          value={userInfo.user.email}
           onChange={(e) => {
             changeEmail(e)
           }}

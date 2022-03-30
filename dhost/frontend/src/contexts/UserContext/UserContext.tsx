@@ -1,25 +1,60 @@
-import { createContext, FC, useContext, useEffect, useState } from "react"
+import { createContext, Dispatch, FC, SetStateAction, useContext, useEffect, useState } from "react"
 import { listDapps, retrieveDapp } from "api/Dapps"
 import { Dapp } from "models/api/Dapp"
+import { User } from "models/api/User"
+import { Notification } from "models/api/Notification"
+import { listNotifications } from "api/Notifications"
+import { meUser } from "api/Users"
 
-const UserContext = createContext({})
+export interface IUser {
+  user: User
+  dapps: Dapp[]
+  notifications: Notification[]
+}
+
+export interface UserContextType {
+  userInfo: IUser
+  setUserInfo: Dispatch<SetStateAction<IUser>>
+}
+
+export const UserContext = createContext({})
 
 export const UserProvider: FC = ({ children }) => {
-  const [userDapps, setUserDapps] = useState<Dapp[]>([])
+
+  const _iUser: IUser = {
+    user: {
+      username: "",
+      email: "",
+      avatar: "",
+      id: ""
+    },
+    dapps: [],
+    notifications: []
+  }
+
+  const [userInfo, setUserInfo] = useState<IUser>(_iUser)
 
   useEffect(() => {
-    retrieveListDapps()
+    retrieveData()
   }, [])
 
-  async function retrieveListDapps() {
+  async function retrieveData() {
     const _listDapps = (await listDapps()).data
-    setUserDapps(_listDapps)
+    const _listNotifications = (await listNotifications()).data
+    const _user = (await meUser()).data
+    const _userInfo: IUser = {
+      user: _user,
+      dapps: _listDapps,
+      notifications: _listNotifications
+    }
+    setUserInfo({ ..._userInfo })
   }
 
   return (
     <UserContext.Provider
       value={{
-        userDapps,
+        userInfo,
+        setUserInfo
       }}
     >
       {children}
@@ -27,4 +62,4 @@ export const UserProvider: FC = ({ children }) => {
   )
 }
 
-export const useUserContext = () => useContext(UserContext)
+export const useUserContext = (): UserContextType => useContext(UserContext) as UserContextType

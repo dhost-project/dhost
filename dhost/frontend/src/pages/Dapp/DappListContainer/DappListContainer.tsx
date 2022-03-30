@@ -17,6 +17,7 @@ import {
 } from ".."
 import { useEffect, useState } from "react"
 import { IDapp, useDapp } from "contexts/DappContext/DappContext"
+import { useUserContext } from "contexts/UserContext/UserContext"
 import { listIPFSDapps, retrieveIPFSDapp } from "api/IPFSDapps"
 import { listDapps, retrieveDapp } from "api/Dapps"
 import { Dapp } from "models/api/Dapp"
@@ -110,45 +111,39 @@ export function DappListContainer(): React.ReactElement {
 
   const { path } = useRouteMatch()
 
-  const [dapp, setDapp] = useState<Dapp>({
-    slug: "",
-    url: "",
-    owner: "",
-    status: "",
-    created_at: ""
-  })
+  const { userInfo, setUserInfo } = useUserContext()
 
-  const [dapps, setDapps] = useState<Dapp[]>([{
-    slug: "",
-    url: "",
-    owner: "",
-    status: "",
-    created_at: ""
-  }])
-  let dataLoaded = false;
+  // const [dapps, setDapps] = useState<Dapp[]>([{
+  //   slug: "",
+  //   url: "",
+  //   owner: "",
+  //   status: "",
+  //   created_at: ""
+  // }])
+  // let dataLoaded = false;
 
-  const fetchDapps = async () => {
-    try {
-      const response = await listDapps()
-      const data = response.data
-      setDapps(data)
-      dataLoaded = true;
-    } catch (error) {
-      console.log("error", error)
-    }
-  }
+  // const fetchDapps = async () => {
+  //   try {
+  //     const response = await listDapps()
+  //     const data = response.data
+  //     setDapps(data)
+  //     dataLoaded = true;
+  //   } catch (error) {
+  //     console.log("error", error)
+  //   }
+  // }
 
-  useEffect(() => {
-    if (!dataLoaded) {
-      fetchDapps();
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!dataLoaded) {
+  //     fetchDapps();
+  //   }
+  // }, [])
 
   return (
     <Router>
       <Switch>
         <Route exact path={`${path}/`}
-          component={() => <ListDapp dapps={dapps} />} />
+          component={() => <ListDapp dapps={userInfo.dapps} />} />
         <Route path={`${path}/:dapp_slug`} component={() => <DappDetail />} />
         <Route path="*" component={NotFound} />
       </Switch>

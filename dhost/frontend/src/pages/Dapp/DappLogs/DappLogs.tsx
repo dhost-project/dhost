@@ -19,7 +19,6 @@ export function DappLogs({
 }: RouteComponentProps<TParams>): React.ReactElement {
   const { t } = useTranslation()
   const { path } = useRouteMatch()
-  const [dataLoaded, setDataLoaded] = useState<boolean>(false)
   const { dapp, setDapp } = useDapp();
 
   function renderWells() {
