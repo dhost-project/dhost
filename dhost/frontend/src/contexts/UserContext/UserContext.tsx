@@ -41,6 +41,7 @@ export const UserProvider: FC = ({ children }) => {
   async function retrieveData() {
     const _listDapps = (await listDapps()).data
     const _listNotifications = (await listNotifications()).data
+    console.log(_listNotifications)
     const _user = (await meUser()).data
     const _userInfo: IUser = {
       user: _user,

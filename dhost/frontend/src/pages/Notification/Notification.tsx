@@ -8,6 +8,7 @@ import { NotFound } from "pages/NotFound"
 import { NotificationList, NotificationDetail } from "."
 import { listNotifications } from "api/Notifications"
 import { useEffect, useState } from "react"
+import { useUserContext } from "contexts/UserContext/UserContext"
 
 const notifications = [
   {
@@ -50,31 +51,32 @@ const notifications = [
 
 export function Notification(): React.ReactElement {
   const { path } = useRouteMatch()
-  const [state, setState] = useState<Notification[]>()
+  const { userInfo, setUserInfo } = useUserContext()
+  // const fetchData = async () => {
+  //   try {
+  //     const res = await listNotifications()
+  //     let _notifications = res.data
+  //     console.log(res.data)
+  //     setUserInfo({n})
 
-  const fetchData = async () => {
-    try {
-      const res = await listNotifications()
-      let _notifications = res.data
-      console.log(res.data)
-    }
-    catch (error) {
-      console.log(error)
-    }
-  }
+  //   }
+  //   catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
-  useEffect(() => {
-    fetchData()
-  }, [])
+  // useEffect(() => {
+  //   fetchData()
+  // }, [])
 
   return (
     <Router>
       <Switch>
         <Route exact path={`${path}`}>
-          <NotificationList notifications={notifications} />
+          <NotificationList notifications={userInfo.notifications} />
         </Route>
         <Route path={`${path}/:notification_id`}>
-          <NotificationDetail notification={notifications[0]} />
+          <NotificationDetail notification={userInfo.notifications[0]} />
         </Route>
         <Route path="*" component={NotFound} />
       </Switch>
