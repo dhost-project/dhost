@@ -1,4 +1,5 @@
 import { ListDappLogs } from "components/ListDappLogs"
+import { ThreeSubscriptions } from "components/Subscription/ThreeSubscriptions"
 import { useDapp } from "contexts/DappContext/DappContext"
 import { useTranslation } from "react-i18next"
 import { RouteComponentProps } from "react-router-dom"
@@ -18,6 +19,7 @@ export function DappDetails({
       </h2>
       {dapp.basic.status}
       <ListDappLogs dappLogsList={dapp.dappLogsList} viewAllLogs={false} />
+      <ThreeSubscriptions></ThreeSubscriptions>
 
     </div>
   )

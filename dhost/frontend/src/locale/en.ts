@@ -37,6 +37,9 @@ export const en = {
     dapp_add: "Create application",
     dapp_change: "Edit application",
     build_opt_add: "Add build option",
-    build_opt_change: "Edit build option"
+    build_opt_change: "Edit build option",
+
+    status: "Status :",
+    owner: "Owner :"
   },
 }

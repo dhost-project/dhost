@@ -11,10 +11,6 @@ export function ListItem({
     const { t } = useTranslation()
     var colors;
 
-    useEffect(() => {
-        console.log("dappLogs", dappLogs)
-    })
-
     switch (true) {
         case /success/.test(dappLogs.action_flag):
             colors =

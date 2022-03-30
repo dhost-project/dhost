@@ -43,20 +43,15 @@ function DappDetail(): React.ReactElement {
     try {
       let envs_resp = (await retrieveEnvVars(slug))
       envs = (envs_resp.data ?? [])
-      console.log("envs_resp", envs_resp.data)
     }
     catch (error) {
       envs = []
-      // console.log(error)
     }
-    console.log("envs", envs)
     try {
       let basic_resp = await retrieveIPFSDapp(slug)
       let basic: IPFSDapp = basic_resp.data
-      console.log("slug", basic.slug)
 
       let build_resp = await retrieveBuildOptions(slug)
-      // console.log("build", build_resp.data[0])
       let build: BuildOptions = build_resp.data[0]
       build = (build == undefined ? { command: "", docker: "" } : build)
 
@@ -64,7 +59,6 @@ function DappDetail(): React.ReactElement {
       let dappLogsList_resp = await listDappsLogs(basic.slug)
 
       dappLogsList = dappLogsList_resp.data
-      console.log(dappLogsList)
 
       let _dapp = {
         basic: basic,
