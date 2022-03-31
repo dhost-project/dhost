@@ -1,4 +1,4 @@
-import { meUser } from "api/Users"
+import { meUser, updateUserSettings } from "api/Users"
 import { useUserContext } from "contexts/UserContext/UserContext"
 import { User } from "models/api/User"
 import { useEffect, useState } from "react"
@@ -8,12 +8,6 @@ export function AccountSettings(): React.ReactElement {
   const { t } = useTranslation()
 
   const { userInfo, setUserInfo } = useUserContext()
-
-  const updateSettings = () => {
-    console.log(userInfo.user)
-    // updateDapp()
-    // setDapp({ ...dapp })
-  }
 
   const changeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
     var _user = userInfo
@@ -25,6 +19,16 @@ export function AccountSettings(): React.ReactElement {
     var _user = userInfo
     _user.user.email = e.target.value;
     setUserInfo({ ..._user })
+  }
+
+  const updateSettings = () => {
+    console.log(userInfo)
+    updateUserSettings({
+      username: userInfo.user.username,
+      email: userInfo.user.email,
+      first_name: "",
+      last_name: ""
+    })
   }
 
   useEffect(() => {

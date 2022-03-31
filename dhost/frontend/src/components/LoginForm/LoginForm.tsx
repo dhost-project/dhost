@@ -1,12 +1,17 @@
 import { env } from "environment"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { http } from "utils/http"
+import Cookies from "universal-cookie"
+import { useHistory } from "react-router"
 
 export function LoginForm() {
   const [loginForm, setLoginForm] = useState({
     username: "",
     password: "",
   })
+  let history = useHistory()
+  let cookies = new Cookies()
+  let session_id = cookies.get("sessionid")
 
   async function login(event: React.FormEvent) {
     event.preventDefault()
@@ -22,6 +27,12 @@ export function LoginForm() {
     await http.get(loginUrl, { headers }) // TODO check behavior
     return await http.post(loginUrl, data, { headers })
   }
+
+  useEffect(() => {
+    if (session_id) {
+      history.push("/dapps")
+    }
+  }, [session_id])
 
   return (
     <form onSubmit={login}>
