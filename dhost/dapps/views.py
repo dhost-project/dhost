@@ -95,7 +95,6 @@ class BundleViewSet(DappViewMixin, CreateListRetrieveViewSet):
         try:
             # TODO doesn't work if zip file contains only one file
             # TODO doesn't work if zip file name contain a dot (.)
-            # self.dapp_model_class.objects.filter(slug=dapp_slug).first()
             dapp = self.get_dapp()
             media_name = request.data["media"].name
             old_media_url = self.IPFS_MEDIAS + media_name.split(".")[0]

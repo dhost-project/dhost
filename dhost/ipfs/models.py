@@ -31,7 +31,8 @@ class IPFSDeployment(Deployment):
         ipfs_hash = principal_directory_json["cid"]["/"]
 
         self.dapp.ipfs_hash = ipfs_hash
-        self.dapp.url = "gateway.ipfs.io/ipfs/" + ipfs_hash
+        print("######GET PUBLIC URL", self.dapp.get_public_url())
+        self.dapp.url = self.dapp.get_public_url()
         self.dapp.save()
 
 
@@ -53,4 +54,4 @@ class IPFSDapp(Dapp):
 
     def get_public_url(self):
         """Generate public URL based on hash and IPFS gateway."""
-        return "{}{}".format(self.ipfs_gateway, self.ipfs_hash)
+        return "{}{}{}{}".format(self.ipfs_gateway, self.ipfs_hash, '/ipfs/', self.slug)
