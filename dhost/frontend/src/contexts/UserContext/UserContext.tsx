@@ -10,6 +10,7 @@ export interface IUser {
   user: User
   dapps: Dapp[]
   notifications: Notification[]
+  subscription: string
 }
 
 export interface UserContextType {
@@ -29,7 +30,8 @@ export const UserProvider: FC = ({ children }) => {
       id: ""
     },
     dapps: [],
-    notifications: []
+    notifications: [],
+    subscription: ""
   }
 
   const [userInfo, setUserInfo] = useState<IUser>(_iUser)
@@ -46,7 +48,8 @@ export const UserProvider: FC = ({ children }) => {
     const _userInfo: IUser = {
       user: _user,
       dapps: _listDapps,
-      notifications: _listNotifications
+      notifications: _listNotifications,
+      subscription: "Free"
     }
     setUserInfo({ ..._userInfo })
   }
