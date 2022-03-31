@@ -31,7 +31,6 @@ class IPFSDeployment(Deployment):
         ipfs_hash = principal_directory_json["cid"]["/"]
 
         self.dapp.ipfs_hash = ipfs_hash
-        print("######GET PUBLIC URL", self.dapp.get_public_url())
         self.dapp.url = self.dapp.get_public_url()
         self.dapp.save()
 
