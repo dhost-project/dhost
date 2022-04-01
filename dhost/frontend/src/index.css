@@ -16,13 +16,23 @@
 
 :root {
   --toastify-toast-width: auto; /* toast width can be modified here */
+  font-family: "Varela Round", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Lato", "sans-serif";
+  font-weight: 400;
+  color: #333;
 }
 
 .border-1 {
-    border-width: 1px;
+  border-width: 1px;
 }
 .hover:border-1:hover {
-    border-width: 1px;
+  border-width: 1px;
 }
 .border-l-1 {
   border-left-width: 1px;
