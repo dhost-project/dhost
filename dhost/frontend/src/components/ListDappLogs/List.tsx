@@ -1,7 +1,7 @@
 export function List({
-    children,
+  children,
 }: {
-    children: React.ReactElement[]
+  children: React.ReactElement[]
 }): React.ReactElement {
-    return <div className="flex flex-col divide-y">{children}</div>
+  return <div className="flex flex-col divide-y rounded">{children}</div>
 }
