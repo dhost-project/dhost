@@ -22,7 +22,7 @@ export function DappCreateForm() {
     try {
       const res = await createIPFSDapp(dappForm)
       await createBuildOptions(dappForm.slug, { command: "", docker: "" })
-      history.push(`/ipfs/${res.data.slug}/deploy`)
+      history.push(`/dapps/${res.data.slug}/deploy`)
       setShowCreateDappModal(false)
     } catch (error) {
       console.warn(error)

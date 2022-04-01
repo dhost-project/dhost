@@ -11,6 +11,7 @@ export function LoginForm() {
   })
   let history = useHistory()
   let cookies = new Cookies()
+  let csrftoken = cookies.get("csrftoken")
   let session_id = cookies.get("sessionid")
 
   async function login(event: React.FormEvent) {
@@ -30,9 +31,9 @@ export function LoginForm() {
 
   useEffect(() => {
     if (session_id) {
-      history.push("/dapps")
+      history.push("/")
     }
-  }, [session_id])
+  }, [csrftoken])
 
   return (
     <form onSubmit={login}>

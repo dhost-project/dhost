@@ -27,7 +27,7 @@ const account_sections = [
   [
     {
       name: "Dapps",
-      href: "/dapps",
+      href: "/",
       icon: BeakerIcon,
     },
     {
@@ -61,7 +61,7 @@ const account_sections = [
   [
     {
       name: "Logout",
-      href: "/login",
+      href: "/login/",
       icon: LogoutIcon,
     },
   ],
