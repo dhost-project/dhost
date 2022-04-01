@@ -9,9 +9,9 @@ export function ListNotification({
 }): React.ReactElement {
   return (
     <List>
-      {notifications.map((notification) => (
+      {notifications.map((notification, i) => (
         <ListItem
-          key={`${notification.id}-${notification.url}`}
+          key={`${notification.id}-${i}`}
           notification={notification}
         />
       ))}

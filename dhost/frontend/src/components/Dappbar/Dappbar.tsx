@@ -1,10 +1,13 @@
-import { DappProvider, IDapp } from "contexts/DappContext/DappContext"
+import { DappProvider, IDapp, useDapp } from "contexts/DappContext/DappContext"
 import { Dapp } from "models/api/Dapp"
+import { useEffect } from "react";
 import { Nav } from "./Nav"
 import { NavItem } from "./NavItem"
 
 
-export function Dappbar({ dapp }: { dapp: IDapp }): React.ReactElement {
+export const Dappbar = () => {
+  let { dapp, setDapp } = useDapp();
+
   return (
     <div>
       <div className="py-4 border-b bg-gradient-to-r from-green-100 to-blue-100">
@@ -14,7 +17,7 @@ export function Dappbar({ dapp }: { dapp: IDapp }): React.ReactElement {
               className="text-reset text-decoration-none"
               href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
             >
-              {dapp.current_slug}
+              {dapp.basic.slug}
             </a>
           </h1>
           <h2 className="text-xl">
@@ -28,7 +31,7 @@ export function Dappbar({ dapp }: { dapp: IDapp }): React.ReactElement {
             </a>
           </h2>
           <a
-            className="absolute top-0 right-0 bg-primary border-solid border border-secondary-light rounded-md px-5 py-2"
+            className="absolute top-0 right-0 bg-primary border-solid border border-secondary-light rounded-md px-5 py-2 text-white"
             href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
             rel="noreferrer"
             target="_blank"
@@ -50,3 +53,4 @@ export function Dappbar({ dapp }: { dapp: IDapp }): React.ReactElement {
     </div>
   )
 }
+

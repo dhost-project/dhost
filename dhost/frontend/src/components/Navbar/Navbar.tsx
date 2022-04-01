@@ -14,10 +14,11 @@ import {
 } from "@heroicons/react/outline"
 import { Fragment } from "react"
 import { Button } from "react-bootstrap"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import logo from "assets/logo.svg"
 import { useModals } from "contexts/ModalsContext/ModalsContext"
 import { gravatar_url } from "utils/gravatar"
+import Cookies from "universal-cookie"
 
 // TODO remove, for test only
 const gravatar = gravatar_url("7bc5dd72ce835d2a2868785729c0f176")
@@ -60,11 +61,17 @@ const account_sections = [
   [
     {
       name: "Logout",
-      href: "/404",
+      href: "/login",
       icon: LogoutIcon,
     },
   ],
 ]
+
+export interface sectionType {
+  name: string;
+  href: string
+  icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+}
 
 function BellNotifications(): React.ReactElement {
   return (
@@ -84,6 +91,24 @@ function BellNotifications(): React.ReactElement {
 }
 
 function AccountMenu(): React.ReactElement {
+  let history = useHistory()
+
+  const cookie = new Cookies()
+
+  const handleClick = (item: sectionType) => {
+    console.log(item.name)
+    history.push(`${item.href}`)
+    if (item.name === "Logout") {
+      cookie.remove("csrftoken", { path: '/' });
+      cookie.set("sessionid", "");
+      cookie.remove("sessionid", { path: '/' });
+
+      // localStorage.removeItem("csrftoken");
+      // localStorage.removeItem("sessionid");
+      // localStorage.removeItem("messages");
+    }
+  }
+
   return (
     <Menu as="div" className="relative">
       <Menu.Button
@@ -116,10 +141,9 @@ function AccountMenu(): React.ReactElement {
                 <Menu.Item key={`${item.name}-${item.href}`}>
                   {({ active }) => (
                     <a
-                      className={`${
-                        active ? "bg-gray-50" : "text-gray-900"
-                      } group flex items-center w-full pl-4 pr-24 py-2 text-sm`}
-                      href={item.href}
+                      className={`${active ? "bg-gray-50" : "text-gray-900"
+                        } group flex items-center w-full pl-4 pr-24 py-2 text-sm`}
+                      onClick={() => handleClick(item)}
                     >
                       <item.icon className="h-5 w-5 mr-2" aria-hidden="true" />
                       {item.name}
@@ -137,6 +161,17 @@ function AccountMenu(): React.ReactElement {
 
 export function Navbar(): React.ReactElement {
   const { setShowCreateDappModal } = useModals()
+  let history = useHistory()
+
+  const handleClick = (item: sectionType) => {
+    console.log(item.name)
+    history.push(`${item.href}`)
+    if (item.name === "Logout") {
+      localStorage.removeItem("csrftoken");
+      localStorage.removeItem("sessionid");
+      localStorage.removeItem("messages");
+    }
+  }
 
   return (
     <Popover className="relative bg-white z-40">
@@ -238,7 +273,7 @@ export function Navbar(): React.ReactElement {
                         {account_section.map((item) => (
                           <a
                             key={item.name}
-                            href={item.href}
+                            onClick={() => handleClick(item)}
                             className="text-base font-medium text-gray-900
                             hover:text-gray-700"
                           >

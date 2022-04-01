@@ -17,7 +17,7 @@ import {
 } from ".."
 import { useEffect, useState } from "react"
 import { IDapp, useDapp } from "contexts/DappContext/DappContext"
-import { DappDetails } from "../DappDetails"
+import { useUserContext } from "contexts/UserContext/UserContext"
 import { listIPFSDapps, retrieveIPFSDapp } from "api/IPFSDapps"
 import { listDapps, retrieveDapp } from "api/Dapps"
 import { Dapp } from "models/api/Dapp"
@@ -25,6 +25,10 @@ import { BuildOptions } from "models/api/BuildOptions"
 import { retrieveGithubOptions } from "api/GithubOptions"
 import { retrieveBuildOptions } from "api/BuildOptions"
 import { IPFSDapp } from "models/api/IPFSDapp"
+import { retrieveEnvVars } from "api/EnvVars"
+import { EnvVar } from "models/api/EnvVar"
+import { listDappsLogs } from "api/DappLogs"
+import { DappLogs } from "models/api/DappLogs"
 
 function DappDetail(): React.ReactElement {
   const { path } = useRouteMatch()
@@ -32,15 +36,30 @@ function DappDetail(): React.ReactElement {
   const slug = window.location.pathname.split("/")[2];
 
   const fetchDapp = async () => {
+    let envs: EnvVar[]
+    let envs_resp
+    // let envs_resp = (await retrieveEnvVars(slug))
+    // envs = (envs_resp.data == undefined ? [] : envs_resp.data)
+    try {
+      let envs_resp = (await retrieveEnvVars(slug))
+      envs = (envs_resp.data ?? [])
+    }
+    catch (error) {
+      envs = []
+    }
     try {
       let basic_resp = await retrieveIPFSDapp(slug)
       let basic: IPFSDapp = basic_resp.data
-      // let github = await retrieveGithubOptions(slug)
+
       let build_resp = await retrieveBuildOptions(slug)
-      // console.log("build", build_resp.data[0])
       let build: BuildOptions = build_resp.data[0]
       build = (build == undefined ? { command: "", docker: "" } : build)
-      // let envs = retr
+
+      let dappLogsList: DappLogs[] = []
+      let dappLogsList_resp = await listDappsLogs(basic.slug)
+
+      dappLogsList = dappLogsList_resp.data
+
       let _dapp = {
         basic: basic,
         build: build,
@@ -50,9 +69,8 @@ function DappDetail(): React.ReactElement {
           auto_deploy: false,
           confirm_ci: false
         },
-        env_vars: [
-        ],
-        current_slug: basic.slug
+        env_vars: envs,
+        dappLogsList: dappLogsList
       }
       setDapp(_dapp)
     }
@@ -67,7 +85,7 @@ function DappDetail(): React.ReactElement {
 
   return (
     <Router>
-      <Dappbar dapp={dapp} />
+      <Dappbar />
       <div className="container mx-auto">
         <Switch>
           <Route exact path={`${path}/`} component={IPFSDappDetails} />
@@ -87,45 +105,39 @@ export function DappListContainer(): React.ReactElement {
 
   const { path } = useRouteMatch()
 
-  const [dapp, setDapp] = useState<Dapp>({
-    slug: "",
-    url: "",
-    owner: "",
-    status: "",
-    created_at: ""
-  })
+  const { userInfo, setUserInfo } = useUserContext()
 
-  const [dapps, setDapps] = useState<Dapp[]>([{
-    slug: "",
-    url: "",
-    owner: "",
-    status: "",
-    created_at: ""
-  }])
-  let dataLoaded = false;
+  // const [dapps, setDapps] = useState<Dapp[]>([{
+  //   slug: "",
+  //   url: "",
+  //   owner: "",
+  //   status: "",
+  //   created_at: ""
+  // }])
+  // let dataLoaded = false;
 
-  const fetchDapps = async () => {
-    try {
-      const response = await listDapps()
-      const data = response.data
-      setDapps(data)
-      dataLoaded = true;
-    } catch (error) {
-      console.log("error", error)
-    }
-  }
+  // const fetchDapps = async () => {
+  //   try {
+  //     const response = await listDapps()
+  //     const data = response.data
+  //     setDapps(data)
+  //     dataLoaded = true;
+  //   } catch (error) {
+  //     console.log("error", error)
+  //   }
+  // }
 
-  useEffect(() => {
-    if (!dataLoaded) {
-      fetchDapps();
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!dataLoaded) {
+  //     fetchDapps();
+  //   }
+  // }, [])
 
   return (
     <Router>
       <Switch>
         <Route exact path={`${path}/`}
-          component={() => <ListDapp dapps={dapps} />} />
+          component={() => <ListDapp dapps={userInfo.dapps} />} />
         <Route path={`${path}/:dapp_slug`} component={() => <DappDetail />} />
         <Route path="*" component={NotFound} />
       </Switch>
