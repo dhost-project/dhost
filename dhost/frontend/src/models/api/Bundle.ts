@@ -1,4 +1,7 @@
 export interface Bundle {
   id: string
-  created_at?: string
+  dapp: string
+  media?: string
+  folder?: string
+  created_at: string
 }

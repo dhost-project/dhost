@@ -1,12 +1,12 @@
 import { env } from "environment"
-import { Dapp } from "models/api/Dapp"
+import { Bundle } from "models/api/Bundle"
 import { http, HttpResponse } from "utils/http"
 
 /**
  *
  * @param dapp_slug string
  */
-export function listBundles(dapp_slug: string): HttpResponse<Dapp[]> {
+export function listBundles(dapp_slug: string): HttpResponse<Bundle[]> {
   return http.get(`${env.API_URL}/api/ipfs/${dapp_slug}/bundles/`)
 }
 
@@ -17,10 +17,16 @@ export function listBundles(dapp_slug: string): HttpResponse<Dapp[]> {
  */
 export function createBundle(
   dapp_slug: string,
+  bundle: File,
   media?: string
-): HttpResponse<Dapp[]> {
-  return http.post(`${env.API_URL}/api/ipfs/${dapp_slug}/bundles/`, {
-    media: media ?? null,
+): HttpResponse<Bundle[]> {
+  const formData = new FormData()
+  formData.append('media', bundle)
+
+  return http.post(`${env.API_URL}/api/ipfs/${dapp_slug}/bundles/`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
   })
 }
 
@@ -32,6 +38,6 @@ export function createBundle(
 export function retrieveBundle(
   dapp_slug: string,
   id: string
-): HttpResponse<Dapp[]> {
+): HttpResponse<Bundle[]> {
   return http.get(`${env.API_URL}/api/ipfs/${dapp_slug}/bundles/${id}/`)
 }

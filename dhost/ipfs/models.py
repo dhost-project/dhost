@@ -53,4 +53,6 @@ class IPFSDapp(Dapp):
 
     def get_public_url(self):
         """Generate public URL based on hash and IPFS gateway."""
-        return "{}{}{}{}".format(self.ipfs_gateway, self.ipfs_hash, '/ipfs/', self.slug)
+        return "{}{}{}{}".format(
+            self.ipfs_gateway, self.ipfs_hash, "/ipfs/", self.slug
+        )
