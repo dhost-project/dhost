@@ -1,16 +1,42 @@
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, MouseEvent, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
-import uploadLogo from "../../../assets/upload.svg"
+import { useParams } from "react-router-dom"
+import { createBundle, listBundles } from "api/Bundle"
+import { Bundle } from "models/api/Bundle"
+import { TParams } from "pages/Dapp"
 import bundleLogo from "../../../assets/bundle.svg"
+import uploadLogo from "../../../assets/upload.svg"
 
 export function BundleDeploy() {
+  const { dapp_slug } = useParams<TParams>()
   const { t } = useTranslation()
-  const [file, setFile] = useState<File | null>(null)
+
+  const [file, setFile] = useState<File>()
+  const [currentBundle, setCurrentBundle] = useState<Bundle>()
+
+  useEffect(() => {
+    getBundle()
+  }, [])
+
+  async function getBundle() {
+    const bundleList = (await listBundles(dapp_slug)).data
+    if (bundleList.length > 0) setCurrentBundle(bundleList[0])
+    console.log({ bundleList })
+  }
+
+  async function handleDeployBundle(e: MouseEvent) {
+    if (!file) return
+    console.log("handleDeployBundle", { file, currentBundle })
+    const res = await createBundle(dapp_slug, file)
+    console.log("res", res)
+  }
 
   function handleFilesUpload(e: ChangeEvent<HTMLInputElement>) {
     if (!e?.target?.files) return
     setFile(e.target.files[0])
   }
+
+  console.log({ currentBundle })
 
   return (
     <>
@@ -24,30 +50,46 @@ export function BundleDeploy() {
           </p>
         </div>
 
-        <div className="flex">
+        <div className="relative flex flex-col">
           <div className="relative flex flex-col items-center w-full h-full p-4 border rounded border-gray-500 cursor-pointer">
-            {file ? (
+            {currentBundle ? (
               <>
-                <span className="font-semibold">
-                  Current bundle :{" "}
-                </span>
-                <div className="flex flex-col justify-center items-center my-4">
-                  <img className="h-20 w-20" src={bundleLogo} alt="Bundle logo" />
-                  <span className="text-bold text-green-500">{file.name}</span>
-                </div>
-                <span className="font-semibold">
-                  You can choose an another bundle to deploy (.zip only)
-                </span>
+                <p>deployed bundle</p>
               </>
             ) : (
               <>
-                <span className="font-semibold">
-                  Choose your bundle to deploy (.zip only)
-                </span>
-                <img className="h-20 w-20 my-4" src={uploadLogo} alt="Upload logo" />
-                <span className="font-semibold">
-                  Or drag and drop your bundle here
-                </span>
+                {file ? (
+                  <>
+                    <span className="font-semibold">Current bundle : </span>
+                    <div className="flex flex-col justify-center items-center my-4">
+                      <img
+                        className="h-20 w-20"
+                        src={bundleLogo}
+                        alt="Bundle logo"
+                      />
+                      <span className="text-bold text-green-500">
+                        {file.name}
+                      </span>
+                    </div>
+                    <span className="font-semibold">
+                      You can choose an another bundle to deploy (.zip only)
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="font-semibold">
+                      Choose your bundle to deploy (.zip only)
+                    </span>
+                    <img
+                      className="h-20 w-20 my-4"
+                      src={uploadLogo}
+                      alt="Upload logo"
+                    />
+                    <span className="font-semibold">
+                      Or drag and drop your bundle here
+                    </span>
+                  </>
+                )}
               </>
             )}
 
@@ -58,6 +100,12 @@ export function BundleDeploy() {
               multiple={false}
             />
           </div>
+          <button
+            className="flex justify-center items-center self-end h-8 btn btn-primary mt-4"
+            onClick={handleDeployBundle}
+          >
+            Deploy Bundle
+          </button>
         </div>
 
         <div className="flex flex-col"></div>
