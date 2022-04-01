@@ -1,9 +1,12 @@
 import { useTranslation } from "react-i18next"
+import { useHistory } from "react-router-dom"
 import { toast } from "react-toastify"
 import { RetryToast } from "components/Toasts/RetryToast"
 
 export function Home(): React.ReactElement {
   const { t } = useTranslation()
+  const history = useHistory()
+  history.push("dapps")
 
   // Toaster retry example
   async function startToasting(seconds: number = 3) {

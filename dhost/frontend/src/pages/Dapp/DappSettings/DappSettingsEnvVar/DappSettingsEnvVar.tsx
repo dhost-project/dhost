@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react"
+import { Button } from "react-bootstrap"
 import { ModalEnvVar } from "components/DappSettings/ModalEnvVar"
 import { DappContextType, IDapp } from "contexts/DappContext/DappContext"
-import { Button } from "react-bootstrap"
 import { useEnvVarModals } from "contexts/EnvVarModalsContext/EnvVarModalsContext"
 
 function DappSettingsEnvVar({
@@ -11,9 +11,7 @@ function DappSettingsEnvVar({
   dapp: IDapp
   setDapp: Dispatch<SetStateAction<IDapp>>
 }): React.ReactElement {
-
   const { setShowCreateEnvVarModal } = useEnvVarModals()
-
 
   function renderSensitive(sensistive: boolean | undefined) {
     if (sensistive) {
