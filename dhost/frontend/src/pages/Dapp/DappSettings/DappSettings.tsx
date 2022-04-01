@@ -1,15 +1,14 @@
+import { useEffect } from "react"
 import { RouteComponentProps } from "react-router-dom"
 import { toast } from "react-toastify"
+import { updateBuildOptions } from "api/BuildOptions"
+import { updateIPFSDapp } from "api/IPFSDapps"
 import { useDapp } from "contexts/DappContext/DappContext"
 import DappSettingsBasic from "./DappSettingsBasic/DappSettingsBasic"
 import DappSettingsBuild from "./DappSettingsBuild/DappSettingsBuild"
 import DappSettingsEnvVar from "./DappSettingsEnvVar/DappSettingsEnvVar"
 import DappSettingsGithub from "./DappSettingsGithub/DappSettingsGithub"
 import DappSettingsSectionTitle from "./DappSettingsSectionTitle/DappSettingsSectionTitle"
-import { updateBuildOptions } from "api/BuildOptions"
-import { useEffect } from "react"
-import { updateIPFSDapp } from "api/IPFSDapps"
-
 
 type TParams = { dapp_slug: string }
 
@@ -23,8 +22,11 @@ export function DappSettings({
   }
 
   const updateDapp = () => {
-    updateBuildOptions(dapp.basic.slug, dapp.build);
-    updateIPFSDapp(dapp.basic.slug, { slug: dapp.basic.slug, ipfs_gateway: dapp.basic.ipfs_gateway })
+    updateBuildOptions(dapp.basic.slug, dapp.build)
+    updateIPFSDapp(dapp.basic.slug, {
+      slug: dapp.basic.slug,
+      ipfs_gateway: dapp.basic.ipfs_gateway,
+    })
     // updateDapp()
     setDapp({ ...dapp })
   }
@@ -34,7 +36,9 @@ export function DappSettings({
       name: "Basic",
       short: "basic",
       description: "Change major informations of your application.",
-      component: (<DappSettingsBasic dapp={dapp} setDapp={setDapp}></DappSettingsBasic>) // <DappSettingsBasic dapp={dapp} setDapp={setDapp}></DappSettingsBasic>
+      component: (
+        <DappSettingsBasic dapp={dapp} setDapp={setDapp}></DappSettingsBasic>
+      ), // <DappSettingsBasic dapp={dapp} setDapp={setDapp}></DappSettingsBasic>
     },
     {
       name: "Build",
@@ -62,7 +66,6 @@ export function DappSettings({
     },
   ]
 
-
   return (
     <div className="container mx-auto">
       <div>
@@ -78,7 +81,7 @@ export function DappSettings({
           ))}
         </div>
       </div>
-      <div className="flex justify-center w-1/3">
+      <div className="flex justify-end">
         <div className="flex items-center">
           <button
             id="build"
