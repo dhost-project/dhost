@@ -21,8 +21,7 @@ export function createBundle(
   media?: string
 ): HttpResponse<Bundle[]> {
   const formData = new FormData()
-  formData.append('file', bundle)
-  formData.append('media', media || 'null')
+  formData.append('media', bundle)
 
   return http.post(`${env.API_URL}/api/ipfs/${dapp_slug}/bundles/`, formData, {
     headers: {
