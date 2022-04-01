@@ -9,10 +9,7 @@ function DappSettingsBasic({
   setDapp: Dispatch<SetStateAction<IDapp>>
 }): React.ReactElement {
   const gateways = [
-    "https://toto.com",
-    "https://wshwsh.ipfs",
-    "https://gateway.com",
-    "https://blblblb.io",
+    "https://ipfs.io/",
   ]
 
   const changeIPFSGateway = (e: React.ChangeEvent<HTMLSelectElement>) => {

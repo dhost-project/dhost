@@ -34,6 +34,7 @@ export function DappDetails({
   ]
 
   useEffect(() => {
+    console.log(dapp)
     if (dapp) {
       let currentStatus = allStatus.find(
         (s) => s.shortName === dapp.basic.status
@@ -78,9 +79,9 @@ export function DappDetails({
               {status.name}
             </span>
             <p className="mt-2">
-              {url ? (
+              {dapp.basic.ipfs_hash ? (
                 <a href={dapp.basic.url} target="_blank">
-                  {dapp.basic.url}
+                  {dapp.basic.ipfs_gateway}/{dapp.basic.ipfs_hash}
                 </a>
               ) : (
                 <p className="italic" style={{ color: "grey" }}>

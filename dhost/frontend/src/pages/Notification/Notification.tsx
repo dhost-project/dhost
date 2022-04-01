@@ -65,15 +65,15 @@ export function Notification(): React.ReactElement {
   //   }
   // }
 
-  // useEffect(() => {
-  //   fetchData()
-  // }, [])
+  useEffect(() => {
+    console.log(userInfo)
+  }, [userInfo])
 
   return (
     <Router>
       <Switch>
         <Route exact path={`${path}`}>
-          <NotificationList notifications={userInfo.notifications} />
+          <NotificationList />
         </Route>
         <Route path={`${path}/:notification_id`}>
           <NotificationDetail notification={userInfo.notifications[0]} />

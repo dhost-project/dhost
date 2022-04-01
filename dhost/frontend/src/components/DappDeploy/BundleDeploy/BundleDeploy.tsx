@@ -6,6 +6,7 @@ import { Bundle } from "models/api/Bundle"
 import { TParams } from "pages/Dapp"
 import bundleLogo from "../../../assets/bundle.svg"
 import uploadLogo from "../../../assets/upload.svg"
+import { deployIPFSDapp } from "api/IPFSDapps"
 
 export function BundleDeploy() {
   const { dapp_slug } = useParams<TParams>()
@@ -24,10 +25,16 @@ export function BundleDeploy() {
     console.log({ bundleList })
   }
 
-  async function handleDeployBundle(e: MouseEvent) {
+  async function handleCreateBundle(e: MouseEvent) {
     if (!file) return
-    console.log("handleDeployBundle", { file, currentBundle })
+    console.log("handleCreateBundle", { file, currentBundle })
     const res = await createBundle(dapp_slug, file)
+    console.log("res", res)
+  }
+
+  async function handleDeploy(e: MouseEvent) {
+    // console.log("handleDeploy", { file, currentBundle })
+    const res = await deployIPFSDapp(dapp_slug)
     console.log("res", res)
   }
 
@@ -102,9 +109,15 @@ export function BundleDeploy() {
           </div>
           <button
             className="flex justify-center items-center self-end h-8 btn btn-primary mt-4"
-            onClick={handleDeployBundle}
+            onClick={handleCreateBundle}
           >
-            Deploy Bundle
+            Create Bundle
+          </button>
+          <button
+            className="flex justify-center items-center self-end h-8 btn btn-primary mt-4"
+            onClick={handleDeploy}
+          >
+            Deploy
           </button>
         </div>
 

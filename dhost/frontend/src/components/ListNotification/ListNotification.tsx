@@ -1,15 +1,12 @@
-import { Notification } from "models/api/Notification"
+import { useUserContext } from "contexts/UserContext/UserContext"
 import { List } from "./List"
 import { ListItem } from "./ListItem"
 
-export function ListNotification({
-  notifications,
-}: {
-  notifications: Notification[]
-}): React.ReactElement {
+export function ListNotification(): React.ReactElement {
+  const { userInfo } = useUserContext()
   return (
     <List>
-      {notifications.map((notification, i) => (
+      {userInfo.notifications.map((notification, i) => (
         <ListItem
           key={`${notification.id}-${i}`}
           notification={notification}
