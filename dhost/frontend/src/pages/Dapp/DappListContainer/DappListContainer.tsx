@@ -37,9 +37,6 @@ function DappDetail(): React.ReactElement {
 
   const fetchDapp = async () => {
     let envs: EnvVar[]
-    let envs_resp
-    // let envs_resp = (await retrieveEnvVars(slug))
-    // envs = (envs_resp.data == undefined ? [] : envs_resp.data)
     try {
       let envs_resp = (await retrieveEnvVars(slug))
       envs = (envs_resp.data ?? [])
@@ -106,32 +103,6 @@ export function DappListContainer(): React.ReactElement {
   const { path } = useRouteMatch()
 
   const { userInfo, setUserInfo } = useUserContext()
-
-  // const [dapps, setDapps] = useState<Dapp[]>([{
-  //   slug: "",
-  //   url: "",
-  //   owner: "",
-  //   status: "",
-  //   created_at: ""
-  // }])
-  // let dataLoaded = false;
-
-  // const fetchDapps = async () => {
-  //   try {
-  //     const response = await listDapps()
-  //     const data = response.data
-  //     setDapps(data)
-  //     dataLoaded = true;
-  //   } catch (error) {
-  //     console.log("error", error)
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   if (!dataLoaded) {
-  //     fetchDapps();
-  //   }
-  // }, [])
 
   return (
     <Router>
