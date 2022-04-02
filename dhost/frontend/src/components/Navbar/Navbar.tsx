@@ -49,8 +49,8 @@ const account_sections = [
       icon: ShieldCheckIcon,
     },
     {
-      name: "Preview",
-      href: "/preview/",
+      name: "Pricing",
+      href: "/pricing/",
       icon: PuzzleIcon,
     },
     {
@@ -212,7 +212,7 @@ export function Navbar(): React.ReactElement {
               items-center"
             >
               <Button
-                className="flex justify-center items-center h-8 mr-4 bg-green-500 border-none"
+                className="flex justify-center items-center h-8 mr-4 bg-green-500 hover:bg-green-500 border-none"
                 onClick={() => {
                   setShowCreateDappModal(true)
                 }}

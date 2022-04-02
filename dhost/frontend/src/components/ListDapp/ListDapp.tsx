@@ -50,7 +50,7 @@ export function ListDapp({ dapps }: { dapps: Dapp[] }): React.ReactElement {
             return (
               <button
                 key={i}
-                className="w-100 mb-3 mt-2 border-2 text-base text-gray-800 font-medium rounded bg-white bg-green-50 hover:border-green-400 focus:bg-green-50 focus:border-green-400 focus:ring-offset-0 focus:ring-green-400 focus:outline-none focus:ring-1 transition cursor-pointer"
+                className="w-100 mb-3 mt-2 text-base text-gray-800 font-medium rounded bg-white bg-green-50 shadow hover:scale-105 focus:scale-100 focus:bg-grey-100 transition cursor-pointer"
                 onClick={() => handleDapp(dapp)}
               >
                 <div className="h-2.5 bg-green-500 rounded-tl-md rounded-tr-md" />
