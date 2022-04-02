@@ -7,6 +7,9 @@ import { TParams } from "pages/Dapp"
 import bundleLogo from "../../../assets/bundle.svg"
 import uploadLogo from "../../../assets/upload.svg"
 import { deployIPFSDapp } from "api/IPFSDapps"
+import { toast } from "react-toastify"
+import { RetryToast } from "components/Toasts/RetryToast"
+
 
 export function BundleDeploy() {
   const { dapp_slug } = useParams<TParams>()
@@ -29,12 +32,14 @@ export function BundleDeploy() {
     if (!file) return
     console.log("handleCreateBundle", { file, currentBundle })
     const res = await createBundle(dapp_slug, file)
+    toast.success("Bundle created.")
     console.log("res", res)
   }
 
   async function handleDeploy(e: MouseEvent) {
     // console.log("handleDeploy", { file, currentBundle })
     const res = await deployIPFSDapp(dapp_slug)
+    toast.success("Bundle deployed.")
     console.log("res", res)
   }
 
@@ -42,8 +47,6 @@ export function BundleDeploy() {
     if (!e?.target?.files) return
     setFile(e.target.files[0])
   }
-
-  console.log({ currentBundle })
 
   return (
     <>

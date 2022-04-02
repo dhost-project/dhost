@@ -38,11 +38,11 @@ const deployMethods: TDeployMethods[] = [
     title: "Bundle",
     description: "Deploy a zipped bundle",
   },
-  {
-    id: "dhost",
-    title: "Dhost CLI",
-    description: "Use Dhost CLI",
-  },
+  // {
+  //   id: "dhost",
+  //   title: "Dhost CLI",
+  //   description: "Use Dhost CLI",
+  // },
 ]
 
 const deploymentProcessMap: TDeploymentProcesses = {
@@ -66,9 +66,8 @@ export function ListDeploymethods({
       {deployMethods.map((item, i) => (
         <div
           key={`${item.title}-${i}`}
-          className={`mr-4 pb-3 pt-3 pl-4 pr-4 cursor-pointer rounded ${
-            isDeployMethod(item.id) ? "border-1 shadow-sm" : ""
-          }`}
+          className={`mr-4 pb-3 pt-3 pl-4 pr-4 cursor-pointer rounded ${isDeployMethod(item.id) ? "border-1 shadow-sm" : ""
+            }`}
           onClick={() => setSelectedDeployMethod(item.id)}
         >
           <h3 className="text-sm font-medium">{item.title}</h3>
