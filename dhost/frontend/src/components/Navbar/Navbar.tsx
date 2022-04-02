@@ -12,7 +12,7 @@ import {
   UserGroupIcon,
   XIcon,
 } from "@heroicons/react/outline"
-import { Fragment } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { Button } from "react-bootstrap"
 import { Link, useHistory } from "react-router-dom"
 import logo from "assets/logo.svg"
@@ -20,6 +20,7 @@ import { useModals } from "contexts/ModalsContext/ModalsContext"
 import { gravatar_url } from "utils/gravatar"
 import Cookies from "universal-cookie"
 import { logout } from "api/Logout"
+import { useUserContext } from "contexts/UserContext/UserContext"
 
 // TODO remove, for test only
 const gravatar = gravatar_url("7bc5dd72ce835d2a2868785729c0f176")
@@ -93,13 +94,14 @@ function BellNotifications(): React.ReactElement {
 
 function AccountMenu(): React.ReactElement {
   let history = useHistory()
-
-  const cookie = new Cookies()
+  let { userInfo } = useUserContext()
 
   const handleClick = async (item: sectionType) => {
     console.log(item.name)
     if (item.name === "Logout") {
-      await logout()
+      await logout();
+      localStorage.removeItem("connected");
+      window.location.reload()
     }
     history.push(`${item.href}`)
   }
@@ -158,24 +160,24 @@ export function Navbar(): React.ReactElement {
   const { setShowCreateDappModal } = useModals()
   let history = useHistory()
 
-  const handleClick = (item: sectionType) => {
+  const handleClick = async (item: sectionType) => {
     console.log(item.name)
-    history.push(`${item.href}`)
     if (item.name === "Logout") {
-      localStorage.removeItem("csrftoken");
-      localStorage.removeItem("sessionid");
-      localStorage.removeItem("messages");
+      await logout()
+      localStorage.removeItem("connected");
+      window.location.reload()
     }
+    history.push(`${item.href}`)
   }
 
-  return (
-    <Popover className="relative bg-white z-40">
+  const renderConnected = () => {
+    return (<Popover className="relative bg-white z-40">
       {({ open }) => (
         <>
           <div
             className="
-            flex justify-between items-center px-3 md:justify-start
-            bg-white border-b"
+          flex justify-between items-center px-3 md:justify-start
+          bg-white border-b"
           >
             <div className="flex justify-start lg:w-0 lg:flex-1">
               <Link to="/">
@@ -186,8 +188,8 @@ export function Navbar(): React.ReactElement {
             <div className="-mr-2 -my-2 md:hidden">
               <Popover.Button
                 className="bg-white rounded-md p-2 inline-flex items-center
-                justify-center text-gray-400 hover:text-gray-500
-                hover:bg-gray-100 focus:outline-none"
+              justify-center text-gray-400 hover:text-gray-500
+              hover:bg-gray-100 focus:outline-none"
               >
                 <span className="sr-only">Open menu</span>
                 <MenuIcon className="h-6 w-6" aria-hidden="true" />
@@ -201,14 +203,14 @@ export function Navbar(): React.ReactElement {
               />
               <button
                 className="flex-none px-2 text-gray-500 rounded-r border-r
-                border-b border-t hover:bg-gray-100"
+              border-b border-t hover:bg-gray-100"
               >
                 <SearchIcon className="h-5" />
               </button>
             </div>
             <div
               className="hidden md:flex justify-end md:flex-1 lg:w-0
-              items-center"
+            items-center"
             >
               <Button
                 className="flex justify-center items-center h-8 mr-4"
@@ -236,11 +238,11 @@ export function Navbar(): React.ReactElement {
               focus
               static
               className="absolute top-0 inset-x-0 p-2 transition transform
-              origin-top-right md:hidden"
+            origin-top-right md:hidden"
             >
               <div
                 className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5
-                bg-white divide-y-2 divide-gray-50"
+              bg-white divide-y-2 divide-gray-50"
               >
                 <div className="pt-5 pb-6 px-5">
                   <div className="flex items-center justify-between">
@@ -250,9 +252,9 @@ export function Navbar(): React.ReactElement {
                     <div className="-mr-2">
                       <Popover.Button
                         className="
-                        bg-white rounded-md p-2 inline-flex items-center
-                        justify-center text-gray-400 hover:text-gray-500
-                        hover:bg-gray-100 focus:outline-none"
+                      bg-white rounded-md p-2 inline-flex items-center
+                      justify-center text-gray-400 hover:text-gray-500
+                      hover:bg-gray-100 focus:outline-none"
                       >
                         <span className="sr-only">Close menu</span>
                         <XIcon className="h-6 w-6" aria-hidden="true" />
@@ -270,7 +272,7 @@ export function Navbar(): React.ReactElement {
                             key={item.name}
                             onClick={() => handleClick(item)}
                             className="text-base font-medium text-gray-900
-                            hover:text-gray-700"
+                          hover:text-gray-700"
                           >
                             {item.name}
                           </a>
@@ -284,6 +286,31 @@ export function Navbar(): React.ReactElement {
           </Transition>
         </>
       )}
-    </Popover>
+    </Popover>)
+  }
+
+  const renderNotConnected = () => {
+    return (
+      <Popover className="relative bg-white z-40">
+        {({ open }) => (
+          <>
+            <div
+              className="
+            flex justify-between items-center px-3 md:justify-start
+            bg-white border-b"
+            >
+              <div className="flex justify-start lg:w-0 lg:flex-1">
+                <Link to="/">
+                  <span className="sr-only">DHost</span>
+                  <img className="my-2 mx-1 h-8 w-auto" src={logo} alt="DHost" />
+                </Link>
+              </div>
+            </div>
+          </>
+        )}
+      </Popover>)
+  }
+
+  return (localStorage.getItem("connected") == "OK" ? renderConnected() : renderNotConnected()
   )
 }

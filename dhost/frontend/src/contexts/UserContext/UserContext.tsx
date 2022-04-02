@@ -31,7 +31,7 @@ export const UserProvider: FC = ({ children }) => {
     },
     dapps: [],
     notifications: [],
-    subscription: ""
+    subscription: "",
   }
 
   const [userInfo, setUserInfo] = useState<IUser>(_iUser)
@@ -39,6 +39,10 @@ export const UserProvider: FC = ({ children }) => {
   useEffect(() => {
     retrieveData()
   }, [])
+
+  useEffect(() => {
+    console.log("user", userInfo)
+  }, [userInfo])
 
   async function retrieveData() {
     const _listDapps = (await listDapps()).data
@@ -49,7 +53,7 @@ export const UserProvider: FC = ({ children }) => {
       user: _user,
       dapps: _listDapps,
       notifications: _listNotifications,
-      subscription: "Free"
+      subscription: "Free",
     }
     setUserInfo({ ..._userInfo })
   }

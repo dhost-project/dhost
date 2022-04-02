@@ -4,16 +4,16 @@ import { http } from "utils/http"
 import Cookies from "universal-cookie"
 import { useHistory } from "react-router"
 import { meUser } from "api/Users"
+import { useUserContext } from "contexts/UserContext/UserContext"
 
 export function LoginForm() {
   const [loginForm, setLoginForm] = useState({
     username: "",
     password: "",
   })
+  let { userInfo, setUserInfo } = useUserContext()
   let history = useHistory()
-  let cookies = new Cookies()
-  let csrftoken = cookies.get("csrftoken")
-  let session_id = cookies.get("sessionid")
+
 
   async function login(event: React.FormEvent) {
     event.preventDefault()
@@ -32,13 +32,11 @@ export function LoginForm() {
 
     if ((await meUser()).status !== 401) {
       history.push("/")
+      localStorage.setItem("connected", "OK")
+      window.location.reload()
     }
     return res
   }
-
-  useEffect(() => {
-
-  }, [csrftoken])
 
   return (
     <form onSubmit={login}>
