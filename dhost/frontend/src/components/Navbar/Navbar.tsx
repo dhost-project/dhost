@@ -15,11 +15,11 @@ import {
 import { Fragment } from "react"
 import { Button } from "react-bootstrap"
 import { Link, useHistory } from "react-router-dom"
+import Cookies from "universal-cookie"
+import { logout } from "api/Logout"
 import logo from "assets/logo.svg"
 import { useModals } from "contexts/ModalsContext/ModalsContext"
 import { gravatar_url } from "utils/gravatar"
-import Cookies from "universal-cookie"
-import { logout } from "api/Logout"
 
 // TODO remove, for test only
 const gravatar = gravatar_url("7bc5dd72ce835d2a2868785729c0f176")
@@ -69,9 +69,9 @@ const account_sections = [
 ]
 
 export interface sectionType {
-  name: string;
+  name: string
   href: string
-  icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+  icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element
 }
 
 function BellNotifications(): React.ReactElement {
@@ -136,8 +136,9 @@ function AccountMenu(): React.ReactElement {
                 <Menu.Item key={`${item.name}-${item.href}`}>
                   {({ active }) => (
                     <a
-                      className={`${active ? "bg-gray-50" : "text-gray-900"
-                        } group flex items-center w-full pl-4 pr-24 py-2 text-sm`}
+                      className={`${
+                        active ? "bg-gray-50" : "text-gray-900"
+                      } group flex items-center w-full pl-4 pr-24 py-2 text-sm`}
                       onClick={() => handleClick(item)}
                     >
                       <item.icon className="h-5 w-5 mr-2" aria-hidden="true" />
@@ -162,14 +163,14 @@ export function Navbar(): React.ReactElement {
     console.log(item.name)
     history.push(`${item.href}`)
     if (item.name === "Logout") {
-      localStorage.removeItem("csrftoken");
-      localStorage.removeItem("sessionid");
-      localStorage.removeItem("messages");
+      localStorage.removeItem("csrftoken")
+      localStorage.removeItem("sessionid")
+      localStorage.removeItem("messages")
     }
   }
 
   return (
-    <Popover className="relative bg-white z-40">
+    <Popover className="sticky top-0 bg-white z-40">
       {({ open }) => (
         <>
           <div
@@ -211,7 +212,7 @@ export function Navbar(): React.ReactElement {
               items-center"
             >
               <Button
-                className="flex justify-center items-center h-8 mr-4"
+                className="flex justify-center items-center h-8 mr-4 bg-green-500 border-none"
                 onClick={() => {
                   setShowCreateDappModal(true)
                 }}
