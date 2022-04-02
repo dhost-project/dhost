@@ -21,7 +21,7 @@ export function RouterOutlet(): React.ReactElement {
       {/* <Route path="/ipfs" component={IPFSDapp} /> */}
       <Route path="/notifications" component={Notification} />
       <Route path="/login" component={Login} />
-      <Route path="/preview" component={SubscriptionListContainer} />
+      <Route path="/pricing" component={SubscriptionListContainer} />
       <Route path="*" component={NotFound} />
     </Switch>
   )

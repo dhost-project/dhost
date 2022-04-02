@@ -15,11 +15,10 @@ import {
 import { Fragment, useEffect, useState } from "react"
 import { Button } from "react-bootstrap"
 import { Link, useHistory } from "react-router-dom"
+import { logout } from "api/Logout"
 import logo from "assets/logo.svg"
 import { useModals } from "contexts/ModalsContext/ModalsContext"
 import { gravatar_url } from "utils/gravatar"
-import Cookies from "universal-cookie"
-import { logout } from "api/Logout"
 import { useUserContext } from "contexts/UserContext/UserContext"
 
 // TODO remove, for test only
@@ -50,8 +49,8 @@ const account_sections = [
       icon: ShieldCheckIcon,
     },
     {
-      name: "Preview",
-      href: "/preview/",
+      name: "Pricing",
+      href: "/pricing/",
       icon: PuzzleIcon,
     },
     {
@@ -70,9 +69,9 @@ const account_sections = [
 ]
 
 export interface sectionType {
-  name: string;
+  name: string
   href: string
-  icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+  icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element
 }
 
 function BellNotifications(): React.ReactElement {
@@ -213,7 +212,7 @@ export function Navbar(): React.ReactElement {
             items-center"
             >
               <Button
-                className="flex justify-center items-center h-8 mr-4"
+                className="flex justify-center items-center h-8 mr-4 bg-green-500 hover:bg-green-500 border-none"
                 onClick={() => {
                   setShowCreateDappModal(true)
                 }}

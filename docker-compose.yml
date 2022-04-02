@@ -1,7 +1,8 @@
 version: "3.7"
 
 services:
-  api: &api
+  api:
+    &api
     build:
       context: .
       dockerfile: ./tools/docker/Dockerfile
@@ -63,12 +64,12 @@ services:
       CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS: /ip4/0.0.0.0/tcp/9094 # Expose API
       CLUSTER_MONITORPINGINTERVAL: 2s # Speed up peer discovery
     ports:
-          # Open API port (allows ipfs-cluster-ctl usage on host)
-          - "127.0.0.1:9094:9094"
-          # The cluster swarm port would need  to be exposed if this container
-          # was to connect to cluster peers on other hosts.
-          # But this is just a testing cluster.
-          # - "9096:9096" # Cluster IPFS Proxy endpoint
+      # Open API port (allows ipfs-cluster-ctl usage on host)
+      - "127.0.0.1:9094:9094"
+      # The cluster swarm port would need  to be exposed if this container
+      # was to connect to cluster peers on other hosts.
+      # But this is just a testing cluster.
+      # - "9096:9096" # Cluster IPFS Proxy endpoint
     volumes:
       - ./data/cluster0:/data/ipfs-cluster
     networks:
