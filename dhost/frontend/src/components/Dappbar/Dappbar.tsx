@@ -12,7 +12,7 @@ export const Dappbar = () => {
           <h1 className="text-4xl">
             <a
               className="text-reset text-decoration-none"
-              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+              href={dapp.basic.url}
             >
               {dapp.basic.slug.toUpperCase()}
             </a>
@@ -20,7 +20,7 @@ export const Dappbar = () => {
           <h2 className="text-xl">
             <a
               className="text-reset text-decoration-none"
-              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+              href={dapp.basic.url}
               rel="noreferrer"
               target="_blank"
             >
@@ -29,7 +29,7 @@ export const Dappbar = () => {
           </h2>
           <a
             className="absolute top-0 right-0 bg-green-500 border-solid border border-secondary-light rounded-md px-5 py-2 text-white"
-            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            href={dapp.basic.url}
             rel="noreferrer"
             target="_blank"
           >

@@ -29,6 +29,7 @@ export function DappSettings({
       ipfs_gateway: dapp.basic.ipfs_gateway,
     })
     // updateDapp()
+    toast.success("Settings changed.")
     setDapp({ ...dapp })
   }
 
