@@ -28,9 +28,8 @@ export function ListItem({
   }
 
   return (
-    <a
+    <div
       className={`${colors} px-4 py-2`}
-      href={`/dappLogs/${dappLog.id}/`}
       style={
         gap
           ? { marginBottom: "5px", border: "none", borderRadius: "5px" }
@@ -44,6 +43,6 @@ export function ListItem({
       <p className="italic text-sm" style={{ color: "grey" }}>
         {date.toLocaleString()}
       </p>
-    </a>
+    </div>
   )
 }
