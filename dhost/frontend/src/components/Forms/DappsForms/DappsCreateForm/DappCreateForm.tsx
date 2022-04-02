@@ -9,7 +9,7 @@ import { createBuildOptions } from "api/BuildOptions"
 
 const initialDapp: IPFSDappParams = {
   slug: "",
-  ipfs_gateway: "https://ipfs.io/",
+  ipfs_gateway: "https://ipfs.io/ipfs/",
 }
 
 export function DappCreateForm() {
@@ -55,7 +55,7 @@ export function DappCreateForm() {
             setDappForm({ ...dappForm, ipfs_gateway: e.target.value })
           }
         >
-          <option value="https://ipfs.io/">https://ipfs.io/</option>
+          <option value="https://ipfs.io/ipfs/">https://ipfs.io/ipfs/</option>
         </Form.Select>
       </Form.Group>
 

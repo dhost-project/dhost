@@ -81,7 +81,7 @@ export function DappDetails({
             <p className="mt-2">
               {dapp.basic.ipfs_hash ? (
                 <a href={dapp.basic.url} target="_blank">
-                  https://ipfs.io/{dapp.basic.ipfs_hash}/ipfs/{dapp.basic.slug}
+                  {dapp.basic.url}
                 </a>
               ) : (
                 <p className="italic" style={{ color: "grey" }}>
