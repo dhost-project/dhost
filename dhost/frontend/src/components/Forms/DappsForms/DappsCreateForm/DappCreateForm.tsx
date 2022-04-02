@@ -1,11 +1,15 @@
 import { FormEvent, useState } from "react"
 import { Form } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
-import { createIPFSDapp } from "api/IPFSDapps"
+import { createIPFSDapp, retrieveIPFSDapp } from "api/IPFSDapps"
 import { Button } from "components/Button"
 import { IPFSDappParams } from "models/api/IPFSDapp"
 import { useModals } from "contexts/ModalsContext/ModalsContext";
 import { createBuildOptions } from "api/BuildOptions"
+import { toast } from "react-toastify"
+import { useUserContext } from "contexts/UserContext/UserContext"
+import { Dapp } from "models/api/Dapp"
+import { retrieveDapp } from "api/Dapps"
 
 const initialDapp: IPFSDappParams = {
   slug: "",
@@ -16,6 +20,7 @@ export function DappCreateForm() {
   const history = useHistory()
   const { setShowCreateDappModal } = useModals()
   const [dappForm, setDappForm] = useState<IPFSDappParams>({ ...initialDapp })
+  const { userInfo, setUserInfo } = useUserContext()
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
@@ -23,8 +28,16 @@ export function DappCreateForm() {
       const res = await createIPFSDapp(dappForm)
       console.log("dappCreated", res)
       await createBuildOptions(dappForm.slug, { command: "", docker: "" })
+      // let _res = (await retrieveDapp(dappForm.slug)).data
+      // let _dapps = userInfo.dapps
+      // _dapps.push(_res)
+      // let _userInfo = userInfo
+      // _userInfo.dapps = _dapps
+      // setUserInfo({ ..._userInfo })
       history.push(`/dapps/${res.data.slug}/deploy`)
       setShowCreateDappModal(false)
+      window.location.reload()
+      toast.success("Dapp created")
     } catch (error) {
       console.warn(error)
     }

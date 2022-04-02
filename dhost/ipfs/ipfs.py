@@ -219,3 +219,7 @@ class ClusterIPFSAPI:
     def unpin_cid(self, CID):
         """Unpin a CID"""
         return self._delete("pins/" + CID)
+    
+    def call_garbage_collector(self):
+        """Perform GC in the IPFS nodes"""
+        return self._post("ipfs/gc")    

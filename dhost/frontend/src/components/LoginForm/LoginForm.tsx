@@ -3,19 +3,18 @@ import { useEffect, useState } from "react"
 import { useHistory } from "react-router"
 import Cookies from "universal-cookie"
 import { fetchAllRepository } from "api/Repositories"
-import { useUserContext } from "contexts/UserContext/UserContext"
 import { http } from "utils/http"
+import { meUser } from "api/Users"
+import { useUserContext } from "contexts/UserContext/UserContext"
 
 export function LoginForm() {
   const { setUserInfo } = useUserContext()
+  let history = useHistory()
   const [loginForm, setLoginForm] = useState({
     username: "",
     password: "",
   })
-  let history = useHistory()
-  let cookies = new Cookies()
-  let csrftoken = cookies.get("csrftoken")
-  let session_id = cookies.get("sessionid")
+
 
   async function login(event: React.FormEvent) {
     event.preventDefault()
@@ -29,20 +28,22 @@ export function LoginForm() {
     const headers = { "Content-Type": "application/x-www-form-urlencoded" }
 
     await http.get(loginUrl, { headers }) // TODO check behavior
-    await http.post(loginUrl, data, { headers })
+    const res = await http.post(loginUrl, data, { headers })
 
     const _listRepositories = (await fetchAllRepository()).data
     setUserInfo((userInfo) => ({
       ...userInfo,
       githubRepositories: _listRepositories,
     }))
-  }
 
-  useEffect(() => {
-    if (session_id) {
+    if ((await meUser()).status !== 401) {
       history.push("/")
+      localStorage.setItem("connected", "OK")
+      window.location.reload()
     }
-  }, [csrftoken])
+
+    return res
+  }
 
   return (
     <form onSubmit={login}>
