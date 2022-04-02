@@ -1,18 +1,19 @@
 import { env } from "environment"
 import { useEffect, useState } from "react"
-import { http } from "utils/http"
-import Cookies from "universal-cookie"
 import { useHistory } from "react-router"
+import Cookies from "universal-cookie"
+import { fetchAllRepository } from "api/Repositories"
+import { http } from "utils/http"
 import { meUser } from "api/Users"
 import { useUserContext } from "contexts/UserContext/UserContext"
 
 export function LoginForm() {
+  const { setUserInfo } = useUserContext()
+  let history = useHistory()
   const [loginForm, setLoginForm] = useState({
     username: "",
     password: "",
   })
-  let { userInfo, setUserInfo } = useUserContext()
-  let history = useHistory()
 
 
   async function login(event: React.FormEvent) {
@@ -27,14 +28,20 @@ export function LoginForm() {
     const headers = { "Content-Type": "application/x-www-form-urlencoded" }
 
     await http.get(loginUrl, { headers }) // TODO check behavior
-    let res = await http.post(loginUrl, data, { headers })
-    console.log(res)
+    const res = await http.post(loginUrl, data, { headers })
+
+    const _listRepositories = (await fetchAllRepository()).data
+    setUserInfo((userInfo) => ({
+      ...userInfo,
+      githubRepositories: _listRepositories,
+    }))
 
     if ((await meUser()).status !== 401) {
       history.push("/")
       localStorage.setItem("connected", "OK")
       window.location.reload()
     }
+
     return res
   }
 

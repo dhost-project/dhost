@@ -30,7 +30,7 @@ export function EnvVarCreateForm() {
             if (res.statusText == "Created") {
                 let envVars = dapp.env_vars
                 envVars.push(envVarForm)
-                setDapp({ ...dapp, env_vars: envVars })
+                setDapp(dapp => ({ ...dapp, env_vars: envVars }))
             }
             setShowCreateEnvVarModal(false)
         } catch (error) {

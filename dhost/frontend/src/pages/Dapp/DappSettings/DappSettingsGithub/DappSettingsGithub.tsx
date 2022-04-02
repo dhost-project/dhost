@@ -1,5 +1,5 @@
+import { Dispatch, SetStateAction } from "react"
 import { IDapp } from "contexts/DappContext/DappContext"
-import { Dispatch, SetStateAction } from "react";
 
 export function DappSettingsGithub({
   dapp,
@@ -10,22 +10,22 @@ export function DappSettingsGithub({
 }): React.ReactElement {
   function changeRepo(e: React.ChangeEvent<HTMLInputElement>) {
     dapp.github.repo = e.target.value
-    setDapp({ ...dapp })
+    setDapp((_dapp) => ({ ..._dapp, ...dapp }))
   }
 
   function changeBranch(e: React.ChangeEvent<HTMLInputElement>) {
     dapp.github.branch = parseInt(e.target.value, 10)
-    setDapp({ ...dapp })
+    setDapp((_dapp) => ({ ..._dapp, ...dapp }))
   }
 
   function changeAutodep(e: React.ChangeEvent<HTMLInputElement>) {
     dapp.github.auto_deploy = e.target.checked
-    setDapp({ ...dapp })
+    setDapp((_dapp) => ({ ..._dapp, ...dapp }))
   }
 
   function changeConfirmCI(e: React.ChangeEvent<HTMLInputElement>) {
     dapp.github.confirm_ci = e.target.checked
-    setDapp({ ...dapp })
+    setDapp((_dapp) => ({ ..._dapp, ...dapp }))
   }
 
   function WithoutRepo() {

@@ -4,11 +4,11 @@ import { toast } from "react-toastify"
 import { updateBuildOptions } from "api/BuildOptions"
 import { updateIPFSDapp } from "api/IPFSDapps"
 import { useDapp } from "contexts/DappContext/DappContext"
+import { useModals } from "../../../contexts/ModalsContext/ModalsDappDestroyContext"
 import DappSettingsBasic from "./DappSettingsBasic/DappSettingsBasic"
 import DappSettingsBuild from "./DappSettingsBuild/DappSettingsBuild"
 import DappSettingsEnvVar from "./DappSettingsEnvVar/DappSettingsEnvVar"
 import DappSettingsSectionTitle from "./DappSettingsSectionTitle/DappSettingsSectionTitle"
-import { useModals } from "../../../contexts/ModalsContext/ModalsDappDestroyContext"
 
 type TParams = { dapp_slug: string }
 
@@ -30,7 +30,7 @@ export function DappSettings({
     })
     // updateDapp()
     toast.success("Settings changed.")
-    setDapp({ ...dapp })
+    setDapp((_dapp) => ({ ..._dapp, ...dapp }))
   }
 
   const settings_sections = [

@@ -1,5 +1,5 @@
 export interface Repository {
-  id: string
+  id: number
   github_owner: string
   github_repo: string
   branches: [
