@@ -1,3 +1,4 @@
+import { listBundles, retrieveBundle } from "api/Bundle"
 import { retrieveIPFSDapp } from "api/IPFSDapps"
 import { useDapp } from "contexts/DappContext/DappContext"
 import { useEffect } from "react"
@@ -14,8 +15,10 @@ export function DappSource({
 
   const fetchData = async () => {
     try {
-      let res = await retrieveIPFSDapp(dapp.basic.slug)
+      let res = await listBundles(dapp.basic.slug)
+      let _res = await retrieveBundle(dapp.basic.slug, res.data[0].id)
       console.log(res)
+      console.log(_res)
     }
     catch (error) {
       console.log(error)

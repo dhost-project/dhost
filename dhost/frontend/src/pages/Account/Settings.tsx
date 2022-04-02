@@ -1,13 +1,15 @@
-import { meUser, updateUserSettings } from "api/Users"
+import { getUserSettings, meUser, updateUserSettings } from "api/Users"
 import { useUserContext } from "contexts/UserContext/UserContext"
 import { User } from "models/api/User"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 export function AccountSettings(): React.ReactElement {
   const { t } = useTranslation()
+  const settingsRef = useRef<HTMLDivElement | undefined>()
 
   const { userInfo, setUserInfo } = useUserContext()
+  const [page, setPage] = useState<string>();
 
   const changeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
     var _user = userInfo
@@ -31,57 +33,35 @@ export function AccountSettings(): React.ReactElement {
     })
   }
 
+  const fetchData = async () => {
+    try {
+      let res = await getUserSettings()
+      console.log(res)
+      setPage(res.data)
+      if (!settingsRef.current) {
+        return
+      }
+      settingsRef.current.querySelector("form")?.setAttribute("action", "/api/settings/")
+      settingsRef.current.querySelector("form")?.setAttribute("target", "dummyframe")
+      settingsRef.current.querySelector(".btn.btn-secondary")?.remove()
+      settingsRef.current.querySelector(".btn.btn-danger")?.remove()
+      settingsRef.current.querySelector(".btn.btn-primary")?.addEventListener("click", () => {
+        window.location.href = "/account/settings/"
+      })
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
-    // fetchData()
+    fetchData()
   }, [])
 
   return (
-    <div className="container mx-auto">
-      <h2>{t("ACCOUNT_SETTINGS_TITLE")}</h2>
-
-      <div className="pb-4 w-1/2">
-        <h2 className="block uppercase tracking-wide text-gray-700 text-xs font-medium mb-2">
-          Username
-        </h2>
-
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          type="text"
-          value={userInfo.user.username}
-          onChange={(e) => {
-            changeUsername(e)
-          }}
-        />
-      </div>
-
-      <div className="pb-4 w-1/2">
-        <h2 className="block uppercase tracking-wide text-gray-700 text-xs font-medium mb-2">
-          Email
-        </h2>
-
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          type="text"
-          value={userInfo.user.email}
-          onChange={(e) => {
-            changeEmail(e)
-          }}
-        />
-      </div>
-      <div className="flex items-center">
-        <button
-          id="build"
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-          type="submit"
-          name="build"
-          onClick={updateSettings}
-        >
-          Validate
-        </button>
-      </div>
-      <a className="btn btn-danger" href="/account/delete-confirm">
-        Delete account
-      </a>
-    </div>
+    <>
+      <iframe name="dummyframe" id="dummyframe" style={{ display: "none" }}></iframe>
+      <div className="content" ref={settingsRef as any} dangerouslySetInnerHTML={{ __html: (page ?? "") }}></div>
+    </>
   )
 }

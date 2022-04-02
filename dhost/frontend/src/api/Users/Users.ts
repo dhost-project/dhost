@@ -14,3 +14,7 @@ export function meUser(): HttpResponse<User> {
 export function updateUserSettings(userSettingsParams: UserSettings): HttpResponse<UserSettings> {
   return http.post(`${env.API_URL}/api/settings/`, userSettingsParams)
 }
+
+export function getUserSettings(): HttpResponse<string> {
+  return http.get(`${env.API_URL}/api/settings/`)
+}
