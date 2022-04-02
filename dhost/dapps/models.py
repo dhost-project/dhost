@@ -62,7 +62,7 @@ class Dapp(models.Model):
         _("status"),
         max_length=2,
         choices=Statuses.choices,
-        default=Statuses.STOPED,
+        default=Statuses.UP,
     )
 
     created_at = models.DateTimeField(_("created at"), default=timezone.now)
