@@ -49,11 +49,14 @@ def log_bundle_create(sender, instance, created, **kwargs):
 
 @receiver(post_delete, sender=Bundle)
 def log_bundle_delete(sender, instance, **kwargs):
-    log_with_user(
-        instance=instance,
-        action_flag=ActionFlags.BUNDLE_DELETION,
-        dapp=instance.dapp,
-    )
+    try:
+        log_with_user(
+            instance=instance,
+            action_flag=ActionFlags.BUNDLE_DELETION,
+            dapp=instance.dapp,
+        )
+    except:
+        pass
 
 
 @receiver(post_save, sender=BuildOptions)
