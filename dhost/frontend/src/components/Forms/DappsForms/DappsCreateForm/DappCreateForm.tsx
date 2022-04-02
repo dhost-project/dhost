@@ -36,6 +36,7 @@ export function DappCreateForm() {
       // setUserInfo({ ..._userInfo })
       history.push(`/dapps/${res.data.slug}/deploy`)
       setShowCreateDappModal(false)
+      window.location.reload()
       toast.success("Dapp created")
     } catch (error) {
       console.warn(error)

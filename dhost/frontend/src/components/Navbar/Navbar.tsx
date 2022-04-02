@@ -111,7 +111,7 @@ function AccountMenu(): React.ReactElement {
         as="img"
         className="my-2 mx-1 cursor-pointer rounded-full border-2
         border-green-400 hover:border-green-500"
-        src={gravatar}
+        src={userInfo.user.avatar ?? gravatar}
         height="32"
         width="32"
         alt="gravatar"

@@ -5,6 +5,7 @@ import { destroyIPFSDapp } from "api/IPFSDapps"
 import { Button } from "components/Button"
 import { useModals } from "contexts/ModalsContext/ModalsDappDestroyContext";
 import { DappDestroyParams } from "models/api/DappDestroyParams"
+import { useUserContext } from "contexts/UserContext/UserContext"
 
 const initialDapp: DappDestroyParams = {
     slug: ""
@@ -14,17 +15,15 @@ export function DappDestroyForm() {
     const history = useHistory()
     const { setShowDestroyDappModal } = useModals()
     const [dappForm, setDappForm] = useState<DappDestroyParams>({ ...initialDapp })
+    const { userInfo, setUserInfo } = useUserContext()
 
     async function handleSubmit(e: FormEvent) {
         e.preventDefault()
         try {
-            // await destroyBuildOptions(dappForm.slug)
-            // await destroyGithubOptions(dappForm.slug)
             const res = await destroyIPFSDapp(dappForm.slug)
-            // TODO: Destroy envVars (slug + id)
-
             history.push(`/`)
             setShowDestroyDappModal(false)
+            window.location.reload()
         } catch (error) {
             console.warn(error)
         }
