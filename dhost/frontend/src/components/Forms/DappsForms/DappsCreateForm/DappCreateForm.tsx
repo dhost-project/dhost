@@ -9,7 +9,7 @@ import { createBuildOptions } from "api/BuildOptions"
 
 const initialDapp: IPFSDappParams = {
   slug: "",
-  ipfs_gateway: "",
+  ipfs_gateway: "https://ipfs.io/",
 }
 
 export function DappCreateForm() {
@@ -21,6 +21,7 @@ export function DappCreateForm() {
     e.preventDefault()
     try {
       const res = await createIPFSDapp(dappForm)
+      console.log("dappCreated", res)
       await createBuildOptions(dappForm.slug, { command: "", docker: "" })
       history.push(`/dapps/${res.data.slug}/deploy`)
       setShowCreateDappModal(false)
@@ -47,14 +48,15 @@ export function DappCreateForm() {
 
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Select IPFS gateway</Form.Label>
-        <Form.Control
-          type="text"
+        <Form.Select
           placeholder="Enter a URL"
           value={dappForm.ipfs_gateway}
           onChange={(e) =>
             setDappForm({ ...dappForm, ipfs_gateway: e.target.value })
           }
-        />
+        >
+          <option value="https://ipfs.io/">https://ipfs.io/</option>
+        </Form.Select>
       </Form.Group>
 
       <Button type="submit">Submit</Button>

@@ -4,9 +4,7 @@ import { useHistory } from "react-router-dom"
 import { destroyIPFSDapp } from "api/IPFSDapps"
 import { Button } from "components/Button"
 import { useModals } from "contexts/ModalsContext/ModalsDappDestroyContext";
-import { destroyBuildOptions } from "api/BuildOptions"
 import { DappDestroyParams } from "models/api/DappDestroyParams"
-import { destroyGithubOptions } from "api/GithubOptions"
 
 const initialDapp: DappDestroyParams = {
     slug: ""
