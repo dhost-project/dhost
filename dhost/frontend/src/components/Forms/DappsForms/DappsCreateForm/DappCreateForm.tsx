@@ -56,6 +56,8 @@ export function DappCreateForm() {
           }
         >
           <option value="https://ipfs.io/ipfs/">https://ipfs.io/ipfs/</option>
+          <option value="https://gateway.ipfs.io/ipfs/">https://gateway.ipfs.io/ipfs/</option>
+
         </Form.Select>
       </Form.Group>
 

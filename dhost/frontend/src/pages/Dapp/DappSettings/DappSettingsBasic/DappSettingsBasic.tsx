@@ -10,6 +10,7 @@ function DappSettingsBasic({
 }): React.ReactElement {
   const gateways = [
     "https://ipfs.io/ipfs/",
+    "https://gateway.ipfs.io/ipfs/"
   ]
 
   const changeIPFSGateway = (e: React.ChangeEvent<HTMLSelectElement>) => {
