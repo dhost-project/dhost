@@ -82,5 +82,5 @@ export function ListDapp({ dapps }: { dapps: Dapp[] }): React.ReactElement {
     )
   }
 
-  return dapps.length > 0 ? renderDapps() : <span>Data loading...</span>
+  return dapps.length > 0 ? renderDapps() : <span>No dapp to show.</span>
 }

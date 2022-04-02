@@ -19,6 +19,7 @@ import logo from "assets/logo.svg"
 import { useModals } from "contexts/ModalsContext/ModalsContext"
 import { gravatar_url } from "utils/gravatar"
 import Cookies from "universal-cookie"
+import { logout } from "api/Logout"
 
 // TODO remove, for test only
 const gravatar = gravatar_url("7bc5dd72ce835d2a2868785729c0f176")
@@ -95,18 +96,12 @@ function AccountMenu(): React.ReactElement {
 
   const cookie = new Cookies()
 
-  const handleClick = (item: sectionType) => {
+  const handleClick = async (item: sectionType) => {
     console.log(item.name)
-    history.push(`${item.href}`)
     if (item.name === "Logout") {
-      cookie.remove("csrftoken", { path: '/' });
-      cookie.set("sessionid", "");
-      cookie.remove("sessionid", { path: '/' });
-
-      // localStorage.removeItem("csrftoken");
-      // localStorage.removeItem("sessionid");
-      // localStorage.removeItem("messages");
+      await logout()
     }
+    history.push(`${item.href}`)
   }
 
   return (

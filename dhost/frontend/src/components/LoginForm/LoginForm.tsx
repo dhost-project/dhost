@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { http } from "utils/http"
 import Cookies from "universal-cookie"
 import { useHistory } from "react-router"
+import { meUser } from "api/Users"
 
 export function LoginForm() {
   const [loginForm, setLoginForm] = useState({
@@ -26,13 +27,17 @@ export function LoginForm() {
     const headers = { "Content-Type": "application/x-www-form-urlencoded" }
 
     await http.get(loginUrl, { headers }) // TODO check behavior
-    return await http.post(loginUrl, data, { headers })
+    let res = await http.post(loginUrl, data, { headers })
+    console.log(res)
+
+    if ((await meUser()).status !== 401) {
+      history.push("/")
+    }
+    return res
   }
 
   useEffect(() => {
-    if (session_id) {
-      history.push("/")
-    }
+
   }, [csrftoken])
 
   return (

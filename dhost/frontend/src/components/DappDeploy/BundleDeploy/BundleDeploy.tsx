@@ -8,7 +8,6 @@ import bundleLogo from "../../../assets/bundle.svg"
 import uploadLogo from "../../../assets/upload.svg"
 import { deployIPFSDapp } from "api/IPFSDapps"
 import { toast } from "react-toastify"
-import { RetryToast } from "components/Toasts/RetryToast"
 
 
 export function BundleDeploy() {
@@ -37,9 +36,8 @@ export function BundleDeploy() {
   }
 
   async function handleDeploy(e: MouseEvent) {
-    // console.log("handleDeploy", { file, currentBundle })
     const res = await deployIPFSDapp(dapp_slug)
-    toast.success("Bundle deployed.")
+    toast.success("Bundle deployment started, it can takes few minutes.")
     console.log("res", res)
   }
 

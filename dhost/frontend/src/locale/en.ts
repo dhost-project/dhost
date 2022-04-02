@@ -40,6 +40,8 @@ export const en = {
     build_opt_change: "Edit build option",
 
     status: "Status :",
-    owner: "Owner :"
+    owner: "Owner :",
+
+    NO_DAPP: "No dapp to show."
   },
 }
