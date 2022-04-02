@@ -5,6 +5,7 @@ import { ListDappLogs } from "components/ListDappLogs"
 import { ThreeSubscriptions } from "components/Subscription/ThreeSubscriptions"
 import { useDapp } from "contexts/DappContext/DappContext"
 import "./DappDetails.css"
+import { toast } from "react-toastify"
 
 type TParams = { dapp_slug: string }
 
@@ -43,6 +44,11 @@ export function DappDetails({
     }
   }, [dapp])
 
+  const saveToClipboard = () => {
+    navigator.clipboard.writeText(dapp.basic.url ?? "")
+    toast.info("Dapp's url saved to clipboard.")
+  }
+
   return (
     <div className="overview">
       <div className="container mx-auto md:flex mt-4">
@@ -78,6 +84,14 @@ export function DappDetails({
             >
               {status.name}
             </span>
+            {dapp.basic.url ? (
+              <a className="ml-2 " onClick={saveToClipboard}>
+                Share
+              </a>
+            ) : (
+              <></>
+            )}
+
             <p className="mt-2">
               {dapp.basic.ipfs_hash ? (
                 <a href={dapp.basic.url} target="_blank">
