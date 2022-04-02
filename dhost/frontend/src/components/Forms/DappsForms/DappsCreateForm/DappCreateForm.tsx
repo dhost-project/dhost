@@ -46,7 +46,7 @@ export function DappCreateForm() {
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Dapp URL</Form.Label>
+        <Form.Label>Select IPFS gateway</Form.Label>
         <Form.Control
           type="text"
           placeholder="Enter a URL"

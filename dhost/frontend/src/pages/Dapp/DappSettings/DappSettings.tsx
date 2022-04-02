@@ -7,8 +7,8 @@ import { useDapp } from "contexts/DappContext/DappContext"
 import DappSettingsBasic from "./DappSettingsBasic/DappSettingsBasic"
 import DappSettingsBuild from "./DappSettingsBuild/DappSettingsBuild"
 import DappSettingsEnvVar from "./DappSettingsEnvVar/DappSettingsEnvVar"
-import DappSettingsGithub from "./DappSettingsGithub/DappSettingsGithub"
 import DappSettingsSectionTitle from "./DappSettingsSectionTitle/DappSettingsSectionTitle"
+import { useModals } from "../../../contexts/ModalsContext/ModalsDappDestroyContext"
 
 type TParams = { dapp_slug: string }
 
@@ -16,6 +16,7 @@ export function DappSettings({
   match,
 }: RouteComponentProps<TParams>): React.ReactElement {
   const { dapp, setDapp } = useDapp()
+  const { setShowDestroyDappModal } = useModals()
 
   function displayData(e: React.MouseEvent<HTMLButtonElement>) {
     toast.info("Change done.", { position: toast.POSITION.BOTTOM_RIGHT })
@@ -91,6 +92,21 @@ export function DappSettings({
             onClick={updateDapp}
           >
             Validate
+          </button>
+        </div>
+      </div>
+      <div className="flex justify-end">
+        <div className="flex items-center">
+          <button
+            id="build"
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            type="submit"
+            name="build"
+            onClick={() => {
+              setShowDestroyDappModal(true)
+            }}
+          >
+            Delete Dapp
           </button>
         </div>
       </div>
