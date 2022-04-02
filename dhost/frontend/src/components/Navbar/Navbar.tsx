@@ -299,10 +299,10 @@ export function Navbar(): React.ReactElement {
             bg-white border-b"
             >
               <div className="flex justify-start lg:w-0 lg:flex-1">
-                <Link to="/">
+                <span>
                   <span className="sr-only">DHost</span>
                   <img className="my-2 mx-1 h-8 w-auto" src={logo} alt="DHost" />
-                </Link>
+                </span>
               </div>
             </div>
           </>
