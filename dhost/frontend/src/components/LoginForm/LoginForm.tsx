@@ -1,10 +1,13 @@
 import { env } from "environment"
 import { useEffect, useState } from "react"
-import { http } from "utils/http"
-import Cookies from "universal-cookie"
 import { useHistory } from "react-router"
+import Cookies from "universal-cookie"
+import { fetchAllRepository } from "api/Repositories"
+import { useUserContext } from "contexts/UserContext/UserContext"
+import { http } from "utils/http"
 
 export function LoginForm() {
+  const { setUserInfo } = useUserContext()
   const [loginForm, setLoginForm] = useState({
     username: "",
     password: "",
@@ -26,7 +29,13 @@ export function LoginForm() {
     const headers = { "Content-Type": "application/x-www-form-urlencoded" }
 
     await http.get(loginUrl, { headers }) // TODO check behavior
-    return await http.post(loginUrl, data, { headers })
+    await http.post(loginUrl, data, { headers })
+
+    const _listRepositories = (await fetchAllRepository()).data
+    setUserInfo((userInfo) => ({
+      ...userInfo,
+      githubRepositories: _listRepositories,
+    }))
   }
 
   useEffect(() => {

@@ -16,7 +16,7 @@ function DappSettingsBasic({
   const changeIPFSGateway = (e: React.ChangeEvent<HTMLSelectElement>) => {
     var _dapp = dapp
     _dapp.basic.ipfs_gateway = e.target.value
-    setDapp({ ..._dapp })
+    setDapp(pDapp => ({ ...pDapp, ..._dapp }))
   }
 
   return (

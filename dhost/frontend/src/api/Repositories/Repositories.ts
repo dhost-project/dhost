@@ -12,7 +12,7 @@ export function listRepositorys(): HttpResponse<Repository[]> {
 /**
  * Update every Github repos for user from the Github API
  */
-export function fetchAllRepository(): HttpResponse<Repository> {
+export function fetchAllRepository(): HttpResponse<Repository[]> {
   return http.get(`${env.API_URL}/api/github/repositories/fetch_all/`)
 }
 
@@ -20,7 +20,7 @@ export function fetchAllRepository(): HttpResponse<Repository> {
  * Retrieve repository by id (from dabatase)
  * @param id Github repository unique ID
  */
-export function retrieveRepository(id: string): HttpResponse<Repository> {
+export function retrieveRepository(id: number): HttpResponse<Repository> {
   return http.get(`${env.API_URL}/api/github/repositories/${id}/`)
 }
 
@@ -28,7 +28,7 @@ export function retrieveRepository(id: string): HttpResponse<Repository> {
  * Update a single repo from Github API
  * @param id Github repository unique ID
  */
-export function fetchRepository(id: string): HttpResponse<Repository> {
+export function fetchRepository(id: number): HttpResponse<Repository> {
   return http.get(`${env.API_URL}/api/github/repositories/${id}/fetch/`)
 }
 
@@ -36,7 +36,7 @@ export function fetchRepository(id: string): HttpResponse<Repository> {
  * Update a single repo branches from the Github API
  * @param id Github repository unique ID
  */
-export function fetchBranchesRepository(id: string): HttpResponse<Repository> {
+export function fetchBranchesRepository(id: number): HttpResponse<Repository> {
   return http.get(
     `${env.API_URL}/api/github/repositories/${id}/fetch_branches/`
   )

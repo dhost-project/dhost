@@ -2,11 +2,10 @@ import { SetStateAction, Dispatch, useEffect } from "react"
 import { createContext, FC, Context, useState, useContext } from "react"
 import { fetchAllRepository } from "api/Repositories"
 import { BuildOptions } from "models/api/BuildOptions"
+import { DappLogs } from "models/api/DappLogs"
 import { EnvVar } from "models/api/EnvVar"
 import { GithubOptions } from "models/api/GithubOptions"
-import { Repository } from "models/api/Repository"
 import { IPFSDapp } from "models/api/IPFSDapp"
-import { DappLogs } from "models/api/DappLogs"
 
 // type StateSetter<T> = (value: T | ((value: T) => T)) => void;
 export interface IDapp {
@@ -20,9 +19,6 @@ export interface IDapp {
 export interface DappContextType {
   dapp: IDapp
   setDapp: Dispatch<SetStateAction<IDapp>> // StateSetter<number>
-  userRepo: Repository[]
-  setUserRepo: Dispatch<SetStateAction<Repository[]>>
-  updateRemoteUserRepo(): Promise<void>
 }
 
 export const DappContext = createContext({} as DappContextType)
@@ -36,7 +32,7 @@ export const DappProvider: FC = ({ children }) => {
       status: "",
       created_at: "",
       ipfs_gateway: "",
-      ipfs_hash: ""
+      ipfs_hash: "",
     },
     build: {
       command: "",
@@ -53,31 +49,20 @@ export const DappProvider: FC = ({ children }) => {
         variable: "",
         value: "",
         sensitive: false,
-      }
+      },
     ],
-    dappLogsList: []
+    dappLogsList: [],
   } as IDapp
 
   const [dapp, setDapp] = useState<IDapp>(_dapp)
-  const [userRepo, setUserRepo] = useState<Repository[]>([] as Repository[])
 
-  const updateRemoteUserRepo = async () => {
-    try {
-      const res = await fetchAllRepository()
-      console.warn("updateRemoteUserRepo", res)
-    } catch (e) {
-      console.warn("updateRemoteUserRepo error", e)
-    }
-  }
+  // TODO update dapp context when route/dapp_slug change
 
   return (
     <DappContext.Provider
       value={{
         dapp,
         setDapp,
-        userRepo,
-        setUserRepo,
-        updateRemoteUserRepo,
       }}
     >
       {children}
