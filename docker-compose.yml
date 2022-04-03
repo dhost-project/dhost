@@ -1,0 +1,228 @@
+version: "3.7"
+
+services:
+  api:
+    &api
+    build:
+      context: .
+      dockerfile: ./tools/docker/Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      - ALLOWED_HOSTS=localhost,127.0.0.1,api
+      - DJANGO_ENV=development
+      - DJANGO_SECRET_KEY=secret
+      - ENABLE_SSL=false
+      - DATABASE_URL=postgres://dhost:dhost@db:5432/dhost
+      - REDIS_URL=redis://cache:6379/1
+      - CELERY_BROKER_URL=redis://broker:6379/1
+      - CELERY_RESULT_BACKEND=redis://broker:6379/1
+      - EMAIL_HOST=mailhog
+      - EMAIL_PORT=1025
+      - IPFS_HTTP_API_URL=http://ipfs:5001/api/
+      - SOCIAL_AUTH_GITHUB_KEY=dc0a656e0c456be2a953
+      - SOCIAL_AUTH_GITHUB_SECRET=f633ffffc2bde5b3633703494b07325b35e1f3e1
+      - IPFS_CLUSTER_API_URL=http://cluster0:9094/
+    networks:
+      - backends
+      - cluster
+
+  # It runs 3 cluster peers (cluster0, cluster1...) attached to go-ipfs daemons
+
+  # 3 cluster peers (cluster0, cluster1, cluster2) attached to go-ipfs daemons (ipfs0, ipfs1, ipfs2) using the CRDT consensus component.
+  # For persistance, a "data" folder is created and used to store configurations and states
+
+  # cluster peer0
+  ipfs0:
+    container_name: ipfs0
+    image: ipfs/go-ipfs:release
+    ports:
+      - "4001:4001" # ipfs swarm - expose if needed/wanted
+      - "5001:5001" # ipfs api - expose if needed/wanted
+    #  - "8080:8080" # ipfs gateway - expose if needed/wanted
+    volumes:
+      - ./data/ipfs0:/data/ipfs
+      - ./media/ipfs:/export
+    networks:
+      - cluster
+
+  cluster0:
+    container_name: cluster0
+    image: ipfs/ipfs-cluster:latest
+    depends_on:
+      - ipfs0
+    environment:
+      CLUSTER_PEERNAME: cluster0
+      CLUSTER_SECRET: ${CLUSTER_SECRET} # From shell variable if set
+      CLUSTER_IPFSHTTP_NODEMULTIADDRESS: /dns4/ipfs0/tcp/5001
+      CLUSTER_CRDT_TRUSTEDPEERS: '*' # Trust all peers in Cluster
+      CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS: /ip4/0.0.0.0/tcp/9094 # Expose API
+      CLUSTER_MONITORPINGINTERVAL: 2s # Speed up peer discovery
+    ports:
+      # Open API port (allows ipfs-cluster-ctl usage on host)
+      - "127.0.0.1:9094:9094"
+      # The cluster swarm port would need  to be exposed if this container
+      # was to connect to cluster peers on other hosts.
+      # But this is just a testing cluster.
+      # - "9096:9096" # Cluster IPFS Proxy endpoint
+    volumes:
+      - ./data/cluster0:/data/ipfs-cluster
+    networks:
+      - cluster
+
+  # cluster peer1
+  ipfs1:
+    container_name: ipfs1
+    image: ipfs/go-ipfs:release
+    volumes:
+      - ./data/ipfs1:/data/ipfs
+    networks:
+      - cluster
+
+  cluster1:
+    container_name: cluster1
+    image: ipfs/ipfs-cluster:latest
+    depends_on:
+      - ipfs1
+    environment:
+      CLUSTER_PEERNAME: cluster1
+      CLUSTER_SECRET: ${CLUSTER_SECRET}
+      CLUSTER_IPFSHTTP_NODEMULTIADDRESS: /dns4/ipfs1/tcp/5001
+      CLUSTER_CRDT_TRUSTEDPEERS: '*'
+      CLUSTER_MONITORPINGINTERVAL: 2s # Speed up peer discovery
+    volumes:
+      - ./data/cluster1:/data/ipfs-cluster
+    networks:
+      - cluster
+
+  # cluster peer2
+  ipfs2:
+    container_name: ipfs2
+    image: ipfs/go-ipfs:release
+    volumes:
+      - ./data/ipfs2:/data/ipfs
+    networks:
+      - cluster
+
+  cluster2:
+    container_name: cluster2
+    image: ipfs/ipfs-cluster:latest
+    depends_on:
+      - ipfs2
+    environment:
+      CLUSTER_PEERNAME: cluster2
+      CLUSTER_SECRET: ${CLUSTER_SECRET}
+      CLUSTER_IPFSHTTP_NODEMULTIADDRESS: /dns4/ipfs2/tcp/5001
+      CLUSTER_CRDT_TRUSTEDPEERS: '*'
+      CLUSTER_MONITORPINGINTERVAL: 2s # Speed up peer discovery
+    volumes:
+      - ./data/cluster2:/data/ipfs-cluster
+    networks:
+      - cluster
+
+  worker:
+    <<: *api
+    command: celery -A dhost worker --loglevel=info -n worker
+    ports: []
+
+  scheduler:
+    <<: *api
+    command: celery -A dhost beat --loglevel=info
+    ports: []
+
+  db:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=dhost
+      - POSTGRES_PASSWORD=dhost
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - backends
+
+  broker:
+    image: redis
+    restart: unless-stopped
+    ports:
+      - 6479:6379
+    networks:
+      - backends
+
+  cache:
+    image: redis
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    networks:
+      - backends
+
+  flower:
+    image: mher/flower
+    restart: unless-stopped
+    ports:
+      - 5555:5555
+    environment:
+      - CELERY_BROKER_URL=redis://broker:6379/1
+      - CELERY_RESULT_BACKEND=redis://broker:6379/1
+    networks:
+      - backends
+
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - 8081:8080
+    networks:
+      - backends
+
+  mailhog:
+    image: mailhog/mailhog
+    restart: unless-stopped
+    ports:
+      - 1025:1025
+      - 8025:8025
+    networks:
+      - backends
+
+  prometheus:
+    image: prom/prometheus
+    restart: unless-stopped
+    ports:
+      - 9090:9090
+    volumes:
+      - ./tools/prometheus:/etc/prometheus
+      - prometheus:/prometheus
+    networks:
+      - backends
+
+  grafana:
+    image: grafana/grafana
+    restart: unless-stopped
+    ports:
+      - 3030:3000
+    volumes:
+      - ./tools/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./tools/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - grafana:/var/lib/grafana
+    networks:
+      - backends
+
+volumes:
+  db:
+    driver: local
+  ipfs_export:
+  ipfs_data:
+  prometheus:
+  grafana:
+
+networks:
+  backends:
+    driver: bridge
+  cluster:
+    driver: bridge

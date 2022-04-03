@@ -6,8 +6,8 @@ from .models import Branch, GithubOptions, Repository
 class BranchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Branch
-        fields = ["name"]
-        read_only_fields = ["name"]
+        fields = ["name", "id"]
+        read_only_fields = ["name", "id"]
 
 
 class RepositorySerializer(serializers.ModelSerializer):

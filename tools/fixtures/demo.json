@@ -1,0 +1,181 @@
+[
+  {
+    "model": "sites.site",
+    "pk": 1,
+    "fields": {
+      "domain": "example.com",
+      "name": "example.com"
+    }
+  },
+  {
+    "model": "dapps.dapp",
+    "pk": "dhost",
+    "fields": {
+      "owner": "19bf9882-7033-456d-995b-66c2b88bec35",
+      "url": "",
+      "status": "SO",
+      "created_at": "2021-06-18T13:05:39.315Z"
+    }
+  },
+  {
+    "model": "ipfs.ipfsdapp",
+    "pk": "dhost",
+    "fields": {
+      "ipfs_hash": "",
+      "ipfs_gateway": ""
+    }
+  },
+  {
+    "model": "logs.dapplog",
+    "pk": "03125ae8-ff08-4618-8678-a6fe7b2323fd",
+    "fields": {
+      "user": "19bf9882-7033-456d-995b-66c2b88bec35",
+      "dapp": "dhost",
+      "content_type": 17,
+      "object_id": "dhost",
+      "action_flag": "dapp_add",
+      "change_message": "",
+      "action_time": "2021-07-15T12:19:57.995Z"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": "19bf9882-7033-456d-995b-66c2b88bec35",
+    "fields": {
+      "password": "pbkdf2_sha256$260000$QU9iDKelTfEmiqNAtTxE6n$l0r9OJ8QXFSZiPLnI112flWT9fnYdSPD/W1yhW2AlqQ=",
+      "last_login": "2021-06-18T13:07:12.936Z",
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "email": "admin@example.com",
+      "gravatar_hash": "",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2021-06-15T12:32:18.788Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": "6872f28c-b8a2-4c35-93e1-7bd081268873",
+    "fields": {
+      "password": "pbkdf2_sha256$260000$YBEH6MydMtQNmpGgwjKhwa$GEd11q+OD053E235YY0i/Rk67XjEymNl2iUgbECGwGQ=",
+      "last_login": "2021-06-18T13:08:20.365Z",
+      "is_superuser": false,
+      "username": "userone",
+      "first_name": "",
+      "last_name": "",
+      "email": "userone@example.com",
+      "gravatar_hash": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-06-15T12:33:09Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": "83c58c3e-6bda-4d4c-9327-ef46b199aeb0",
+    "fields": {
+      "password": "pbkdf2_sha256$260000$BiGqA5PL2TZusm1lEVxIAq$oVLiDfuC98i4r6A3Vruoxhysw0l5RxhAXHBB3JK65Z0=",
+      "last_login": "2021-06-18T13:06:46.459Z",
+      "is_superuser": false,
+      "username": "usertwo",
+      "first_name": "",
+      "last_name": "",
+      "email": "usertwo@example.com",
+      "gravatar_hash": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-06-15T12:33:35.232Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "oauth2.oauth2application",
+    "pk": 1,
+    "fields": {
+      "client_id": "dhost_cli",
+      "user": null,
+      "redirect_uris": "",
+      "client_type": "public",
+      "authorization_grant_type": "password",
+      "client_secret": "",
+      "name": "DHost public CLI",
+      "skip_authorization": false,
+      "created": "2021-06-15T12:35:27.170Z",
+      "updated": "2021-06-15T12:35:27.170Z",
+      "algorithm": "",
+      "logo": "oauth2_provider_app_logos/dhost_cli_nhXjPGp.png",
+      "description": ""
+    }
+  },
+  {
+    "model": "oauth2.oauth2application",
+    "pk": 2,
+    "fields": {
+      "client_id": "dhost_dashboard",
+      "user": null,
+      "redirect_uris": "http://localhost:3001/authorize",
+      "client_type": "confidential",
+      "authorization_grant_type": "authorization-code",
+      "client_secret": "Jqa0e47XoXxPsWVfVMoO2iRCJvfzOtF6l",
+      "name": "DHost dashboard",
+      "skip_authorization": true,
+      "created": "2021-06-15T12:37:20.838Z",
+      "updated": "2021-06-18T11:35:34.478Z",
+      "algorithm": "",
+      "logo": "oauth2_provider_app_logos/dhost_dashboard_pEnrFzv.png",
+      "description": ""
+    }
+  },
+  {
+    "model": "oauth2_provider.accesstoken",
+    "pk": 1,
+    "fields": {
+      "user": "19bf9882-7033-456d-995b-66c2b88bec35",
+      "source_refresh_token": null,
+      "token": "admintoken",
+      "id_token": null,
+      "application": 1,
+      "expires": "2042-06-15T12:35:44Z",
+      "scope": "",
+      "created": "2021-06-15T12:35:55.543Z",
+      "updated": "2021-06-15T12:35:55.543Z"
+    }
+  },
+  {
+    "model": "oauth2_provider.accesstoken",
+    "pk": 2,
+    "fields": {
+      "user": "6872f28c-b8a2-4c35-93e1-7bd081268873",
+      "source_refresh_token": null,
+      "token": "uonetoken",
+      "id_token": null,
+      "application": 1,
+      "expires": "2042-06-15T12:36:10Z",
+      "scope": "",
+      "created": "2021-06-15T12:36:14.567Z",
+      "updated": "2021-06-15T12:36:14.567Z"
+    }
+  },
+  {
+    "model": "oauth2_provider.accesstoken",
+    "pk": 3,
+    "fields": {
+      "user": "83c58c3e-6bda-4d4c-9327-ef46b199aeb0",
+      "source_refresh_token": null,
+      "token": "utwotoken",
+      "id_token": null,
+      "application": 1,
+      "expires": "2042-06-15T12:36:25Z",
+      "scope": "",
+      "created": "2021-06-15T12:36:32.845Z",
+      "updated": "2021-06-15T12:36:32.845Z"
+    }
+  }
+]

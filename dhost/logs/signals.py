@@ -1,4 +1,4 @@
-from django.db.models.signals import post_delete, post_save
+from django.db.models.signals import post_delete, post_save, pre_delete
 from django.dispatch import receiver
 
 from dhost.builds.models import (
@@ -18,6 +18,7 @@ from dhost.dapps.models import (
 )
 from dhost.github.models import GithubOptions
 from dhost.ipfs.models import IPFSDapp, IPFSDeployment
+from dhost.notifications.models import Notification
 
 from .models import ActionFlags
 from .utils import log_with_user
@@ -47,7 +48,7 @@ def log_bundle_create(sender, instance, created, **kwargs):
         )
 
 
-@receiver(post_delete, sender=Bundle)
+@receiver(pre_delete, sender=Bundle)
 def log_bundle_delete(sender, instance, **kwargs):
     log_with_user(
         instance=instance,
@@ -67,7 +68,7 @@ def log_build_options_create_or_update(sender, instance, created, **kwargs):
     )
 
 
-@receiver(post_delete, sender=BuildOptions)
+@receiver(pre_delete, sender=BuildOptions)
 def log_build_options_delete(sender, instance, **kwargs):
     log_with_user(
         instance=instance,
@@ -89,7 +90,7 @@ def log_env_var_create_or_update(sender, instance, created, **kwargs):
     )
 
 
-@receiver(post_delete, sender=EnvVar)
+@receiver(pre_delete, sender=EnvVar)
 def log_env_var_delete(sender, instance, **kwargs):
     log_with_user(
         instance=instance,
@@ -109,7 +110,7 @@ def log_github_options_create_or_update(sender, instance, created, **kwargs):
     )
 
 
-@receiver(post_delete, sender=GithubOptions)
+@receiver(pre_delete, sender=GithubOptions)
 def log_github_options_delete(sender, instance, **kwargs):
     log_with_user(
         instance=instance,

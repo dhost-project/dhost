@@ -2,16 +2,8 @@ import os
 
 import dj_database_url
 
-
-def env(var, default=None):
-    return os.environ.get(var, default)
-
-
-def env_list(var, default=None, separator=","):
-    """Return a python list of value from env vars."""
-    text_list = env(var, default)
-    return [item.strip() for item in text_list.split(separator)]
-
+from dhost.utils import get_version
+from dhost.utils.env import env, env_bool, env_float, env_int, env_list
 
 # dhost folder (apps dir)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -19,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # git root
 ROOT_DIR = os.path.dirname(BASE_DIR)
 
-SITE_ID = env("SITE_ID", 1)
+SITE_ID = env_int("SITE_ID", 1)
 
 ALLOWED_HOSTS = env_list("ALLOWED_HOSTS", "localhost,127.0.0.1")
 
@@ -100,6 +92,32 @@ DATABASES = {
     )
 }
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+    }
+}
+
+REDIS_URL = env("REDIS_URL")
+
+if REDIS_URL:
+    CACHES.update(
+        {
+            "redis": {
+                "BACKEND": "django_redis.cache.RedisCache",
+                "LOCATION": REDIS_URL,
+                "OPTIONS": {
+                    "CLIENT_CLASS": "django_redis.client.DefaultClient",
+                    "IGNORE_EXCEPTIONS": True,
+                },
+            }
+        }
+    )
+
+    SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+
+    SESSION_CACHE_ALIAS = "redis"
+
 AUTH_USER_MODEL = "users.User"
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -133,11 +151,6 @@ USE_TZ = True
 
 LOCALE_PATHS = (os.path.join(os.path.dirname(ROOT_DIR), "locale"),)
 
-LANGUAGES = [
-    ("en", "English"),
-    ("fr", "Français"),
-]
-
 STATIC_URL = "/static/"
 
 STATIC_ROOT = os.path.join(ROOT_DIR, "staticfiles")
@@ -147,6 +160,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "frontend", "build", "static")]
 MEDIA_URL = "/media/"
 
 MEDIA_ROOT = env("MEDIA_ROOT", os.path.join(ROOT_DIR, "media"))
+
+FIXTURE_DIRS = [os.path.join(ROOT_DIR, "tools", "fixtures")]
 
 EMAIL_HOST = env("EMAIL_HOST", "localhost")
 
@@ -207,11 +222,26 @@ SOCIAL_AUTH_GITHUB_SCOPE = [
     # 'user:email',
 ]
 
+GITHUB_REPOS_ROOT = env("GITHUB_REPOS_ROOT", os.path.join(MEDIA_ROOT, "github"))
+
 # Celery
-CELERY_BROKER_URL = env("CELERY_BROKER_URL", "redis://127.0.0.1:6379/0")
-CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND", "redis://127.0.0.1:6379/0")
+CELERY_BROKER_URL = env("CELERY_BROKER_URL", "redis://localhost:6379/0")
+
+CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND", "redis://localhost:6379/0")
+
 CELERY_TASK_TRACK_STARTED = True
-CELERY_TASK_TIME_LIMIT = 30 * 60
+
+CELERY_TASK_TIME_LIMIT = env_int("CELERY_TASK_TIME_LIMIT", 1800)
+
+CELERY_TASK_SOFT_TIME_LIMIT = env_int("CELERY_TASK_SOFT_TIME_LIMIT", 1700)
+
+GITHUB_REPOS_ROOT = env("GITHUB_REPOS_ROOT", os.path.join(MEDIA_ROOT, "github"))
+
+# IPFS
+IPFS_HTTP_API_URL = env("IPFS_HTTP_API_URL", "http://127.0.0.1:5001/api/")
+IPFS_CLUSTER_API_URL = env("IPFS_CLUSTER_API_URL", "https://cluster0:9094/")
+IPFS_MEDIAS = env("IPFS_MEDIAS", "media/ipfs/")
+
 
 # putting the `TEST_DIR` inside the `.cache` folder protect from loosing data
 # that musn't be deleted
@@ -221,18 +251,12 @@ TEST_MEDIA_ROOT = env("TEST_MEDIA_ROOT", os.path.join(TEST_DIR, "media"))
 
 LOG_ROOT = env("LOG_ROOT", ROOT_DIR)
 
+LOG_LEVEL = env("LOG_LEVEL", "INFO")
+
 # https://docs.djangoproject.com/en/dev/topics/logging/#configuring-logging
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "filters": {
-        "require_debug_false": {
-            "()": "django.utils.log.RequireDebugFalse",
-        },
-        "require_debug_true": {
-            "()": "django.utils.log.RequireDebugTrue",
-        },
-    },
     "formatters": {
         "django.server": {
             "()": "django.utils.log.ServerFormatter",
@@ -242,22 +266,17 @@ LOGGING = {
     },
     "handlers": {
         "console": {
-            "level": "INFO",
-            "filters": ["require_debug_true"],
             "class": "logging.StreamHandler",
+            "formatter": "django.server",
         },
         "django.server": {
-            "level": "INFO",
             "class": "logging.StreamHandler",
             "formatter": "django.server",
         },
         "mail_admins": {
-            "level": "ERROR",
-            "filters": ["require_debug_false"],
             "class": "django.utils.log.AdminEmailHandler",
         },
         "github_api": {
-            "level": "WARNING",
             "class": "logging.FileHandler",
             "filename": os.path.join(LOG_ROOT, "github_api.log"),
             "formatter": "django.server",
@@ -266,17 +285,37 @@ LOGGING = {
     "loggers": {
         "django": {
             "handlers": ["console", "mail_admins"],
-            "level": "INFO",
+            "level": LOG_LEVEL,
         },
         "django.server": {
             "handlers": ["django.server"],
-            "level": "INFO",
+            "level": LOG_LEVEL,
             "propagate": False,
         },
         "dhost.github.github_api": {
             "handlers": ["console", "github_api"],
-            "level": "WARNING",
+            "level": LOG_LEVEL,
             "propagate": False,
         },
     },
 }
+
+# Sentry
+# https://docs.sentry.io/platforms/python/guides/django/
+SENTRY_DSN = env("SENTRY_DSN")
+
+if SENTRY_DSN:
+    import sentry_sdk
+    from sentry_sdk.integrations.celery import CeleryIntegration
+    from sentry_sdk.integrations.django import DjangoIntegration
+
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[
+            DjangoIntegration(),
+            CeleryIntegration(),
+        ],
+        traces_sample_rate=env_float("SENTRY_TRACES_SAMPLE_RATE", 1.0),
+        send_default_pii=env_bool("SENTRY_SEND_DEFAULT_PII", True),
+        release=get_version(),
+    )

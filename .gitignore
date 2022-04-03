@@ -155,3 +155,11 @@ dhost/frontend/build/static/media
 terraform.tfstate
 terraform.tfstate.backup
 *.key
+
+docker-ipfs/
+
+# IPFS datas
+ipfs_data/*
+data/*
+media/ipfs/*
+

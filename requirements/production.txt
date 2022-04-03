@@ -1,0 +1,7 @@
+boto3
+django-storages
+google-cloud-storage
+gunicorn
+httptools
+uvicorn
+uvloop

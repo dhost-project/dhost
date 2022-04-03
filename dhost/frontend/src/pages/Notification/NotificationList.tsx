@@ -1,17 +1,14 @@
 import { SearchIcon } from "@heroicons/react/outline"
 import { useTranslation } from "react-i18next"
-
 import { Button } from "components/Button"
 import { ListNotification } from "components/ListNotification"
+import { Notification } from "models/api/Notification"
+import { useUserContext } from "contexts/UserContext/UserContext"
 
-import { Notification } from "models/Notification"
-
-export function NotificationList({
-  notifications,
-}: {
-  notifications: Notification[]
-}): React.ReactElement {
+export function NotificationList(): React.ReactElement {
   const { t } = useTranslation()
+
+
 
   return (
     <div className="container mx-auto py-4">
@@ -32,7 +29,7 @@ export function NotificationList({
         <Button size="sm">{t("Mark all as read")}</Button>
         <Button size="sm">{t("Mark all as un-read")}</Button>
       </div>
-      <ListNotification notifications={notifications} />
+      <ListNotification />
     </div>
   )
 }

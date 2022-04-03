@@ -4,11 +4,11 @@ from django.urls import include, path, re_path
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("api/admin/", admin.site.urls),
     path("api/", include("dhost.api.urls")),
     path("oauth2/", include("dhost.oauth2.urls", namespace="oauth2_provider")),
-    path("social/", include("social_django.urls", namespace="social")),
     path("api/", include("dhost.users.urls")),
+    path("api/social/", include("social_django.urls", namespace="social")),
     path(
         "robots.txt",
         TemplateView.as_view(
@@ -20,12 +20,12 @@ urlpatterns = [
 admin.site.site_header = "DHost"
 admin.site.site_title = "dhost"
 
-if settings.SETTINGS_MODULE == "dhost.settings.development":  # pragma: no cover
+if settings.DEBUG:  # pragma: no cover
     from django.conf.urls.static import static
 
     urlpatterns.append(
         path(
-            "api-auth/",
+            "api/api-auth/",
             include("rest_framework.urls", namespace="rest_framework"),
         )
     )

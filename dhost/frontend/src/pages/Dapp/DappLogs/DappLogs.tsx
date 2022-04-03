@@ -1,18 +1,31 @@
-import { useTranslation } from "react-i18next"
-import { RouteComponentProps } from "react-router-dom"
+import { useEffect, useState } from "react"
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useRouteMatch,
+} from "react-router-dom"
+import { useDapp } from "contexts/DappContext/DappContext"
+import { NotFound } from "pages/NotFound"
+import { DappLogsList } from "./DappLogsList"
 
-type TParams = { dapp_slug: string }
-
-export function DappLogs({
-  match,
-}: RouteComponentProps<TParams>): React.ReactElement {
-  const { t } = useTranslation()
+export function DappLogs(): React.ReactElement {
+  const { path } = useRouteMatch()
+  const { dapp } = useDapp()
 
   return (
     <div className="container mx-auto">
-      <h2>
-        {t("LOGS_TITLE")} {match.params.dapp_slug}
-      </h2>
+      <Router>
+        <Switch>
+          <Route exact path={`${path}`}>
+            <DappLogsList dappLogs={dapp.dappLogsList} />
+          </Route>
+          {/* <Route path={`${path}/:notification_id`}>
+              <NotificationDetail notification={notifications[0]} />
+            </Route> */}
+          <Route path="*" component={NotFound} />
+        </Switch>
+      </Router>
     </div>
   )
 }

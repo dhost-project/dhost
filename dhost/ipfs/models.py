@@ -1,7 +1,10 @@
+import json
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from dhost.dapps.models import Dapp, Deployment
+from dhost.ipfs.ipfs import ClusterIPFSAPI
 
 
 class IPFSDeployment(Deployment):
@@ -17,7 +20,19 @@ class IPFSDeployment(Deployment):
 
     def deploy(self):
         # deploying on the IPFS
-        pass
+        ipfs = ClusterIPFSAPI()
+        result = ipfs.add(self.bundle.folder)
+
+        list_raw_data = (result.decode("utf-8")).split("\n")
+        if list_raw_data[-1] == "":
+            list_raw_data.pop()
+
+        principal_directory_json = json.loads(list_raw_data[-1])
+        ipfs_hash = principal_directory_json["cid"]["/"]
+
+        self.dapp.ipfs_hash = ipfs_hash
+        self.dapp.url = self.dapp.get_public_url()
+        self.dapp.save()
 
 
 class IPFSDapp(Dapp):
@@ -38,4 +53,6 @@ class IPFSDapp(Dapp):
 
     def get_public_url(self):
         """Generate public URL based on hash and IPFS gateway."""
-        return "{}{}".format(self.ipfs_gateway, self.ipfs_hash)
+        return "{}{}{}{}".format(
+            self.ipfs_gateway, self.ipfs_hash, "/ipfs/", self.slug
+        )

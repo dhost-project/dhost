@@ -1,48 +1,24 @@
-import os
-
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
-
-from dhost import __version__
+from dhost.utils.env import env, env_bool, env_int
 
 from .defaults import *  # noqa
 
 DEBUG = False
 
-SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
+SECRET_KEY = env("DJANGO_SECRET_KEY")
 
-if env("ENABLE_SSL", "1") == "1":  # noqa
+ENABLE_SSL = env_bool("ENABLE_SSL", True)
 
-    SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = ENABLE_SSL
 
-    CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = ENABLE_SSL
 
-    SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = ENABLE_SSL
 
-    SECURE_HSTS_SECONDS = int(env("SECURE_HSTS_SECONDS", 60))  # noqa
+SECURE_HSTS_SECONDS = env_int("SECURE_HSTS_SECONDS", 60)
 
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = ENABLE_SSL
 
-    SECURE_HSTS_PRELOAD = True
-
-# Redis
-REDIS_URL = env("REDIS_URL")  # noqa
-
-if REDIS_URL:
-    CACHES = {
-        "default": {
-            "BACKEND": "django_redis.cache.RedisCache",
-            "LOCATION": REDIS_URL,
-            "OPTIONS": {
-                "CLIENT_CLASS": "django_redis.client.DefaultClient",
-                "IGNORE_EXCEPTIONS": True,
-            },
-        }
-    }
-
-    SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-
-    SESSION_CACHE_ALIAS = "default"
+SECURE_HSTS_PRELOAD = ENABLE_SSL
 
 # AWS S3
 AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")  # noqa
@@ -111,21 +87,4 @@ elif DJANGO_DEFAULT_FILE_STORAGE != "default":
     raise Exception(
         "DJANGO_DEFAULT_FILE_STORAGE not configured correctly, use one of: "
         "aws, google, default. default=default."
-    )
-
-# Sentry
-# https://docs.sentry.io/platforms/python/guides/django/
-SENTRY_DSN = env("SENTRY_DSN")  # noqa
-
-SENTRY_TRACES_SAMPLE_RATE = env("SENTRY_TRACES_SAMPLE_RATE", 1.0)  # noqa
-
-SENTRY_SEND_DEFAULT_PII = env("SENTRY_SEND_DEFAULT_PII", True)  # noqa
-
-if SENTRY_DSN:
-    sentry_sdk.init(
-        dsn=SENTRY_DSN,
-        integrations=[DjangoIntegration()],
-        traces_sample_rate=SENTRY_TRACES_SAMPLE_RATE,
-        send_default_pii=SENTRY_SEND_DEFAULT_PII,
-        release=__version__,
     )

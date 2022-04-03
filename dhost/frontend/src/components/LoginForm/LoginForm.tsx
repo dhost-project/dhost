@@ -1,12 +1,20 @@
-import axios from "axios"
 import { env } from "environment"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useHistory } from "react-router"
+import Cookies from "universal-cookie"
+import { fetchAllRepository } from "api/Repositories"
+import { http } from "utils/http"
+import { meUser } from "api/Users"
+import { useUserContext } from "contexts/UserContext/UserContext"
 
 export function LoginForm() {
+  const { setUserInfo } = useUserContext()
+  let history = useHistory()
   const [loginForm, setLoginForm] = useState({
     username: "",
     password: "",
   })
+
 
   async function login(event: React.FormEvent) {
     event.preventDefault()
@@ -16,16 +24,25 @@ export function LoginForm() {
     const password = encodeURIComponent(loginForm.password)
     const next = encodeURIComponent("/")
 
-    const http = axios.create({
-      xsrfCookieName: "csrftoken",
-      xsrfHeaderName: "X-CSRFToken",
-    })
-
     const data = `username=${username}&password=${password}&next=${next}`
     const headers = { "Content-Type": "application/x-www-form-urlencoded" }
 
     await http.get(loginUrl, { headers }) // TODO check behavior
-    return await http.post(loginUrl, data, { headers })
+    const res = await http.post(loginUrl, data, { headers })
+
+    // const _listRepositories = (await fetchAllRepository()).data
+    // setUserInfo((userInfo) => ({
+    //   ...userInfo,
+    //   githubRepositories: _listRepositories,
+    // }))
+
+    if ((await meUser()).status !== 401) {
+      history.push("/")
+      localStorage.setItem("connected", "OK")
+      window.location.reload()
+    }
+
+    return res
   }
 
   return (
@@ -69,7 +86,7 @@ export function LoginForm() {
         </label>
       </div>
       <input
-        className="px-4 py-1 mt-12 rounded bg-green-200 w-full hover:bg-gray-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500"
+        className="px-4 py-2 mt-12 rounded bg-green-300 w-full hover:bg-green-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500"
         type="submit"
         value="Login"
       />
