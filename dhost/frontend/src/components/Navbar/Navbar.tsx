@@ -43,16 +43,6 @@ const account_sections = [
       href: "/account/settings/",
       icon: CogIcon,
     },
-    {
-      name: "Security",
-      href: "/account/settings/",
-      icon: ShieldCheckIcon,
-    },
-    {
-      name: "Support",
-      href: "/support/",
-      icon: SupportIcon,
-    },
   ],
   [
     {

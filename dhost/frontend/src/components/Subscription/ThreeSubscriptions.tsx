@@ -10,6 +10,7 @@ export function ThreeSubscriptions() {
 
   const handleSubscription = (plan: string) => {
     history.push(`/payment?plan=${plan}&periodicity=${period}`)
+    window.location.reload()
   }
 
   return (
