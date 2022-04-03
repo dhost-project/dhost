@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 import {
   createGithubOptions,
+  destroyGithubOptions,
   listGithubOptions,
   updateGithubOptions,
 } from "api/GithubOptions"
@@ -15,36 +16,58 @@ import { TParams } from "pages/Dapp"
 
 export function ConnectedGithubDeploy() {
   const { t } = useTranslation()
-  const { userInfo, setUserInfo } = useUserContext()
-  const { dapp_slug }: TParams = useParams()
+  const { dapp_slug } = useParams<TParams>()
   const { dapp, setDapp } = useDapp()
+  const { userInfo, setUserInfo } = useUserContext()
 
   const [selectedRepo, setSelectedRepo] = useState<number>()
   const [selectedBranch, setSelectedBranch] = useState<number>()
 
   useEffect(() => {
-    console.log("ConnectedGithubDeploy", { dapp_slug, dapp, userInfo })
-  }, [dapp])
+    // console.log("ConnectedGithubDeploy", { dapp_slug, dapp, userInfo })
+    getListGithubOptions()
+  }, [])
 
-  async function linkRepository() {
-    if (!selectedRepo) return
-    // TODO linkRepository
-    console.log("linkRepository", { selectedRepo })
-
-    const _hydratedCurrentRepository = (
-      await fetchBranchesRepository(selectedRepo)
-    ).data
+  async function getRepositoriesList() {
     const _listRepositories = (await listRepositorys()).data
 
     setUserInfo((userInfo) => ({
       ...userInfo,
       githubRepositories: _listRepositories,
     }))
+  }
+
+  async function getListGithubOptions() {
+    try {
+      const githubOptionsList = (await listGithubOptions(dapp_slug)).data
+      if (!githubOptionsList.length) return
+
+      // console.log("githubOptionsList", githubOptionsList)
+      const githubOption = githubOptionsList[githubOptionsList.length - 1]
+      setDapp((_dapp) => ({
+        ..._dapp,
+        github: githubOption,
+      }))
+    } catch (e) {
+      // console.error("getListGithubOptions", e)
+      toast.warn("Error while getting github options")
+    }
+  }
+
+  async function linkRepository() {
+    if (!selectedRepo) return
+    // console.log("linkRepository", { selectedRepo })
+
+    const _hydratedCurrentRepository = (
+      await fetchBranchesRepository(selectedRepo)
+    ).data
+
+    getRepositoriesList() // To refresh repos with fetched branches
 
     setDapp((dapp) => ({
       ...dapp,
       github: {
-        repo: _hydratedCurrentRepository.github_repo,
+        repo: `${_hydratedCurrentRepository.id}`,
         branch: 0,
         auto_deploy: false,
         confirm_ci: false,
@@ -54,41 +77,42 @@ export function ConnectedGithubDeploy() {
 
   async function linkBranch() {
     if (!selectedBranch) {
-      console.log("Please select a branch")
+      // console.log("selectedBranch", selectedBranch)
       toast.warn("Please select a branch")
       return
     }
-
     if (!dapp.github.repo) {
-      console.log("Missing repository information", dapp.github)
+      // console.log("dapp.github.repo", dapp.github.repo)
       toast.warn(
         "Missing repository information, please reload and/or try again later"
       )
       return
     }
 
-    console.log("linkBranch", { selectedBranch })
-
     const githubOptionsList = (await listGithubOptions(dapp_slug)).data
-
-    console.log("githubOptionsRes", githubOptionsList)
+    // console.log("linkBranch", { selectedBranch, githubOptionsList })
 
     try {
       if (githubOptionsList.length) {
         if (
           githubOptionsList.some(
             (githubOptions) =>
-              githubOptions.repo === dapp.github.repo &&
-              githubOptions.branch === selectedBranch
+              githubOptions.repo == dapp.github.repo &&
+              githubOptions.branch == selectedBranch
           )
         ) {
-          const updatedGithubOptions = await updateGithubOptions(dapp_slug, {
-            ...dapp.github,
-            repo: dapp.github.repo,
-            branch: selectedBranch,
-          })
+          const updatedGithubOptions = await updateGithubOptions(
+            dapp_slug,
+            dapp.github.repo,
+            // `${selectedBranch}`,
+            {
+              ...dapp.github,
+              repo: dapp.github.repo,
+              branch: selectedBranch,
+            }
+          )
 
-          console.log("updatedGithubOptions", updatedGithubOptions)
+          // console.log("updatedGithubOptions", updatedGithubOptions)
 
           setDapp((_dapp) => ({
             ..._dapp,
@@ -97,13 +121,18 @@ export function ConnectedGithubDeploy() {
           return
         }
       }
-      const createdGithubOptions = await createGithubOptions(dapp_slug, {
-        ...dapp.github,
-        repo: dapp.github.repo,
-        branch: selectedBranch,
-      })
+      const createdGithubOptions = await createGithubOptions(
+        dapp_slug,
+        dapp.github.repo,
+        // `${selectedBranch}`,
+        {
+          ...dapp.github,
+          repo: dapp.github.repo,
+          branch: selectedBranch,
+        }
+      )
 
-      console.log("createdGithubOptions", createdGithubOptions)
+      // console.log("createdGithubOptions", createdGithubOptions)
 
       setDapp((_dapp) => ({
         ..._dapp,
@@ -115,10 +144,28 @@ export function ConnectedGithubDeploy() {
     }
   }
 
-  function getRepositoryBranches(repositoryName: string) {
+  function getRepositoryBranches(repositoryId: string) {
     return userInfo.githubRepositories.find(
-      (repository) => repository.github_repo === repositoryName
+      (repository) => `${repository.id}` == repositoryId
     )?.branches
+  }
+
+  function getRepository(repositoryId: string) {
+    return userInfo.githubRepositories.find(
+      (repository) => `${repository.id}` == repositoryId
+    )
+    // console.log("getRepository", repo)
+    // return repo
+  }
+
+  function setAutoDeploy(value: boolean) {
+    setDapp((_dapp) => ({
+      ..._dapp,
+      github: {
+        ..._dapp.github,
+        auto_deploy: value,
+      },
+    }))
   }
 
   return (
@@ -143,29 +190,30 @@ export function ConnectedGithubDeploy() {
                 <option
                   key={repository.id}
                   value={repository.id}
-                  selected={repository.github_repo === dapp.github.repo}
+                  selected={`${repository.id}` == dapp.github.repo}
                 >
                   📥 {repository.github_repo}
                 </option>
               ))}
             </select>
             <button
-              className="w-40 text-medium border-1 border-gray-700 text-gray-700 hover:bg-gray-700 rounded hover:text-white"
+              className="flex justify-center items-center btn border border-green-500 h-8 ml-2 text-green-500 bg-white p-4"
               onClick={linkRepository}
             >
               Connect Repository
             </button>
           </div>
           {dapp.github.repo && dapp.github.branch ? (
-            <GithubBranchLinked />
+            <GithubBranchLinked repository={getRepository(dapp.github.repo)} />
           ) : (
             <div className="flex justify-between">
               {getRepositoryBranches(dapp.github.repo)?.length ? (
                 <>
                   <select
-                    onChange={(e) =>
+                    onChange={(e) => {
+                      console.log("branch", e.target.value)
                       setSelectedBranch(parseInt(e.target.value))
-                    }
+                    }}
                     className="mr-2 border-1 border-gray-400 w-full p-1 rounded"
                   >
                     {getRepositoryBranches(dapp.github.repo)?.map(
@@ -181,7 +229,7 @@ export function ConnectedGithubDeploy() {
                   </select>
                   <button
                     onClick={linkBranch}
-                    className="w-40 text-medium border-1 border-gray-700 text-gray-700 hover:bg-gray-700 rounded hover:text-white"
+                    className="flex justify-center items-center btn border border-green-500 h-8 ml-2 text-green-500 bg-white p-4"
                   >
                     Connect Branch
                   </button>
@@ -259,13 +307,23 @@ export function ConnectedGithubDeploy() {
             </p>
 
             <div>
-              <button className="pl-4 pr-4 pt-1 pb-1 font-medium text-sm text-gray-500 border-1 border-gray-500 rounded hover:bg-gray-500 hover:text-white">
+              <button
+                onClick={() => setAutoDeploy(false)}
+                className="pl-4 pr-4 pt-1 pb-1 font-medium text-sm text-gray-500 border-1 border-gray-500 rounded hover:bg-gray-500 hover:text-white"
+              >
                 Disable Automatic Deploy
               </button>
             </div>
           </div>
         ) : (
-          <div>Enable auto deploy</div>
+          <div>
+            <button
+              onClick={() => setAutoDeploy(true)}
+              className="pl-4 pr-4 pt-1 pb-1 font-medium text-sm text-green-500 border-1 border-green-500 rounded hover:bg-green-500 hover:text-white"
+            >
+              Enable Automatic Deploy
+            </button>
+          </div>
         )}
       </section>
 
@@ -293,15 +351,36 @@ export function ConnectedGithubDeploy() {
             Choose a branch to deploy
           </h4>
           <div className="flex justify-between">
-            <select className="mr-2 border-1 border-gray-400 w-full p-1 rounded">
-              <option value="master">🖇 master</option>
-              <option value="main">🖇 main</option>
-              <option value="dev">🖇 dev</option>
-              <option value="feature">🖇 feature</option>
-            </select>
-            <button className="w-40 text-medium border-1 border-gray-700 text-gray-700 hover:bg-gray-700 rounded hover:text-white">
-              Deploy Branch
-            </button>
+            {getRepositoryBranches(dapp.github.repo)?.length ? (
+              <>
+                <select
+                  onChange={(e) => {
+                    console.log("branch", e.target.value)
+                    setSelectedBranch(parseInt(e.target.value))
+                  }}
+                  className="mr-2 border-1 border-gray-400 w-full p-1 rounded"
+                >
+                  {getRepositoryBranches(dapp.github.repo)?.map((branch, i) => (
+                    <option
+                      key={`github-deploy-${branch.name}-${i}`}
+                      value={branch.id}
+                    >
+                      🖇 {branch.name}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  onClick={linkBranch}
+                  className="flex justify-center items-center btn border border-green-500 h-8 ml-2 text-green-500 bg-white p-4"
+                >
+                  Deploy Branch
+                </button>
+              </>
+            ) : (
+              <div>
+                <p>No branches found or repository not yet connected</p>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -309,10 +388,31 @@ export function ConnectedGithubDeploy() {
   )
 }
 
-export function GithubBranchLinked() {
-  function disconnect() {
-    // TODO
-    console.log("TODO disconnect")
+export function GithubBranchLinked({
+  repository,
+}: {
+  repository: Repository | undefined
+}) {
+  const { dapp_slug } = useParams<TParams>()
+  const { dapp, setDapp } = useDapp()
+
+  async function disconnect() {
+    const res = await destroyGithubOptions(dapp_slug, dapp_slug)
+    setDapp((_dapp) => ({
+      ..._dapp,
+      github: {
+        repo: "",
+        branch: 0,
+        auto_deploy: false,
+        confirm_ci: false,
+      },
+    }))
+  }
+
+  function getCurrentBranch() {
+    return repository?.branches.find(
+      (branch) => branch.id === dapp.github.branch
+    )
   }
 
   return (
@@ -321,19 +421,23 @@ export function GithubBranchLinked() {
         <p className="text-sm">
           Connected to
           <a
-            href="https://github.com"
+            href={`https://github.com/${repository?.github_owner}/${repository?.github_repo}`}
             className="pl-1 pr-1 text-blue-500 hover:text-blue-400"
           >
             <span className="pr-1 no-underline">📘 </span>
-            <span className="underline">project-name/repo-name</span>
+            {/* <span className="underline">project-name/repo-name</span> */}
+            <span className="underline">
+              {repository?.github_repo}/{getCurrentBranch()?.name}
+            </span>
           </a>
           by
           <a
-            href="https://github.com"
+            href={`https://github.com/${repository?.github_owner}/${repository?.github_repo}`}
             className="pl-1 pr-1 text-blue-500 hover:text-blue-400"
           >
             <span className="pr-1 no-underline">🧙‍♂️ </span>
-            <span className="underline">username</span>
+            {/* <span className="underline">username</span> */}
+            <span className="underline">{repository?.github_owner}</span>
           </a>
         </p>
 
@@ -348,18 +452,23 @@ export function GithubBranchLinked() {
         <p className="pb-1 text-sm">
           <span className="pr-2">➰</span>
           Release in the{" "}
-          <a href="https://github.com" className="text-blue-500 underline">
+          <a
+            href={`https://github.com/${repository?.github_owner}/${repository?.github_repo}`}
+            className="text-blue-500 underline"
+          >
             activity feed
           </a>{" "}
           link to Github to view commit diffs
         </p>
-        <p className="pb-1 text-sm">
-          <span className="pr-2">🥨</span>
-          Automatically deploy from
-          <span className="ml-1 mr-1 pl-1 pr-1 bg-gray-100 border-1 border-gray-400 rounded-sm">
-            🖇 dev
-          </span>
-        </p>
+        {dapp.github.auto_deploy && (
+          <p className="pb-1 text-sm">
+            <span className="pr-2">🥨</span>
+            Automatically deploy from
+            <span className="ml-1 mr-1 pl-1 pr-1 bg-gray-100 border-1 border-gray-400 rounded-sm">
+              🖇 {getCurrentBranch()?.name}
+            </span>
+          </p>
+        )}
       </div>
     </div>
   )

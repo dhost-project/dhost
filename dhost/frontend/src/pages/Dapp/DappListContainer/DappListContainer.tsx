@@ -46,7 +46,7 @@ function DappDetail(): React.ReactElement {
     try {
       let basic_resp = await retrieveIPFSDapp(dapp_slug)
       let basic: IPFSDapp = basic_resp.data
-      console.log(basic)
+      // console.log(basic)
 
       let build_resp = await retrieveBuildOptions(dapp_slug)
       let build: BuildOptions = build_resp.data[0]
@@ -71,7 +71,7 @@ function DappDetail(): React.ReactElement {
         env_vars: _dapp.env_vars,
         dappLogsList: _dapp.dappLogsList,
       }))
-      console.log("dapp", dapp)
+      // console.log("dapp", dapp)
     } catch (error) {
       console.log(error)
     }

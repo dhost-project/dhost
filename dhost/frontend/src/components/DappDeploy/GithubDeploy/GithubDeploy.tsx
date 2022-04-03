@@ -20,11 +20,11 @@ export function GithubDeploy() {
       const listRepositoryRes = await listRepositorys()
 
       if (listRepositoryRes.status >= 200) {
-        console.log("setconnected true", listRepositoryRes.data)
+        // console.log("setconnected true", listRepositoryRes.data)
         setIsConnected(true)
       }
     } catch (error: any) {
-      console.warn("getListRepositories", error)
+      // console.warn("getListRepositories", error)
       setIsConnected(false)
     }
   }

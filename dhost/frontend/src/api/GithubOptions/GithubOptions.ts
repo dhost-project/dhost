@@ -19,9 +19,11 @@ export function listGithubOptions(
  */
 export function createGithubOptions(
   dappSlug: string,
+  repoId: string,
   githubOptions: GithubOptions
 ): HttpResponse<GithubOptions> {
   return http.post(
+    // `${env.API_URL}/api/ipfs/${dappSlug}/githuboptions/${dappSlug}/`,
     `${env.API_URL}/api/ipfs/${dappSlug}/githuboptions/`,
     githubOptions
   )
@@ -32,7 +34,8 @@ export function createGithubOptions(
  * @param dappSlug string
  */
 export function retrieveGithubOptions(
-  dappSlug: string
+  dappSlug: string,
+  repoId: string
 ): HttpResponse<GithubOptions> {
   return http.get(
     `${env.API_URL}/api/ipfs/${dappSlug}/githuboptions/${dappSlug}/`
@@ -46,6 +49,7 @@ export function retrieveGithubOptions(
  */
 export function updateGithubOptions(
   dappSlug: string,
+  repoId: string,
   githubOptions: GithubOptions
 ): HttpResponse<GithubOptions> {
   return http.put(
@@ -61,6 +65,7 @@ export function updateGithubOptions(
  */
 export function partialUpdateGithubOptions(
   dappSlug: string,
+  repoId: string,
   githubOptions: GithubOptions
 ): HttpResponse<GithubOptions> {
   return http.patch(
@@ -73,7 +78,10 @@ export function partialUpdateGithubOptions(
  *
  * @param dappSlug string
  */
-export function destroyGithubOptions(dappSlug: string): HttpResponse<void> {
+export function destroyGithubOptions(
+  dappSlug: string,
+  repoId: string
+): HttpResponse<void> {
   return http.delete(
     `${env.API_URL}/api/ipfs/${dappSlug}/githuboptions/${dappSlug}/`
   )
