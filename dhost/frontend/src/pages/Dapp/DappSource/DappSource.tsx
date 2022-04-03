@@ -10,43 +10,6 @@ import FileTree from "react-file-treeview";
 
 type TParams = { dapp_slug: string }
 
-const data = {
-  name: "treeview",
-  id: 1,
-  toggled: true,
-  child: [
-    {
-      name: "folder1",
-      id: 2,
-      child: [
-        {
-          name: "folder2",
-          id: 5,
-          child: [
-            { name: "file3.py", id: 6, child: [] },
-            { name: "file4.cpp", id: 7, child: [] },
-          ],
-        },
-        {
-          name: "file1.js", id: 3, child: [{ name: "file3.py", id: 6, child: [] },
-          {
-            name: "file4.cpp", id: 7, child: [{ name: "file3.py", id: 6, child: [] },
-            {
-              name: "file4.cpp", id: 7, child: [{ name: "file3.py", id: 6, child: [] },
-              {
-                name: "file4.cpp", id: 7, child: [{ name: "file3.py", id: 6, child: [] },
-                { name: "file4.cpp", id: 7, child: [] },]
-              },]
-            },]
-          },
-          ]
-        },
-        { name: "file2.ts", id: 4, child: [] },
-      ],
-    },
-  ],
-};
-
 export function DappSource({
   match,
 }: RouteComponentProps<TParams>): React.ReactElement {
@@ -60,7 +23,9 @@ export function DappSource({
     try {
       let res = await listBundles(dapp.basic.slug)
       let _res = await retrieveBundle(dapp.basic.slug, res.data[res.data.length - 1].id)
-      setTreeView(JSON.parse(_res.data.folder_tree.replaceAll("'", "\"").replaceAll("True", "true").replaceAll("False", "false")))
+      if (_res.data.folder_tree) {
+        setTreeView(JSON.parse(_res.data.folder_tree.replaceAll("'", "\"").replaceAll("True", "true").replaceAll("False", "false")))
+      }
     }
     catch (error) {
       console.log(error)
