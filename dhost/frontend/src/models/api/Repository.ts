@@ -4,6 +4,7 @@ export interface Repository {
   github_repo: string
   branches: [
     {
+      id: number
       name: string
     }
   ]

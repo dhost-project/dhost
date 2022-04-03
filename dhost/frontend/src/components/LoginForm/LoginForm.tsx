@@ -30,11 +30,11 @@ export function LoginForm() {
     await http.get(loginUrl, { headers }) // TODO check behavior
     const res = await http.post(loginUrl, data, { headers })
 
-    const _listRepositories = (await fetchAllRepository()).data
-    setUserInfo((userInfo) => ({
-      ...userInfo,
-      githubRepositories: _listRepositories,
-    }))
+    // const _listRepositories = (await fetchAllRepository()).data
+    // setUserInfo((userInfo) => ({
+    //   ...userInfo,
+    //   githubRepositories: _listRepositories,
+    // }))
 
     if ((await meUser()).status !== 401) {
       history.push("/")

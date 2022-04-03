@@ -1,5 +1,5 @@
 import { DappCreateForm, DappDestroyForm } from "components/Forms/DappsForms"
-import { useModals } from "contexts/ModalsContext/ModalsDappDestroyContext"
+import { useModals } from "contexts/ModalsContext/ModalsContext"
 
 export function DappDestroyModal() {
     const { setShowDestroyDappModal } = useModals()
