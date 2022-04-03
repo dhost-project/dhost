@@ -18,8 +18,7 @@ export function listBundles(dapp_slug: string): HttpResponse<Bundle[]> {
 export function createBundle(
   dapp_slug: string,
   bundle: File,
-  media?: string
-): HttpResponse<Bundle[]> {
+): HttpResponse<Bundle> {
   const formData = new FormData()
   formData.append('media', bundle)
 
