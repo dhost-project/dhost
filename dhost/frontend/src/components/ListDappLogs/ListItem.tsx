@@ -15,7 +15,7 @@ export function ListItem({
   let date = new Date(dappLog.action_time)
 
   switch (true) {
-    case /success|dapp_add/.test(dappLog.action_flag):
+    case /success|add/.test(dappLog.action_flag):
       colors =
         "bg-green-100 text-green-600 hover:bg-green-200 hover:text-green-700"
       break
