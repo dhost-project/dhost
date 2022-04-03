@@ -17,12 +17,22 @@ export function ListItem({
     colors = "bg-red-100 text-red-600 hover:bg-red-200 hover:text-red-700"
   }
 
+  let date = new Date(notification.timestamp)
+
   return (
     <a
-      className={`${colors} px-4 py-2`}
-      href={`/notifications/${notification.id}/`}
+      className={`${colors} px-4 py-2 w-75`}
     >
-      {notification.subject}
+      <p>
+        <span className="text-lg" style={{ color: "rgb(0,120,80)" }}>
+          {notification.subject}
+        </span>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <span className="mr-0">
+          {notification.content}
+        </span>
+      </p>
+      {date.toLocaleString()}
     </a>
   )
 }
