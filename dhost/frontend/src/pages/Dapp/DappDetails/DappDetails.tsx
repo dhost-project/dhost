@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { RouteComponentProps } from "react-router-dom"
+import { toast } from "react-toastify"
 import { ListDappLogs } from "components/ListDappLogs"
 import { ThreeSubscriptions } from "components/Subscription/ThreeSubscriptions"
 import { useDapp } from "contexts/DappContext/DappContext"
 import "./DappDetails.css"
-import { toast } from "react-toastify"
 
 type TParams = { dapp_slug: string }
 
@@ -52,12 +52,9 @@ export function DappDetails({
     <div className="overview">
       <div className="container mx-auto md:flex mt-4">
         <div className="w-100 md:flex">
-          <a href={dapp.basic.url} target="_blank">
-            <div
-              className="thumbnail mr-2"
-              title={url ? "Go to site" : "no preview available"}
-            >
-              {url ? (
+          {url ? (
+            <a href={dapp.basic.url} target="_blank">
+              <div className="thumbnail mr-2" title="Go to site">
                 <iframe
                   src={url}
                   frameBorder="0"
@@ -66,17 +63,19 @@ export function DappDetails({
                   onLoad={() => setIframeOpacity(true)}
                   style={iframeOpacity ? { opacity: "1" } : { opacity: "0" }}
                 />
-              ) : (
-                <img
-                  src="https://admin.amslaw.ph/uploads/misc/noImagePreview.jpg"
-                  alt="preview site"
-                  onLoad={() => setIframeOpacity(true)}
-                  style={iframeOpacity ? { opacity: "1" } : { opacity: "0" }}
-                ></img>
-              )}
+              </div>
+            </a>
+          ) : (
+            <div className="thumbnail mr-2" title="no preview available">
+              <img
+                src="https://admin.amslaw.ph/uploads/misc/noImagePreview.jpg"
+                alt="preview site"
+                onLoad={() => setIframeOpacity(true)}
+                style={iframeOpacity ? { opacity: "1" } : { opacity: "0" }}
+              ></img>
             </div>
-          </a>
-          <div className="ml-2 mt-3 mr-4">
+          )}
+          <div id="dappData" className="ml-2 mt-3 mr-4 w-100 md:w-50">
             <span
               className="py-2 px-3 rounded text-white"
               style={{ backgroundColor: status.color }}
