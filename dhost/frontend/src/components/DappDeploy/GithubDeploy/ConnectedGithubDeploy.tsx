@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
+import { toast } from "react-toastify"
 import {
   createGithubOptions,
   listGithubOptions,
@@ -18,16 +19,11 @@ export function ConnectedGithubDeploy() {
   const { dapp_slug }: TParams = useParams()
   const { dapp, setDapp } = useDapp()
 
-  const [currentRepoInfos, setCurrentRepoInfos] = useState<Repository>()
-  const [selectedRepo, setSelectedRepo] = useState<number | undefined>()
-  const [selectedBranch, setSelectedBranch] = useState<number | undefined>()
+  const [selectedRepo, setSelectedRepo] = useState<number>()
+  const [selectedBranch, setSelectedBranch] = useState<number>()
 
   useEffect(() => {
     console.log("ConnectedGithubDeploy", { dapp_slug, dapp, userInfo })
-
-    listGithubOptions(dapp_slug).then((res) =>
-      console.log("listGithubOptions", res)
-    )
   }, [dapp])
 
   async function linkRepository() {
@@ -45,36 +41,78 @@ export function ConnectedGithubDeploy() {
       githubRepositories: _listRepositories,
     }))
 
-    setCurrentRepoInfos(_hydratedCurrentRepository)
-
-    console.log("setDapp linkRepository")
     setDapp((dapp) => ({
       ...dapp,
       github: {
-        ...dapp.github,
         repo: _hydratedCurrentRepository.github_repo,
+        branch: 0,
+        auto_deploy: false,
+        confirm_ci: false,
       },
     }))
   }
 
-  function linkBranch() {
-    if (!selectedBranch) return
+  async function linkBranch() {
+    if (!selectedBranch) {
+      console.log("Please select a branch")
+      toast.warn("Please select a branch")
+      return
+    }
 
-    // TODO linkBranch
+    if (!dapp.github.repo) {
+      console.log("Missing repository information", dapp.github)
+      toast.warn(
+        "Missing repository information, please reload and/or try again later"
+      )
+      return
+    }
+
     console.log("linkBranch", { selectedBranch })
-    setDapp((dapp) => ({
-      ...dapp,
-      github: {
-        ...dapp.github,
-        branch: selectedBranch,
-      },
-    }))
 
-    // TODO clarify branch (number) and how to get it
-    updateGithubOptions(dapp_slug, {
-      ...dapp.github,
-      branch: selectedBranch,
-    })
+    const githubOptionsList = (await listGithubOptions(dapp_slug)).data
+
+    console.log("githubOptionsRes", githubOptionsList)
+
+    try {
+      if (githubOptionsList.length) {
+        if (
+          githubOptionsList.some(
+            (githubOptions) =>
+              githubOptions.repo === dapp.github.repo &&
+              githubOptions.branch === selectedBranch
+          )
+        ) {
+          const updatedGithubOptions = await updateGithubOptions(dapp_slug, {
+            ...dapp.github,
+            repo: dapp.github.repo,
+            branch: selectedBranch,
+          })
+
+          console.log("updatedGithubOptions", updatedGithubOptions)
+
+          setDapp((_dapp) => ({
+            ..._dapp,
+            github: updatedGithubOptions.data,
+          }))
+          return
+        }
+      }
+      const createdGithubOptions = await createGithubOptions(dapp_slug, {
+        ...dapp.github,
+        repo: dapp.github.repo,
+        branch: selectedBranch,
+      })
+
+      console.log("createdGithubOptions", createdGithubOptions)
+
+      setDapp((_dapp) => ({
+        ..._dapp,
+        github: createdGithubOptions.data,
+      }))
+    } catch (e) {
+      console.warn(e)
+      toast.error("Unable to set your github options")
+    }
   }
 
   function getRepositoryBranches(repositoryName: string) {
@@ -124,7 +162,12 @@ export function ConnectedGithubDeploy() {
             <div className="flex justify-between">
               {getRepositoryBranches(dapp.github.repo)?.length ? (
                 <>
-                  <select className="mr-2 border-1 border-gray-400 w-full p-1 rounded">
+                  <select
+                    onChange={(e) =>
+                      setSelectedBranch(parseInt(e.target.value))
+                    }
+                    className="mr-2 border-1 border-gray-400 w-full p-1 rounded"
+                  >
                     {getRepositoryBranches(dapp.github.repo)?.map(
                       (branch, i) => (
                         <option
@@ -136,7 +179,10 @@ export function ConnectedGithubDeploy() {
                       )
                     )}
                   </select>
-                  <button className="w-40 text-medium border-1 border-gray-700 text-gray-700 hover:bg-gray-700 rounded hover:text-white">
+                  <button
+                    onClick={linkBranch}
+                    className="w-40 text-medium border-1 border-gray-700 text-gray-700 hover:bg-gray-700 rounded hover:text-white"
+                  >
                     Connect Branch
                   </button>
                 </>
