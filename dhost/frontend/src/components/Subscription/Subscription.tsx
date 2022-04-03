@@ -19,7 +19,6 @@ export function Subscription({
   }
 
   const displayIfActive = () => {
-    console.log(subscription.name, userInfo.subscription)
     return userInfo.subscription == subscription.name ? (
       <img
         className="h-10 w-10 my-4"

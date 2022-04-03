@@ -5,7 +5,7 @@ export function NotConnectedGithubDeploy() {
   const { t } = useTranslation()
 
   async function handleConnectToGithub() {
-    console.log("handleConnectToGithub")
+    // console.log("handleConnectToGithub")
     window.open(`${env.API_URL}/api/social/login/github/`)
   }
 

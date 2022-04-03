@@ -27,9 +27,7 @@ export function DappCreateForm() {
     e.preventDefault()
     try {
       const res = await createIPFSDapp(dappForm)
-      console.log("dappCreated", res)
       await createBuildOptions(dappForm.slug, { command: "", docker: "" })
-      await createEnvVar(dappForm.slug, { value: "", variable: "", sensitive: false })
       // let _res = (await retrieveDapp(dappForm.slug)).data
       // let _dapps = userInfo.dapps
       // _dapps.push(_res)

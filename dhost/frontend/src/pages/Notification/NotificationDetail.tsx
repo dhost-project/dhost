@@ -12,7 +12,7 @@ export function NotificationDetail({
 
   const renderWells = (_notification: Notification) => {
 
-    console.log(_notification)
+    // console.log(_notification)
     return (
       <div className="container mx-auto">
         {/* <h2>{t("NOTIFICATION_DETAIL_TITLE")}</h2> */}
@@ -26,7 +26,6 @@ export function NotificationDetail({
       </div>
     )
   }
-  console.log(notification == undefined)
   return (
     (notification !== undefined) ? renderWells(notification) : <span>"No details."</span>
   )

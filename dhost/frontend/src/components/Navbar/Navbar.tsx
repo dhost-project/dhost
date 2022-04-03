@@ -96,7 +96,6 @@ function AccountMenu(): React.ReactElement {
   const { userInfo, setUserInfo } = useUserContext()
 
   const handleClick = async (item: sectionType) => {
-    console.log(item.name)
     if (item.name === "Logout") {
       await logout()
       setUserInfo(userInfo => ({
@@ -164,7 +163,6 @@ export function Navbar(): React.ReactElement {
   let history = useHistory()
 
   const handleClick = async (item: sectionType) => {
-    console.log(item.name)
     if (item.name === "Logout") {
       await logout()
       setUserInfo(userInfo => ({

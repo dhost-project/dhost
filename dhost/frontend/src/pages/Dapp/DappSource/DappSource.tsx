@@ -57,8 +57,8 @@ export function DappSource({
     try {
       let res = await listBundles(dapp.basic.slug)
       let _res = await retrieveBundle(dapp.basic.slug, res.data[0].id)
-      console.log(res)
-      console.log(_res)
+      console.log("listBundles", res)
+      console.log("bundle", _res)
     }
     catch (error) {
       console.log(error)

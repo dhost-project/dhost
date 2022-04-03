@@ -12,6 +12,7 @@ import {
 import { Dapp } from "models/api/Dapp"
 import { List } from "./List"
 import { ListItem } from "./ListItem"
+import { GetStarted } from "pages/GetStarted"
 
 export function ListDapp({ dapps }: { dapps: Dapp[] }): React.ReactElement {
   let history = useHistory()
@@ -82,5 +83,5 @@ export function ListDapp({ dapps }: { dapps: Dapp[] }): React.ReactElement {
     )
   }
 
-  return dapps.length > 0 ? renderDapps() : <span>No dapp to show.</span>
+  return dapps.length > 0 ? renderDapps() : <GetStarted></GetStarted>
 }

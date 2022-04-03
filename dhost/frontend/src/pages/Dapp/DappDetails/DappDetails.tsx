@@ -35,7 +35,6 @@ export function DappDetails({
   ]
 
   useEffect(() => {
-    console.log(dapp)
     if (dapp) {
       let currentStatus = allStatus.find(
         (s) => s.shortName === dapp.basic.status

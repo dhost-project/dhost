@@ -18,7 +18,6 @@ function DappSettingsBuild({
   function changeDocker(e: React.ChangeEvent<HTMLInputElement>) {
     var _dapp = dapp
     _dapp.build.docker = e.target.value
-    console.log(_dapp)
     setDapp(dapp => ({ ...dapp, ..._dapp }))
   }
 
