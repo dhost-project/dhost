@@ -32,9 +32,9 @@ const account_sections = [
       icon: BeakerIcon,
     },
     {
-      name: "Teams",
-      href: "/404",
-      icon: UserGroupIcon,
+      name: "Pricing",
+      href: "/pricing/",
+      icon: PuzzleIcon,
     },
   ],
   [
@@ -42,21 +42,6 @@ const account_sections = [
       name: "Settings",
       href: "/account/settings/",
       icon: CogIcon,
-    },
-    {
-      name: "Security",
-      href: "/account/settings/",
-      icon: ShieldCheckIcon,
-    },
-    {
-      name: "Pricing",
-      href: "/pricing/",
-      icon: PuzzleIcon,
-    },
-    {
-      name: "Support",
-      href: "/support/",
-      icon: SupportIcon,
     },
   ],
   [
@@ -96,7 +81,6 @@ function AccountMenu(): React.ReactElement {
   const { userInfo, setUserInfo } = useUserContext()
 
   const handleClick = async (item: sectionType) => {
-    console.log(item.name)
     if (item.name === "Logout") {
       await logout()
       setUserInfo((userInfo) => ({
@@ -131,7 +115,7 @@ function AccountMenu(): React.ReactElement {
         <Menu.Items
           className="absolute right-0 overflow-hidden origin-top-right bg-white
           border-b border-l border-r border-gray-200 divide-y divide-gray-100
-          rounded-b-lg shadow-lg focus:outline-none"
+          rounded-b-lg shadow-lg focus:outline-none cursor-pointer"
           style={{ zIndex: -1 }}
         >
           {account_sections.map((account_section, index) => (
@@ -140,9 +124,8 @@ function AccountMenu(): React.ReactElement {
                 <Menu.Item key={`${item.name}-${item.href}`}>
                   {({ active }) => (
                     <a
-                      className={`${
-                        active ? "bg-gray-50" : "text-gray-900"
-                      } group flex items-center w-full pl-4 pr-24 py-2 text-sm`}
+                      className={`${active ? "bg-gray-50" : "text-gray-900"
+                        } group flex items-center w-full pl-4 pr-24 py-2 text-sm`}
                       onClick={() => handleClick(item)}
                     >
                       <item.icon className="h-5 w-5 mr-2" aria-hidden="true" />
@@ -165,7 +148,6 @@ export function Navbar(): React.ReactElement {
   let history = useHistory()
 
   const handleClick = async (item: sectionType) => {
-    console.log(item.name)
     if (item.name === "Logout") {
       await logout()
       setUserInfo((userInfo) => ({
@@ -206,19 +188,6 @@ export function Navbar(): React.ReactElement {
                   <span className="sr-only">Open menu</span>
                   <MenuIcon className="h-6 w-6" aria-hidden="true" />
                 </Popover.Button>
-              </div>
-              <div className="hidden md:flex md:flex-1 px-16">
-                <input
-                  type="text"
-                  className="flex-grow px-2 rounded-l border text-gray-700"
-                  placeholder="Search dapps"
-                />
-                <button
-                  className="flex-none px-2 text-gray-500 rounded-r border-r
-              border-b border-t hover:bg-gray-100"
-                >
-                  <SearchIcon className="h-5" />
-                </button>
               </div>
               <div
                 className="hidden md:flex justify-end md:flex-1 lg:w-0

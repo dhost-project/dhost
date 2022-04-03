@@ -4,4 +4,5 @@ export interface Bundle {
   media?: string
   folder?: string
   created_at: string
+  folder_tree: string
 }

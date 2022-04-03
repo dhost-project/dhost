@@ -18,3 +18,7 @@ export function updateUserSettings(userSettingsParams: UserSettings): HttpRespon
 export function getUserSettings(): HttpResponse<string> {
   return http.get(`${env.API_URL}/api/settings/`)
 }
+
+export function signUp(): HttpResponse<string> {
+  return http.post(`${env.API_URL}/api/signup/`)
+}

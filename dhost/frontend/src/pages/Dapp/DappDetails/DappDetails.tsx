@@ -35,7 +35,6 @@ export function DappDetails({
   ]
 
   useEffect(() => {
-    console.log(dapp)
     if (dapp) {
       let currentStatus = allStatus.find(
         (s) => s.shortName === dapp.basic.status
@@ -52,17 +51,30 @@ export function DappDetails({
   return (
     <div className="overview">
       <div className="container mx-auto md:flex mt-4">
-        <div className="w-100 md:flex">
+        <div className="md:flex w-100">
           {url ? (
             <a href={dapp.basic.url} target="_blank">
-              <div className="thumbnail mr-2" title="Go to site">
+              <div
+                className="thumbnail mr-2 border-2 rounded"
+                title="Go to site"
+              >
                 <iframe
                   src={url}
                   frameBorder="0"
-                  width="384"
-                  height="216"
                   onLoad={() => setIframeOpacity(true)}
-                  style={iframeOpacity ? { opacity: "1" } : { opacity: "0" }}
+                  style={
+                    iframeOpacity
+                      ? {
+                          opacity: "1",
+                          width: "384px !important",
+                          height: "auto",
+                        }
+                      : {
+                          opacity: "0",
+                          width: "384px !important",
+                          height: "auto",
+                        }
+                  }
                 />
               </div>
             </a>
@@ -72,29 +84,42 @@ export function DappDetails({
                 src="https://admin.amslaw.ph/uploads/misc/noImagePreview.jpg"
                 alt="preview site"
                 onLoad={() => setIframeOpacity(true)}
-                style={iframeOpacity ? { opacity: "1" } : { opacity: "0" }}
+                width="384"
+                height="216"
+                style={
+                  iframeOpacity
+                    ? {
+                        opacity: "1",
+                        width: "384px !important",
+                        height: "auto",
+                      }
+                    : {
+                        opacity: "0",
+                        width: "384px !important",
+                        height: "auto",
+                      }
+                }
               ></img>
             </div>
           )}
-          <div id="dappData" className="ml-2 mt-3 mr-4 w-100 md:w-50">
+          <div
+            id="dappData"
+            className="ml-2 mt-3 mr-4 w-100 md:w-50"
+            style={{ maxWidth: "200px", wordWrap: "break-word" }}
+          >
             <span
               className="py-2 px-3 rounded text-white"
               style={{ backgroundColor: status.color }}
             >
               {status.name}
             </span>
-            {dapp.basic.url ? (
-              <a className="ml-2 " onClick={saveToClipboard}>
-                Share
-              </a>
-            ) : (
-              <></>
-            )}
-
             <p className="mt-2">
-              {dapp.basic.ipfs_hash ? (
-                <a href={dapp.basic.url} target="_blank">
-                  {dapp.basic.url}
+              {dapp.basic.url ? (
+                <a
+                  className="mt-2 cursor-pointer text-blue-500"
+                  onClick={saveToClipboard}
+                >
+                  Share Link
                 </a>
               ) : (
                 <p className="italic" style={{ color: "grey" }}>

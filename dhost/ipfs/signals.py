@@ -1,18 +1,14 @@
+import os
+import shutil
+
+from django.conf import settings
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
-from django.conf import settings
-
-from dhost.ipfs.ipfs import ClusterIPFSAPI
 
 from dhost.dapps.models import Bundle
-
+from dhost.ipfs.ipfs import ClusterIPFSAPI
 from dhost.ipfs.models import IPFSDapp, IPFSDeployment
-
 from dhost.notifications.models import Notification
-
-import os
-
-import shutil
 
 ipfs = ClusterIPFSAPI()
 IPFS_MEDIAS = settings.IPFS_MEDIAS
@@ -28,6 +24,10 @@ def remove_local_folder_bundle_delete(sender, instance, **kwargs):
 
 @receiver(post_delete, sender=IPFSDapp)
 def remove_ipfs_folder_dapp_delete(sender, instance, **kwargs):
+    #Send Notification
+    Notification.objects.create(
+            user=instance.owner, subject="Deletion dapp " +instance.slug, content="Dapp " + instance.slug + "and all of its instances has been deleted"
+        )
     # Unpin CID and call garbage collector when deleting the object
     try:
         if instance.ipfs_hash:

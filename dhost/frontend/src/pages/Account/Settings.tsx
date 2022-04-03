@@ -24,7 +24,6 @@ export function AccountSettings(): React.ReactElement {
   }
 
   const updateSettings = () => {
-    console.log(userInfo)
     updateUserSettings({
       username: userInfo.user.username,
       email: userInfo.user.email,
@@ -36,7 +35,6 @@ export function AccountSettings(): React.ReactElement {
   const fetchData = async () => {
     try {
       let res = await getUserSettings()
-      console.log(res)
       setPage(res.data)
       if (!settingsRef.current) {
         return

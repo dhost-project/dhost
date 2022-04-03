@@ -1,6 +1,4 @@
 .thumbnail-container {
-  width: 384px;
-  height: 216px;
   display: inline-block;
   overflow: hidden;
   position: relative;
@@ -8,15 +6,13 @@
 
 .thumbnail iframe {
   border-radius: 5px;
-  width: 384px;
-  height: 216px;
   opacity: 0;
   transition: all 300ms ease-in-out;
 }
 
 .thumbnail {
-  width: 384px;
-  height: 216px;
+  /* width: 384px;
+  height: 216px; */
   position: relative;
   cursor: pointer;
 }

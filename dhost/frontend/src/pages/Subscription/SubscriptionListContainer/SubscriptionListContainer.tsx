@@ -48,7 +48,6 @@ function SubscriptionDetail(): React.ReactElement {
     })
 
     useEffect(() => {
-        console.log(name)
         setState(selectSubscription(name))
     }, [])
 

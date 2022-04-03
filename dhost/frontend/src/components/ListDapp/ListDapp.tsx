@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom"
 import { useModals } from "contexts/ModalsContext/ModalsContext"
 import { Dapp } from "models/api/Dapp"
 import "./ListDapp.css"
+import { GetStarted } from "pages/GetStarted"
 
 export function ListDapp({ dapps }: { dapps: Dapp[] }): React.ReactElement {
   let history = useHistory()
@@ -31,7 +32,7 @@ export function ListDapp({ dapps }: { dapps: Dapp[] }): React.ReactElement {
             <span className="LineThroughtBefore"></span>List Dapps
             <span className="LineThroughtAfter"></span>
           </h2>
-          <div className="flex grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {dapps.map((dapp, i) => {
               let currentStatus = allStatus.find(
                 (s) => s.shortName === dapp.status
@@ -41,7 +42,7 @@ export function ListDapp({ dapps }: { dapps: Dapp[] }): React.ReactElement {
                 <div className="w-100 mb-3 mt-2 px-3">
                   <button
                     key={i}
-                    className="w-100 text-base text-gray-800 font-medium rounded bg-white bg-green-50 shadow hover:scale-105 focus:scale-100 focus:bg-grey-100 transition cursor-pointer"
+                    className="w-100 text-base text-gray-800 font-medium rounded bg-white shadow hover:scale-105 focus:scale-100 focus:bg-grey-100 transition cursor-pointer"
                     onClick={() => handleDapp(dapp)}
                   >
                     <div className="buttonHeader h-5 bg-green-500 rounded-tl-md rounded-tr-md" />
@@ -85,5 +86,5 @@ export function ListDapp({ dapps }: { dapps: Dapp[] }): React.ReactElement {
     )
   }
 
-  return dapps.length > 0 ? renderDapps() : <span>No dapp to show.</span>
+  return dapps.length > 0 ? renderDapps() : <GetStarted></GetStarted>
 }

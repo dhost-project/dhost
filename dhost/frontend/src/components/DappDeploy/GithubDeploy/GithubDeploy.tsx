@@ -10,9 +10,9 @@ export function GithubDeploy() {
     getListRepositories()
   }, [])
 
-  useEffect(() => {
-    console.log("isConnected", isConnected)
-  }, [isConnected])
+  // useEffect(() => {
+  //   console.log("isConnected", isConnected)
+  // }, [isConnected])
 
   async function getListRepositories() {
     try {

@@ -1,3 +1,3 @@
 export interface DappDestroyParams {
-    slug: string
+    slugConfirmation: string
 }

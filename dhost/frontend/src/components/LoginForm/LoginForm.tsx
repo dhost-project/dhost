@@ -45,6 +45,10 @@ export function LoginForm() {
     return res
   }
 
+  const handleSignUp = () => {
+    history.push("/signup")
+  }
+
   return (
     <form onSubmit={login}>
       <div className="relative">
@@ -90,6 +94,11 @@ export function LoginForm() {
         type="submit"
         value="Login"
       />
+      <button
+        className="px-4 py-2 mt-12 rounded bg-blue-300 w-full hover:bg-blue-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+        onClick={handleSignUp}
+        value="button"
+      >Sign up</button>
       <a
         href="/"
         className="mt-4 block text-sm text-center font-medium text-green-700 hover:underline focus:outline-none focus:ring-2 focus:ring-green-500 rounded"

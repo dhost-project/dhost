@@ -2,12 +2,13 @@ import React from "react"
 import { Switch, Route } from "react-router-dom"
 import { About } from "pages/About"
 import { Account } from "pages/Account"
-import { DappDetails, DappListContainer } from "pages/Dapp"
+import { DappListContainer } from "pages/Dapp"
 import { Home } from "pages/Home"
 import { Login } from "pages/Login"
 import { NotFound } from "pages/NotFound"
 import { Notification } from "pages/Notification"
-import { Subscription } from "pages/Subscription"
+import { Payment } from "pages/Payment"
+import { SignUp } from "pages/SignUp"
 import { SubscriptionListContainer } from "pages/Subscription/SubscriptionListContainer"
 
 export function RouterOutlet(): React.ReactElement {
@@ -21,7 +22,9 @@ export function RouterOutlet(): React.ReactElement {
       {/* <Route path="/ipfs" component={IPFSDapp} /> */}
       <Route path="/notifications" component={Notification} />
       <Route path="/login" component={Login} />
+      <Route path="/signup" component={SignUp} />
       <Route path="/pricing" component={SubscriptionListContainer} />
+      <Route path="/payment" component={Payment} />
       <Route path="*" component={NotFound} />
     </Switch>
   )

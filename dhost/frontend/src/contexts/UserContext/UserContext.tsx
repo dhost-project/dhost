@@ -46,10 +46,6 @@ export const UserProvider: FC = ({ children }) => {
     retrieveData()
   }, [])
 
-  useEffect(() => {
-    console.log("user", userInfo)
-  }, [userInfo])
-
   async function retrieveData() {
     const _userRes = await meUser()
 
