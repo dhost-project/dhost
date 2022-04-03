@@ -65,7 +65,7 @@ export const UserProvider: FC = ({ children }) => {
       await Promise.all([
         (await listDapps()).data,
         (await listNotifications()).data,
-        (await fetchAllRepository()).data,
+        (await fetchAllRepository().catch((error) => { console.warn(error) }))?.data ?? [],
       ])
 
     const _userInfo: IUser = {
