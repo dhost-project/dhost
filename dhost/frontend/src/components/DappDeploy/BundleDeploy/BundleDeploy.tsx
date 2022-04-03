@@ -1,44 +1,57 @@
 import { ChangeEvent, MouseEvent, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
+import { toast } from "react-toastify"
 import { createBundle, listBundles } from "api/Bundle"
+import { deployIPFSDapp } from "api/IPFSDapps"
 import { Bundle } from "models/api/Bundle"
 import { TParams } from "pages/Dapp"
 import bundleLogo from "../../../assets/bundle.svg"
 import uploadLogo from "../../../assets/upload.svg"
-import { deployIPFSDapp } from "api/IPFSDapps"
-import { toast } from "react-toastify"
-
 
 export function BundleDeploy() {
   const { dapp_slug } = useParams<TParams>()
   const { t } = useTranslation()
 
   const [file, setFile] = useState<File>()
-  const [currentBundle, setCurrentBundle] = useState<Bundle>()
+  const [currentUploadedBundle, setCurrentUploadedBundle] = useState<Bundle>()
 
   useEffect(() => {
     getBundle()
   }, [])
 
   async function getBundle() {
-    const bundleList = (await listBundles(dapp_slug)).data
-    if (bundleList.length > 0) setCurrentBundle(bundleList[0])
-    console.log({ bundleList })
+    try {
+      const bundleList = (await listBundles(dapp_slug)).data
+      if (bundleList.length > 0)
+        setCurrentUploadedBundle(bundleList[bundleList.length - 1])
+    } catch (e) {
+      console.error("getBundle", e)
+      toast.warn("Unable to retrieve current bundle list.")
+    }
   }
 
-  async function handleCreateBundle(e: MouseEvent) {
+  async function handleUploadBundle(e: MouseEvent) {
     if (!file) return
-    console.log("handleCreateBundle", { file, currentBundle })
-    const res = await createBundle(dapp_slug, file)
-    toast.success("Bundle created.")
-    console.log("res", res)
+    try {
+      const createdBundles = (await createBundle(dapp_slug, file)).data
+      setCurrentUploadedBundle(createdBundles)
+      setFile(undefined)
+      toast.success("Bundle uploaded.")
+    } catch (e) {
+      console.error("handleUploadBundle", e)
+      toast.warn("Something went wrong during dapp bundle upload.")
+    }
   }
 
   async function handleDeploy(e: MouseEvent) {
-    const res = await deployIPFSDapp(dapp_slug)
-    toast.success("Bundle deployment started, it can takes few minutes.")
-    console.log("res", res)
+    try {
+      await deployIPFSDapp(dapp_slug)
+      toast.success("Bundle deployment started, it can takes few minutes.")
+    } catch (e) {
+      console.error("handleDeploy", e)
+      toast.warn("Something went wrong during dapp bundle deployment.")
+    }
   }
 
   function handleFilesUpload(e: ChangeEvent<HTMLInputElement>) {
@@ -60,9 +73,43 @@ export function BundleDeploy() {
 
         <div className="relative flex flex-col">
           <div className="relative flex flex-col items-center w-full h-full p-4 border rounded border-gray-500 cursor-pointer">
-            {currentBundle ? (
+            {currentUploadedBundle ? (
               <>
-                <p>deployed bundle</p>
+                <span className="font-semibold">
+                  Current uploaded bundle :{" "}
+                </span>
+                <div className="flex w-full justify-center items-center my-4">
+                  {file && (
+                    <>
+                      <div className="flex flex-col justify-center items-center">
+                        <img
+                          className="h-20 w-20"
+                          src={bundleLogo}
+                          alt="Bundle logo"
+                        />
+                        <span className="text-bold text-green-500">
+                          {file.name}
+                        </span>
+                        <span>(local)</span>
+                      </div>
+                      <span className="mx-8">{"👉"}</span>
+                    </>
+                  )}
+                  <div className="flex flex-col justify-center items-center">
+                    <img
+                      className="h-20 w-20"
+                      src={bundleLogo}
+                      alt="Bundle logo"
+                    />
+                    <span className="text-bold text-green-500">
+                      {currentUploadedBundle.dapp}
+                    </span>
+                    {file && <span>(remote)</span>}
+                  </div>
+                </div>
+                <span>
+                  You can choose an another bundle to deploy (.zip only)
+                </span>
               </>
             ) : (
               <>
@@ -100,7 +147,6 @@ export function BundleDeploy() {
                 )}
               </>
             )}
-
             <input
               className="absolute left-0 top-0 h-full w-full opacity-0 focus:outline-none cursor-pointer"
               type="file"
@@ -108,18 +154,32 @@ export function BundleDeploy() {
               multiple={false}
             />
           </div>
-          <button
-            className="flex justify-center items-center self-end h-8 btn btn-primary mt-4"
-            onClick={handleCreateBundle}
-          >
-            Create Bundle
-          </button>
-          <button
-            className="flex justify-center items-center self-end h-8 btn btn-primary mt-4"
-            onClick={handleDeploy}
-          >
-            Deploy
-          </button>
+          <div className="flex justify-end mt-4">
+            <button
+              className={
+                "flex justify-center items-center h-8 btn ml-2 text-white " +
+                (!file ? "bg-gray-500 text-gray-300" : "bg-green-500")
+              }
+              onClick={handleUploadBundle}
+              disabled={!file}
+            >
+              Upload Bundle
+              {currentUploadedBundle && file && " (local)"}
+            </button>
+            <button
+              className={
+                "flex justify-center items-center h-8 btn ml-2 text-white " +
+                (!currentUploadedBundle
+                  ? "bg-gray-500 text-gray-300"
+                  : "bg-green-500")
+              }
+              onClick={handleDeploy}
+              disabled={!currentUploadedBundle}
+            >
+              Deploy Bundle
+              {currentUploadedBundle && file && " (remote)"}
+            </button>
+          </div>
         </div>
 
         <div className="flex flex-col"></div>
