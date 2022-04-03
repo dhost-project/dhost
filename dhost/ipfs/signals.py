@@ -1,18 +1,14 @@
+import os
+import shutil
+
+from django.conf import settings
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
-from django.conf import settings
-
-from dhost.ipfs.ipfs import ClusterIPFSAPI
 
 from dhost.dapps.models import Bundle
-
+from dhost.ipfs.ipfs import ClusterIPFSAPI
 from dhost.ipfs.models import IPFSDapp, IPFSDeployment
-
 from dhost.notifications.models import Notification
-
-import os
-
-import shutil
 
 ipfs = ClusterIPFSAPI()
 IPFS_MEDIAS = settings.IPFS_MEDIAS
