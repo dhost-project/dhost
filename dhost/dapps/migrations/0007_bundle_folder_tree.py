@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('dapps', '0006_alter_dapp_status'),
+        ("dapps", "0006_alter_dapp_status"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='bundle',
-            name='folder_tree',
-            field=models.TextField(blank=True, null=True, verbose_name='folder tree'),
+            model_name="bundle",
+            name="folder_tree",
+            field=models.TextField(
+                blank=True, null=True, verbose_name="folder tree"
+            ),
         ),
     ]

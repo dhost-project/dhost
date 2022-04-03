@@ -6,13 +6,27 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('dapps', '0005_bundle_media_alter_dapp_owner'),
+        ("dapps", "0005_bundle_media_alter_dapp_owner"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='dapp',
-            name='status',
-            field=models.CharField(choices=[('SO', 'Stoped'), ('BI', 'Building'), ('BT', 'Builed'), ('DP', 'Deploying'), ('SA', 'Starting'), ('UP', 'Running'), ('UA', 'Unavailable'), ('ER', 'Error')], default='UP', max_length=2, verbose_name='status'),
+            model_name="dapp",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("SO", "Stoped"),
+                    ("BI", "Building"),
+                    ("BT", "Builed"),
+                    ("DP", "Deploying"),
+                    ("SA", "Starting"),
+                    ("UP", "Running"),
+                    ("UA", "Unavailable"),
+                    ("ER", "Error"),
+                ],
+                default="UP",
+                max_length=2,
+                verbose_name="status",
+            ),
         ),
     ]

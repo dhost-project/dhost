@@ -1,7 +1,5 @@
-from django.db.models.signals import pre_delete, post_delete, post_save
+from django.db.models.signals import post_delete, post_save, pre_delete
 from django.dispatch import receiver
-
-from dhost.notifications.models import Notification
 
 from dhost.builds.models import (
     Build,
@@ -20,6 +18,7 @@ from dhost.dapps.models import (
 )
 from dhost.github.models import GithubOptions
 from dhost.ipfs.models import IPFSDapp, IPFSDeployment
+from dhost.notifications.models import Notification
 
 from .models import ActionFlags
 from .utils import log_with_user
@@ -52,10 +51,10 @@ def log_bundle_create(sender, instance, created, **kwargs):
 @receiver(pre_delete, sender=Bundle)
 def log_bundle_delete(sender, instance, **kwargs):
     log_with_user(
-            instance=instance,
-            action_flag=ActionFlags.BUNDLE_DELETION,
-            dapp=instance.dapp,
-        )
+        instance=instance,
+        action_flag=ActionFlags.BUNDLE_DELETION,
+        dapp=instance.dapp,
+    )
 
 
 @receiver(post_save, sender=BuildOptions)
