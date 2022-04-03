@@ -113,6 +113,11 @@ class Bundle(models.Model):
         null=True,
         blank=True,
     )
+    folder_tree = models.TextField(
+        _("folder tree"),
+        null=True,
+        blank=True,
+    )
     media = models.FileField(null=True, blank=True)
     created_at = models.DateTimeField(default=timezone.now)
 
