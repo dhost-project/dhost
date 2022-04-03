@@ -32,9 +32,9 @@ const account_sections = [
       icon: BeakerIcon,
     },
     {
-      name: "Teams",
-      href: "/404",
-      icon: UserGroupIcon,
+      name: "Pricing",
+      href: "/pricing/",
+      icon: PuzzleIcon,
     },
   ],
   [
@@ -47,11 +47,6 @@ const account_sections = [
       name: "Security",
       href: "/account/settings/",
       icon: ShieldCheckIcon,
-    },
-    {
-      name: "Pricing",
-      href: "/pricing/",
-      icon: PuzzleIcon,
     },
     {
       name: "Support",
@@ -130,7 +125,7 @@ function AccountMenu(): React.ReactElement {
         <Menu.Items
           className="absolute right-0 overflow-hidden origin-top-right bg-white
           border-b border-l border-r border-gray-200 divide-y divide-gray-100
-          rounded-b-lg shadow-lg focus:outline-none"
+          rounded-b-lg shadow-lg focus:outline-none cursor-pointer"
           style={{ zIndex: -1 }}
         >
           {account_sections.map((account_section, index) => (

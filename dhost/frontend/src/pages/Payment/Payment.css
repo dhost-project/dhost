@@ -1,0 +1,69 @@
+.payment .row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.payment .col-25 {
+  flex: 25%;
+}
+
+.payment .col-50 {
+  flex: 50%;
+}
+
+.payment .col-75 {
+  flex: 75%;
+}
+
+.payment .col-25,
+.payment .col-50,
+.payment .col-75 {
+  padding: 0 16px;
+}
+
+.payment .container {
+  padding: 5px 20px 15px 20px;
+  border-radius: 3px;
+}
+
+.payment input[type="text"] {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.payment label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.payment .btn {
+  background-color: #04aa6d;
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.payment .btn:hover {
+  background-color: #008a4d;
+}
+
+.payment a {
+  color: #2196f3;
+}
+
+.payment hr {
+  border: 1px solid lightgrey;
+}
+
+.payment span.price {
+  float: right;
+  color: grey;
+}

@@ -1,38 +1,17 @@
-import { env } from "environment"
 import { useState } from "react"
-import { Subscription as SubscriptionType } from "models/api/Subscription"
-import { http } from "utils/http"
-import { Subscription } from "./Subscription"
-
-// export const subscriptions = [
-//   {
-//     name: "Discovery",
-//     description:
-//       "entièrement gratuite et sans engagement, vous permet de créer un site de 5 pages et de réserver en option un nom de domaine pour votre site.",
-//     price: "Free",
-//     savings: "",
-//   },
-//   {
-//     name: "Blog",
-//     description:
-//       " vous permet de créer un site avec un nombre de pages illimité, un accès illimité au module Blog, et un nom de domaine inclus.",
-//     price: "5.99€TTC/Mois",
-//     savings: "47.50€/2ans",
-//   },
-//   {
-//     name: "Premium",
-//     description:
-//       "vous permet de créer un site illimité (avec modules blog, formulaires, commentaires, forum, newsletter, réseaux sociaux, etc.) et de réserver gratuitement votre nom de domaine.",
-//     price: "11.99€TTC/Mois",
-//     savings: "95.90€/2ans",
-//   },
-// ]
+import { useHistory } from "react-router-dom"
 
 export function ThreeSubscriptions() {
+  const history = useHistory()
   const [period, setPeriod] = useState("annualy")
   const handlePeriod = (periodicity: string) => {
     setPeriod(periodicity)
   }
+
+  const handleSubscription = (plan: string) => {
+    history.push(`/payment?plan=${plan}&periodicity=${period}`)
+  }
+
   return (
     <>
       <div className="xl:mx-auto xl:container md:py-20 2xl:px-0 px-6">
@@ -96,6 +75,7 @@ export function ThreeSubscriptions() {
             <div
               role="listitem"
               className="bg-white cursor-pointer shadow rounded-lg p-8 relative z-30"
+              onClick={() => handleSubscription("starter")}
             >
               <div className="md:flex items-center justify-between">
                 <h2 className="text-2xl font-semibold leading-6 text-gray-800">
@@ -112,6 +92,7 @@ export function ThreeSubscriptions() {
             <div
               role="listitem"
               className="bg-white cursor-pointer shadow rounded-lg mt-3 flex relative z-30"
+              onClick={() => handleSubscription("personal")}
             >
               <div className="w-2.5  h-auto bg-green-500 rounded-tl-md rounded-bl-md" />
               <div className="w-full p-8">
@@ -120,7 +101,8 @@ export function ThreeSubscriptions() {
                     Personal
                   </h2>
                   <p className="text-2xl md:mt-0 mt-4 font-semibold leading-6 text-gray-800">
-                    $9<span className="font-normal text-base">/mo</span>
+                    {period === "annualy" ? "$7" : "$9"}
+                    <span className="font-normal text-base">/mo</span>
                   </p>
                 </div>
                 <p className="md:w-80 text-base leading-6 mt-4 text-gray-600">
@@ -131,13 +113,15 @@ export function ThreeSubscriptions() {
             <div
               role="listitem"
               className="bg-white cursor-pointer shadow rounded-lg p-8 relative z-30 mt-7"
+              onClick={() => handleSubscription("team")}
             >
               <div className="md:flex items-center justify-between">
                 <h2 className="text-2xl font-semibold leading-6 text-gray-800">
                   Team
                 </h2>
                 <p className="text-2xl md:mt-0 mt-4 font-semibold leading-6 text-gray-800">
-                  $18<span className="font-normal text-base">/mo</span>
+                  {period === "annualy" ? "$16" : "$18"}
+                  <span className="font-normal text-base">/mo</span>
                 </p>
               </div>
               <p className="md:w-80 text-base leading-6 mt-4 text-gray-600">
