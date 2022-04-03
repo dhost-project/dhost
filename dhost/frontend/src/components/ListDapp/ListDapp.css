@@ -1,0 +1,39 @@
+.listDapp h2 {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.listDapp h2 span:last-child {
+  background-color: #eee;
+  content: "";
+  display: inline-block;
+  height: 5px;
+  position: relative;
+  width: 100%;
+  margin-right: 10px;
+  margin-left: 5px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.listDapp h2 span:first-child {
+  background-color: #eee;
+  content: "";
+  display: inline-block;
+  height: 5px;
+  position: relative;
+  width: 30px;
+  margin-left: 10px;
+  margin-right: 5px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.listDapp .buttonHeader {
+  background-image: url(./abstract-bg.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* filter: brightness(200%); */
+}

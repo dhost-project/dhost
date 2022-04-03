@@ -8,6 +8,8 @@ from dhost.dapps.models import Bundle
 
 from dhost.ipfs.models import IPFSDapp, IPFSDeployment
 
+from dhost.notifications.models import Notification
+
 import os
 
 import shutil

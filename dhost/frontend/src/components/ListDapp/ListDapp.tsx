@@ -1,31 +1,16 @@
-import { render } from "@headlessui/react/dist/utils/render"
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { useTranslation } from "react-i18next"
+import { Button } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
-import { listIPFSDapps } from "api/IPFSDapps"
-import {
-  DappContext,
-  DappContextType,
-  IDapp,
-  useDapp,
-} from "contexts/DappContext/DappContext"
+import { useModals } from "contexts/ModalsContext/ModalsContext"
 import { Dapp } from "models/api/Dapp"
-import { List } from "./List"
-import { ListItem } from "./ListItem"
+import "./ListDapp.css"
 
 export function ListDapp({ dapps }: { dapps: Dapp[] }): React.ReactElement {
   let history = useHistory()
-  const { t } = useTranslation()
+  const { setShowCreateDappModal } = useModals()
 
   const handleDapp = (dapp: Dapp) => {
     history.push(`/dapps/${dapp.slug}`)
   }
-
-  const [status, setStatus] = useState({
-    name: "Loading",
-    shortName: "LO",
-    color: "#999",
-  })
 
   const allStatus = [
     { name: "Stoped", shortName: "SO", color: "#B33" },
@@ -40,43 +25,61 @@ export function ListDapp({ dapps }: { dapps: Dapp[] }): React.ReactElement {
 
   function renderDapps() {
     return (
-      <div className="mt-3 block">
+      <div className="listDapp mt-3 block">
         <div className="mx-5">
-          {dapps.map((dapp, i) => {
-            let currentStatus = allStatus.find(
-              (s) => s.shortName === dapp.status
-            )
+          <h2 className="text-3xl pb-2">
+            <span className="LineThroughtBefore"></span>List Dapps
+            <span className="LineThroughtAfter"></span>
+          </h2>
+          <div className="flex grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {dapps.map((dapp, i) => {
+              let currentStatus = allStatus.find(
+                (s) => s.shortName === dapp.status
+              )
 
-            return (
-              <button
-                key={i}
-                className="w-100 mb-3 mt-2 border-2 text-base text-gray-800 font-medium rounded bg-white bg-green-50 hover:border-green-400 focus:bg-green-50 focus:border-green-400 focus:ring-offset-0 focus:ring-green-400 focus:outline-none focus:ring-1 transition cursor-pointer"
-                onClick={() => handleDapp(dapp)}
-              >
-                <div className="h-2.5 bg-green-500 rounded-tl-md rounded-tr-md" />
-                <div className="px-4 py-4">
-                  <h2
-                    className="uppercase text-xl"
-                    style={{ textAlign: "left" }}
+              return (
+                <div className="w-100 mb-3 mt-2 px-3">
+                  <button
+                    key={i}
+                    className="w-100 text-base text-gray-800 font-medium rounded bg-white bg-green-50 shadow hover:scale-105 focus:scale-100 focus:bg-grey-100 transition cursor-pointer"
+                    onClick={() => handleDapp(dapp)}
                   >
-                    {dapp.slug}
-                  </h2>
-                  <p className="uppercase" style={{ textAlign: "right" }}>
-                    <span
-                      className="py-2 px-3 rounded text-white"
-                      style={{
-                        backgroundColor: currentStatus
-                          ? currentStatus.color
-                          : "grey",
-                      }}
-                    >
-                      {currentStatus ? currentStatus.name : "Loading"}
-                    </span>
-                  </p>
+                    <div className="buttonHeader h-5 bg-green-500 rounded-tl-md rounded-tr-md" />
+                    <div className="px-4 py-4">
+                      <h2
+                        className="uppercase text-xl"
+                        style={{ textAlign: "left" }}
+                      >
+                        {dapp.slug}
+                      </h2>
+                      <p className="uppercase" style={{ textAlign: "right" }}>
+                        <span
+                          className="py-2 px-3 rounded text-white"
+                          style={{
+                            backgroundColor: currentStatus
+                              ? currentStatus.color
+                              : "grey",
+                          }}
+                        >
+                          {currentStatus ? currentStatus.name : "Loading"}
+                        </span>
+                      </p>
+                    </div>
+                  </button>
                 </div>
-              </button>
-            )
-          })}
+              )
+            })}
+          </div>
+          <div className="flex justify-center mt-4">
+            <Button
+              className="flex items-center h-8 mr-4 bg-green-500 hover:bg-green-600 focus:bg-green-700 border-none px-5 py-4 mb-5 text-xl"
+              onClick={() => {
+                setShowCreateDappModal(true)
+              }}
+            >
+              Create Dapp
+            </Button>
+          </div>
         </div>
       </div>
     )

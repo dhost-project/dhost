@@ -10,7 +10,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from dhost.api.viewsets import CreateListRetrieveViewSet
-
+from .utils import create_tree_folder
 from .models import Bundle, Dapp, Deployment
 from .permissions import DappPermission
 from .serializers import (
@@ -111,8 +111,11 @@ class BundleViewSet(DappViewMixin, CreateListRetrieveViewSet):
                         shutil.rmtree(new_media_url)
 
                     os.rename(old_media_url, new_media_url)
+            index = 1
+            treeview={}
+            create_tree_folder(treeview, new_media_url, index)
 
-            bundle = Bundle.objects.create(dapp=dapp, folder=new_media_url)
+            bundle = Bundle.objects.create(dapp=dapp, folder=new_media_url, folder_tree=treeview)
             data = BundleSerializer(bundle).data
 
             return Response(data, status=status.HTTP_201_CREATED)

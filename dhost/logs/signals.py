@@ -1,6 +1,8 @@
 from django.db.models.signals import pre_delete, post_delete, post_save
 from django.dispatch import receiver
 
+from dhost.notifications.models import Notification
+
 from dhost.builds.models import (
     Build,
     BuildOptions,
