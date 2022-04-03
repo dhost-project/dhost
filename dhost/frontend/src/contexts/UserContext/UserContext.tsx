@@ -1,27 +1,16 @@
-import {
-  createContext,
-  Dispatch,
-  FC,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react"
+import { createContext, Dispatch, FC, SetStateAction, useContext, useEffect, useState } from "react"
 import { listDapps, retrieveDapp } from "api/Dapps"
-import { listNotifications } from "api/Notifications"
-import { fetchAllRepository } from "api/Repositories"
-import { meUser } from "api/Users"
 import { Dapp } from "models/api/Dapp"
-import { Notification } from "models/api/Notification"
-import { Repository } from "models/api/Repository"
 import { User } from "models/api/User"
+import { Notification } from "models/api/Notification"
+import { listNotifications } from "api/Notifications"
+import { meUser } from "api/Users"
 
 export interface IUser {
   user: User
   dapps: Dapp[]
   notifications: Notification[]
   subscription: string
-  githubRepositories: Repository[]
 }
 
 export interface UserContextType {
@@ -32,17 +21,17 @@ export interface UserContextType {
 export const UserContext = createContext({})
 
 export const UserProvider: FC = ({ children }) => {
+
   const _iUser: IUser = {
     user: {
       username: "",
       email: "",
       avatar: "",
-      id: "",
+      id: ""
     },
     dapps: [],
     notifications: [],
     subscription: "",
-    githubRepositories: [],
   }
 
   const [userInfo, setUserInfo] = useState<IUser>(_iUser)
@@ -56,20 +45,15 @@ export const UserProvider: FC = ({ children }) => {
   }, [userInfo])
 
   async function retrieveData() {
-    const [_listDapps, _listNotifications, _listRepositories] =
-      await Promise.all([
-        (await listDapps()).data,
-        (await listNotifications()).data,
-        (await fetchAllRepository()).data,
-      ])
-
+    const _listDapps = (await listDapps()).data
+    const _listNotifications = (await listNotifications()).data
+    console.log(_listNotifications)
     const _user = (await meUser()).data
     const _userInfo: IUser = {
       user: _user,
       dapps: _listDapps,
       notifications: _listNotifications,
       subscription: "Free",
-      githubRepositories: _listRepositories,
     }
     setUserInfo({ ..._userInfo })
   }
@@ -78,7 +62,7 @@ export const UserProvider: FC = ({ children }) => {
     <UserContext.Provider
       value={{
         userInfo,
-        setUserInfo,
+        setUserInfo
       }}
     >
       {children}
@@ -86,5 +70,4 @@ export const UserProvider: FC = ({ children }) => {
   )
 }
 
-export const useUserContext = (): UserContextType =>
-  useContext(UserContext) as UserContextType
+export const useUserContext = (): UserContextType => useContext(UserContext) as UserContextType

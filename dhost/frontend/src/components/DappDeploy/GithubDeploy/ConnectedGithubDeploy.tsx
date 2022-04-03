@@ -48,10 +48,10 @@ export function ConnectedGithubDeploy() {
 
     setCurrentRepoInfos(_hydratedCurrentRepository)
 
-    console.log(
-      "getRepositoryBranches",
-      getRepositoryBranches(_hydratedCurrentRepository.github_repo)
-    )
+    // console.log(
+    //   "getRepositoryBranches",
+    //   getRepositoryBranches(_hydratedCurrentRepository.github_repo)
+    // )
     console.log("setDapp linkRepository")
     setDapp((dapp) => ({
       ...dapp,
@@ -80,15 +80,15 @@ export function ConnectedGithubDeploy() {
     // })
   }
 
-  function getRepositoryBranches(repositoryName: string) {
-    return userInfo.githubRepositories.find(
-      (repository) => repository.github_repo === repositoryName
-    )?.branches
-  }
+  // function getRepositoryBranches(repositoryName: string) {
+  //   return userInfo.githubRepositories.find(
+  //     (repository) => repository.github_repo === repositoryName
+  //   )?.branches
+  // }
 
   return (
     <>
-      <section className="grid-5-10 p-4 border-b-1 border-gray-200">
+      {/* <section className="grid-5-10 p-4 border-b-1 border-gray-200">
         <div className="pr-10">
           <h2 className="mb-2 font-normal text-green-500">
             {t("DEPLOY_APP_CONNECTED")}
@@ -263,7 +263,7 @@ export function ConnectedGithubDeploy() {
             </button>
           </div>
         </div>
-      </section>
+      </section> */}
     </>
   )
 }

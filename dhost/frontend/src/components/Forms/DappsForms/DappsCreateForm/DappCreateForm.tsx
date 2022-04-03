@@ -10,6 +10,7 @@ import { toast } from "react-toastify"
 import { useUserContext } from "contexts/UserContext/UserContext"
 import { Dapp } from "models/api/Dapp"
 import { retrieveDapp } from "api/Dapps"
+import { createEnvVar } from "api/EnvVars"
 
 const initialDapp: IPFSDappParams = {
   slug: "",
@@ -28,6 +29,7 @@ export function DappCreateForm() {
       const res = await createIPFSDapp(dappForm)
       console.log("dappCreated", res)
       await createBuildOptions(dappForm.slug, { command: "", docker: "" })
+      await createEnvVar(dappForm.slug, { value: "", variable: "", sensitive: false })
       // let _res = (await retrieveDapp(dappForm.slug)).data
       // let _dapps = userInfo.dapps
       // _dapps.push(_res)
@@ -49,6 +51,7 @@ export function DappCreateForm() {
       onClick={(e) => e.stopPropagation()}
       className="bg-white p-4 rounded shadow"
     >
+      <Form.Label className="text-center"><p></p>Create dapp</Form.Label>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Dapp Slug</Form.Label>
         <Form.Control
