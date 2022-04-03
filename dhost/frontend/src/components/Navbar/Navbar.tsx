@@ -160,7 +160,7 @@ function AccountMenu(): React.ReactElement {
 
 export function Navbar(): React.ReactElement {
   const { setShowCreateDappModal } = useModals()
-  const { setUserInfo } = useUserContext()
+  const { userInfo, setUserInfo } = useUserContext()
   let history = useHistory()
 
   const handleClick = async (item: sectionType) => {
@@ -317,6 +317,6 @@ export function Navbar(): React.ReactElement {
       </Popover>)
   }
 
-  return (localStorage.getItem("connected") == "OK" ? renderConnected() : renderNotConnected()
+  return (userInfo.isConnected ? renderConnected() : renderNotConnected()
   )
 }
