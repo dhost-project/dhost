@@ -92,15 +92,18 @@ function BellNotifications(): React.ReactElement {
 }
 
 function AccountMenu(): React.ReactElement {
-  let history = useHistory()
-  let { userInfo } = useUserContext()
+  const history = useHistory()
+  const { userInfo, setUserInfo } = useUserContext()
 
   const handleClick = async (item: sectionType) => {
     console.log(item.name)
     if (item.name === "Logout") {
-      await logout();
-      localStorage.removeItem("connected");
-      window.location.reload()
+      await logout()
+      setUserInfo(userInfo => ({
+        ...userInfo,
+        isConnected: false
+      }))
+      window.location.href = '/login'
     }
     history.push(`${item.href}`)
   }
@@ -157,14 +160,18 @@ function AccountMenu(): React.ReactElement {
 
 export function Navbar(): React.ReactElement {
   const { setShowCreateDappModal } = useModals()
+  const { setUserInfo } = useUserContext()
   let history = useHistory()
 
   const handleClick = async (item: sectionType) => {
     console.log(item.name)
     if (item.name === "Logout") {
       await logout()
-      localStorage.removeItem("connected");
-      window.location.reload()
+      setUserInfo(userInfo => ({
+        ...userInfo,
+        isConnected: false
+      }))
+      window.location.href = '/login'
     }
     history.push(`${item.href}`)
   }

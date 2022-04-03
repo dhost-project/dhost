@@ -3,7 +3,7 @@ import { Form } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
 import { destroyIPFSDapp } from "api/IPFSDapps"
 import { Button } from "components/Button"
-import { useModals } from "contexts/ModalsContext/ModalsDappDestroyContext";
+import { useModals } from "contexts/ModalsContext/ModalsContext"
 import { DappDestroyParams } from "models/api/DappDestroyParams"
 import { useUserContext } from "contexts/UserContext/UserContext"
 

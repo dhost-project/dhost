@@ -5,12 +5,16 @@ import { User } from "models/api/User"
 import { Notification } from "models/api/Notification"
 import { listNotifications } from "api/Notifications"
 import { meUser } from "api/Users"
+import { Repository } from "models/api/Repository";
+import { fetchAllRepository } from "api/Repositories";
 
 export interface IUser {
   user: User
   dapps: Dapp[]
   notifications: Notification[]
   subscription: string
+  githubRepositories: Repository[]
+  isConnected: boolean
 }
 
 export interface UserContextType {
@@ -32,6 +36,8 @@ export const UserProvider: FC = ({ children }) => {
     dapps: [],
     notifications: [],
     subscription: "",
+    githubRepositories: [],
+    isConnected: false
   }
 
   const [userInfo, setUserInfo] = useState<IUser>(_iUser)
@@ -45,15 +51,30 @@ export const UserProvider: FC = ({ children }) => {
   }, [userInfo])
 
   async function retrieveData() {
-    const _listDapps = (await listDapps()).data
-    const _listNotifications = (await listNotifications()).data
-    console.log(_listNotifications)
-    const _user = (await meUser()).data
+    const _userRes = await meUser()
+
+    if (_userRes.status === 401) {
+      setUserInfo(userInfo => ({
+        ...userInfo,
+        isConnected: false
+      }))
+      return
+    }
+
+    const [_listDapps, _listNotifications, _listRepositories] =
+      await Promise.all([
+        (await listDapps()).data,
+        (await listNotifications()).data,
+        (await fetchAllRepository()).data,
+      ])
+
     const _userInfo: IUser = {
-      user: _user,
+      user: _userRes.data,
       dapps: _listDapps,
       notifications: _listNotifications,
       subscription: "Free",
+      githubRepositories: _listRepositories,
+      isConnected: true
     }
     setUserInfo({ ..._userInfo })
   }

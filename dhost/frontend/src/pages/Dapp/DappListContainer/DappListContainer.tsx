@@ -6,6 +6,7 @@ import {
   Route,
   useRouteMatch,
   useLocation,
+  useParams,
 } from "react-router-dom"
 import { retrieveBuildOptions } from "api/BuildOptions"
 import { listDappsLogs } from "api/DappLogs"
@@ -27,31 +28,28 @@ import {
   DappSource as IPFSDappSource,
   DappLogs as IPFSDappLogs,
 } from ".."
+import { TParams } from "../DappDeploy"
 
 function DappDetail(): React.ReactElement {
   const { path } = useRouteMatch()
   const { dapp, setDapp } = useDapp()
-  // const slug = window.location.pathname.split("/")[2]
+  const { dapp_slug } = useParams<TParams>()
   let slug: string = ""
 
-
-
   const fetchDapp = async () => {
-    slug = window.location.pathname.split("/")[2]
-    console.log(slug)
     let envs: EnvVar[]
     try {
-      let envs_resp = await retrieveEnvVars(slug)
+      let envs_resp = await retrieveEnvVars(dapp_slug)
       envs = envs_resp.data ?? []
     } catch (error) {
       envs = []
     }
     try {
-      let basic_resp = await retrieveIPFSDapp(slug)
+      let basic_resp = await retrieveIPFSDapp(dapp_slug)
       let basic: IPFSDapp = basic_resp.data
       console.log(basic)
 
-      let build_resp = await retrieveBuildOptions(slug)
+      let build_resp = await retrieveBuildOptions(dapp_slug)
       let build: BuildOptions = build_resp.data[0]
       build = build == undefined ? { command: "", docker: "" } : build
 
@@ -67,7 +65,13 @@ function DappDetail(): React.ReactElement {
         dappLogsList: dappLogsList,
       }
 
-      setDapp((dapp) => ({ ...dapp, basic: _dapp.basic, build: _dapp.build, env_vars: _dapp.env_vars, dappLogsList: _dapp.dappLogsList }))
+      setDapp((dapp) => ({
+        ...dapp,
+        basic: _dapp.basic,
+        build: _dapp.build,
+        env_vars: _dapp.env_vars,
+        dappLogsList: _dapp.dappLogsList,
+      }))
       console.log("dapp", dapp)
     } catch (error) {
       console.log(error)
@@ -75,7 +79,6 @@ function DappDetail(): React.ReactElement {
   }
 
   useEffect(() => {
-
     fetchDapp()
   }, [path])
 

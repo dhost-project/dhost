@@ -18,10 +18,8 @@ export function ConnectedGithubDeploy() {
   const { dapp_slug }: TParams = useParams()
   const { dapp, setDapp } = useDapp()
 
-  // const [isRepositoryLinked, setIsRepositoryLinked] = useState(false)
-  // const [isBranchLinked, setIsBranchLinked] = useState(false)
   const [currentRepoInfos, setCurrentRepoInfos] = useState<Repository>()
-  const [selectedRepo, setSelectedRepo] = useState<number>(0)
+  const [selectedRepo, setSelectedRepo] = useState<number | undefined>()
   const [selectedBranch, setSelectedBranch] = useState<number | undefined>()
 
   useEffect(() => {
@@ -33,6 +31,7 @@ export function ConnectedGithubDeploy() {
   }, [dapp])
 
   async function linkRepository() {
+    if (!selectedRepo) return
     // TODO linkRepository
     console.log("linkRepository", { selectedRepo })
 
@@ -48,10 +47,6 @@ export function ConnectedGithubDeploy() {
 
     setCurrentRepoInfos(_hydratedCurrentRepository)
 
-    // console.log(
-    //   "getRepositoryBranches",
-    //   getRepositoryBranches(_hydratedCurrentRepository.github_repo)
-    // )
     console.log("setDapp linkRepository")
     setDapp((dapp) => ({
       ...dapp,
@@ -63,8 +58,10 @@ export function ConnectedGithubDeploy() {
   }
 
   function linkBranch() {
+    if (!selectedBranch) return
+
     // TODO linkBranch
-    console.log("linkBranch", {})
+    console.log("linkBranch", { selectedBranch })
     setDapp((dapp) => ({
       ...dapp,
       github: {
@@ -74,21 +71,21 @@ export function ConnectedGithubDeploy() {
     }))
 
     // TODO clarify branch (number) and how to get it
-    // updateGithubOptions(dapp_slug, {
-    //   ...dapp.github,
-    //   branch: selectedBranch,
-    // })
+    updateGithubOptions(dapp_slug, {
+      ...dapp.github,
+      branch: selectedBranch,
+    })
   }
 
-  // function getRepositoryBranches(repositoryName: string) {
-  //   return userInfo.githubRepositories.find(
-  //     (repository) => repository.github_repo === repositoryName
-  //   )?.branches
-  // }
+  function getRepositoryBranches(repositoryName: string) {
+    return userInfo.githubRepositories.find(
+      (repository) => repository.github_repo === repositoryName
+    )?.branches
+  }
 
   return (
     <>
-      {/* <section className="grid-5-10 p-4 border-b-1 border-gray-200">
+      <section className="grid-5-10 p-4 border-b-1 border-gray-200">
         <div className="pr-10">
           <h2 className="mb-2 font-normal text-green-500">
             {t("DEPLOY_APP_CONNECTED")}
@@ -99,7 +96,7 @@ export function ConnectedGithubDeploy() {
         </div>
 
         <div className="flex flex-col">
-          <div className="flex justify-between">
+          <div className="flex justify-between mb-4">
             <select
               onChange={(e) => setSelectedRepo(parseInt(e.target.value))}
               className="mr-2 border-1 border-gray-400 w-full p-1 rounded"
@@ -121,8 +118,6 @@ export function ConnectedGithubDeploy() {
               Connect Repository
             </button>
           </div>
-          repo : {dapp.github.repo}
-          branch : {dapp.github.branch}
           {dapp.github.repo && dapp.github.branch ? (
             <GithubBranchLinked />
           ) : (
@@ -134,7 +129,7 @@ export function ConnectedGithubDeploy() {
                       (branch, i) => (
                         <option
                           key={`github-deploy-${branch.name}-${i}`}
-                          value={branch.name}
+                          value={branch.id}
                         >
                           🖇 {branch.name}
                         </option>
@@ -263,7 +258,7 @@ export function ConnectedGithubDeploy() {
             </button>
           </div>
         </div>
-      </section> */}
+      </section>
     </>
   )
 }
