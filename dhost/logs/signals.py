@@ -28,9 +28,20 @@ from .utils import log_with_user
 def log_dapp_create_or_update(sender, instance, created, **kwargs):
     if created:
         action_flag = ActionFlags.DAPP_ADDITION
+
+        #Send Notification
+        Notification.objects.create(
+                user=instance.owner, subject="Creation new dapp "+ instance.slug , content="Dapp " + instance.slug + " and all of its instances has been created"
+            )
+            
     else:
         action_flag = ActionFlags.DAPP_CHANGE
 
+        #Send Notification
+        Notification.objects.create(
+                user=instance.owner, subject="Change dapp "+ instance.slug , content="Dapp " + instance.slug + " and all of its instances has been changed"
+            )
+    
     # we can't just use 'instance' because it's not a 'Dapp' models instance
     # rather a child object
     dapp = Dapp.objects.get(pk=instance.dapp_ptr_id)

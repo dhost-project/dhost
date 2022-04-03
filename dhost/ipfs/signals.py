@@ -24,6 +24,10 @@ def remove_local_folder_bundle_delete(sender, instance, **kwargs):
 
 @receiver(post_delete, sender=IPFSDapp)
 def remove_ipfs_folder_dapp_delete(sender, instance, **kwargs):
+    #Send Notification
+    Notification.objects.create(
+            user=instance.owner, subject="Deletion dapp " +instance.slug, content="Dapp " + instance.slug + "and all of its instances has been deleted"
+        )
     # Unpin CID and call garbage collector when deleting the object
     try:
         if instance.ipfs_hash:
