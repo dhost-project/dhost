@@ -38,6 +38,6 @@ export function createBundle(
 export function retrieveBundle(
   dapp_slug: string,
   id: string
-): HttpResponse<Bundle[]> {
+): HttpResponse<Bundle> {
   return http.get(`${env.API_URL}/api/ipfs/${dapp_slug}/bundles/${id}/`)
 }

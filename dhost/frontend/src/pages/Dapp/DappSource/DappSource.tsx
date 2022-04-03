@@ -10,55 +10,57 @@ import FileTree from "react-file-treeview";
 
 type TParams = { dapp_slug: string }
 
+const data = {
+  name: "treeview",
+  id: 1,
+  toggled: true,
+  child: [
+    {
+      name: "folder1",
+      id: 2,
+      child: [
+        {
+          name: "folder2",
+          id: 5,
+          child: [
+            { name: "file3.py", id: 6, child: [] },
+            { name: "file4.cpp", id: 7, child: [] },
+          ],
+        },
+        {
+          name: "file1.js", id: 3, child: [{ name: "file3.py", id: 6, child: [] },
+          {
+            name: "file4.cpp", id: 7, child: [{ name: "file3.py", id: 6, child: [] },
+            {
+              name: "file4.cpp", id: 7, child: [{ name: "file3.py", id: 6, child: [] },
+              {
+                name: "file4.cpp", id: 7, child: [{ name: "file3.py", id: 6, child: [] },
+                { name: "file4.cpp", id: 7, child: [] },]
+              },]
+            },]
+          },
+          ]
+        },
+        { name: "file2.ts", id: 4, child: [] },
+      ],
+    },
+  ],
+};
+
 export function DappSource({
   match,
 }: RouteComponentProps<TParams>): React.ReactElement {
   const { t } = useTranslation()
   const { dapp } = useDapp()
+  const [treeview, setTreeView] = useState<Object>()
 
-  const data = {
-    name: "treeview",
-    id: 1,
-    toggled: true,
-    child: [
-      {
-        name: "folder1",
-        id: 2,
-        child: [
-          {
-            name: "folder2",
-            id: 5,
-            child: [
-              { name: "file3.py", id: 6, child: [] },
-              { name: "file4.cpp", id: 7, child: [] },
-            ],
-          },
-          {
-            name: "file1.js", id: 3, child: [{ name: "file3.py", id: 6, child: [] },
-            {
-              name: "file4.cpp", id: 7, child: [{ name: "file3.py", id: 6, child: [] },
-              {
-                name: "file4.cpp", id: 7, child: [{ name: "file3.py", id: 6, child: [] },
-                {
-                  name: "file4.cpp", id: 7, child: [{ name: "file3.py", id: 6, child: [] },
-                  { name: "file4.cpp", id: 7, child: [] },]
-                },]
-              },]
-            },
-            ]
-          },
-          { name: "file2.ts", id: 4, child: [] },
-        ],
-      },
-    ],
-  };
+
 
   const fetchData = async () => {
     try {
       let res = await listBundles(dapp.basic.slug)
-      let _res = await retrieveBundle(dapp.basic.slug, res.data[0].id)
-      console.log("listBundles", res)
-      console.log("bundle", _res)
+      let _res = await retrieveBundle(dapp.basic.slug, res.data[res.data.length - 1].id)
+      setTreeView(JSON.parse(_res.data.folder_tree.replaceAll("'", "\"").replaceAll("True", "true").replaceAll("False", "false")))
     }
     catch (error) {
       console.log(error)
@@ -94,12 +96,12 @@ export function DappSource({
     <div className="container mx-auto">
       <div className="border-2 border-grey-500 rounded overflow-y-auto m-4 p-4 max-h-[calc(100vh-310px)]">
         <button onClick={() => setCollapseAll(true)}>Collapse All</button>
-        <FileTree
-          data={data}
+        {treeview && <FileTree
+          data={treeview}
           action={action} //optional
           collapseAll={{ collapseAll, handleCollapseAll }} //Optional
           decorator={treeDecorator} //Optional
-        />
+        />}
       </div>
     </div>
   )
