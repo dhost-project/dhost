@@ -7,8 +7,8 @@ import { Home } from "pages/Home"
 import { Login } from "pages/Login"
 import { NotFound } from "pages/NotFound"
 import { Notification } from "pages/Notification"
-import { Subscription } from "pages/Subscription"
 import { SubscriptionListContainer } from "pages/Subscription/SubscriptionListContainer"
+import { SignUp } from "pages/SignUp"
 
 export function RouterOutlet(): React.ReactElement {
   return (
@@ -21,6 +21,7 @@ export function RouterOutlet(): React.ReactElement {
       {/* <Route path="/ipfs" component={IPFSDapp} /> */}
       <Route path="/notifications" component={Notification} />
       <Route path="/login" component={Login} />
+      <Route path="/signup" component={SignUp} />
       <Route path="/pricing" component={SubscriptionListContainer} />
       <Route path="*" component={NotFound} />
     </Switch>
