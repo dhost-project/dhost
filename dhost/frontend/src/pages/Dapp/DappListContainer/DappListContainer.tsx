@@ -34,7 +34,6 @@ function DappDetail(): React.ReactElement {
   const { path } = useRouteMatch()
   const { dapp, setDapp } = useDapp()
   const { dapp_slug } = useParams<TParams>()
-  let slug: string = ""
 
   const fetchDapp = async () => {
     let envs: EnvVar[]

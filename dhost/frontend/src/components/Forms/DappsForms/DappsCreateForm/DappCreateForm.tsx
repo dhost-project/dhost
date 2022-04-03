@@ -51,7 +51,8 @@ export function DappCreateForm() {
       onClick={(e) => e.stopPropagation()}
       className="bg-white p-4 rounded shadow"
     >
-      <Form.Label className="text-center"><p></p>Create dapp</Form.Label>
+      <Form.Label className="flex"><p className="flex-auto text-lg text-center">Create dapp</p></Form.Label>
+      <hr className="mb-4" />
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Dapp Slug</Form.Label>
         <Form.Control
@@ -76,7 +77,6 @@ export function DappCreateForm() {
 
         </Form.Select>
       </Form.Group>
-
       <Button type="submit">Submit</Button>
     </Form>
   )
