@@ -31,14 +31,10 @@ import {
 function DappDetail(): React.ReactElement {
   const { path } = useRouteMatch()
   const { dapp, setDapp } = useDapp()
-  // const slug = window.location.pathname.split("/")[2]
-  let slug: string = ""
-
+  const slug = window.location.pathname.split("/")[2]
 
 
   const fetchDapp = async () => {
-    slug = window.location.pathname.split("/")[2]
-    console.log(slug)
     let envs: EnvVar[]
     try {
       let envs_resp = await retrieveEnvVars(slug)
@@ -68,7 +64,6 @@ function DappDetail(): React.ReactElement {
       }
 
       setDapp((dapp) => ({ ...dapp, basic: _dapp.basic, build: _dapp.build, env_vars: _dapp.env_vars, dappLogsList: _dapp.dappLogsList }))
-      console.log("dapp", dapp)
     } catch (error) {
       console.log(error)
     }

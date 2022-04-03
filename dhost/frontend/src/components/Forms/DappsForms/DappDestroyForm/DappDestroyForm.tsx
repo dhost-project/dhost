@@ -35,6 +35,8 @@ export function DappDestroyForm() {
             onClick={(e) => e.stopPropagation()}
             className="bg-white p-4 rounded shadow"
         >
+            <Form.Label className="flex"><p className="flex-auto text-lg text-center">Confirm deletion</p></Form.Label>
+            <hr className="mb-4" />
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Type the Dapp Slug</Form.Label>
                 <Form.Control
