@@ -44,6 +44,7 @@ export const UserProvider: FC = ({ children }) => {
 
   useEffect(() => {
     retrieveData()
+    console.log(userInfo.user.id)
   }, [])
 
   async function retrieveData() {

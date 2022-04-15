@@ -10,6 +10,7 @@ import { Notification } from "pages/Notification"
 import { Payment } from "pages/Payment"
 import { SignUp } from "pages/SignUp"
 import { SubscriptionListContainer } from "pages/Subscription/SubscriptionListContainer"
+import { GetStarted } from "pages/GetStarted"
 
 export function RouterOutlet(): React.ReactElement {
   return (
@@ -21,6 +22,7 @@ export function RouterOutlet(): React.ReactElement {
       {/* <Route path="/dapp" component={IPFSDapp} /> */}
       {/* <Route path="/ipfs" component={IPFSDapp} /> */}
       <Route path="/notifications" component={Notification} />
+      <Route path="/get_started" component={GetStarted} />
       <Route path="/login" component={Login} />
       <Route path="/signup" component={SignUp} />
       <Route path="/pricing" component={SubscriptionListContainer} />
