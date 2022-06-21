@@ -1,5 +1,8 @@
 # DHost
 
+### This project is not maintaned anymore.
+#### If you are looking for a platform to automatically deploy to the IPFS check-out Fleek: [fleek.co](https://fleek.co/) more infos: [ipfs doc fleek](https://docs.ipfs.io/how-to/websites-on-ipfs/introducing-fleek/).
+
 ![infra](docs/dhost_infra.png)
 
 ## Setup
